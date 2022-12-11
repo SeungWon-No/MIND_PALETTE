@@ -2,18 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+$mobileSubDomain = env('MOBILE_SUB_DOMAIN', 'dev-m');
+$advisorSubDomain = env('ADVISOR_SUB_DOMAIN', 'dev-advisor');
 
-Route::get('/', function () {
-    return view('welcome');
-    //lazxczxczxczxczxczxcst ty
+Route::domain($mobileSubDomain .'.maeumpalette.com')->group(function () {
+    Route::get('/', function () {
+        return "MMM";
+    });
 });
+
+Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
+    Route::get('/', function () {
+//        return view('welcome');
+        return "DDDDD";
+    });
+});
+
