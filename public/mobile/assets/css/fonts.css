@@ -1,0 +1,90 @@
+/*******************************************************
+
+	100	:	Thin
+	200	:	Extra Light (Ultra Light)
+	300	:	Light
+	400	:	Regular
+	500	:	Medium
+	600	:	Semi Bold (Demi Bold)
+	700	:	Bold
+	800	:	Extra Bold (Ultra Bold)
+	900	:	Black (Heavy)	
+
+*******************************************************/
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 800;
+	font-display: swap;
+	src: local(''), url('../fonts/Pretendard-ExtraBold.subset.woff2') format('woff2'), url('../fonts/Pretendard-ExtraBold.subset.woff') format('woff');
+}
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 700;
+	font-display: swap;
+	src: local(''), url('../fonts/Pretendard-Bold.subset.woff2') format('woff2'), url('../fonts/Pretendard-Bold.subset.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 600;
+	font-display: swap;
+	src: local(''), url('../fonts/Pretendard-SemiBold.subset.woff2') format('woff2'), url('../fonts/Pretendard-SemiBold.subset.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 500;
+	font-display: swap;
+	src: local(''), url('../fonts/Pretendard-Medium.subset.woff2') format('woff2'), url('../fonts/Pretendard-Medium.subset.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 400;
+	font-display: swap;
+	src: local(''), url('../fonts/Pretendard-Regular.subset.woff2') format('woff2'), url('../fonts/Pretendard-Regular.subset.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 300;
+	font-display: swap;
+	src: local(''), url('../fonts/Pretendard-Light.subset.woff2') format('woff2'), url('../fonts/Pretendard-Light.subset.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*
+@font-face {
+	font-family: 'NanumSquareRound';
+	font-weight: 800;
+	font-display: swap;
+	src: local(''), url('../fonts/NanumSquareRoundEB.woff2') format('woff2'), url('../fonts/NanumSquareRoundEB.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'NanumSquareRound';
+	font-weight: 700;
+	font-display: swap;
+	src: local(''), url('../fonts/NanumSquareRoundB.woff2') format('woff2'), url('../fonts/NanumSquareRoundB.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'NanumSquareRound';
+	font-weight: 400;
+	font-display: swap;
+	src: local(''), url('../fonts/NanumSquareRoundR.woff2') format('woff2'), url('../fonts/NanumSquareRoundR.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'NanumSquareRound';
+	font-weight: 300;
+	font-display: swap;
+	src: local(''), url('../fonts/NanumSquareRoundL.woff2') format('woff2'), url('../fonts/NanumSquareRoundL.woff') format('woff');
+}
+*/
