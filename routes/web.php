@@ -16,8 +16,9 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->group(function () {
 
 Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
     Route::get('/', function () {
-//        return view('welcome');
-        return "DDDDD";
+        return view('/web/main'); // 메인 페이지
     });
+
+    //Route::resource('/login', LoginController::class); // 로그인 페이지
 });
 
