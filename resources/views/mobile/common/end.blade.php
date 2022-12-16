@@ -1,3 +1,3 @@
-<script src="/mobile/assets/js/common.js?v={{JS_VRSION}}"></script>
+<script src="/mobile/assets/js/common.js?v={{JS_VERSION}}"></script>
 </body>
 </html>

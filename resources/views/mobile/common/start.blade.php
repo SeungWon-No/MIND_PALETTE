@@ -23,7 +23,7 @@
     <meta name="twitter:image" content="/mobile/assets/images/common/sns.jpg">
     <link rel="canonical" href="대표도메인">
     <!-- custom css -->
-    <link href="/mobile/assets/css/style.css?v={{CSS_VRSION}}" rel="stylesheet">
+    <link href="/mobile/assets/css/style.css?v={{CSS_VERSION}}" rel="stylesheet">
     <!-- jquery js -->
     <script src="/mobile/assets/js/jquery.js"></script>
     <script src="/mobile/assets/js/swiper/swiper.min.js"></script>

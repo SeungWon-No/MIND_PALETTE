@@ -31,7 +31,6 @@
                 <div style="display:block">
                     <div class="form-input-valid font-color-error">
                         <div id="error-info">이메일을 다시 확인해주세요.</div>
-                        <div style="display:block">비밀번호를 다시 확인해주세요.</div>
                     </div>
                 </div>
                 <div class="login-btns">
@@ -42,7 +41,7 @@
         </div>
     </div>
     <div class="login-footer">
-        @include('/mobile/common/footer')
+{{--        @include('/mobile/common/footer')--}}
     </div>
 </div>
 <script>
