@@ -36,7 +36,7 @@
                 <div class="login-btns">
                     <a href="javascript:login()" class="btn btn-orange btn-large-size btn-page-action">로그인</a>
                 </div>
-                <div class="login-join">계정이 없으신가요? <a href="#">회원가입</a></div>
+                <div class="login-join">계정이 없으신가요? <a href="/agree">회원가입</a></div>
             </fieldset>
         </div>
     </div>

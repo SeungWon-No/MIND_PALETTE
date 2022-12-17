@@ -1,5 +1,5 @@
 @include('/mobile/common/start')
-@include('/mobile/common/header')
+@include('/mobile/common/header',["isShowBackButton" => false])
 <section id="container" class="page-body">
     <div class="page-contents">
         <div class="main-wrap">
