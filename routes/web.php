@@ -4,7 +4,10 @@ use App\Http\Controllers\Mobile\IndexController;
 use App\Http\Controllers\Mobile\Join\EmailCheckController;
 use App\Http\Controllers\Mobile\Join\JoinController;
 use App\Http\Controllers\Mobile\Login\LoginController;
+use App\Http\Controllers\Mobile\Logout\LogoutController;
+use App\Http\Controllers\Mobile\Mypage\MyPageController;
 use App\Http\Middleware\AutoLogin;
+use App\Http\Middleware\LoginValid;
 use Illuminate\Support\Facades\Route;
 
 const CSS_VERSION = "1";
@@ -20,6 +23,11 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
     ]);
     Route::resource('/join', JoinController::class);
     Route::post("/emailCheck", EmailCheckController::class);
+});
+
+Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::class,LoginValid::class])->group(function () {
+    Route::resource("/mypage", MyPageController::class);
+    Route::get("/logout", LogoutController::class);
 });
 
 Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {

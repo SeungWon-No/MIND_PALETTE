@@ -6,6 +6,7 @@ use Closure;
 use App\Models\Member;
 use Cookie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class AutoLogin
 {
@@ -21,7 +22,8 @@ class AutoLogin
 
                 $loginData = [
                     "memberPK" => $member->memberPK,
-                    "mbName" => $member->mbName,
+                    "memberEmail" => $member->email,
+                    "memberName" => Crypt::decryptString($member->memberName),
                 ];
                 $request->session()->push('login', $loginData);
             }

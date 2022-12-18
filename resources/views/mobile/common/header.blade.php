@@ -26,7 +26,7 @@
                     <div class="icon icon-page-alarm-gray on"></div>
                     <div class="icon icon-page-alarm-white off"></div>
                 </a>
-                <a href="#" class="btn-page-ui btn-page-user">
+                <a href="/mypage" class="btn-page-ui btn-page-user">
                     <div class="icon icon-page-user-orange on"></div>
                     <div class="icon icon-page-user-white off"></div>
                 </a>

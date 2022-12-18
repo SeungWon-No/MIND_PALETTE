@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Cookie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -47,7 +48,8 @@ class LoginController extends Controller
 
         $loginData = [
             "memberPK" => $member->memberPK,
-            "mbName" => $member->mbName,
+            "memberEmail" => $member->email,
+            "memberName" => Crypt::decryptString($member->memberName),
         ];
         $request->session()->push('login', $loginData);
         return redirect('/');

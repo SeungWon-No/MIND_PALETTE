@@ -29,3 +29,11 @@
     <script src="/mobile/assets/js/swiper/swiper.min.js"></script>
 </head>
 <body>
+@if (session('error'))
+    <script>
+        if(location.hash !== "#e"){
+            history.pushState(null, '', window.location.pathname+"?#e");
+            alert("{{session('error')}}");
+        }
+    </script>
+@endif
