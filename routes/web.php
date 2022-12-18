@@ -21,7 +21,9 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
     Route::resource("/login",LoginController::class)->only([
         'index', 'store'
     ]);
-    Route::resource('/join', JoinController::class);
+    Route::resource('/join', JoinController::class)->only([
+        'index', 'create', 'store', 'show'
+    ]);
     Route::post("/emailCheck", EmailCheckController::class);
 });
 

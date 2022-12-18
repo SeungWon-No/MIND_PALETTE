@@ -12,8 +12,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
+        if ($request->session()->has('login')) {
+            return redirect('/')->with('error', '로그인 상태입니다.');
+        }
+
         return view("/mobile/login/login");
     }
 
@@ -38,8 +43,9 @@ class LoginController extends Controller
 
     public static function login($request, $member): RedirectResponse
     {
-
         Member::updateLoginDate($member->memberPK);
+
+        $redirectUrl = (isset($request->redirectUrl)) ? $request->redirectUrl : "/";
 
         if ( $request->autoLogin == "true" ) {
             // dd($request->autoLogin);
@@ -52,6 +58,6 @@ class LoginController extends Controller
             "memberName" => Crypt::decryptString($member->memberName),
         ];
         $request->session()->push('login', $loginData);
-        return redirect('/');
+        return redirect($redirectUrl);
     }
 }

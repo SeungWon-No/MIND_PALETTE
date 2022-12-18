@@ -13,23 +13,18 @@ use Illuminate\Support\Facades\Hash;
 
 class JoinController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->session()->has('login')) {
+            return redirect('/')->with('error', '로그인 상태입니다.');
+        }
         return view("/mobile/join/agree");
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
+        if ($request->session()->has('login')) {
+            return redirect('/')->with('error', '로그인 상태입니다.');
+        }
         return view("/mobile/join/create");
     }
 
@@ -60,6 +55,7 @@ class JoinController extends Controller
             $member->createDate = $nowDate;
             $member->save();
 
+            $request->redirectUrl = "/join/completion";
             DB::commit();
             return LoginController::login($request,Member::findMemberInfo($member->memberPK));
         } catch(Exception $e){
@@ -67,48 +63,7 @@ class JoinController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function show(){
+        return view("/mobile/join/completion");
     }
 }

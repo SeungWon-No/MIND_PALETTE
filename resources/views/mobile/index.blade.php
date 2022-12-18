@@ -15,68 +15,70 @@
                         <div class="point-note-desc"><div class="txt">검사 이후 추가 상담 및 치료가 필요한 분들은 전문 상담사가 소속된 센터나, 가까운 심리 상담 센터에 방문해서 후속 상담 및 치료를 받으실 수 있습니다.</div></div>
                     </div>
                 </div>
-                <div class="basic-data-group">
-                    <div class="main-advice-list">
-                        <div class="gallery-list-wrap">
-                            <div class="gallery-list-top">
-                                <div class="gallery-list-title">우리 아이 상담 내역<em>3</em></div>
-                                <a href="#" class="btn-more-ui">더보기</a>
-                            </div>
-                            <div class="gallery-list-body">
-                                <div class="horizontal-swiper-scoller">
-                                    <div class="scoller-inner">
-                                        <div class="scoller-list">
-                                            <a href="#" class="gallery-list-item">
-                                                <div class="item-thumb"><div class="thumb"><img src="../mobile/assets/images/@picture.png" alt=""/></div></div>
-                                                <div class="item-info">
-                                                    <div class="item-icon"><div class="icon icon-kids-small"></div></div>
-                                                    <div class="item-data">
-                                                        <div class="item-name">홍길동</div>
-                                                        <div class="item-date">2022.11.15 13:20</div>
+                @if($counselingCount > 0)
+                    <div class="basic-data-group">
+                        <div class="main-advice-list">
+                            <div class="gallery-list-wrap">
+                                <div class="gallery-list-top">
+                                    <div class="gallery-list-title">우리 아이 상담 내역<em>3</em></div>
+                                    <a href="#" class="btn-more-ui">더보기</a>
+                                </div>
+                                <div class="gallery-list-body">
+                                    <div class="horizontal-swiper-scoller">
+                                        <div class="scoller-inner">
+                                            <div class="scoller-list">
+                                                <a href="#" class="gallery-list-item">
+                                                    <div class="item-thumb"><div class="thumb"><img src="../mobile/assets/images/@picture.png" alt=""/></div></div>
+                                                    <div class="item-info">
+                                                        <div class="item-icon"><div class="icon icon-kids-small"></div></div>
+                                                        <div class="item-data">
+                                                            <div class="item-name">홍길동</div>
+                                                            <div class="item-date">2022.11.15 13:20</div>
+                                                        </div>
+                                                        <div class="item-state"><div class="label label-red">상담사 매칭중</div></div>
                                                     </div>
-                                                    <div class="item-state"><div class="label label-red">상담사 매칭중</div></div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="gallery-list-item">
-                                                <div class="item-thumb"><div class="thumb"><div class="advice-ing"><em></em><strong>상담 신청을 완료해주세요.</strong></div></div></div>
-                                                <div class="item-info">
-                                                    <div class="item-icon"><div class="icon icon-kids-small"></div></div>
-                                                    <div class="item-data">
-                                                        <div class="item-name">홍길동</div>
-                                                        <div class="item-date">2022.11.15 13:20</div>
+                                                </a>
+                                                <a href="#" class="gallery-list-item">
+                                                    <div class="item-thumb"><div class="thumb"><div class="advice-ing"><em></em><strong>상담 신청을 완료해주세요.</strong></div></div></div>
+                                                    <div class="item-info">
+                                                        <div class="item-icon"><div class="icon icon-kids-small"></div></div>
+                                                        <div class="item-data">
+                                                            <div class="item-name">홍길동</div>
+                                                            <div class="item-date">2022.11.15 13:20</div>
+                                                        </div>
+                                                        <div class="item-state"><div class="label label-silver">상담완료</div></div>
                                                     </div>
-                                                    <div class="item-state"><div class="label label-silver">상담완료</div></div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="gallery-list-item">
-                                                <div class="item-thumb"><div class="thumb"><div class="advice-free"><em></em><strong>마음팔레트 무료 상담</strong></div></div></div>
-                                                <div class="item-info">
-                                                    <div class="item-icon"><div class="icon icon-kids-small"></div></div>
-                                                    <div class="item-data">
-                                                        <div class="item-name">홍길동</div>
-                                                        <div class="item-date">2022.11.15 13:20</div>
+                                                </a>
+                                                <a href="#" class="gallery-list-item">
+                                                    <div class="item-thumb"><div class="thumb"><div class="advice-free"><em></em><strong>마음팔레트 무료 상담</strong></div></div></div>
+                                                    <div class="item-info">
+                                                        <div class="item-icon"><div class="icon icon-kids-small"></div></div>
+                                                        <div class="item-data">
+                                                            <div class="item-name">홍길동</div>
+                                                            <div class="item-date">2022.11.15 13:20</div>
+                                                        </div>
+                                                        <div class="item-state"><div class="label label-gray">작성중</div></div>
                                                     </div>
-                                                    <div class="item-state"><div class="label label-gray">작성중</div></div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="gallery-list-item">
-                                                <div class="item-thumb"><div class="thumb"><img src="../mobile/assets/images/@picture.png" alt=""/></div></div>
-                                                <div class="item-info">
-                                                    <div class="item-icon"><div class="icon icon-kids-small"></div></div>
-                                                    <div class="item-data">
-                                                        <div class="item-name">홍길동</div>
-                                                        <div class="item-date">2022.11.15 13:20</div>
+                                                </a>
+                                                <a href="#" class="gallery-list-item">
+                                                    <div class="item-thumb"><div class="thumb"><img src="../mobile/assets/images/@picture.png" alt=""/></div></div>
+                                                    <div class="item-info">
+                                                        <div class="item-icon"><div class="icon icon-kids-small"></div></div>
+                                                        <div class="item-data">
+                                                            <div class="item-name">홍길동</div>
+                                                            <div class="item-date">2022.11.15 13:20</div>
+                                                        </div>
+                                                        <div class="item-state"><div class="label label-silver">상담완료</div></div>
                                                     </div>
-                                                    <div class="item-state"><div class="label label-silver">상담완료</div></div>
-                                                </div>
-                                            </a>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
                 <div class="basic-data-group">
                     <h3 class="con-title">About</h3>
                     <div class="main-about">
