@@ -3,78 +3,61 @@
 namespace App\Http\Controllers\Mobile\Login;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
+use Cookie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
+        if ($request->session()->has('login')) {
+            return redirect('/')->with('error', '로그인 상태입니다.');
+        }
+
         return view("/mobile/login/login");
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(Request $request): string
     {
-        //
+        $email = urldecode($request["email"]) ?? "";
+        $pw = urldecode($request["pw"]) ?? "";
+
+        if ( $email == "" || $pw  == "" ) {
+            return "이메일 또는 패스워드를 입력해주세요";
+        }
+        $member = Member::findUser($email,$pw)->first();
+        if ($member) {
+            if (Hash::check($pw, $member->pw)) {
+                $this->login($request,  Member::findMemberInfo($member->memberPK));
+                return "success";
+            }
+        }
+        return "아이디/패스워드가 일치하지 않습니다.";
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public static function login($request, $member): RedirectResponse
     {
-        //
-    }
+        Member::updateLoginDate($member->memberPK);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $redirectUrl = (isset($request->redirectUrl)) ? $request->redirectUrl : "/";
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        if ( $request->autoLogin == "true" ) {
+            // dd($request->autoLogin);
+            Cookie::queue(Cookie::forever('AKTV', $member->memberPK));
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $loginData = [
+            "memberPK" => $member->memberPK,
+            "memberEmail" => $member->email,
+            "memberName" => Crypt::decryptString($member->memberName),
+        ];
+        $request->session()->push('login', $loginData);
+        return redirect($redirectUrl);
     }
 }
