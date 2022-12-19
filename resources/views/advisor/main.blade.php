@@ -22,11 +22,11 @@
   <meta name="twitter:image" content=""> 
   <link rel="canonical" href=""> <!--대표도메인-->
   <!-- jquery -->
-  <script src="../assets/js/jquery.js"></script>
+  <script src="../pc/assets/js/jquery.js"></script>
   <!--swiper -->
-  <script src="../assets/js/swiper.min.js"></script>
+  <script src="../pc/assets/js/swiper.min.js"></script>
   <!-- custom css -->
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../pc/assets/css/style.css">
 </head>
 <body>
   <div id="wrapper">
@@ -35,8 +35,8 @@
         <div class="header-top__inner">
           <div class="header-top__left">
             <h1 class="logo">마음팔레트
-              <a href="index.html" class="logo-link">
-                <img src="../assets/images/logo.png" alt="마음팔레트 로고" class="logo-img">
+              <a href="/" class="logo-link">
+                <img src="../pc/assets/images/logo.png" alt="마음팔레트 로고" class="logo-img">
               </a>
             </h1>
             <div class="header-search__box">
@@ -47,7 +47,7 @@
           <div class="header-top__right">
             <div class="user-info__cell">
               <div class="user-profile__photo">
-                <img src="../assets/images/user-profile.jpg" alt="" class="user-profile__img">
+                <img src="../pc/assets/images/user-profile.jpg" alt="" class="user-profile__img">
               </div>
               <div class="user-info__username">김아무</div>
             </div>
@@ -58,8 +58,8 @@
         <div class="header-bottom__inner">
           <nav class="nav">
             <!-- 링크에 해당하는 페이지면 nav-menu에 클래스 active -->
-            <a href="index.html" class="nav-menu active">홈</a>
-            <a href="#none" class="nav-menu">상담리스트</a>
+            <a href="/" class="nav-menu active">홈</a>
+            <a href="/detail" class="nav-menu">상담리스트</a>
             <a href="#none" class="nav-menu">나의 상담 리스트</a>
             <a href="#none" class="nav-menu">프로필</a>
             <a href="#none" class="nav-menu">공지사항</a>
@@ -127,10 +127,10 @@
                   4-2. 긴급조치 필요 counseling에 need-care 추가 (end는 추가되있는 상태)
                 =========================================  -->
                 <ul class="counseling-list">
-                  <!-- 대기중인 상담 -->
+                  <!-- 상담 리스트 시작 -->
                   <li class="counseling">
                     <a href="#none" class="counseling-thumb">
-                      <img src="../assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
+                      <img src="../pc/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
                       <div class="counseling-user__name">홍길동</div>
@@ -144,119 +144,7 @@
                       <a href="#none" class="counseling-link">상담하기</a>
                     </div>
                   </li>
-                  <!-- 상담중인 상담 -->
-                  <!-- 상담중인 상담은 counseling태그에 ongoing 클래스명 추가 -->
-                  <li class="counseling ongoing">
-                    <a href="#none" class="counseling-thumb">
-                      <img src="../assets/images/couns-list-02.jpg" alt="" class="counseling-thumb__img">
-                    </a>
-                    <div class="counseling-user__info">
-                      <div class="counseling-user__name">홍길동</div>
-                      <div class="counseling-user__year">191898</div>
-                      <div class="counseling-user__gender">남아</div>
-                    </div>
-                    <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">2143426</span></div>
-                    </div>
-                    <div class="counseling-link__cell">
-                      <a href="#none" class="counseling-link">상담중</a>
-                    </div>
-                  </li>
-                  <!-- 상담 불가 -->
-                  <!-- 상담 불가인 상담은 counseling태그에 disabled 클래스명 추가 -->
-                  <li class="counseling disabled">
-                    <a href="#none" class="counseling-thumb">
-                      <img src="../assets/images/couns-list-02.jpg" alt="" class="counseling-thumb__img">
-                    </a>
-                    <div class="counseling-user__info">
-                      <div class="counseling-user__name">홍길동</div>
-                      <div class="counseling-user__year">191898</div>
-                      <div class="counseling-user__gender">남아</div>
-                    </div>
-                    <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">2143426</span></div>
-                    </div>
-                    <div class="counseling-link__cell">
-                      <a href="#none" class="counseling-link">상담불가</a>
-                    </div>
-                  </li>
-                  <!-- 끝난 상담 -->
-                  <!-- 끝난 상담은 counseling태그에 end 클래스명 추가 -->
-                  <li class="counseling end">
-                    <a href="#none" class="counseling-thumb">
-                      <img src="../assets/images/couns-list-03.jpg" alt="" class="counseling-thumb__img">
-                    </a>
-                    <div class="counseling-user__info">
-                      <div class="counseling-user__name">홍길동</div>
-                      <div class="counseling-user__year">191898</div>
-                      <div class="counseling-user__gender">남아</div>
-                    </div>
-                    <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">2143426</span></div>
-                    </div>
-                    <div class="counseling-thum__upDown">
-                      <div class="thumb-up__btn">
-                        <span class="icon thumb-up-icon"></span>
-                        <span class="thumb-up__num">3</span>
-                      </div>
-                      <div class="thumb-down__btn">
-                        <span class="icon thumb-down-icon"></span>
-                        <span class="thumb-down__num">3</span>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- 끝난 상담 - 위험 -->
-                  <!-- 끝난 상담은 counseling태그에 end 클래스명 추가 -->
-                  <!-- 끝난 상담 + 위험은 counseling태그에 danger 클래스명 추가 -->
-                  <li class="counseling end danger">
-                    <a href="#none" class="counseling-thumb">
-                      <img src="../assets/images/couns-list-03.jpg" alt="" class="counseling-thumb__img">
-                    </a>
-                    <div class="counseling-user__info">
-                      <div class="counseling-user__name">홍길동</div>
-                      <div class="counseling-user__year">191898</div>
-                      <div class="counseling-user__gender">남아</div>
-                    </div>
-                    <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">2143426</span></div>
-                    </div>
-                    <div class="counseling-thum__upDown">
-                      <div class="thumb-up__btn">
-                        <span class="icon thumb-up-icon"></span>
-                        <span class="thumb-up__num">3</span>
-                      </div>
-                      <div class="thumb-down__btn">
-                        <span class="icon thumb-down-icon"></span>
-                        <span class="thumb-down__num">3</span>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- 끝난 상담 - 조치필요 -->
-                  <!-- 끝난 상담은 counseling태그에 end 클래스명 추가 -->
-                  <!-- 끝난 상담 + 조치필요는 counseling태그에 need-care 클래스명 추가 -->
-                  <li class="counseling end need-care">
-                    <a href="#none" class="counseling-thumb">
-                      <img src="../assets/images/couns-list-03.jpg" alt="" class="counseling-thumb__img">
-                    </a>
-                    <div class="counseling-user__info">
-                      <div class="counseling-user__name">홍길동</div>
-                      <div class="counseling-user__year">191898</div>
-                      <div class="counseling-user__gender">남아</div>
-                    </div>
-                    <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">2143426</span></div>
-                    </div>
-                    <div class="counseling-thum__upDown">
-                      <div class="thumb-up__btn">
-                        <span class="icon thumb-up-icon"></span>
-                        <span class="thumb-up__num">3</span>
-                      </div>
-                      <div class="thumb-down__btn">
-                        <span class="icon thumb-down-icon"></span>
-                        <span class="thumb-down__num">3</span>
-                      </div>
-                    </div>
-                  </li>
+                  <!-- 상담 리스트 끝 -->
                 </ul>
                 <div class="paging-box">
                   <a href="#none" class="paging-prev"><span class="icon pagin-perv-icon"></span></a>
@@ -271,10 +159,11 @@
                 <a href="#none" class="cont-heading__link">상담사 더보기 <span class="icon link-more-icon"></span></a>
               </div>
               <div class="expert-list">
+              <?/* 상담사 리스트 시작 */?>
                 <div class="expert-item">
                   <div class="expert-item__head">
                     <div class="expert-profile__photo">
-                      <img src="../assets/images/user-profile.jpg" alt="" class="expert-profile__img">
+                      <img src="../pc/assets/images/user-profile.jpg" alt="" class="expert-profile__img">
                     </div>
                     <div class="expert-profile">
                       <div class="expert-name">아무개 전문 상담사</div>
@@ -300,64 +189,7 @@
                     </p>
                   </div>
                 </div>
-                <div class="expert-item">
-                  <div class="expert-item__head">
-                    <div class="expert-profile__photo">
-                      <img src="../assets/images/user-profile.jpg" alt="" class="expert-profile__img">
-                    </div>
-                    <div class="expert-profile">
-                      <div class="expert-name">아무개 전문 상담사</div>
-                      <div class="expert-like__box">
-                        <div class="expert-like__btn">
-                          <span class="icon thumb-up-icon"></span>
-                          <span class="expert-like__num">30</span>
-                        </div>
-                        <div class="expert-unlike__btn">
-                          <span class="icon thumb-down-icon"></span>
-                          <span class="expert-unlike__num">3</span>
-                        </div>
-                      </div>
-                      <div class="expert-exp">
-                        팔레트 상담 <span class="expert-exp__num">1242</span>회 진행
-                      </div>
-                    </div>
-                  </div>
-                  <div class="expert-item__body">
-                    <h5 class="expert-introduce">자기소개</h5>
-                    <p class="expert-introduce__desc">
-                      아이의 전문적인 상담이 필요하신가요? 아이만을 위한 ‘개인적인 공간'에서 편안하게 고민을 털어 놓아주세요.꽁꽁 사매고 있던 짐을 나눠드릴 수 있는 시간들이 되실거라 기대합니다.
-                    </p>
-                  </div>
-                </div>
-                <div class="expert-item">
-                  <div class="expert-item__head">
-                    <div class="expert-profile__photo">
-                      <img src="../assets/images/user-profile.jpg" alt="" class="expert-profile__img">
-                    </div>
-                    <div class="expert-profile">
-                      <div class="expert-name">아무개 전문 상담사</div>
-                      <div class="expert-like__box">
-                        <div class="expert-like__btn">
-                          <span class="icon thumb-up-icon"></span>
-                          <span class="expert-like__num">30</span>
-                        </div>
-                        <div class="expert-unlike__btn">
-                          <span class="icon thumb-down-icon"></span>
-                          <span class="expert-unlike__num">3</span>
-                        </div>
-                      </div>
-                      <div class="expert-exp">
-                        팔레트 상담 <span class="expert-exp__num">1242</span>회 진행
-                      </div>
-                    </div>
-                  </div>
-                  <div class="expert-item__body">
-                    <h5 class="expert-introduce">자기소개</h5>
-                    <p class="expert-introduce__desc">
-                      아이의 전문적인 상담이 필요하신가요? 아이만을 위한 ‘개인적인 공간'에서 편안하게 고민을 털어 놓아주세요.꽁꽁 사매고 있던 짐을 나눠드릴 수 있는 시간들이 되실거라 기대합니다.
-                    </p>
-                  </div>
-                </div>
+                <?/* 상담사 리스트 끝*/?>
               </div>
               <p class="notice-data">
                 <span class="icon notice-icon"></span>22년 11월 28일 14시 22분 기준 정보입니다.
@@ -368,7 +200,7 @@
             <div class="account">
               <div class="account-info__cell">
                 <div class="account-profile__photo">
-                  <img src="../assets/images/user-profile.jpg" alt="" class="account-profile__img">
+                  <img src="../pc/assets/images/user-profile.jpg" alt="" class="account-profile__img">
                 </div>
                 <div class="account-profile">
                   <div class="account-profile__cell">
@@ -382,7 +214,6 @@
                 </div>
               </div>
             </div>
-  
             <div class="my-history">
               <div class="my-history__heading">
                 <div class="my-history__tit">나의 상담내역</div>
@@ -420,9 +251,10 @@
                 <a href="#none" class="aside__heading__link">더보기<span class="icon link-more-icon"></span></a>
               </div>
               <div class="recent-history__list">
+                <?/* 최근 상담 내역 리스트 시작*/?>
                 <div class="recent-history__item">
                   <div class="recent-history__photo">
-                    <img src="../assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
+                    <img src="../pc/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
                   </div>
                   <div class="recent-history__info-wrap">
                     <div class="recent-history__info">
@@ -435,36 +267,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="recent-history__item">
-                  <div class="recent-history__photo">
-                    <img src="../assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
-                  </div>
-                  <div class="recent-history__info-wrap">
-                    <div class="recent-history__info">
-                      <div class="recent-history__name">홍길동</div>
-                      <div class="recent-history__year">191898</div>
-                      <div class="recent-history__gender">남아</div>
-                    </div>
-                    <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">2143426</span></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="recent-history__item">
-                  <div class="recent-history__photo">
-                    <img src="../assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
-                  </div>
-                  <div class="recent-history__info-wrap">
-                    <div class="recent-history__info">
-                      <div class="recent-history__name">홍길동</div>
-                      <div class="recent-history__year">191898</div>
-                      <div class="recent-history__gender">남아</div>
-                    </div>
-                    <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">2143426</span></div>
-                    </div>
-                  </div>
-                </div>
+                <?/* 최근 상담 내역 리스트 끝*/?>
               </div>
             </div>
             <div class="my-prefer">
@@ -506,15 +309,14 @@
             </div>
             <div class="aside__link-banners">
               <a href="#" class="aside__link-banner aside__link-banner--top">
-                <img src="../assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
+                <img src="../pc/assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
               </a>
               <a href="#" class="aside__link-banner aside__link-banner--bottom">
-                <img src="../assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
+                <img src="../pc/assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
               </a>
             </div>
           </div> <!-- column-right end-->
         </div>
-
       </main>
     </div> <!-- container end-->
     <footer id="footer">
@@ -522,7 +324,7 @@
         <div class="footer__left">
           <div class="footer-logo">
             <a href="#none" class="footer-logo__link">
-              <img src="../assets/images/footer-logo.png" alt="다섯달란트 로고" class="footer-logo__img">
+              <img src="../pc/assets/images/footer-logo.png" alt="다섯달란트 로고" class="footer-logo__img">
             </a>
           </div>
         </div>
@@ -549,6 +351,6 @@
     </footer>
   </div> <!-- wrap end-->
   <!-- custom js -->
-  <script src="../assets/js/common.js"></script>
+  <script src="../pc/assets/js/common.js"></script>
 </body>
 </html>

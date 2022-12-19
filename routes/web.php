@@ -19,6 +19,16 @@ Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
         return view('/web/main'); // 메인 페이지
     });
 
-    //Route::resource('/login', LoginController::class); // 로그인 페이지
+    Route::get('/login', function () {
+        return view('/web/login'); // 로그인 페이지
+    });
+
+    Route::get('/detail', function () {
+        return view('/web/counseling'); // 상세 페이지
+    });
+
+    Route::get('/profile', function () {
+        return view('/web/profile'); // 로그인 페이지
+    });
 });
 

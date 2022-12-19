@@ -1,0 +1,54 @@
+@charset "utf-8";
+/*========================================
+  'Pretendard'
+  bold : 700
+  medium : 500
+  regular : 400
+  'D-DIN'
+  bold : 700
+========================================*/
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 700;
+font-display: swap;
+  src:url('../fonts/Pretendard-Bold.woff2') format('woff2'),
+  url('../fonts/Pretendard-Bold.woff') format('woff'),
+  url('../fonts/Pretendard-Bold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 500;
+font-display: swap;
+  src:url('../fonts/Pretendard-Medium.woff2') format('woff2'),
+  url('../fonts/Pretendard-Medium.woff') format('woff'),
+  url('../fonts/Pretendard-Medium.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 400;
+font-display: swap;
+  src:url('../fonts/Pretendard-Regular.woff2') format('woff2'),
+  url('../fonts/Pretendard-Regular.woff') format('woff'),
+  url('../fonts/Pretendard-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'D-DIN';
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/D-DIN-Bold.woff2') format('woff2');
+}
+
+ /* font-family: 'D-DIN', sans-serif; */
+html,
+body,
+select,
+textarea,
+button,
+input,
+.ui-widget 
+{
+  font-family: "Pretendard", sans-serif !important;
+}
