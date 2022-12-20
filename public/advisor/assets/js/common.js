@@ -20,8 +20,237 @@ const stanbyCounsSlider = new Swiper('.sb-counseling__slider', {
   },
   pagination: {
     el: '.swiper-pagination',
+    clickable : true,
   },
 })
+
+
+
+
+
+
+
+
+//커스텀 셀렉트박스
+
+function customSelectControl() {
+
+
+  const customSelectBox = document.querySelectorAll('.select-box');
+  const customSelectBtn = document.querySelectorAll('.select-box__label');
+  const allCustomSelectOtionBox = document.querySelectorAll('.select-option__list');
+
+
+  customSelectBtn.forEach((selectBtn) => {
+
+    selectBtn.addEventListener('click', () => {
+      
+      const selectOptionBtn = selectBtn.nextElementSibling;
+      const selectOption = [...selectOptionBtn.children];
+
+      //다른 옵션박스 닫기
+      allCustomSelectOtionBox.forEach((item) => {
+        item.classList.remove('active');
+      })
+
+      //옵션박스열기
+      selectOptionBtn.classList.add('active');
+      
+      selectOption.forEach((optionValue) => {
+        optionValue.addEventListener('click', () => {
+          selectBtn.innerHTML = `${optionValue.innerHTML}<span class="icon select-down-icon"></span>`
+          selectOptionBtn.classList.remove('active');
+        })
+      })
+    })
+  })
+
+  // 셀렉트박스외 클릭시 닫히기
+if (customSelectBox.length != 0 ) {
+  window.addEventListener('click', (e) => {
+    if ( [...allCustomSelectOtionBox].includes(e.target.parentElement) || [...customSelectBox].includes(e.target.parentElement) ) {
+    } else {
+      allCustomSelectOtionBox.forEach((item) => {
+            item.classList.remove('active');
+      })
+    }
+  })
+}
+
+
+
+}
+
+customSelectControl();
+
+
+
+
+
+// 테이블 박스 추가하기
+
+const tableAddBtn = document.querySelectorAll('.table-add__btn');
+
+tableAddBtn.forEach((addBtn) => {
+
+  addBtn.addEventListener('click', () => {
+
+    const targetTable = addBtn.previousElementSibling;
+    const targetTableTr = targetTable.querySelector('.member-table__body');
+    
+    const tableTr = document.createElement('tr');
+    tableTr.classList.add('table-row');
+
+    if (targetTable.classList.contains('member-table--01')) {
+
+      const table01Content = `<td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">학사</li><li class="select-option">석사</li><li class="select-option">박사</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="학교명"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="학과명"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="전공"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">졸업</li><li class="select-option">재학</li><li class="select-option">수료</li></ul></div></td><td class="table-col cursor"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td>` 
+      tableTr.innerHTML = table01Content;
+
+      targetTableTr.appendChild(tableTr);
+      
+    } else if(targetTable.classList.contains('member-table--02')) {
+
+      const table02Content = `<tr class="table-row"><td class="table-col"><input type="text" class="tabel-form__control" placeholder="발행처"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="자격이름"></td><td class="table-col"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td></tr>`;
+      tableTr.innerHTML = table02Content;
+
+      targetTableTr.appendChild(tableTr);
+    } else if (targetTable.classList.contains('member-table--03')) {
+
+      const table03Content = '<tr class="table-row"><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">현재 근무지</li><li class="select-option">이전 근무지</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="기관검색"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">근무형태 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">근무형태</li><li class="select-option">풀타임</li><li class="select-option">파트타임</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="담당업무"></td><td class="table-col"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td></tr>';
+
+      tableTr.innerHTML = table03Content;
+      targetTableTr.appendChild(tableTr);
+    }
+
+    customSelectControl();
+  })
+
+})
+
+
+
+
+// 상담상세페이지 그림 확대
+  const detailItemPlusBtn = document.querySelectorAll('.detail-item__btn.plus');
+  const layerPopImg = document.querySelector('.layer-img');
+
+  detailItemPlusBtn.forEach((plusBtn, btnIdx) => {
+
+    plusBtn.addEventListener('click', () => {
+
+      // img src 속성가져오기
+      const imgEle = plusBtn.parentElement.parentElement.children[0];
+      const imgSrc = imgEle.getAttribute('src');
+      
+
+      layerPopImg.setAttribute('src', imgSrc);
+      pop.open('detailImagePop');
+    })
+
+  })
+
+// 비디오 재생
+  const detailItemVideo = document.querySelector('.detail-item__video');
+  const videoSource = document.querySelector('.video-area source');// 가져오는 비디오 주소
+
+  const layerPopVideo = document.querySelector('#detailVideoPop'); // 비디오팝업
+  const layerPopVideoArea = document.querySelector('.layer-pop__video'); // 비디오팝업 - 비디오 영역
+
+  const closeLayerPop = document.querySelector('.pop-close__btn');
+
+
+  if (detailItemVideo) {
+    detailItemVideo.addEventListener('click', () => {
+
+      const layerVideoSrc = videoSource.getAttribute('src');
+  
+      //비디오 태그 생성
+      const popVideo = document.createElement('video')
+      popVideo.classList.add('layer-video');
+      popVideo.setAttribute('controls','');
+  
+      const popVideoSource = document.createElement('source');
+      popVideoSource.setAttribute('type', 'video/mp4');
+      popVideoSource.setAttribute('src', layerVideoSrc)
+  
+      layerPopVideoArea.appendChild(popVideo);
+      popVideo.appendChild(popVideoSource);
+      
+      //팝업 나타나기
+      layerPopVideo.classList.add('active');
+      document.querySelector('html').classList.add('fix');
+  
+    })
+
+    closeLayerPop.addEventListener('click', () => {
+
+      //팝업 없애기
+      layerPopVideo.classList.remove('active');
+      document.querySelector('html').classList.remove('fix');
+      //비디오 삭제
+      document.querySelector('.layer-video').remove();
+    })    
+  }
+
+
+
+
+//감정 그래프 버튼 동작
+const emotionOrder1Btns = document.querySelectorAll('.counselor-edit__emotion .emotion-stauts.order-01 .emotion-status__btn')
+const emotionOrder2Btns = document.querySelectorAll('.counselor-edit__emotion .emotion-stauts.order-02 .emotion-status__btn')
+const emotionOrder3Btns = document.querySelectorAll('.counselor-edit__emotion .emotion-stauts.order-03 .emotion-status__btn')
+const emotionRefreshBtn = document.querySelector('.emotion-refresh__btn');
+const emotionStauts = document.querySelectorAll('.counselor-edit__emotion .emotion-stauts')
+
+emotionOrder1Btns.forEach((item, idx) => {
+  item.addEventListener('click', () => {
+    item.parentElement.parentElement.classList.remove(`step-1`)
+    item.parentElement.parentElement.classList.remove(`step-2`)
+    item.parentElement.parentElement.classList.remove(`step-3`)
+    item.parentElement.parentElement.classList.remove(`step-4`)
+    item.parentElement.parentElement.classList.add(`step-${idx+1}`);
+    item.parentElement.parentElement.nextElementSibling.innerHTML = `${idx+1}단계`;
+
+  })
+})
+
+emotionOrder2Btns.forEach((item, idx) => {
+  item.addEventListener('click', () => {
+    item.parentElement.parentElement.classList.remove(`step-1`)
+    item.parentElement.parentElement.classList.remove(`step-2`)
+    item.parentElement.parentElement.classList.remove(`step-3`)
+    item.parentElement.parentElement.classList.remove(`step-4`)
+    item.parentElement.parentElement.classList.add(`step-${idx+1}`);
+    item.parentElement.parentElement.nextElementSibling.innerHTML = `${idx+1}단계`;
+  })
+})
+
+emotionOrder3Btns.forEach((item, idx) => {
+  item.addEventListener('click', () => {
+    item.parentElement.parentElement.classList.remove(`step-1`)
+    item.parentElement.parentElement.classList.remove(`step-2`)
+    item.parentElement.parentElement.classList.remove(`step-3`)
+    item.parentElement.parentElement.classList.remove(`step-4`)
+    item.parentElement.parentElement.classList.add(`step-${idx+1}`);
+    item.parentElement.parentElement.nextElementSibling.innerHTML = `${idx+1}단계`;
+  })
+})
+
+//감정그래프 초기화
+
+if(emotionRefreshBtn) {
+  emotionRefreshBtn.addEventListener('click', () => {
+    emotionStauts.forEach((item) => {
+      item.classList.remove('step-1')
+      item.classList.remove('step-2')
+      item.classList.remove('step-3')
+      item.classList.remove('step-4')
+      item.classList.add('step-1')
+      item.nextElementSibling.innerHTML = `1단계`;
+    })
+  })
+}
+
 
 
 // 상삼상세페이지 슬라이더 - 그림 전환
@@ -102,6 +331,26 @@ if (loginCheckBox) {
   
 }
 
+// 메인 필터버튼 클릭
+// const counselingFilterBtn = document.querySelectorAll('.counseling-filter__btn');
+
+// counselingFilterBtn.forEach((filterBtn , btnIdx) => {
+//   filterBtn.addEventListener('click', (e) => {
+//     counselingFilterBtn.forEach((item) => {
+//       item.classList.remove('active');
+//     })
+//     filterBtn.classList.add('active');
+
+
+//     if(btnIdx == 0) {
+//       counselingFilterBtn.forEach((item) => {
+//         item.classList.add('active');
+//       })
+//     }
+//   })
+// })
+
+
 // 공감, 반대 원형그래프
 
 const myLikeNum = document.querySelector('.my-like__num');
@@ -109,6 +358,7 @@ const myLikeNum = document.querySelector('.my-like__num');
 function arcDegCalc() {
 
   // 숫자가져오기
+  // 현재 my-like__num에 적힌 숫자를 가져와 각도로 변환해서(100%일떄 360도 기준) 그래프 그리고 있습니다..
   const regex = /[^0-9]/g;
 
   let myLikeNumContent = myLikeNum.innerHTML.replace(regex, "");
