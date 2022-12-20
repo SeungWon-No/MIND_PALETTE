@@ -3,7 +3,7 @@
     <div class="page-contents">
         <div class="login-wrap">
             <div class="login-inner">
-                <div class="login-logo" onclick="javascript:location.href='/'"></div>
+                <div class="login-logo"></div>
                 <div class="login-input-wrap">
                     <fieldset>
                         <legend>로그인 입력 폼</legend>
@@ -41,6 +41,7 @@
                         <div class="login-join">계정이 없으신가요? <a href="/join">회원가입</a></div>
                     </fieldset>
                 </div>
+                <a href="/" class="btn-page-ui btn-page-close"><div class="icon icon-page-close-gray">페이지 닫기</div></a>
             </div>
             <div class="login-footer">
                 <div class="footer-menu">

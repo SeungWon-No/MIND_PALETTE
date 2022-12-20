@@ -153,6 +153,28 @@ input[type=number]::-webkit-outer-spin-button {
 .form-radiobox .form-check-icon > em {display:inline-block; padding-left:26px; font-size:14px; line-height:20px;}
 .form-radiobox .form-check-icon > em:empty {display:none;}
 
+.form-checkbox-buttons {position:relative;display:block; width:100%;}
+.form-checkbox-buttons > input {position:absolute; top:0; left:0; display:block; width:100%; height:100%; opacity:0; cursor:pointer;}
+.form-checkbox-buttons > em {position:relative; display:flex; align-items:center; justify-content:center; font-size:15px; color:#000; text-align:center; width:100%; height:64px; background:#F8F8F8; border-radius:16px;}
+.form-checkbox-buttons > em:before {content:'';position:absolute;top:0;left:0;display:block;width:100%;height:100%;box-sizing:border-box;border-radius:16px;border:3px solid #000; opacity:0;}
+.form-checkbox-buttons:nth-child(1) > em:before {border-color:#6ECEAB;}
+.form-checkbox-buttons:nth-child(2) > em:before {border-color:#FFA113;}
+.form-checkbox-buttons:nth-child(3) > em:before {border-color:#FF6C7E;}
+.form-checkbox-buttons > input:checked + em {background-color:#fff;}
+.form-checkbox-buttons > input:checked + em:before {opacity:1;}
+
+.form-checkbox-buttons + .form-checkbox-buttons {margin-top:8px;}
+
+.form-button-inner {display:flex; margin:0 -6px;}
+.form-button-inner > .form-button {flex:1; margin:0 6px;}
+.form-button {position:relative;display:block; width:100%;}
+.form-button > input {position:absolute; top:0; left:0; display:block; width:100%; height:100%; opacity:0; cursor:pointer;}
+.form-button > em {position:relative; display:flex; align-items:center; justify-content:center; font-size:15px; color:#000; text-align:center; width:100%; height:44px; background:#F8F8F8; border-radius:8px;}
+.form-button > em:before {content:'';position:absolute;top:0;left:0;display:block;width:100%;height:100%;box-sizing:border-box;border-radius:8px;border:3px solid #FFA113; opacity:0;}
+.form-button > input:checked + em {background-color:#fff;}
+.form-button > input:checked + em:before {opacity:1;}
+
+
 /* 스위치형 */
 .form-switch-toggle {position:relative; display:inline-block; width:36px; height:16px; box-sizing:border-box;}
 .form-switch-toggle input[type=checkbox] {position:absolute; top:0; left:0; display:block; width:100%; height:100%; opacity:0; z-index:5;}
@@ -190,33 +212,36 @@ input[type=number]::-webkit-outer-spin-button {
 
 /* 설문조사 */
 .survey-items + .survey-items {margin-top:32px;}
-.survey-items .item-title {font-size:15px; line-height:1.4; color:#4c4c4c; font-weight:700; text-align:left; margin-bottom:12px;}
+.survey-items .item-title {font-size:15px; line-height:1.4; color:#4c4c4c; font-weight:700; text-align:left; margin-bottom:12px; word-break:keep-all;}
+.survey-items .item-title > em {display:inline-block;}
 .survey-items .item-data {width:100%;}
 
-.form-survey-labels {display:flex; justify-content:space-between; margin-top:8px; font-size:13px; color:#878F9A; line-height:14px;}
-.form-survey-inputs {display:flex; background:#EFF2F5; height:30px; border-radius:15px; overflow:hidden; position:relative; }
+.form-survey-labels {display:flex; justify-content:space-between; margin-top:8px; font-size:13px; color:#878F9A; line-height:1.3; padding:0 5px;}
+.form-survey-labels > div:first-child {text-align:left;}
+.form-survey-labels > div:last-child {text-align:right;}
+.form-survey-horizontal-inputs {display:flex; background:#EFF2F5; height:30px; border-radius:15px; overflow:hidden; position:relative; }
 .form-survey-btns {display:flex; width:100%;}
-.form-survey-inputs .form-checkbox {flex:1;}
-.form-survey-inputs .form-checkbox:nth-child(1) input:checked + .form-check-icon {background:#6ECEAB;}
-.form-survey-inputs .form-checkbox:nth-child(2) input:checked + .form-check-icon {background:#FFC83B;}
-.form-survey-inputs .form-checkbox:nth-child(3) input:checked + .form-check-icon {background:#FFA113;}
-.form-survey-inputs .form-checkbox:nth-child(4) input:checked + .form-check-icon {background:#FF6C7E;}
-.form-survey-inputs .btn-survey-nav {position:relative; width:100%; height:100%; box-sizing:border-box; display:block; z-index:2;}
-.form-survey-inputs .btn-survey-nav + .btn-survey-nav {border-left:1px solid #fff;}
-.form-survey-inputs .btn-survey-nav > em {position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; padding:0; font-size:13px; line-height:1; color:#4C4C4C; text-align:center; z-index:5;}
-.form-survey-inputs .btn-survey-nav.actived > em {color:#fff;}
-.form-survey-inputs .bar {position:absolute;top:0;left:0;display:block;width:0;height:100%;background:transparent; z-index:0; transition:width 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940), background 0.4s ease;}
-.form-survey-inputs.check1 .bar {width:25%; background-color:#6ECEAB;}
-.form-survey-inputs.check1 .btn-survey-nav:nth-child(1) > em {font-weight:700; color:#fff;}
-.form-survey-inputs.check2 .bar {width:50%; background-color:#FFC83B;}
-.form-survey-inputs.check2 .btn-survey-nav:nth-child(1) > em {font-weight:700; color:#fff;}
-.form-survey-inputs.check2 .btn-survey-nav:nth-child(2) > em {font-weight:700; color:#fff;}
-.form-survey-inputs.check3 .bar {width:75%; background-color:#FFA113;}
-.form-survey-inputs.check3 .btn-survey-nav:nth-child(1) > em {font-weight:700; color:#fff;}
-.form-survey-inputs.check3 .btn-survey-nav:nth-child(2) > em {font-weight:700; color:#fff;}
-.form-survey-inputs.check3 .btn-survey-nav:nth-child(3) > em {font-weight:700; color:#fff;}
-.form-survey-inputs.check4 .bar {width:100%; background-color:#FF6C7E;}
-.form-survey-inputs.check4 .btn-survey-nav:nth-child(1) > em {font-weight:700; color:#fff;}
-.form-survey-inputs.check4 .btn-survey-nav:nth-child(2) > em {font-weight:700; color:#fff;}
-.form-survey-inputs.check4 .btn-survey-nav:nth-child(3) > em {font-weight:700; color:#fff;}
-.form-survey-inputs.check4 .btn-survey-nav:nth-child(4) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs .form-checkbox {flex:1;}
+.form-survey-horizontal-inputs .form-checkbox:nth-child(1) input:checked + .form-check-icon {background:#6ECEAB;}
+.form-survey-horizontal-inputs .form-checkbox:nth-child(2) input:checked + .form-check-icon {background:#FFC83B;}
+.form-survey-horizontal-inputs .form-checkbox:nth-child(3) input:checked + .form-check-icon {background:#FFA113;}
+.form-survey-horizontal-inputs .form-checkbox:nth-child(4) input:checked + .form-check-icon {background:#FF6C7E;}
+.form-survey-horizontal-inputs .btn-survey-nav {position:relative; width:100%; height:100%; box-sizing:border-box; display:block; z-index:2;}
+.form-survey-horizontal-inputs .btn-survey-nav + .btn-survey-nav {border-left:1px solid #fff;}
+.form-survey-horizontal-inputs .btn-survey-nav > em {position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; padding:0; font-size:13px; line-height:1; color:#4C4C4C; text-align:center; z-index:5;}
+.form-survey-horizontal-inputs .btn-survey-nav.actived > em {color:#fff;}
+.form-survey-horizontal-inputs .bar {position:absolute;top:0;left:0;display:block;width:0;height:100%;background:transparent; z-index:0; transition:width 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940), background 0.4s ease;}
+.form-survey-horizontal-inputs.check1 .bar {width:25%; background-color:#6ECEAB;}
+.form-survey-horizontal-inputs.check1 .btn-survey-nav:nth-child(1) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.check2 .bar {width:50%; background-color:#FFC83B;}
+.form-survey-horizontal-inputs.check2 .btn-survey-nav:nth-child(1) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.check2 .btn-survey-nav:nth-child(2) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.check3 .bar {width:75%; background-color:#FFA113;}
+.form-survey-horizontal-inputs.check3 .btn-survey-nav:nth-child(1) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.check3 .btn-survey-nav:nth-child(2) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.check3 .btn-survey-nav:nth-child(3) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.check4 .bar {width:100%; background-color:#FF6C7E;}
+.form-survey-horizontal-inputs.check4 .btn-survey-nav:nth-child(1) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.check4 .btn-survey-nav:nth-child(2) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.check4 .btn-survey-nav:nth-child(3) > em {font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.check4 .btn-survey-nav:nth-child(4) > em {font-weight:700; color:#fff;}

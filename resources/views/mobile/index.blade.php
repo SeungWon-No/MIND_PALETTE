@@ -6,7 +6,7 @@
             <div class="main-visual">
                 <h2 class="main-visual-title">내 아이를 위한<br>최상의 마음 케어</h2>
                 <div class="main-visual-desc">센터에 방문하지 않고 가정에서 보호자의 지도에 따라 HTP 검사를 통해 아이의 심리상태를 진단하실 수 있습니다.</div>
-                <div class="main-visual-ui"><a href="#">상담 신청하기</a></div>
+                <div class="main-visual-ui"><a href="javascript:advice()">상담 신청하기</a></div>
             </div>
             <div class="main-body">
                 <div class="basic-data-group">
@@ -201,6 +201,15 @@
         </div>
     </div>
 </section>
+<script>
+    function advice() {
+        @if($isLogin)
+            location.href = '/adviceAgree';
+        @else
+            location.href = '/login';
+        @endif
+    }
+</script>
 @include('/mobile/common/footer')
 @include('/mobile/common/end')
 

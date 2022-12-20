@@ -37,7 +37,7 @@ var common = {
 
 	init : function(){		
 
-		$(document).on('click' , '.btn-point-note-nav' , function(){
+		$(document).on('click' , 'button.btn-point-note-nav' , function(){
 			$(this).parents('.point-note').toggleClass('actived');
 		});
 

@@ -58,7 +58,7 @@ class JoinController extends Controller
             $request->redirectUrl = "/join/completion";
             DB::commit();
             return LoginController::login($request,Member::findMemberInfo($member->memberPK));
-        } catch(Exception $e){
+        } catch(\Exception $e){
             DB::rollback();
         }
     }

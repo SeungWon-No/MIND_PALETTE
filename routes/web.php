@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Mobile\Advice\AgreeController;
 use App\Http\Controllers\Mobile\IndexController;
 use App\Http\Controllers\Mobile\Join\EmailCheckController;
 use App\Http\Controllers\Mobile\Join\JoinController;
@@ -28,6 +29,8 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
 });
 
 Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::class,LoginValid::class])->group(function () {
+    Route::get("/adviceAgree", AgreeController::class);
+
     Route::resource("/mypage", MyPageController::class);
     Route::get("/logout", LogoutController::class);
 });
