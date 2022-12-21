@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
+use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
+use App\Http\Controllers\Mobile\Advice\SampleController;
 use App\Http\Controllers\Mobile\IndexController;
 use App\Http\Controllers\Mobile\Join\EmailCheckController;
 use App\Http\Controllers\Mobile\Join\JoinController;
@@ -19,6 +21,10 @@ const JS_VERSION = "1";
 $mobileSubDomain = env('MOBILE_SUB_DOMAIN', 'dev-m');
 $advisorSubDomain = env('ADVISOR_SUB_DOMAIN', 'dev-advisor');
 
+Route::middleware([AutoLogin::class])->group(function () {
+    Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]);
+});
+
 Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::class])->group(function () {
     Route::get('/', IndexController::class);
     Route::resource("/login",LoginController::class)->only([
@@ -29,6 +35,9 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
     ]);
     Route::post("/emailCheck", EmailCheckController::class);
     Route::post('/findRegion/{id}', [RequestAdviceController::class,"findRegion"]);
+
+
+    Route::get("/sample",SampleController::class);
 });
 
 Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::class,LoginValid::class])->group(function () {
