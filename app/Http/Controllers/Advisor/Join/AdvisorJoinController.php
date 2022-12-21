@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Advisor\Join;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advisor;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -18,28 +19,31 @@ class AdvisorJoinController extends Controller{
     {
         $nowDate = date("Y-m-d H:i:s");
 
-        $memberBasicInfomation = [ // 상담사 기본정보
-            'email' => $request["userEmail"] ?? '',
-            'password' => Hash::make($request['userPassword']),
-            'memberName' => Crypt::encryptString($request['userName']) ?? '',
-            'phoneNumber' => Crypt::encryptString($request['userPhone']) ?? '',
-            'auth' => 'N',
-            'lastLoginDate' => $nowDate,
-            'updateDate' => $nowDate,
-        ];
+        // $memberAgree = new MemberAgree;
+        // $memberAgree->agree1 = "Y";
+        // $memberAgree->agree2 = "Y";
+        // $memberAgree->updateDate = $nowDate;
+        // $memberAgree->createDate = $nowDate;
+        // $memberAgree->save();
 
-        $memberAdditionalInfomation = [ // 상담사 추가 정보
-            'schoolName' => $request["schoolName"] ?? '',
-            'department' => $request["department"] ?? '',
-            'major' => $request["major"] ?? '',
-            'certificateAttachment' => $request["certificateAttachment"] ?? '',
-            'publisher' => $request["publisher"] ?? '',
-            'licenseTitle' => $request["licenseTitle"] ?? '',
-            'career' => $request["career"] ?? '',
-        ];
+        // $agreePK = $memberAgree->mbAgreePK;
 
-        print_r($memberAdditionalInfomation);
+        $member = new Advisor();
+        $member->email = $request["userEmail"] ?? '';
+        $member->pw = Hash::make($request['userPassword']);
+        $member->memberName = Crypt::encryptString($request['userName']) ?? '';
+        $member->phone = Crypt::encryptString($request['userPhoneNumber']) ?? '';
+        //$member->mbAgreePK = $agreePK;
+        //$member->auth = 'N';
+        $member->advisorStatus = '1';
+        $member->lastLoginDate = $nowDate;
+        $member->updateDate = $nowDate;
+        $member->createDate = $nowDate;
+
+        $member->save();
+
         return view("/advisor/join/consultationInformation");
+        
     }
 
     public function show(Request $request)

@@ -96,48 +96,6 @@
                       </label>
                     </td>
                   </tr>
-                  <tr class="table-row">
-                    <td class="table-col no-padding">
-                      <div class="select-box">
-                        <button class="select-box__label">석사 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option">학사</li>
-                          <li class="select-option">석사</li>
-                          <li class="select-option">박사</li>
-                        </ul>                      
-                      </div>
-                    </td>
-                    <td class="table-col">  
-                      <input id="schoolName" name="schoolName" type="text" class="tabel-form__control" placeholder="학교명">
-                    </td>
-                    <td class="table-col">
-                      <input id="department" name="department" type="text" class="tabel-form__control" placeholder="학과명">
-                    </td>
-                    <td class="table-col">
-                      <input id="major " name="major " type="text" class="tabel-form__control" placeholder="전공">
-                    </td>
-                    <td class="table-col no-padding">
-                      <div class="select-box ">
-                        <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option">졸업</li>
-                          <li class="select-option">재학</li>
-                          <li class="select-option">수료</li>
-                        </ul>                      
-                      </div>
-                    </td>
-                    <td class="table-col cursor">
-                      <!-- 파일 올렸을때 -->
-                      <label class="table-file__label">
-                        <input id="certificateAttachment" name="certificateAttachment" type="file" class="table-file">
-                        <span class="table-file__name">증명서.png</span>
-                      </label>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
               <button type="button" class="table-add__btn">추가하기</button>

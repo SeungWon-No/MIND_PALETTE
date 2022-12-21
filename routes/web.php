@@ -46,13 +46,13 @@ Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
         return view('/advisor/main'); // 메인 페이지
     });
 
-    Route::resource('/join', AdvisorJoinController::class)->only([
-        'index', 'store', 'show'
-    ]);
-
     Route::get('/login', function () {
         return view('/advisor/login/login'); // 로그인 페이지
     });
+
+    Route::resource('/join', AdvisorJoinController::class)->only([
+        'index', 'store', 'show'
+    ]);
 
     Route::get('/detail', function () {
         return view('/advisor/counseling'); // 상세 페이지
