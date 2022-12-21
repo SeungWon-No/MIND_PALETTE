@@ -1,72 +1,4 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Page Infomation -->
-  <title>마음팔레트</title>
-  <meta name="Description" content="">
-  <meta name="Author" content=""> 
-  <meta name="Keywords" content="">
-  <!-- SNS Basic -->
-  <meta property="og:title" content=""> <!--타이틀--> 
-  <meta property="og:description" content=""> <!--설명 100자내외-->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="">
-  <meta property="og:image" content=""> 
-  <!-- SNS Twitter -->
-  <meta name="twitter:card" content="summary"> <!---->
-  <meta name="twitter:title" content="타이틀"> <!--타이틀-->
-  <meta name="twitter:description" content=""> <!--설명 100자내외-->
-  <meta name="twitter:image" content=""> 
-  <link rel="canonical" href=""> <!--대표도메인-->
-  <!-- jquery -->
-  <script src="../pc/assets/js/jquery.js"></script>
-  <!--swiper -->
-  <script src="../pc/assets/js/swiper.min.js"></script>
-  <!-- custom css -->
-  <link rel="stylesheet" href="../pc/assets/css/style.css">
-</head>
-<body>
-  <div id="wrapper">
-    <header id="header">
-      <div class="header-top">
-        <div class="header-top__inner">
-          <div class="header-top__left">
-            <h1 class="logo">마음팔레트
-              <a href="/" class="logo-link">
-                <img src="../pc/assets/images/logo.png" alt="마음팔레트 로고" class="logo-img">
-              </a>
-            </h1>
-            <div class="header-search__box">
-              <input type="text" class="header-search">
-              <button type="button" class="header-search__btn"><span class="icon search-icon"></span></button>
-            </div>
-          </div>
-          <div class="header-top__right">
-            <div class="user-info__cell">
-              <div class="user-profile__photo">
-                <img src="../pc/assets/images/user-profile.jpg" alt="" class="user-profile__img">
-              </div>
-              <div class="user-info__username">김아무</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="header-bottom">
-        <div class="header-bottom__inner">
-          <nav class="nav">
-            <!-- 링크에 해당하는 페이지면 nav-menu에 클래스 active -->
-            <a href="/" class="nav-menu active">홈</a>
-            <a href="/detail" class="nav-menu">상담리스트</a>
-            <a href="#none" class="nav-menu">나의 상담 리스트</a>
-            <a href="#none" class="nav-menu">프로필</a>
-            <a href="#none" class="nav-menu">공지사항</a>
-          </nav>
-        </div>
-      </div>
-    </header>
+@include('advisor/common/header')
     <div id="container">
       <main>
         <div class="column-wrapper">
@@ -130,7 +62,7 @@
                   <!-- 상담 리스트 시작 -->
                   <li class="counseling">
                     <a href="#none" class="counseling-thumb">
-                      <img src="../pc/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
+                      <img src="../advisor/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
                       <div class="counseling-user__name">홍길동</div>
@@ -163,7 +95,7 @@
                 <div class="expert-item">
                   <div class="expert-item__head">
                     <div class="expert-profile__photo">
-                      <img src="../pc/assets/images/user-profile.jpg" alt="" class="expert-profile__img">
+                      <img src="../advisor/assets/images/user-profile.jpg" alt="" class="expert-profile__img">
                     </div>
                     <div class="expert-profile">
                       <div class="expert-name">아무개 전문 상담사</div>
@@ -200,7 +132,7 @@
             <div class="account">
               <div class="account-info__cell">
                 <div class="account-profile__photo">
-                  <img src="../pc/assets/images/user-profile.jpg" alt="" class="account-profile__img">
+                  <img src="../advisor/assets/images/user-profile.jpg" alt="" class="account-profile__img">
                 </div>
                 <div class="account-profile">
                   <div class="account-profile__cell">
@@ -254,7 +186,7 @@
                 <?/* 최근 상담 내역 리스트 시작*/?>
                 <div class="recent-history__item">
                   <div class="recent-history__photo">
-                    <img src="../pc/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
+                    <img src="../advisor/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
                   </div>
                   <div class="recent-history__info-wrap">
                     <div class="recent-history__info">
@@ -309,48 +241,15 @@
             </div>
             <div class="aside__link-banners">
               <a href="#" class="aside__link-banner aside__link-banner--top">
-                <img src="../pc/assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
+                <img src="../advisor/assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
               </a>
               <a href="#" class="aside__link-banner aside__link-banner--bottom">
-                <img src="../pc/assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
+                <img src="../advisor/assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
               </a>
             </div>
           </div> <!-- column-right end-->
         </div>
       </main>
-    </div> <!-- container end-->
-    <footer id="footer">
-      <div class="footer__inner">
-        <div class="footer__left">
-          <div class="footer-logo">
-            <a href="#none" class="footer-logo__link">
-              <img src="../pc/assets/images/footer-logo.png" alt="다섯달란트 로고" class="footer-logo__img">
-            </a>
-          </div>
-        </div>
-        <div class="footer__right">
-          <div class="footer-link__cell">
-            <a href="#none" class="footer-link">서비스 안내</a>
-            <a href="#none" class="footer-link">이용약관</a>
-            <a href="#none" class="footer-link">개인정보 취급방침</a>
-            <a href="#none" class="footer-link">공지사항</a>
-          </div>
-          <address class="footer-info">
-            <div class="footer-info__cell">
-              <span>대표 : 진재연</span><span>통신판매신고번호 : 제 2021-인천부평-1164호</span><span> 개인정보보호 책임자 : 진재연</span><span>이메일 : support@5dalant.net</span>
-            </div>
-            <div class="footer-info__cell">
-              <span>사업자등록번호 : 122-31-79460</span>
-              <span>주소 : 인천광역시 부평구 부평대로 부평J타워3차 1239호</span>
-              <span>전화 : 070-7566-0902</span>
-            </div>
-          </address>
-          <div class="copyright">© 2020 Copyright by <em>5dalant.</em> All rights reserved.</div>
-        </div>
-      </div>
-    </footer>
-  </div> <!-- wrap end-->
-  <!-- custom js -->
-  <script src="../pc/assets/js/common.js"></script>
-</body>
-</html>
+    </div>
+@include('advisor/common/footer')    
+@include('advisor/common/end')

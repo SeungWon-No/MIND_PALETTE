@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
 use App\Http\Controllers\Mobile\IndexController;
@@ -42,19 +43,23 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
 
 Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
     Route::get('/', function () {
-        return view('/web/main'); // 메인 페이지
+        return view('/advisor/main'); // 메인 페이지
     });
 
+    Route::resource('/join', AdvisorJoinController::class)->only([
+        'index', 'create', 'store', 'show'
+    ]);
+
     Route::get('/login', function () {
-        return view('/web/login'); // 로그인 페이지
+        return view('/advisor/login/login'); // 로그인 페이지
     });
 
     Route::get('/detail', function () {
-        return view('/web/counseling'); // 상세 페이지
+        return view('/advisor/counseling'); // 상세 페이지
     });
 
     Route::get('/profile', function () {
-        return view('/web/profile'); // 로그인 페이지
+        return view('/advisor/profile'); // 로그인 페이지
     });
 });
 
