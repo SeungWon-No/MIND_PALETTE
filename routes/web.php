@@ -42,7 +42,7 @@ Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
     });
 
     Route::resource('/join', AdvisorJoinController::class)->only([
-        'index', 'create', 'store', 'show'
+        'index', 'store', 'show'
     ]);
 
     Route::get('/login', function () {

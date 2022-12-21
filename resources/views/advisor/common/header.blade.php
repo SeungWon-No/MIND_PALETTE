@@ -4,29 +4,23 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Page Infomation -->
   <title>마음팔레트</title>
   <meta name="Description" content="">
   <meta name="Author" content=""> 
   <meta name="Keywords" content="">
-  <!-- SNS Basic -->
-  <meta property="og:title" content=""> <!--타이틀--> 
-  <meta property="og:description" content=""> <!--설명 100자내외-->
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
   <meta property="og:type" content="website">
   <meta property="og:url" content="">
   <meta property="og:image" content=""> 
-  <!-- SNS Twitter -->
-  <meta name="twitter:card" content="summary"> <!---->
-  <meta name="twitter:title" content="타이틀"> <!--타이틀-->
-  <meta name="twitter:description" content=""> <!--설명 100자내외-->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="타이틀">
+  <meta name="twitter:description" content="">
   <meta name="twitter:image" content=""> 
-  <link rel="canonical" href=""> <!--대표도메인-->
-  <!-- jquery -->
-  <script src="../advisor/assets/js/jquery.js"></script>
-  <!--swiper -->
-  <script src="../advisor/assets/js/swiper.min.js"></script>
-  <!-- custom css -->
-  <link rel="stylesheet" href="../advisor/assets/css/style.css">
+  <link rel="canonical" href="">
+  <script src="../advisor/assets/js/jquery.js?v={{JS_VERSION}}"></script>
+  <script src="../advisor/assets/js/swiper.min.js?v={{JS_VERSION}}"></script>
+  <link rel="stylesheet" href="../advisor/assets/css/style.css?v={{CSS_VERSION}}">
 </head>
 <body>
   <div id="wrapper">
