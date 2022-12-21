@@ -1,11 +1,14 @@
 @include('/mobile/common/start')
-
-<header id="header" class="basic-header">
-    <div class="page-title">회원가입</div>
-    <div class="header-right">
-        <a href="/" class="btn-page-ui btn-page-close"><div class="icon icon-page-close-gray">페이지 닫기</div></a>
-    </div>
-</header>
+@include('/mobile/common/header',[
+    "isShowBackButton" => false,
+    "isShowCloseButton" => true,
+    "title" => "회원가입"
+])
+<script>
+    function pageClose(){
+        location.href = '/';
+    }
+</script>
 <section id="container" class="page-body">
     <div class="page-contents page-write">
         <div class="join-wrap">

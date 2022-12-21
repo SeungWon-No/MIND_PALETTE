@@ -1,6 +1,7 @@
 @include('/mobile/common/start')
 @include('/mobile/common/header',[
     "isShowBackButton" => true,
+    "isShowCloseButton" => false,
     "title" => "회원가입"
 ])
 <section id="container" class="page-body">

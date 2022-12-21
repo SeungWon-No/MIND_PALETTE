@@ -4,6 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed $counselingPK
+ * @property mixed $memberPK
+ * @property mixed $advisorPK
+ * @property mixed $applicantName
+ * @property mixed $relationship
+ * @property mixed|string $phone
+ * @property int|mixed $city
+ * @property int|mixed $region
+ * @property int|mixed $counselingStatus
+ * @property int|mixed $updateDate
+ * @property int|mixed $createDate
+ */
 class Counseling extends Model
 {
     protected $table = 'counseling';

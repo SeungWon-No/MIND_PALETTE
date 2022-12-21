@@ -6,14 +6,23 @@
       $loginSession = session()->get('login')[0];
     }
 @endphp
-@if($isShowBackButton)
+@if($isShowBackButton || $isShowCloseButton)
     <header id="header" class="basic-header">
-        <div class="header-left">
-            <a href="javascript:history.back()" class="btn-page-ui btn-page-prev">
-                <div class="icon icon-page-prev-gray">페이지 뒤로가기</div>
-            </a>
-        </div>
+        @if($isShowBackButton)
+            <div class="header-left">
+                <a href="javascript:history.back()" class="btn-page-ui btn-page-prev">
+                    <div class="icon icon-page-prev-gray">페이지 뒤로가기</div>
+                </a>
+            </div>
+        @endif
         <div class="page-title">{{(isset($title))?$title:""}}</div>
+        @if($isShowCloseButton)
+            <div class="header-right">
+                <a href="javascript:pageClose()" class="btn-page-ui btn-page-close">
+                    <div class="icon icon-page-close-gray">페이지 닫기</div>
+                </a>
+            </div>
+        @endif
     </header>
 @else
     <header id="header" class="basic-header orange">
