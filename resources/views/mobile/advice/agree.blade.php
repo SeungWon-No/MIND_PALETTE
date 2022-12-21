@@ -1,10 +1,13 @@
-@include('/mobile/common/start')
-<header id="header" class="basic-header transparent scroll-orange">
-    <div class="page-title transparent">HTP 상담 신청하기</div>
-    <div class="header-right">
-        <a href="/" class="btn-page-ui btn-page-close">페이지 닫기<div class="icon icon-page-close-white"></div></a>
-    </div>
-</header>
+@include('/mobile/common/start')@include('/mobile/common/header',[
+    "isShowBackButton" => true,
+    "isShowCloseButton" => false,
+    "title" => "HTP 상담 신청하기"
+])
+<script>
+    function pageClose(){
+        location.href = '/';
+    }
+</script>
 <section id="container" class="page-body">
     <div class="page-contents">
         <div class="advice-info-wrap">
@@ -53,7 +56,7 @@
 
         if ($("input[class='check-agree-checkbox']:checked").length === 2) {
             $("#adviceRequest").removeClass("disabled");
-            $("#adviceRequest").attr("href",'/');
+            $("#adviceRequest").attr("href",'/requestAdvice');
         } else {
             $("#adviceRequest").addClass("disabled");
             $("#adviceRequest").removeAttr("href");

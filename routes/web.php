@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Mobile\Advice\AgreeController;
+use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
 use App\Http\Controllers\Mobile\IndexController;
 use App\Http\Controllers\Mobile\Join\EmailCheckController;
 use App\Http\Controllers\Mobile\Join\JoinController;
@@ -26,10 +27,14 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
         'index', 'create', 'store', 'show'
     ]);
     Route::post("/emailCheck", EmailCheckController::class);
+    Route::post('/findRegion/{id}', [RequestAdviceController::class,"findRegion"]);
 });
 
 Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::class,LoginValid::class])->group(function () {
     Route::get("/adviceAgree", AgreeController::class);
+    Route::resource("/requestAdvice", RequestAdviceController::class)->only([
+        'index', 'store'
+    ]);
 
     Route::resource("/mypage", MyPageController::class);
     Route::get("/logout", LogoutController::class);
