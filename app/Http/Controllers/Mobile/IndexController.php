@@ -19,11 +19,10 @@ class IndexController extends Controller
             $counselingRow = Counseling::findAllCounseling($memberPK);
         }
 
-        return phpinfo();
-//        return view("/mobile/index",[
-//            "isLogin" => $isLogin,
-//            "counselingCount" => $counselingCount,
-//            "counselingRow" => $counselingRow,
-//        ]);
+        return view("/mobile/index",[
+            "isLogin" => $isLogin,
+            "counselingCount" => $counselingCount,
+            "counselingRow" => $counselingRow,
+        ]);
     }
 }
