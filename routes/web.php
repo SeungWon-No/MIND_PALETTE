@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
+use App\Http\Controllers\Advisor\AdvisorIndexController;
+use App\Http\Controllers\Advisor\Login\AdvisorLoginController;
 use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
@@ -15,6 +17,7 @@ use App\Http\Controllers\Mobile\Logout\LogoutController;
 use App\Http\Controllers\Mobile\Mypage\MyPageController;
 use App\Http\Middleware\AutoLogin;
 use App\Http\Middleware\LoginValid;
+use App\Models\Advisor;
 use Illuminate\Support\Facades\Route;
 
 const CSS_VERSION = "1";
@@ -57,17 +60,15 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
 });
 
 Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
-    Route::get('/', function () {
-        return view('/advisor/main'); // 메인 페이지
-    });
+    Route::get('/', AdvisorIndexController::class);
 
-    Route::resource('/join', AdvisorJoinController::class)->only([
-        'index', 'create', 'store', 'show'
+    Route::resource("/login",AdvisorLoginController::class)->only([
+        'index', 'store'
     ]);
 
-    Route::get('/login', function () {
-        return view('/advisor/login/login'); // 로그인 페이지
-    });
+    Route::resource('/join', AdvisorJoinController::class)->only([
+        'index', 'store', 'show'
+    ]);
 
     Route::get('/detail', function () {
         return view('/advisor/counseling'); // 상세 페이지

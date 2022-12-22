@@ -1,4 +1,4 @@
 </div>
-  <script src="../pc/assets/js/common.js"></script>
+  <script src="../advisor/assets/js/common.js?v={{JS_VERSION}}"></script>
 </body>
 </html>

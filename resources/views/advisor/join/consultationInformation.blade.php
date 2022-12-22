@@ -1,4 +1,6 @@
 @include('advisor/common/header')
+<form id="nextStepForm" name="nextStepForm" action="/join" method="post" autocomplete="off">
+@csrf       
 <div id="container">
       <div class="member-cont">
         <div class="member-inner">
@@ -22,7 +24,7 @@
               <!-- join-progress__item에 클래스 active -->
               <div class="join-progress__item active">
                 <div class="icon join-progress__icon"></div>
-                <div class="join-progress__desc">기본정보 입력</div>
+                <div class="join-progress__desc"><a href="/join">기본정보 입력</a></div>
               </div>
               <div class="join-progress__item active">
                 <div class="icon join-progress__icon"></div>
@@ -57,20 +59,20 @@
                         <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                         <ul class="select-option__list">
                           <li class="select-option">선택</li>
-                          <li class="select-option">학사</li>
-                          <li class="select-option">석사</li>
-                          <li class="select-option">박사</li>
+                          <li class="select-option" value="학사">학사</li>
+                          <li class="select-option" value="석사">석사</li>
+                          <li class="select-option" value="박사">박사</li>
                         </ul>                      
                       </div>
                     </td>
                     <td class="table-col">  
-                      <input type="text" class="tabel-form__control" placeholder="학교명">
+                      <input id="schoolName" name="schoolName" type="text" class="tabel-form__control" placeholder="학교명">
                     </td>
                     <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="학과명">
+                      <input id="department" name="department" type="text" class="tabel-form__control" placeholder="학과명">
                     </td>
                     <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="전공">
+                      <input id="major " name="major " type="text" class="tabel-form__control" placeholder="전공">
                     </td>
                     <td class="table-col no-padding">
                       <div class="select-box">
@@ -78,9 +80,9 @@
                         <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                         <ul class="select-option__list">
                           <li class="select-option">선택</li>
-                          <li class="select-option">졸업</li>
-                          <li class="select-option">재학</li>
-                          <li class="select-option">수료</li>
+                          <li class="select-option" value="졸업">졸업</li>
+                          <li class="select-option" value="재학">재학</li>
+                          <li class="select-option" value="수료">수료</li>
                         </ul>                      
                       </div>
                     </td>
@@ -91,48 +93,6 @@
                         <!-- 파일올렸을때 
                           <span class="table-file__name">증명서.png</span> 
                         //파일올렸을때 -->
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-row">
-                    <td class="table-col no-padding">
-                      <div class="select-box">
-                        <button class="select-box__label">석사 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option">학사</li>
-                          <li class="select-option">석사</li>
-                          <li class="select-option">박사</li>
-                        </ul>                      
-                      </div>
-                    </td>
-                    <td class="table-col">  
-                      <input type="text" class="tabel-form__control" placeholder="학교명">
-                    </td>
-                    <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="학과명">
-                    </td>
-                    <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="전공">
-                    </td>
-                    <td class="table-col no-padding">
-                      <div class="select-box ">
-                        <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option">졸업</li>
-                          <li class="select-option">재학</li>
-                          <li class="select-option">수료</li>
-                        </ul>                      
-                      </div>
-                    </td>
-                    <td class="table-col cursor">
-                      <!-- 파일 올렸을때 -->
-                      <label class="table-file__label">
-                        <input type="file" class="table-file">
-                        <span class="table-file__name">증명서.png</span>
                       </label>
                     </td>
                   </tr>
@@ -156,10 +116,10 @@
                 <tbody class="member-table__body">
                   <tr class="table-row">
                     <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="발행처">
+                      <input id="publisher" name="publisher" type="text" class="tabel-form__control" placeholder="발행처">
                     </td>
                     <td class="table-col">  
-                      <input type="text" class="tabel-form__control" placeholder="자격이름">
+                      <input id="licenseTitle" name="licenseTitle" type="text" class="tabel-form__control" placeholder="자격이름">
                     </td>
                     <td class="table-col">
                       <label class="table-file__label">
@@ -172,11 +132,11 @@
                     </td>
                   </tr>
                   <tr class="table-row">
-                    <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="발행처">
+                  <td class="table-col">
+                      <input id="issuance" name="issuance" type="text" class="tabel-form__control" placeholder="발행처">
                     </td>
                     <td class="table-col">  
-                      <input type="text" class="tabel-form__control" placeholder="자격이름">
+                      <input id="licenseTitle" name="licenseTitle" type="text" class="tabel-form__control" placeholder="자격이름">
                     </td>
                     <td class="table-col">
                       <label class="table-file__label">
@@ -203,7 +163,7 @@
                 <div class="form-group__label">상담경력</div>
                 <div class="form-group__item">
                   <div class="form-group__data">
-                    <input type="text" class="form-control" placeholder="예) 3년이상, 6개월 이상">
+                    <input id="career" name="" type="career" class="form-control" placeholder="예) 3년이상, 6개월 이상">
                   </div>
                   <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                 </div>
@@ -227,8 +187,8 @@
                         <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                         <ul class="select-option__list">
                           <li class="select-option">선택</li>
-                          <li class="select-option">현재 근무지</li>
-                          <li class="select-option">이전 근무지</li>
+                          <li class="select-option" value="현재 근무지">현재 근무지</li>
+                          <li class="select-option" value="이전 근무지">이전 근무지</li>
                         </ul>                      
                       </div>
                     </td>
@@ -241,8 +201,8 @@
                         <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                         <ul class="select-option__list">
                           <li class="select-option">근무형태</li>
-                          <li class="select-option">풀타임</li>
-                          <li class="select-option">파트타임</li>
+                          <li class="select-option" value="풀타임">풀타임</li>
+                          <li class="select-option" value="파트타임">파트타임</li>
                         </ul>                      
                       </div>
                     </td>
@@ -307,11 +267,17 @@
             <em>(필수)</em> 입력한 정보는 모두 사실이며, 추후 사실이 아님이 확인되는 경우 즉각 상담활동이 중지됨을 확인하였습니다.
           </label>
           <div class="member-bt__btns-wrap mg-t-43 gap-38">
-            <button type="button" class="member-bt__btn wd-320 save">저장하기</button>
-            <button type="button" class="member-bt__btn wd-320">승인요청</button>
+            <a href="javascript:submitForm()"><button type="button" class="member-bt__btn wd-320 save">저장하기</button></a>
+            <a href="javascript:submitForm()"><button type="button" class="member-bt__btn wd-320">승인요청</button></a>
           </div>
         </div>
       </div>
-    </div> <!-- container end-->
+    </div>
+</form>
+<script>
+    function submitForm() {
+        $("#nextStepForm").submit();
+    }
+</script>
 @include('advisor/common/footer')    
 @include('advisor/common/end')

@@ -28,79 +28,87 @@
           </div>
         </div>
       </div>
-      <div class="member-cell pd-56-114-105">
-        <div class="member-group">
-          <div class="form-group join">
-            <div class="member-label">이메일</div>
-            <div class="form-group__item">
-              <div class="form-group__data">
-                <input type="text" class="form-control wd-274" placeholder="입력">
-                <button type="button" class="form-control__btn">중복확인</button>
-              </div>
-              <p class="form-group-text">
-                * 심사 결과가 메일로 전송됩니다. 반드시 수신 가능한 이메일을 입력해주세요.
-              </p>
-              <p class="form-group-text">
-                * 수신할 수 없는 이메일을 입력하여 발생한 문제는 도움을 드릴 수 없습니다.
-              </p>
+      <form id="joinForm" name="joinForm" action="/join" method="post" autocomplete="off">
+      @csrf
+        <div class="member-cell pd-56-114-105">
+            <div class="member-group">
+            <div class="form-group join">
+                <div class="member-label">이메일<em class="need">*</em></div>
+                <div class="form-group__item">
+                <div class="form-group__data">
+                    <input id="userEmail" name="userEmail" type="text" class="form-control wd-274" placeholder="입력">
+                    <button type="button" class="form-control__btn">중복확인</button>
+                </div>
+                <p class="form-group-text">
+                    * 심사 결과가 메일로 전송됩니다. 반드시 수신 가능한 이메일을 입력해주세요.
+                </p>
+                <p class="form-group-text">
+                    * 수신할 수 없는 이메일을 입력하여 발생한 문제는 도움을 드릴 수 없습니다.
+                </p>
+                </div>
             </div>
-          </div>
-          <div class="form-group join">
-            <div class="member-label">비밀번호</div>
-            <div class="form-group__item">
-              <div class="form-group__data">
-                <input type="password" class="form-control pwd" placeholder="6-14자 이내로  영문 , 숫자 , 특수문자를 조합하여 작성합니다.">
-              </div>
-              <p class="form-group-text">
-                * 사용 가능한 특수문자 !@#$%^&*?()_~
-              </p>
+            <div class="form-group join">
+                <div class="member-label">비밀번호<em class="need">*</em></div>
+                <div class="form-group__item">
+                <div class="form-group__data">
+                    <input id="userPassword" name="userPassword" type="password" class="form-control pwd" placeholder="6-14자 이내로  영문 , 숫자 , 특수문자를 조합하여 작성합니다.">
+                </div>
+                <p class="form-group-text">
+                    * 사용 가능한 특수문자 !@#$%^&*?()_~
+                </p>
+                </div>
             </div>
-          </div>
-          <div class="form-group join">
-            <div class="member-label">비밀번호 재확인</div>
-            <div class="form-group__item">
-              <div class="form-group__data">
-                <input type="password" class="form-control pwd">
-              </div>
+            <div class="form-group join">
+                <div class="member-label">비밀번호 재확인<em class="need">*</em></div>
+                <div class="form-group__item">
+                <div class="form-group__data">
+                    <input id="confirmUserPassword" name="confirmUserPassword" type="password" class="form-control pwd">
+                </div>
+                </div>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="member-label">이름</div>
-            <div class="form-group__item">
-              <div class="form-group__data">
-                <input type="text" class="form-control name">
-              </div>
+            <div class="form-group">
+                <div class="member-label">이름<em class="need">*</em></div>
+                <div class="form-group__item">
+                <div class="form-group__data">
+                    <input id="userName" name="userName" type="text" class="form-control name">
+                </div>
+                </div>
             </div>
-          </div>
-          <div class="form-group join">
-            <div class="member-label">휴대전화</div>
-            <div class="form-group__item">
-              <div class="form-group__data">
-                <input type="tel" class="form-control wd-239" placeholder="“-”없이 입력">
-                <button type="button" class="form-control__btn">인증번호</button>
-              </div>
-              <p class="form-group-text">
-                * 연락 가능한 휴대전화 번호를 입력해주세요.
-              </p>
+            <div class="form-group join">
+                <div class="member-label">휴대전화<em class="need">*</em></div>
+                <div class="form-group__item">
+                <div class="form-group__data">
+                    <input id="userPhoneNumber" name="userPhoneNumber" type="tel" class="form-control wd-239" placeholder="“-”없이 입력">
+                    <button type="button" class="form-control__btn">인증번호</button>
+                </div>
+                <p class="form-group-text">
+                    * 연락 가능한 휴대전화 번호를 입력해주세요.
+                </p>
+                </div>
+                <div class="form-group__item">
+                <div class="form-group__data">
+                    <input type="tel" class="form-control wd-371 mg-t-40" placeholder="인증번호 입력">
+                </div>
+                </div>
             </div>
-            <div class="form-group__item">
-              <div class="form-group__data">
-                <input type="tel" class="form-control wd-371 mg-t-40" placeholder="인증번호 입력">
-              </div>
             </div>
-          </div>
         </div>
-      </div>
+      </form>
       <label class="label-checkbox member mg-t-53">
         <input type="checkbox" class="form-checkbox">
         <span class="icon check-off-round"></span>
         <em>(필수) </em> 서비스 이용약관 및 개인정보 처리방침에 동의합니다.
       </label>
       <div class="member-bt__btns-wrap mg-t-43">
-        <button type="button" class="member-bt__btn wd-320">입력하기</button>
+      <a href="javascript:submitForm()"><button type="button" class="member-bt__btn wd-320">입력하기</button></a>
       </div>
     </div>
   </div>
-</div> <!-- container end-->
+</div>
+<script>
+    function submitForm() {
+        $("#joinForm").submit();
+    }
+</script>
 @include('advisor/common/footer')    
 @include('advisor/common/end')
