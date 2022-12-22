@@ -17,7 +17,6 @@ use App\Http\Controllers\Mobile\Logout\LogoutController;
 use App\Http\Controllers\Mobile\Mypage\MyPageController;
 use App\Http\Middleware\AutoLogin;
 use App\Http\Middleware\LoginValid;
-use App\Models\Advisor;
 use Illuminate\Support\Facades\Route;
 
 const CSS_VERSION = "1";
