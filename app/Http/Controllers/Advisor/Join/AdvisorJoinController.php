@@ -19,18 +19,9 @@ class AdvisorJoinController extends Controller{
     {
         $nowDate = date("Y-m-d H:i:s");
 
-        // $memberAgree = new MemberAgree;
-        // $memberAgree->agree1 = "Y";
-        // $memberAgree->agree2 = "Y";
-        // $memberAgree->updateDate = $nowDate;
-        // $memberAgree->createDate = $nowDate;
-        // $memberAgree->save();
-
-        // $agreePK = $memberAgree->mbAgreePK;
-
         $member = new Advisor();
         $member->email = $request["userEmail"] ?? '';
-        $member->pw = Hash::make($request['userPassword']);
+        $member->password = Hash::make($request['userPassword']);
         $member->memberName = Crypt::encryptString($request['userName']) ?? '';
         $member->phone = Crypt::encryptString($request['userPhoneNumber']) ?? '';
         //$member->mbAgreePK = $agreePK;

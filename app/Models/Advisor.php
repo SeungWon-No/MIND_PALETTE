@@ -45,11 +45,12 @@ class Advisor extends Model
     public static function updateLoginDate($advisorPK){
         $nowDate = date("Y-m-d H:i:s");
 
-        Advisor::where('advisorPK',$advisorPK)
+        Advisor::where('advisorPK', $advisorPK)
             ->update(['lastLoginDate'=> $nowDate]);
     }
 
-    public static function findMemberInfo($advisorPK) {
+    public static function findAdvisorInfo($advisorPK) {
         return Advisor::where('advisorPK','=',$advisorPK)->first();
     }
+    
 }

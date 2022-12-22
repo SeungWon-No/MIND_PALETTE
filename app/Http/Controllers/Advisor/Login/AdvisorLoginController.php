@@ -8,6 +8,7 @@ use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AdvisorLoginController extends Controller
@@ -22,20 +23,21 @@ class AdvisorLoginController extends Controller
 
     public function store(Request $request): string
     {
-        $email = urldecode($request["email"]) ?? "";
-        $pw = urldecode($request["pw"]) ?? "";
+        $email = $request["userEmail"] ?? "";
+        $password = $request["userPassword"] ?? "";
 
-        if ( $email == "" || $pw  == "" ) {
-            return "이메일 또는 패스워드를 입력해주세요";
+        if ($email == "" || $password == ""){
+            return view("/advisor/login/loginFail");
         }
-        $advisor = Advisor::findUser($email,$pw)->first();
+
+        $advisor = Advisor::findUser($email, $password)->first();
         if ($advisor) {
-            if (Hash::check($pw, $advisor->pw)) {
-                $this->login($request,  Advisor::findadvisorInfo($advisor->advisorPK));
+            if (Hash::check($password, $advisor->password)) {
+                $this->login($request,  Advisor::findAdvisorInfo($advisor->advisorPK));
                 return "success";
             }
         }
-        return "아이디/패스워드가 일치하지 않습니다.";
+        return view("/advisor/login/loginFail");
 
     }
 
@@ -46,7 +48,6 @@ class AdvisorLoginController extends Controller
         $redirectUrl = (isset($request->redirectUrl)) ? $request->redirectUrl : "/";
 
         if ( $request->autoLogin == "true" ) {
-            // dd($request->autoLogin);
             Cookie::queue(Cookie::forever('AKTV', $advisor->advisorPK));
             
         }
