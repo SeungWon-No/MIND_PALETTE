@@ -24,7 +24,7 @@ class Counseling extends Model
     public $timestamps = false;
 
     public static function findAllCounseling($userPK) {
-        $freeCounseling = FreeCounselingResult::findFreeCounselingResult($userPK);
+        $freeCounseling = CounselingTemplate::findFreeCounselingResult($userPK);
         return Counseling::select("counselorName","counselingStatus","updateDate")
             ->where('memberPK','=',$userPK)->union($freeCounseling)->get();
     }

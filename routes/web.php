@@ -5,6 +5,8 @@ use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
 use App\Http\Controllers\Mobile\Advice\SampleController;
+use App\Http\Controllers\Mobile\FreeAdvice\DepressionController;
+use App\Http\Controllers\Mobile\FreeAdvice\RequestInfoController;
 use App\Http\Controllers\Mobile\IndexController;
 use App\Http\Controllers\Mobile\Join\EmailCheckController;
 use App\Http\Controllers\Mobile\Join\JoinController;
@@ -23,6 +25,7 @@ $advisorSubDomain = env('ADVISOR_SUB_DOMAIN', 'dev-advisor');
 
 Route::middleware([AutoLogin::class])->group(function () {
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]);
+    Route::get("/sample",SampleController::class);
 });
 
 Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::class])->group(function () {
@@ -36,8 +39,11 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
     Route::post("/emailCheck", EmailCheckController::class);
     Route::post('/findRegion/{id}', [RequestAdviceController::class,"findRegion"]);
 
-
-    Route::get("/sample",SampleController::class);
+    Route::get('/freeAdviceRequest',RequestInfoController::class);
+    Route::post('/createFreeAdvice',[RequestInfoController::class,"create"]);
+    Route::get('/depressionStep1/{counselingResultPK}',[DepressionController::class,"depressionStep1"]);
+    Route::get('/depressionStep2/{counselingResultPK}',[DepressionController::class,"depressionStep2"]);
+    Route::get('/depressionStep3/{counselingResultPK}',[DepressionController::class,"depressionStep3"]);
 });
 
 Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::class,LoginValid::class])->group(function () {

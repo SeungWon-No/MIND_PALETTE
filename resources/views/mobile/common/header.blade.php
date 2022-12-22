@@ -5,9 +5,11 @@
       $isLogin = true;
       $loginSession = session()->get('login')[0];
     }
+    $isShowProgress = $isShowProgress ?? false
+    $progressValue = $progressValue ?? 0
 @endphp
 @if($isShowBackButton || $isShowCloseButton)
-    <header id="header" class="basic-header">
+    <header id="header" class="basic-header">`
         @if($isShowBackButton)
             <div class="header-left">
                 <a href="javascript:history.back()" class="btn-page-ui btn-page-prev">
@@ -22,6 +24,9 @@
                     <div class="icon icon-page-close-gray">페이지 닫기</div>
                 </a>
             </div>
+        @endif
+        @if($isShowProgress)
+            <div class="page-progress"><div class="bar" style="width:{{$progressValue}}%;"></div></div>
         @endif
     </header>
 @else

@@ -96,7 +96,7 @@
                                 </a>
                             </div>
                             <div class="main-about-cell">
-                                <a href="#" class="card-item card-banner blue">
+                                <a href="/freeAdviceRequest" class="card-item card-banner blue">
                                     <div class="item-info">
                                         <div class="item-subject"><em class="font-color-darkblue">마음팔레트 무료 상담 체험</em></div>
                                         <div class="item-desc">30가지 문항으로 우리 아이의<br>상태를 체크해보세요.</div>
