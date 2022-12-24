@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Mobile\FreeAdvice;
 use App\Http\Controllers\Controller;
 use App\Http\Util\CounselingTemplate;
 use App\Models\Answer;
+use App\Models\CounselingTemplateResult;
 use App\Models\Questions;
+use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,10 +17,16 @@ class SelfWorthController extends Controller
     {
         $questionsOption = CounselingTemplate::$selfWorthOption;
         $answer = null;
+        $memberPK = "";
         if ($request->session()->has("login")) {
             $memberPK = $request->session()->get('login')[0]['memberPK'];
-            $answer = $this->answerResult($memberPK,"step1",$questionsOption);
         }
+        $freeCode = "";
+        if ( Cookie::has('FREE_ADVICE') ) {
+            $freeCode = Cookie::get('FREE_ADVICE');
+        }
+
+        $answer = $this->answerResult($memberPK, $freeCode,"step1",$questionsOption);
         return view("/mobile/freeAdvice/selfWorth",[
             "counselingTemplatePK" =>$counselingTemplatePK,
             "step" => "selfWorthStep1",
@@ -35,11 +43,16 @@ class SelfWorthController extends Controller
     public function selfWorthStep2(Request $request, $counselingTemplatePK)
     {
         $questionsOption = CounselingTemplate::$selfWorthOption;
-        $answer = null;
+        $memberPK = "";
         if ($request->session()->has("login")) {
             $memberPK = $request->session()->get('login')[0]['memberPK'];
-            $answer = $this->answerResult($memberPK,"step2",$questionsOption);
         }
+        $freeCode = "";
+        if ( Cookie::has('FREE_ADVICE') ) {
+            $freeCode = Cookie::get('FREE_ADVICE');
+        }
+
+        $answer = $this->answerResult($memberPK, $freeCode,"step2",$questionsOption);
         return view("/mobile/freeAdvice/selfWorth",[
             "counselingTemplatePK" =>$counselingTemplatePK,
             "step" => "selfWorthStep2",
@@ -55,22 +68,28 @@ class SelfWorthController extends Controller
 
     public function create(Request $request, $counselingTemplatePK)
     {
-
-        $memberPK = $request->session()->get('login')[0]['memberPK'];
+        $memberPK = "";
+        if ($request->session()->has("login")) {
+            $memberPK = $request->session()->get('login')[0]['memberPK'];
+        }
+        $freeCode = "";
+        if ( Cookie::has('FREE_ADVICE') ) {
+            $freeCode = Cookie::get('FREE_ADVICE');
+        }
         $nowDate = date("Y-m-d H:i:s");
-        $questionsOption = CounselingTemplate::$depressionOption;
+        $questionsOption = CounselingTemplate::$selfWorthOption;
         $nowStep = "";
         $nextStep = "";
         $counselingStatus = "";
         switch ($request->step) {
             case "selfWorthStep1" :
                 $nowStep = "step1";
-                $counselingStatus = 299;
+                $counselingStatus = ($request->isClose == "true")? 298 : 299;
                 $nextStep = "/selfWorthStep2/".$counselingTemplatePK;
                 break;
             case "selfWorthStep2" :
                 $nowStep = "step2";
-                $counselingStatus = 300;
+                $counselingStatus = ($request->isClose == "true") ? 299 : 300;
                 $nextStep = "/";
                 break;
         }
@@ -84,7 +103,7 @@ class SelfWorthController extends Controller
             foreach ($questions as $questionsRow) {
                 $formName = "questions".$questionsRow->questionsPK;
                 if ($request[$formName] != "") {
-                    $updateAnswer = Answer::findAnswer($memberPK,$questionsRow->questionsPK,$counselingTemplatePK);
+                    $updateAnswer = Answer::findAnswer($memberPK,$freeCode,$questionsRow->questionsPK,$counselingTemplatePK);
                     if ( $updateAnswer ) {
                         $updateValue = [
                             "answer" => $request[$formName],
@@ -96,7 +115,11 @@ class SelfWorthController extends Controller
                         $answer->questionsPK = $questionsRow->questionsPK;
                         $answer->counselingTemplatePK = $counselingTemplatePK;
                         $answer->answerType = 293;
-                        $answer->memberPK = $memberPK;
+                        if ( $memberPK != "") {
+                            $answer->memberPK = $memberPK;
+                        } else if ($freeCode != "") {
+                            $answer->tempCounselingCode = $freeCode;
+                        }
                         $answer->answer = $request[$formName];
                         $answer->updateDate = $nowDate;
                         $answer->createDate = $nowDate;
@@ -105,12 +128,40 @@ class SelfWorthController extends Controller
                 }
             }
 
-            if ($request->step == "selfWorthStep2") {
-                $sumScore = Answer::sumAnswerScore($counselingTemplatePK);
-                dd($sumScore);
+            $counselingTemplate = \App\Models\CounselingTemplate::find($counselingTemplatePK);
+
+            if ($request->step == "selfWorthStep2" && $request->isClose == "false") {
+
+                $scoreResult = Answer::sumAnswerScore($counselingTemplatePK);
+                $updateAnswer = Answer::findAnswer($memberPK,$freeCode,59,$counselingTemplatePK);
+                if ( $updateAnswer ) {
+                    $updateValue = [
+                        "answer" => $scoreResult->sumScore,
+                        "updateDate" => $nowDate
+                    ];
+                    Answer::updateAnswer($updateAnswer->answerPK,$updateValue);
+                } else {
+                    $answer = new Answer;
+                    $answer->questionsPK = 59;
+                    $answer->counselingTemplatePK = $counselingTemplatePK;
+                    $answer->answerType = 294;
+                    if ( $memberPK != "") {
+                        $answer->memberPK = $memberPK;
+                    } else if ($freeCode != "") {
+                        $answer->tempCounselingCode = $freeCode;
+                    }
+                    $answer->answer = $scoreResult->sumScore;
+                    $answer->updateDate = $nowDate;
+                    $answer->createDate = $nowDate;
+                    $answer->save();
+                }
+
+                $resultScore = CounselingTemplateResult::findResultScore($scoreResult->sumScore);
+                if ($resultScore) {
+                    $counselingTemplate->counselingTemplateResultPK = $resultScore->counselingTemplateResultPK;
+                }
             }
 
-            $counselingTemplate = \App\Models\CounselingTemplate::find($counselingTemplatePK);
             $counselingTemplate->counselingStatus = $counselingStatus;
             $counselingTemplate->updateDate = $nowDate;
             $counselingTemplate->save();
@@ -120,8 +171,7 @@ class SelfWorthController extends Controller
                 "status" => "success",
                 "nextStep" => $nextStep
             ]);
-        }catch (Exception $e) {
-
+        }catch (\Exception $e) {
             DB::rollBack();
             return json_encode([
                 "status" => "fail",
@@ -131,9 +181,9 @@ class SelfWorthController extends Controller
     }
 
 
-    private function answerResult($memberPK, $step, $questionsOption) {
+    private function answerResult($memberPK,$freeCode, $step, $questionsOption) {
         $returnValue = null;
-        $answer = Answer::findAnswers($memberPK,289,
+        $answer = Answer::findAnswers($memberPK,$freeCode,289,
             $questionsOption["questionRange"][$step]["offset"],
             $questionsOption["questionRange"][$step]["limit"]);
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 
 class Answer extends Model
@@ -11,22 +12,33 @@ class Answer extends Model
     protected $primaryKey = 'answerPK';
     public $timestamps = false;
 
-    public static function findAnswers($memberPK, $questionsType, $offset, $limit) {
-        return Answer::join("questions","questions.questionsPK","=","answer.questionsPK")
-            ->where('memberPK','=',$memberPK)
-            ->where('questionsType','=',$questionsType)
+    public static function findAnswers($memberPK, $freeCode, $questionsType, $offset, $limit) {
+        $answerResult = Answer::join("questions","questions.questionsPK","=","answer.questionsPK");
+
+        if ($memberPK != "") {
+            $answerResult->where('memberPK','=',$memberPK);
+        } else if ($freeCode != "") {
+            $answerResult->where('tempCounselingCode','=',$freeCode);
+        }
+
+        $answerResult->where('questionsType','=',$questionsType)
             ->orderBy("questionsOrder", "ASC")
             ->offset($offset)
-            ->limit($limit)
-            ->get();
+            ->limit($limit);
+
+        return $answerResult->get();
     }
 
-    public static function findAnswer($memberPK, $questionsPK, $counselingTemplatePK) {
-        return Answer::select("answerPK")
-            ->where('memberPK','=',$memberPK)
-            ->where('questionsPK','=',$questionsPK)
-            ->where('counselingTemplatePK','=',$counselingTemplatePK)
-            ->get()->first();
+    public static function findAnswer($memberPK, $freeCode, $questionsPK, $counselingTemplatePK) {
+        $answerResult = Answer::select("answerPK");
+        if ($memberPK != "") {
+            $answerResult->where('memberPK','=',$memberPK);
+        } else if ($freeCode != "") {
+            $answerResult->where('tempCounselingCode','=',$freeCode);
+        }
+        $answerResult->where('questionsPK','=',$questionsPK)
+            ->where('counselingTemplatePK','=',$counselingTemplatePK);
+        return $answerResult->get()->first();
     }
 
     public static function updateAnswer($answerPK, $updateValue) {
@@ -35,8 +47,9 @@ class Answer extends Model
     }
 
     public static function sumAnswerScore($counselingTemplatePK) {
-        return Answer::select("sum(cast(answer as unsigned))")
+        return Answer::select(DB::raw('sum(cast(answer as unsigned)) as sumScore'))
             ->where('counselingTemplatePK','=',$counselingTemplatePK)
-            ->get()->first();
+            ->where('answerType','=',"293")
+            ->get("cast(answer as unsigned) as sumCount")->first();
     }
 }

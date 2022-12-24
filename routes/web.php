@@ -43,6 +43,11 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware(['autoLogin'])-
 
     Route::get('/freeAdviceRequest',RequestInfoController::class);
     Route::post('/createFreeAdvice',[RequestInfoController::class,"create"]);
+});
+
+Route::domain($mobileSubDomain .'.maeumpalette.com')
+    ->middleware(['autoLogin','freeAdviceVerify'])->group(function () {
+
     Route::get('/depressionStep1/{counselingTemplatePK}',[DepressionController::class,"depressionStep1"]);
     Route::get('/depressionStep2/{counselingTemplatePK}',[DepressionController::class,"depressionStep2"]);
     Route::get('/depressionStep3/{counselingTemplatePK}',[DepressionController::class,"depressionStep3"]);

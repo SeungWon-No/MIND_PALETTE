@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mobile\FreeAdvice;
 
 use App\Http\Controllers\Controller;
 use App\Models\CounselingTemplate;
+use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,6 @@ class RequestInfoController extends Controller
         $counselorName = $request->counselorName ?? '';
 
         if ($counselorName == "") {
-
             return json_encode([
                 "status" => "fail",
                 "message" => "필수 값이 존재하지 않습니다."
@@ -27,13 +27,24 @@ class RequestInfoController extends Controller
         }
 
         try {
-
             DB::beginTransaction();
             $nowDate = date("Y-m-d H:i:s");
-            $memberPK = $request->session()->get('login')[0]['memberPK'];
 
             $counselingTemplate = new CounselingTemplate;
-            $counselingTemplate->memberPK = $memberPK;
+            if ( $request->session()->has("login")) {
+                $memberPK = $request->session()->get('login')[0]['memberPK'];
+                $counselingTemplate->memberPK = $memberPK;
+            } else {
+                $freeCode = "";
+                if ( Cookie::has('FREE_ADVICE') ) {
+                    $freeCode = Cookie::get('FREE_ADVICE');
+                } else {
+                    $freeCode = date("YmdHis").sprintf('%03d', rand(000,999));
+                    Cookie::queue(Cookie::forever('FREE_ADVICE', $freeCode));
+                }
+
+                $counselingTemplate->tempCounselingCode = $freeCode;
+            }
             $counselingTemplate->counselorName = Crypt::encryptString($counselorName);
             $counselingTemplate->counselingStatus = 290; //depressionStep1
             $counselingTemplate->updateDate = $nowDate;

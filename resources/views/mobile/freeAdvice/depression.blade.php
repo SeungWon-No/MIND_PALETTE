@@ -111,6 +111,7 @@
 
     function submitForm(isClose) {
         var queryString = $("form[name=depressionFrom]").serialize() ;
+        queryString = queryString + "&isClose="+isClose;
         $.ajax({
             type:'POST',
             url:'/depression/{{$counselingTemplatePK}}',
