@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CounselingTemplate extends Model
 {
     protected $table = 'counselingTemplate';
-    protected $primaryKey = 'counselingResultPK';
+    protected $primaryKey = 'counselingTemplatePK';
     public $timestamps = false;
 
     public static function findFreeCounselingResult($userPK) {

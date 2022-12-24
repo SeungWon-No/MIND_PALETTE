@@ -152,4 +152,32 @@ class CounselingTemplate {
             [ "content"=>"언제나 싸운다 (2점)", "value"=> 2 ],
         ),
     ];
+    public static array $anxietyOption = [
+        "questionRange" => [
+            "step1" => [
+                "offset" => 0,
+                "limit" => 7,
+            ],
+            "step2" => [
+                "offset" => 7,
+                "limit" => 7,
+            ],
+            "step3" => [
+                "offset" => 14,
+                "limit" => 7,
+            ]
+        ],
+    ];
+    public static array $selfWorthOption = [
+        "questionRange" => [
+            "step1" => [
+                "offset" => 0,
+                "limit" => 5,
+            ],
+            "step2" => [
+                "offset" => 5,
+                "limit" => 5,
+            ]
+        ],
+    ];
 }

@@ -7,16 +7,16 @@ use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
 use App\Http\Controllers\Mobile\Advice\SampleController;
+use App\Http\Controllers\Mobile\FreeAdvice\AnxietyController;
 use App\Http\Controllers\Mobile\FreeAdvice\DepressionController;
 use App\Http\Controllers\Mobile\FreeAdvice\RequestInfoController;
+use App\Http\Controllers\Mobile\FreeAdvice\SelfWorthController;
 use App\Http\Controllers\Mobile\IndexController;
 use App\Http\Controllers\Mobile\Join\EmailCheckController;
 use App\Http\Controllers\Mobile\Join\JoinController;
 use App\Http\Controllers\Mobile\Login\LoginController;
 use App\Http\Controllers\Mobile\Logout\LogoutController;
 use App\Http\Controllers\Mobile\Mypage\MyPageController;
-use App\Http\Middleware\AutoLogin;
-use App\Http\Middleware\LoginValid;
 use Illuminate\Support\Facades\Route;
 
 const CSS_VERSION = "1";
@@ -25,12 +25,12 @@ const JS_VERSION = "1";
 $mobileSubDomain = env('MOBILE_SUB_DOMAIN', 'dev-m');
 $advisorSubDomain = env('ADVISOR_SUB_DOMAIN', 'dev-advisor');
 
-Route::middleware([AutoLogin::class])->group(function () {
+Route::middleware(['autoLogin'])->group(function () {
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]);
     Route::get("/sample",SampleController::class);
 });
 
-Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::class])->group(function () {
+Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware(['autoLogin'])->group(function () {
     Route::get('/', IndexController::class);
     Route::resource("/login",LoginController::class)->only([
         'index', 'store'
@@ -43,12 +43,22 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
 
     Route::get('/freeAdviceRequest',RequestInfoController::class);
     Route::post('/createFreeAdvice',[RequestInfoController::class,"create"]);
-    Route::get('/depressionStep1/{counselingResultPK}',[DepressionController::class,"depressionStep1"]);
-    Route::get('/depressionStep2/{counselingResultPK}',[DepressionController::class,"depressionStep2"]);
-    Route::get('/depressionStep3/{counselingResultPK}',[DepressionController::class,"depressionStep3"]);
+    Route::get('/depressionStep1/{counselingTemplatePK}',[DepressionController::class,"depressionStep1"]);
+    Route::get('/depressionStep2/{counselingTemplatePK}',[DepressionController::class,"depressionStep2"]);
+    Route::get('/depressionStep3/{counselingTemplatePK}',[DepressionController::class,"depressionStep3"]);
+    Route::post('/depression/{counselingTemplatePK}',[DepressionController::class,"create"]);
+
+    Route::get('/anxietyStep1/{counselingTemplatePK}',[AnxietyController::class,"anxietyStep1"]);
+    Route::get('/anxietyStep2/{counselingTemplatePK}',[AnxietyController::class,"anxietyStep2"]);
+    Route::get('/anxietyStep3/{counselingTemplatePK}',[AnxietyController::class,"anxietyStep3"]);
+    Route::post('/anxiety/{counselingTemplatePK}',[AnxietyController::class,"create"]);
+
+    Route::get('/selfWorthStep1/{counselingTemplatePK}',[SelfWorthController::class,"selfWorthStep1"]);
+    Route::get('/selfWorthStep2/{counselingTemplatePK}',[SelfWorthController::class,"selfWorthStep2"]);
+    Route::post('/selfWorth/{counselingTemplatePK}',[SelfWorthController::class,"create"]);
 });
 
-Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::class,LoginValid::class])->group(function () {
+Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/adviceAgree", AgreeController::class);
     Route::resource("/requestAdvice", RequestAdviceController::class)->only([
         'index', 'store'

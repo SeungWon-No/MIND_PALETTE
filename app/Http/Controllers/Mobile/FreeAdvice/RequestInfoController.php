@@ -43,7 +43,7 @@ class RequestInfoController extends Controller
             DB::commit();
             return json_encode([
                 "status" => "success",
-                "requestAdvicePK" => $counselingTemplate->counselingResultPK
+                "counselingTemplatePK" => $counselingTemplate->counselingTemplatePK
             ]);
         } catch (\Exception $e) {
             DB::rollBack();

@@ -9,21 +9,21 @@ use App\Models\Questions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DepressionController extends Controller
+class SelfWorthController extends Controller
 {
-    public function depressionStep1(Request $request, $counselingTemplatePK)
+    public function selfWorthStep1(Request $request, $counselingTemplatePK)
     {
-        $questionsOption = CounselingTemplate::$depressionOption;
+        $questionsOption = CounselingTemplate::$selfWorthOption;
         $answer = null;
         if ($request->session()->has("login")) {
             $memberPK = $request->session()->get('login')[0]['memberPK'];
             $answer = $this->answerResult($memberPK,"step1",$questionsOption);
         }
-        return view("/mobile/freeAdvice/depression",[
+        return view("/mobile/freeAdvice/selfWorth",[
             "counselingTemplatePK" =>$counselingTemplatePK,
-            "step" => "depressionStep1",
-            "progressWidth" => 33,
-            "questions" => Questions::findQuestions(287,
+            "step" => "selfWorthStep1",
+            "progressWidth" => 50,
+            "questions" => Questions::findQuestions(289,
                 $questionsOption["questionRange"]["step1"]["offset"],
                 $questionsOption["questionRange"]["step1"]["limit"]
             ),
@@ -32,19 +32,19 @@ class DepressionController extends Controller
         ]);
     }
 
-    public function depressionStep2(Request $request, $counselingTemplatePK)
+    public function selfWorthStep2(Request $request, $counselingTemplatePK)
     {
-        $questionsOption = CounselingTemplate::$depressionOption;
+        $questionsOption = CounselingTemplate::$selfWorthOption;
         $answer = null;
         if ($request->session()->has("login")) {
             $memberPK = $request->session()->get('login')[0]['memberPK'];
             $answer = $this->answerResult($memberPK,"step2",$questionsOption);
         }
-        return view("/mobile/freeAdvice/depression",[
+        return view("/mobile/freeAdvice/selfWorth",[
             "counselingTemplatePK" =>$counselingTemplatePK,
-            "step" => "depressionStep2",
-            "progressWidth" => 66,
-            "questions" => Questions::findQuestions(287,
+            "step" => "selfWorthStep2",
+            "progressWidth" => 100,
+            "questions" => Questions::findQuestions(289,
                 $questionsOption["questionRange"]["step2"]["offset"],
                 $questionsOption["questionRange"]["step2"]["limit"]
             ),
@@ -52,29 +52,6 @@ class DepressionController extends Controller
             "options" => $questionsOption
         ]);
     }
-
-    public function depressionStep3(Request $request, $counselingTemplatePK)
-    {
-        $questionsOption = CounselingTemplate::$depressionOption;
-        $answer = null;
-        if ($request->session()->has("login")) {
-            $memberPK = $request->session()->get('login')[0]['memberPK'];
-            $answer = $this->answerResult($memberPK,"step3",$questionsOption);
-        }
-
-        return view("/mobile/freeAdvice/depression",[
-            "counselingTemplatePK" =>$counselingTemplatePK,
-            "step" => "depressionStep3",
-            "progressWidth" => 100,
-            "questions" => Questions::findQuestions(287,
-                $questionsOption["questionRange"]["step3"]["offset"],
-                $questionsOption["questionRange"]["step3"]["limit"]
-            ),
-            "answer" => $answer,
-            "options" => $questionsOption
-        ]);
-    }
-
 
     public function create(Request $request, $counselingTemplatePK)
     {
@@ -86,32 +63,27 @@ class DepressionController extends Controller
         $nextStep = "";
         $counselingStatus = "";
         switch ($request->step) {
-            case "depressionStep1" :
+            case "selfWorthStep1" :
                 $nowStep = "step1";
-                $counselingStatus = 291;
-                $nextStep = "/depressionStep2/".$counselingTemplatePK;
+                $counselingStatus = 299;
+                $nextStep = "/selfWorthStep2/".$counselingTemplatePK;
                 break;
-            case "depressionStep2" :
+            case "selfWorthStep2" :
                 $nowStep = "step2";
-                $counselingStatus = 292;
-                $nextStep = "/depressionStep3/".$counselingTemplatePK;
-                break;
-            case "depressionStep3" :
-                $nowStep = "step3";
-                $counselingStatus = 295;
-                $nextStep = "/anxietyStep1/".$counselingTemplatePK;
+                $counselingStatus = 300;
+                $nextStep = "/";
                 break;
         }
 
         try {
             DB::beginTransaction();
-            $questions = Questions::findQuestions(287,
+            $questions = Questions::findQuestions(289,
                 $questionsOption["questionRange"][$nowStep]["offset"],
                 $questionsOption["questionRange"][$nowStep]["limit"]);
 
             foreach ($questions as $questionsRow) {
                 $formName = "questions".$questionsRow->questionsPK;
-                if (isset($request[$formName])) {
+                if ($request[$formName] != "") {
                     $updateAnswer = Answer::findAnswer($memberPK,$questionsRow->questionsPK,$counselingTemplatePK);
                     if ( $updateAnswer ) {
                         $updateValue = [
@@ -133,6 +105,11 @@ class DepressionController extends Controller
                 }
             }
 
+            if ($request->step == "selfWorthStep2") {
+                $sumScore = Answer::sumAnswerScore($counselingTemplatePK);
+                dd($sumScore);
+            }
+
             $counselingTemplate = \App\Models\CounselingTemplate::find($counselingTemplatePK);
             $counselingTemplate->counselingStatus = $counselingStatus;
             $counselingTemplate->updateDate = $nowDate;
@@ -143,7 +120,7 @@ class DepressionController extends Controller
                 "status" => "success",
                 "nextStep" => $nextStep
             ]);
-        }catch (\Exception $e) {
+        }catch (Exception $e) {
 
             DB::rollBack();
             return json_encode([
@@ -156,7 +133,7 @@ class DepressionController extends Controller
 
     private function answerResult($memberPK, $step, $questionsOption) {
         $returnValue = null;
-        $answer = Answer::findAnswers($memberPK,287,
+        $answer = Answer::findAnswers($memberPK,289,
             $questionsOption["questionRange"][$step]["offset"],
             $questionsOption["questionRange"][$step]["limit"]);
 

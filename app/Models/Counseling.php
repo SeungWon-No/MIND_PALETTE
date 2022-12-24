@@ -26,7 +26,11 @@ class Counseling extends Model
     public static function findAllCounseling($userPK) {
         $freeCounseling = CounselingTemplate::findFreeCounselingResult($userPK);
         return Counseling::select("counselorName","counselingStatus","updateDate")
-            ->where('memberPK','=',$userPK)->union($freeCounseling)->get();
+            ->where('memberPK','=',$userPK)->union($freeCounseling)
+            ->orderBy('updateDate', 'DESC')
+            ->offset(0)
+            ->limit(10)
+            ->get();
     }
 
 }

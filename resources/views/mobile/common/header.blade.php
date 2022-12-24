@@ -5,11 +5,12 @@
       $isLogin = true;
       $loginSession = session()->get('login')[0];
     }
-    $isShowProgress = $isShowProgress ?? false
-    $progressValue = $progressValue ?? 0
+    $isShowProgress = $isShowProgress ?? false;
+    $isShowCloseButton = $isShowCloseButton ?? false;
+    $progressValue = $progressValue ?? 0;
 @endphp
 @if($isShowBackButton || $isShowCloseButton)
-    <header id="header" class="basic-header">`
+    <header id="header" class="basic-header">
         @if($isShowBackButton)
             <div class="header-left">
                 <a href="javascript:history.back()" class="btn-page-ui btn-page-prev">

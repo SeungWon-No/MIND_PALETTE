@@ -76,7 +76,7 @@
             success:function(json){
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
-                    location.href = '/depressionStep1/'+data.counselingResultPK;
+                    location.href = '/depressionStep1/'+data.counselingTemplatePK;
                 } else {
                     alert(data.message);
                 }
