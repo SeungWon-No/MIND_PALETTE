@@ -40,6 +40,8 @@
     </div>
   </form>
 </div>
+@include('advisor/common/footer')    
+@include('advisor/common/end')
 <script>
     function submitForm() {
         $("#loginForm").submit();

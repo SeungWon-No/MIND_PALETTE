@@ -140,7 +140,7 @@
                       <div class="account-profile__name">김아무 상담사</div>
                       <div class="account-profile__center">사랑 마음 센터</div>
                     </div>
-                    <a href="#none" class="account-logout__btn">로그아웃</a>
+                    <a href="/logout" class="account-logout__btn">로그아웃</a>
                   </div>
                   <a href="#none" class="account-profile__link">프로필 바로가기 ></a>
                 </div>

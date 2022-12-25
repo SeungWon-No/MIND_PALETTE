@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <form id="joinForm" name="joinForm" action="/join" method="post" autocomplete="off">
+      <form id="joinForm" name="joinForm" action="/join" method="POST" autocomplete="off">
       @csrf
         <div class="member-cell pd-56-114-105">
             <div class="member-group">
@@ -36,9 +36,12 @@
                 <div class="member-label">이메일<em class="need">*</em></div>
                 <div class="form-group__item">
                 <div class="form-group__data">
-                    <input id="userEmail" name="userEmail" type="text" class="form-control wd-274" placeholder="입력">
-                    <button type="button" class="form-control__btn">중복확인</button>
+                    <input id="userEmail" name="userEmail" type="text" class="form-control wd-274" placeholder="입력" onkeyup="validEmailCheck()" required>
+                    <a href="/emailCheck"><button type="button" class="form-control__btn">중복확인</button></a>
                 </div>
+                <p id="valid-error-email" class="form-group-text" style="display: none;">
+                    * 이메일 형식이 올바르지 않습니다.
+                </p>
                 <p class="form-group-text">
                     * 심사 결과가 메일로 전송됩니다. 반드시 수신 가능한 이메일을 입력해주세요.
                 </p>
@@ -51,8 +54,12 @@
                 <div class="member-label">비밀번호<em class="need">*</em></div>
                 <div class="form-group__item">
                 <div class="form-group__data">
-                    <input id="userPassword" name="userPassword" type="password" class="form-control pwd" placeholder="6-14자 이내로  영문 , 숫자 , 특수문자를 조합하여 작성합니다.">
+                    <input id="userPassword" name="userPassword" type="password" class="form-control pwd" placeholder="8-20자 이내로  영문 , 숫자 , 특수문자를 조합하여 작성합니다." 
+                    onkeyup="validPasswordCheck()" required>
                 </div>
+                <p id="valid-error-password" class="form-group-text" style="display: none;">
+                  영문+숫자+특수문자 8~20자를 입력하셔야 합니다.
+                </p>
                 <p class="form-group-text">
                     * 사용 가능한 특수문자 !@#$%^&*?()_~
                 </p>
@@ -62,15 +69,19 @@
                 <div class="member-label">비밀번호 재확인<em class="need">*</em></div>
                 <div class="form-group__item">
                 <div class="form-group__data">
-                    <input id="confirmUserPassword" name="confirmUserPassword" type="password" class="form-control pwd">
+                    <input id="confirmUserPassword" name="confirmUserPassword" type="password" class="form-control pwd" 
+                    onkeyup="validConfirmUserPasswordCheck()" required>
                 </div>
+                <p id="valid-error-confirmPassword" class="form-group-text" style="display: none;">
+                  비밀번호가 일치하지 않습니다.
+                </p>
                 </div>
             </div>
             <div class="form-group">
                 <div class="member-label">이름<em class="need">*</em></div>
                 <div class="form-group__item">
                 <div class="form-group__data">
-                    <input id="userName" name="userName" type="text" class="form-control name">
+                    <input id="userName" name="userName" type="text" class="form-control name" required>
                 </div>
                 </div>
             </div>
@@ -78,7 +89,7 @@
                 <div class="member-label">휴대전화<em class="need">*</em></div>
                 <div class="form-group__item">
                 <div class="form-group__data">
-                    <input id="userPhoneNumber" name="userPhoneNumber" type="tel" class="form-control wd-239" placeholder="“-”없이 입력">
+                    <input id="userPhoneNumber" name="userPhoneNumber" type="tel" class="form-control wd-239" placeholder="“-”없이 입력" required>
                     <button type="button" class="form-control__btn">인증번호</button>
                 </div>
                 <p class="form-group-text">
@@ -95,7 +106,7 @@
         </div>
       </form>
       <label class="label-checkbox member mg-t-53">
-        <input type="checkbox" class="form-checkbox">
+        <input id="agreeCheckbox" name="agreeCheckbox" type="checkbox" class="form-checkbox" onclick="agreeCheckbox()">
         <span class="icon check-off-round"></span>
         <em>(필수) </em> 서비스 이용약관 및 개인정보 처리방침에 동의합니다.
       </label>
@@ -106,9 +117,103 @@
   </div>
 </div>
 <script>
-    function submitForm() {
-        $("#joinForm").submit();
+  function submitForm() {
+    var validEmailResult = validEmailCheck(); // 이메일 체크
+    var validPasswordResult = validPasswordCheck(); // 비밀번호 체크
+    var validConfirmUserPasswordResult = validConfirmUserPasswordCheck(); // 비밀번호 확인 체크
+    var validAgreeCheckboxResult = agreeCheckbox(); // 필수 동의 체크 여부
+
+    if (validEmailResult == false) {
+      return alert('이메일을 확인해주세요.');
+      
+    }else if(validPasswordResult == false){
+      return alert('비밀번호를 확인해주세요.');
+
+    }else if(validConfirmUserPasswordResult == false ){
+      return alert('비밀번호가 일치하지 않습니다.');
+
+    }else if(validAgreeCheckboxResult == false){
+      return alert('서비스 이용약관 및 개인정보 처리방침에 동의해주세요.');
+
+    }else{
+      $("#joinForm").submit();
     }
+
+  }
+
+  // 이메일 유효성 체크
+  function validEmailCheck() {
+    var email = $('#userEmail').val();
+    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    var checkResult = regExp.test(email);
+
+    if (email == '') {
+      $("#valid-error-email").html('* 이메일을 입력해주세요.');
+      return false;
+    }
+
+    if (checkResult == false) {
+      $("#valid-error-email").attr("style", "display:''; color:#ff0000").html('* 이메일 형식이 올바르지 않습니다.');
+      return false;
+
+    }else{
+      $("#valid-error-email").attr("style", "display:''; color:#4169e1;").html('* 사용가능한 이메일 입니다.');
+      return true;
+    }
+
+  }
+
+  // 비밀번호 유효성 체크 
+  function validPasswordCheck() {
+    var password = $('#userPassword').val();
+    var regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
+    var checkResult = regExp.test(password);
+    var lengthCheck = true;
+
+    if (password == "") {
+      $("#valid-error-password").attr("style", "display:''; color:#ff0000").html('* 비밀번호를 입력해주세요.');
+      return false;
+    }
+
+    if (password.length < 8 || password.length > 20) { //8-20자 이내
+      return false;
+    }
+
+    if (checkResult == false || lengthCheck == false) {
+      $("#valid-error-password").attr("style", "display:''; color:#ff0000").html('영문+숫자+특수문자 8~20자를 입력하셔야 합니다.');
+      return false;
+
+    }else if(checkResult == true && lengthCheck == true){
+      $("#valid-error-password").attr("style", "display:''; color:#4169e1;").html('* 사용가능한 비밀번호 입니다.');
+      return true;
+    }
+
+  }
+
+  // 비밀번호 재확인 체크
+  function validConfirmUserPasswordCheck() {
+    var password = $('#userPassword').val();
+    var confirmPassword = $('#confirmUserPassword').val();
+
+    if (confirmPassword !== '') {
+      if (password != confirmPassword) {
+        $('#valid-error-confirmPassword').attr("style", "display:''; color:#ff0000").html('비밀번호가 일치하지 않습니다.'); 
+        return false;
+      }else {
+        $('#valid-error-confirmPassword').attr("style", "display:''; color:#4169e1;").html('확인되었습니다.');
+        return true;
+      }
+    }else{
+      $('#valid-error-confirmPassword').attr("style", "display:''; color:#ff0000").html('* 비밀번호를 입력해주세요.');
+      return false;
+    }
+  }
+
+  // 필수 약관 동의 확인
+  function agreeCheckbox(){
+    var checkResult = $('[name=agreeCheckbox]').prop('checked');
+    return checkResult;
+  }
 </script>
 @include('advisor/common/footer')    
 @include('advisor/common/end')

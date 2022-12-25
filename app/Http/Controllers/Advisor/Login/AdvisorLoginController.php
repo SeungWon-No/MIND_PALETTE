@@ -34,7 +34,7 @@ class AdvisorLoginController extends Controller
         if ($advisor) {
             if (Hash::check($password, $advisor->password)) {
                 $this->login($request,  Advisor::findAdvisorInfo($advisor->advisorPK));
-                return "success";
+                return redirect('/');
             }
         }
         return view("/advisor/login/loginFail");

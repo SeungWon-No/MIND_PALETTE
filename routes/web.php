@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
+use App\Http\Controllers\Advisor\Join\VerifyEmailDuplicationController;
 use App\Http\Controllers\Advisor\AdvisorIndexController;
 use App\Http\Controllers\Advisor\Login\AdvisorLoginController;
+use App\Http\Controllers\Advisor\Logout\AdvisorLogoutController;
+
 use App\Http\Controllers\Mobile\Advice\AgreeController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
 use App\Http\Controllers\Mobile\IndexController;
@@ -45,22 +48,23 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware([AutoLogin::cla
 });
 
 Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
-    Route::get('/', AdvisorIndexController::class);
-    
-    Route::resource("/login",AdvisorLoginController::class)->only([
+
+    Route::get('/', AdvisorIndexController::class); // 메인
+    Route::resource("/login",AdvisorLoginController::class)->only([ // 로그인
         'index', 'store'
     ]);
+    Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
-    Route::resource('/join', AdvisorJoinController::class)->only([
+    Route::resource('/join', AdvisorJoinController::class)->only([ // 회원가입
         'index', 'store', 'show'
     ]);
+    Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
 
-    Route::get('/detail', function () {
-        return view('/advisor/counseling'); // 상세 페이지
+    Route::get('/detail', function () { // 상세 페이지
+        return view('/advisor/counseling'); 
     });
-
     Route::get('/profile', function () {
-        return view('/advisor/profile'); // 로그인 페이지
+        return view('/advisor/profile');
     });
 });
 

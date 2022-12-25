@@ -13,6 +13,9 @@ class AdvisorIndexController extends Controller
         
         if ($isLogin) {
             $advisorPK = $request->session()->get('login')[0]["advisorPK"];
+
+        }else{
+            return view("/advisor/login/login");
         }
 
         return view("/advisor/main",[
