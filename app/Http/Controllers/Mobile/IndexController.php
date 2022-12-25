@@ -17,6 +17,7 @@ class IndexController extends Controller
         if ($isLogin) {
             $memberPK = $request->session()->get('login')[0]["memberPK"];
             $counselingRow = Counseling::findAllCounseling($memberPK);
+            $counselingCount = $counselingRow->count();
         }
 
         return view("/mobile/index",[

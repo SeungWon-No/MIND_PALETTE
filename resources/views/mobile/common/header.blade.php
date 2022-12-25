@@ -5,6 +5,9 @@
       $isLogin = true;
       $loginSession = session()->get('login')[0];
     }
+    $isShowProgress = $isShowProgress ?? false;
+    $isShowCloseButton = $isShowCloseButton ?? false;
+    $progressValue = $progressValue ?? 0;
 @endphp
 @if($isShowBackButton || $isShowCloseButton)
     <header id="header" class="basic-header">
@@ -22,6 +25,9 @@
                     <div class="icon icon-page-close-gray">페이지 닫기</div>
                 </a>
             </div>
+        @endif
+        @if($isShowProgress)
+            <div class="page-progress"><div class="bar" style="width:{{$progressValue}}%;"></div></div>
         @endif
     </header>
 @else
