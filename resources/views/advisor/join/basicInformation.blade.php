@@ -37,7 +37,7 @@
                 <div class="form-group__item">
                 <div class="form-group__data">
                     <input id="userEmail" name="userEmail" type="text" class="form-control wd-274" placeholder="입력" onkeyup="validEmailCheck()" required>
-                    <a href="/emailCheck"><button type="button" class="form-control__btn">중복확인</button></a>
+                    <button type="button" class="form-control__btn" onclick="emailDuplicationCheck()">중복확인</button>
                 </div>
                 <p id="valid-error-email" class="form-group-text" style="display: none;">
                     * 이메일 형식이 올바르지 않습니다.
@@ -119,6 +119,7 @@
 <script>
   function submitForm() {
     var validEmailResult = validEmailCheck(); // 이메일 체크
+    var validEmailDuplicationResult = emailDuplicationCheck(); // 이메일 중복체크
     var validPasswordResult = validPasswordCheck(); // 비밀번호 체크
     var validConfirmUserPasswordResult = validConfirmUserPasswordCheck(); // 비밀번호 확인 체크
     var validAgreeCheckboxResult = agreeCheckbox(); // 필수 동의 체크 여부
@@ -126,6 +127,9 @@
     if (validEmailResult == false) {
       return alert('이메일을 확인해주세요.');
       
+    }else if(validEmailDuplicationResult == false){
+      return alert('이미 등록된 이메일 입니다.');
+
     }else if(validPasswordResult == false){
       return alert('비밀번호를 확인해주세요.');
 
@@ -161,6 +165,36 @@
       return true;
     }
 
+  }
+
+  // 이메일 중복 체크 
+  function emailDuplicationCheck(){
+    var email = $('#userEmail').val();
+    var emailCount = "1";
+
+    if (email == "") {
+      $("#valid-error-email").attr("style", "display:''; color:#ff0000").html('* 이메일을 입력해주세요.');
+      return false;
+    }
+
+    $.ajax({
+        type:'POST',
+        url:'/emailCheck',
+        data: {
+            "userEmail" : email
+        },
+        async: false,
+        headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+        success:function(data){ // 중복 이메일이 있는 경우엔 1, 없는 경우엔 0을 return함 
+            emailCount = data;
+        }
+    });
+
+    if ( emailCount === "1" ) {
+      $("#valid-error-email").attr("style", "display:''; color:#ff0000").html('* 이미 등록된 이메일 입니다.');
+        return false;
+    }
+    return true;
   }
 
   // 비밀번호 유효성 체크 
