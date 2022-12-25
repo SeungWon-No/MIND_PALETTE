@@ -87,6 +87,8 @@ Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
     ]);
     Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
 
+    Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]); // 파일업로드
+
     Route::get('/detail', function () { // 상세 페이지
         return view('/advisor/counseling'); 
     });

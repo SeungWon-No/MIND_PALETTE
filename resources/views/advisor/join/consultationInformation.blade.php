@@ -321,14 +321,8 @@
       return result;
     }
 
-    // id = education-attachedFile
-    // name = education-attachedFilePath
-
-    // <input id="attachFile" type="file" name="filePath">
-    // <input id="attachFilePath" type="hidden">
-
+    // 파일 업로드
     $('input[name="education-attachedFilePath"]').change(function(){
-      console.log('1');
         if($("education-attachedFile").val() === ""){
             // 파일 취소
             cancel();
