@@ -32,9 +32,9 @@ $advisorSubDomain = env('ADVISOR_SUB_DOMAIN', 'dev-advisor');
 Route::middleware(['autoLogin'])->group(function () {
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]);
     Route::get("/sample",SampleController::class);
-    Route::get('/test', function () {
-        return phpinfo();
-    });
+//    Route::get('/test', function () {
+//        return phpinfo();
+//    });
 
     Route::post('/auth', PASSAuthController::class);
     Route::get('/auth/return', [PASSAuthController::class, "authReturn"]);
