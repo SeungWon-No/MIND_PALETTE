@@ -3,7 +3,7 @@
         <div class="footer__left">
           <div class="footer-logo">
             <a href="#none" class="footer-logo__link">
-              <img src="../advisor/assets/images/footer-logo.png" alt="다섯달란트 로고" class="footer-logo__img">
+              <img src="../advisorAssets/assets/images/footer-logo.png" alt="다섯달란트 로고" class="footer-logo__img">
             </a>
           </div>
         </div>

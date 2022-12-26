@@ -45,11 +45,11 @@ class AdvisorLoginController extends Controller
     {
         Advisor::updateLoginDate($advisor->advisorPK);
 
-        $redirectUrl = (isset($request->redirectUrl)) ? $request->redirectUrl : "/";
+        $redirectUrl = (isset($request->redirectUrl)) ? $request->redirectUrl : "/advisor/";
 
         if ( $request->autoLogin == "true" ) {
-            Cookie::queue(Cookie::forever('AKTV', $advisor->advisorPK));
-            
+            Cookie::queue(Cookie::forever('AD_AKTV', $advisor->advisorPK));
+
         }
 
         $loginData = [
@@ -57,7 +57,7 @@ class AdvisorLoginController extends Controller
             "advisorEmail" => $advisor->email,
             "advisorName" => Crypt::decryptString($advisor->advisorName),
         ];
-        $request->session()->push('login', $loginData);
+        $request->session()->push('advisorLogin', $loginData);
         return redirect($redirectUrl);
     }
 }

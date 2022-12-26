@@ -44,7 +44,7 @@ function customSelectControl() {
   customSelectBtn.forEach((selectBtn) => {
 
     selectBtn.addEventListener('click', () => {
-      
+
       const selectOptionBtn = selectBtn.nextElementSibling;
       const selectOption = [...selectOptionBtn.children];
 
@@ -55,7 +55,7 @@ function customSelectControl() {
 
       //옵션박스열기
       selectOptionBtn.classList.add('active');
-      
+
       selectOption.forEach((optionValue) => {
         optionValue.addEventListener('click', () => {
           selectBtn.innerHTML = `${optionValue.innerHTML}<span class="icon select-down-icon"></span>`
@@ -97,18 +97,19 @@ tableAddBtn.forEach((addBtn) => {
 
     const targetTable = addBtn.previousElementSibling;
     const targetTableTr = targetTable.querySelector('.member-table__body');
-    
+
     const tableTr = document.createElement('tr');
     tableTr.classList.add('table-row');
 
-    if (targetTable.classList.contains('member-table--01')) {
-
-      const table01Content = `<td class="table-col no-padding"><div class="select-box"><button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">학사</li><li class="select-option">석사</li><li class="select-option">박사</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="학교명"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="학과명"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="전공"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">졸업</li><li class="select-option">재학</li><li class="select-option">수료</li></ul></div></td><td class="table-col cursor"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td>` 
-      tableTr.innerHTML = table01Content;
-
-      targetTableTr.appendChild(tableTr);
-      
-    } else if(targetTable.classList.contains('member-table--02')) {
+      // if (targetTable.classList.contains('member-table--01')) {
+      //
+      //     const table01Content = `<td class="table-col no-padding"><div class="select-box"><button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">학사</li><li class="select-option">석사</li><li class="select-option">박사</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="학교명"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="학과명"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="전공"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">졸업</li><li class="select-option">재학</li><li class="select-option">수료</li></ul></div></td><td class="table-col cursor"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td>`
+      //     tableTr.innerHTML = table01Content;
+      //
+      //     targetTableTr.appendChild(tableTr);
+      //
+      // } else
+      if(targetTable.classList.contains('member-table--02')) {
 
       const table02Content = `<tr class="table-row"><td class="table-col"><input type="text" class="tabel-form__control" placeholder="발행처"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="자격이름"></td><td class="table-col"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td></tr>`;
       tableTr.innerHTML = table02Content;
@@ -141,7 +142,7 @@ tableAddBtn.forEach((addBtn) => {
       // img src 속성가져오기
       const imgEle = plusBtn.parentElement.parentElement.children[0];
       const imgSrc = imgEle.getAttribute('src');
-      
+
 
       layerPopImg.setAttribute('src', imgSrc);
       pop.open('detailImagePop');
@@ -163,23 +164,23 @@ tableAddBtn.forEach((addBtn) => {
     detailItemVideo.addEventListener('click', () => {
 
       const layerVideoSrc = videoSource.getAttribute('src');
-  
+
       //비디오 태그 생성
       const popVideo = document.createElement('video')
       popVideo.classList.add('layer-video');
       popVideo.setAttribute('controls','');
-  
+
       const popVideoSource = document.createElement('source');
       popVideoSource.setAttribute('type', 'video/mp4');
       popVideoSource.setAttribute('src', layerVideoSrc)
-  
+
       layerPopVideoArea.appendChild(popVideo);
       popVideo.appendChild(popVideoSource);
-      
+
       //팝업 나타나기
       layerPopVideo.classList.add('active');
       document.querySelector('html').classList.add('fix');
-  
+
     })
 
     closeLayerPop.addEventListener('click', () => {
@@ -189,7 +190,7 @@ tableAddBtn.forEach((addBtn) => {
       document.querySelector('html').classList.remove('fix');
       //비디오 삭제
       document.querySelector('.layer-video').remove();
-    })    
+    })
   }
 
 
@@ -261,7 +262,7 @@ const detailSliderWrap = document.querySelector('.detail-slider__wrap');
 const detailSliderClose = document.querySelector('.detail-slider__close');
 
 
-const detailItemDocumentBtn = document.querySelectorAll('.detail-item .detail-item__btn.doc'); 
+const detailItemDocumentBtn = document.querySelectorAll('.detail-item .detail-item__btn.doc');
 
 detailItemDocumentBtn.forEach(function(docBtn, btnIdx) {
   docBtn.addEventListener('click', (e) => {
@@ -284,7 +285,7 @@ if (detailSliderClose) {
 }
 
 
-// 상담상세 정보 탭 
+// 상담상세 정보 탭
 
 const detailTabBtn = document.querySelectorAll('.detail-tab__btn');
 const edtailTabContent = document.querySelectorAll('.content-cell');
@@ -328,7 +329,7 @@ if (loginCheckBox) {
   })
 
 } else {
-  
+
 }
 
 // 메인 필터버튼 클릭
@@ -437,7 +438,7 @@ const pop = {
     //팝업 컨텐츠 외 영역 클릭시 닫기 이벤트
     document.addEventListener('click', (e) => {
       if(pop.isActive){
-        if(e.target.parentNode.parentNode == pop.element){					
+        if(e.target.parentNode.parentNode == pop.element){
           pop.close();
         }
       }

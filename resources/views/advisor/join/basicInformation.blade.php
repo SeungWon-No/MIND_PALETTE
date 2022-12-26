@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <form id="joinForm" name="joinForm" action="/join" method="POST" autocomplete="off">
+      <form id="joinForm" name="joinForm" action="/advisor/join" method="POST" autocomplete="off">
       @csrf
         <div class="member-cell pd-56-114-105">
             <div class="member-group">
@@ -54,7 +54,7 @@
                 <div class="member-label">비밀번호<em class="need">*</em></div>
                 <div class="form-group__item">
                 <div class="form-group__data">
-                    <input id="userPassword" name="userPassword" type="password" class="form-control pwd" placeholder="8-20자 이내로  영문 , 숫자 , 특수문자를 조합하여 작성합니다." 
+                    <input id="userPassword" name="userPassword" type="password" class="form-control pwd" placeholder="8-20자 이내로  영문 , 숫자 , 특수문자를 조합하여 작성합니다."
                     onkeyup="validPasswordCheck()" required>
                 </div>
                 <p id="valid-error-password" class="form-group-text" style="display: none;">
@@ -69,7 +69,7 @@
                 <div class="member-label">비밀번호 재확인<em class="need">*</em></div>
                 <div class="form-group__item">
                 <div class="form-group__data">
-                    <input id="confirmUserPassword" name="confirmUserPassword" type="password" class="form-control pwd" 
+                    <input id="confirmUserPassword" name="confirmUserPassword" type="password" class="form-control pwd"
                     onkeyup="validConfirmUserPasswordCheck()" required>
                 </div>
                 <p id="valid-error-confirmPassword" class="form-group-text" style="display: none;">
@@ -126,7 +126,7 @@
 
     if (validEmailResult == false) {
       return alert('이메일을 확인해주세요.');
-      
+
     }else if(validEmailDuplicationResult == false){
       return alert('이미 등록된 이메일 입니다.');
 
@@ -167,7 +167,7 @@
 
   }
 
-  // 이메일 중복 체크 
+  // 이메일 중복 체크
   function emailDuplicationCheck($sign){
     var email = $('#userEmail').val();
     var emailCount = "1";
@@ -180,13 +180,13 @@
 
     $.ajax({
         type:'POST',
-        url:'/emailCheck',
+        url:'/advisor/emailCheck',
         data: {
             "userEmail" : email
         },
         async: false,
         headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
-        success:function(data){ // 중복 이메일이 있는 경우엔 1, 없는 경우엔 0을 return함 
+        success:function(data){ // 중복 이메일이 있는 경우엔 1, 없는 경우엔 0을 return함
             emailCount = data;
         }
     });
@@ -200,10 +200,10 @@
       alert('사용 가능한 이메일입니다.');
       return true;
     }
-    
+
   }
 
-  // 비밀번호 유효성 체크 
+  // 비밀번호 유효성 체크
   function validPasswordCheck() {
     var password = $('#userPassword').val();
     var regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
@@ -237,7 +237,7 @@
 
     if (confirmPassword !== '') {
       if (password != confirmPassword) {
-        $('#valid-error-confirmPassword').attr("style", "display:''; color:#ff0000").html('비밀번호가 일치하지 않습니다.'); 
+        $('#valid-error-confirmPassword').attr("style", "display:''; color:#ff0000").html('비밀번호가 일치하지 않습니다.');
         return false;
       }else {
         $('#valid-error-confirmPassword').attr("style", "display:''; color:#4169e1;").html('확인되었습니다.');
@@ -255,5 +255,5 @@
     return checkResult;
   }
 </script>
-@include('advisor/common/footer')    
+@include('advisor/common/footer')
 @include('advisor/common/end')

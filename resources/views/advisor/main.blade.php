@@ -51,7 +51,7 @@
               <div class="counseling-list__wrap">
                 <!-- ====================================
                   counseling 케이스 총 6가지 (전부 li태그에 클래스명 추가)
-                1. 상담대기 
+                1. 상담대기
                 2. 상담중 counseling에 ongoing 클래스 추가
                 3. 상담불가 counseling에 disabled 클래스 추가
                 4. 상담끝  counseling에 end 클래스 추가
@@ -62,7 +62,7 @@
                   <!-- 상담 리스트 시작 -->
                   <li class="counseling">
                     <a href="#none" class="counseling-thumb">
-                      <img src="../advisor/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
+                      <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
                       <div class="counseling-user__name">홍길동</div>
@@ -95,7 +95,7 @@
                 <div class="expert-item">
                   <div class="expert-item__head">
                     <div class="expert-profile__photo">
-                      <img src="../advisor/assets/images/user-profile.jpg" alt="" class="expert-profile__img">
+                      <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="expert-profile__img">
                     </div>
                     <div class="expert-profile">
                       <div class="expert-name">아무개 전문 상담사</div>
@@ -132,7 +132,7 @@
             <div class="account">
               <div class="account-info__cell">
                 <div class="account-profile__photo">
-                  <img src="../advisor/assets/images/user-profile.jpg" alt="" class="account-profile__img">
+                  <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="account-profile__img">
                 </div>
                 <div class="account-profile">
                   <div class="account-profile__cell">
@@ -140,7 +140,7 @@
                       <div class="account-profile__name">김아무 상담사</div>
                       <div class="account-profile__center">사랑 마음 센터</div>
                     </div>
-                    <a href="/logout" class="account-logout__btn">로그아웃</a>
+                    <a href="/advisor/logout" class="account-logout__btn">로그아웃</a>
                   </div>
                   <a href="#none" class="account-profile__link">프로필 바로가기 ></a>
                 </div>
@@ -176,7 +176,7 @@
                 </li>
               </ul>
             </div>
-  
+
             <div class="recent-history">
               <div class="aside__heading">
                 <h4 class="aside__heading__tit">최근 상담 내역</h4>
@@ -186,7 +186,7 @@
                 <?/* 최근 상담 내역 리스트 시작*/?>
                 <div class="recent-history__item">
                   <div class="recent-history__photo">
-                    <img src="../advisor/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
+                    <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
                   </div>
                   <div class="recent-history__info-wrap">
                     <div class="recent-history__info">
@@ -241,15 +241,15 @@
             </div>
             <div class="aside__link-banners">
               <a href="#" class="aside__link-banner aside__link-banner--top">
-                <img src="../advisor/assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
+                <img src="../advisorAssets/assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
               </a>
               <a href="#" class="aside__link-banner aside__link-banner--bottom">
-                <img src="../advisor/assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
+                <img src="../advisorAssets/assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
               </a>
             </div>
           </div> <!-- column-right end-->
         </div>
       </main>
     </div>
-@include('advisor/common/footer')    
+@include('advisor/common/footer')
 @include('advisor/common/end')
