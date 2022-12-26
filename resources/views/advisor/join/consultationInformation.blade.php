@@ -55,13 +55,12 @@
                   <tr class="table-row">
                     <td class="table-col no-padding">
                       <div class="select-box">
-                        <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
+                        <button id="educationInfo" name="educationInfo" class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
                         <ul class="select-option__list">
                           <li class="select-option">선택</li>
-                          <li class="select-option" value="학사">학사</li>
-                          <li class="select-option" value="석사">석사</li>
-                          <li class="select-option" value="박사">박사</li>
+                          <li class="select-option">학사</li>
+                          <li class="select-option">석사</li>
+                          <li class="select-option">박사</li>
                         </ul>                      
                       </div>
                     </td>
@@ -72,23 +71,24 @@
                       <input id="department" name="department" type="text" class="tabel-form__control" placeholder="학과명">
                     </td>
                     <td class="table-col">
-                      <input id="major " name="major " type="text" class="tabel-form__control" placeholder="전공">
+                      <input id="major" name="major" type="text" class="tabel-form__control" placeholder="전공">
                     </td>
                     <td class="table-col no-padding">
                       <div class="select-box">
-                        <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
+                        <button id="graduationInfo" name="graduationInfo" class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
                         <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                         <ul class="select-option__list">
                           <li class="select-option">선택</li>
-                          <li class="select-option" value="졸업">졸업</li>
-                          <li class="select-option" value="재학">재학</li>
-                          <li class="select-option" value="수료">수료</li>
+                          <li class="select-option">졸업</li>
+                          <li class="select-option">재학</li>
+                          <li class="select-option">수료</li>
                         </ul>                      
                       </div>
                     </td>
                     <td class="table-col cursor">
                       <label class="table-file__label">
-                        <input type="file" class="table-file">
+                        <input id="education-attachedFile" name="education-attachedFilePath" type="file" class="table-file">
+                        <input id="education-attachedFilePath" type="hidden">
                         첨부하기
                         <!-- 파일올렸을때 
                           <span class="table-file__name">증명서.png</span> 
@@ -98,7 +98,7 @@
                   </tr>
                 </tbody>
               </table>
-              <button type="button" class="table-add__btn">추가하기</button>
+              <button type="button" class="table-add__btn" onclick="getEducation()">추가하기</button>
             </div>
           </div>
           <div class="member-cell">
@@ -276,8 +276,96 @@
 </form>
 <script>
     function submitForm() {
-        $("#nextStepForm").submit();
+        //$("#nextStepForm").submit();
     }
+
+    // 학력사항
+    function getEducation () {
+      var issuance = $('#issuance').val();
+      var schoolName = $('#schoolName').val();
+      var department = $('#department').val();
+      var major = $('#major').val();
+      var graduation = $('#graduationInfo').text();
+      var attachedFile = '';
+
+      var result = {
+        'degree':degree, 
+        'schoolName':schoolName, 
+        'department':department, 
+        'major':major, 
+        'graduation':graduation,
+        'attachedFile':attachedFile,
+      };
+
+      return result;
+    }
+
+    // 자격사항
+    function getQualification (){
+      var degree = $('#educationInfo').text();
+      var schoolName = $('#schoolName').val();
+      var department = $('#department').val();
+      var major = $('#major').val();
+      var graduation = $('#graduationInfo').text();
+      var attachedFile = '';
+
+      var result = {
+        'degree':degree, 
+        'schoolName':schoolName, 
+        'department':department, 
+        'major':major, 
+        'graduation':graduation,
+        'attachedFile':attachedFile,
+      };
+
+      return result;
+    }
+
+    // 파일 업로드
+    $('input[name="education-attachedFilePath"]').change(function(){
+        if($("education-attachedFile").val() === ""){
+            // 파일 취소
+            cancel();
+        } else {
+            save();
+        }
+    });
+
+    function save() {
+      
+        const imageInput = $("#education-attachedFile")[0];
+        const formData = new FormData();
+        formData.append("file", imageInput.files[0]);
+        formData.append("oldFilePath", $("#education-attachedFilePath").val());
+
+        $.ajax({
+            type:"POST",
+            url: "/fileUpload",
+            processData: false,
+            contentType: false,
+            data: formData,
+            async: false,
+            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+            success: function(json){
+                var data = JSON.parse(json);
+                if ( data.status === "success" ) {
+                    $("#education-attachedFilePath").val(data.filePath);
+                    alert("path = "+data.filePath);
+                } else {
+                    alert(data.message);
+                }
+            },
+            err: function(err){
+                console.log("err:", err)
+            }
+        });
+        alert('save')
+    }
+    function cancel() {
+        alert('cancel')
+    }
+    
+
 </script>
 @include('advisor/common/footer')    
 @include('advisor/common/end')
