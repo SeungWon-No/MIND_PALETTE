@@ -87,18 +87,15 @@
                     </td>
                     <td class="table-col cursor">
                       <label class="table-file__label">
-                        <input id="education-attachedFile" name="education-attachedFilePath" type="file" class="table-file">
-                        <input id="education-attachedFilePath" type="hidden">
+                        <input id="attachedFile" name="attachedFilePath" type="file" class="table-file">
+                        <input id="attachedFilePath" type="hidden">
                         첨부하기
-                        <!-- 파일올렸을때 
-                          <span class="table-file__name">증명서.png</span> 
-                        //파일올렸을때 -->
                       </label>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <button type="button" class="table-add__btn" onclick="getEducation()">추가하기</button>
+              <button type="button" id="addCareer" class="table-add__btn">추가하기</button>
             </div>
           </div>
           <div class="member-cell">
@@ -148,7 +145,7 @@
                   </tr>
                 </tbody>
               </table>
-              <button type="button" class="table-add__btn">추가하기</button>
+              <button type="button" id="addCareer" class="table-add__btn">추가하기</button>
             </div>
           </div>
           <div class="member-cell">
@@ -258,7 +255,7 @@
                   </tr>
                 </tbody>
               </table>
-              <button type="button" class="table-add__btn">추가하기</button>
+              <button type="button" id="addCareer" class="table-add__btn">추가하기</button>
             </div>
           </div>
           <label class="label-checkbox member mg-t-53">
@@ -276,67 +273,65 @@
 </form>
 <script>
     function submitForm() {
+      console.log(getEducation());
         //$("#nextStepForm").submit();
     }
 
+    
     // 학력사항
     function getEducation () {
-      var issuance = $('#issuance').val();
+      var degree = $('#educationInfo').text();
+      degree == '선택' ? '' : degree;
       var schoolName = $('#schoolName').val();
       var department = $('#department').val();
       var major = $('#major').val();
       var graduation = $('#graduationInfo').text();
-      var attachedFile = '';
-
+      graduation == '선택' ? '' : graduation;
+      var attachedFilePath = $('#attachedFilePath').val();
+      
       var result = {
         'degree':degree, 
         'schoolName':schoolName, 
         'department':department, 
         'major':major, 
         'graduation':graduation,
-        'attachedFile':attachedFile,
+        'attachedFilePath':attachedFilePath,
       };
 
       return result;
     }
 
     // 자격사항
-    function getQualification (){
-      var degree = $('#educationInfo').text();
-      var schoolName = $('#schoolName').val();
-      var department = $('#department').val();
-      var major = $('#major').val();
-      var graduation = $('#graduationInfo').text();
-      var attachedFile = '';
+    // function getQualification (){
+    //   var schoolName = $('#schoolName').val();
+    //   var department = $('#department').val();
+    //   var graduation = $('#graduationInfo').text();
+    //   var attachedFile = '';
 
-      var result = {
-        'degree':degree, 
-        'schoolName':schoolName, 
-        'department':department, 
-        'major':major, 
-        'graduation':graduation,
-        'attachedFile':attachedFile,
-      };
+    //   var result = {
+    //     'degree':degree, 
+    //     'graduation':graduation,
+    //     'attachedFile':attachedFile,
+    //   };
 
-      return result;
-    }
+    //   return result;
+    // }
 
     // 파일 업로드
-    $('input[name="education-attachedFilePath"]').change(function(){
-        if($("education-attachedFile").val() === ""){
+    $('input[name="attachedFilePath"]').change(function(){
+        if($("attachedFile").val() === ""){
             // 파일 취소
             cancel();
         } else {
             save();
         }
     });
-
     function save() {
       
-        const imageInput = $("#education-attachedFile")[0];
+        const imageInput = $("#attachedFile")[0];
         const formData = new FormData();
         formData.append("file", imageInput.files[0]);
-        formData.append("oldFilePath", $("#education-attachedFilePath").val());
+        formData.append("oldFilePath", $("#attachedFilePath").val());
 
         $.ajax({
             type:"POST",
@@ -349,20 +344,32 @@
             success: function(json){
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
-                    $("#education-attachedFilePath").val(data.filePath);
-                    alert("path = "+data.filePath);
+                    $("#attachedFilePath").val(data.filePath);
+                    
                 } else {
-                    alert(data.message);
+                   console.log(data.message);
                 }
             },
             err: function(err){
                 console.log("err:", err)
             }
         });
-        alert('save')
     }
     function cancel() {
-        alert('cancel')
+        alert('파일 업로드 취소되었습니다.');
+    }
+
+    // 추가하기 
+    $("#addCareer").click(function (){
+      addCareer();
+    });
+    
+    function addCareer (){
+      alert('dd');
+
+
+
+
     }
     
 

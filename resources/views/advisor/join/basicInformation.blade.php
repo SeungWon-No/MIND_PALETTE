@@ -37,7 +37,7 @@
                 <div class="form-group__item">
                 <div class="form-group__data">
                     <input id="userEmail" name="userEmail" type="text" class="form-control wd-274" placeholder="입력" onkeyup="validEmailCheck()" required>
-                    <button type="button" class="form-control__btn" onclick="emailDuplicationCheck()">중복확인</button>
+                    <button type="button" class="form-control__btn" onclick="emailDuplicationCheck('check')">중복확인</button>
                 </div>
                 <p id="valid-error-email" class="form-group-text" style="display: none;">
                     * 이메일 형식이 올바르지 않습니다.
@@ -119,7 +119,7 @@
 <script>
   function submitForm() {
     var validEmailResult = validEmailCheck(); // 이메일 체크
-    var validEmailDuplicationResult = emailDuplicationCheck(); // 이메일 중복체크
+    var validEmailDuplicationResult = emailDuplicationCheck('submit'); // 이메일 중복체크
     var validPasswordResult = validPasswordCheck(); // 비밀번호 체크
     var validConfirmUserPasswordResult = validConfirmUserPasswordCheck(); // 비밀번호 확인 체크
     var validAgreeCheckboxResult = agreeCheckbox(); // 필수 동의 체크 여부
@@ -161,16 +161,17 @@
       return false;
 
     }else{
-      $("#valid-error-email").attr("style", "display:''; color:#4169e1;").html('* 사용가능한 이메일 입니다.');
+      $("#valid-error-email").attr("style", "display:''; color:#4169e1;").html('* 사용 가능한 이메일입니다.');
       return true;
     }
 
   }
 
   // 이메일 중복 체크 
-  function emailDuplicationCheck(){
+  function emailDuplicationCheck($sign){
     var email = $('#userEmail').val();
     var emailCount = "1";
+    var sign = $sign;
 
     if (email == "") {
       $("#valid-error-email").attr("style", "display:''; color:#ff0000").html('* 이메일을 입력해주세요.');
@@ -190,11 +191,16 @@
         }
     });
 
-    if ( emailCount === "1" ) {
+    if ( emailCount === "1" && sign == 'check') { // 중복된 이메일이 있는 경우
       $("#valid-error-email").attr("style", "display:''; color:#ff0000").html('* 이미 등록된 이메일 입니다.');
-        return false;
+      alert('이미 등록된 이메일 입니다.');
+      return false;
+
+    }else if(sign == 'check'){ // 이메일 사용 가능한 경우
+      alert('사용 가능한 이메일입니다.');
+      return true;
     }
-    return true;
+    
   }
 
   // 비밀번호 유효성 체크 
@@ -218,7 +224,7 @@
       return false;
 
     }else if(checkResult == true && lengthCheck == true){
-      $("#valid-error-password").attr("style", "display:''; color:#4169e1;").html('* 사용가능한 비밀번호 입니다.');
+      $("#valid-error-password").attr("style", "display:''; color:#4169e1;").html('* 사용 가능한 비밀번호 입니다.');
       return true;
     }
 
