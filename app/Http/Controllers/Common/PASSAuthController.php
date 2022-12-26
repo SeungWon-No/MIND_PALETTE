@@ -66,7 +66,7 @@ class PASSAuthController extends Controller
             }
         }
 
-        return view('/join/auth',[
+        return view('/common/auth',[
             "popupUrl" => $popupUrl,
             "RSLT_CD" => $RSLT_CD,
             "RSLT_MSG" => $RSLT_MSG,
@@ -178,7 +178,7 @@ class PASSAuthController extends Controller
             }
         } else {
         }
-        return view("/join/authResult",[
+        return view("/common/authResult",[
             "isSuccess" => $isSuccess,
             "authResult" => $authResult
         ]);
