@@ -30,8 +30,13 @@ class HTPController extends Controller
         $pageOrder = Code::findCode("counselingStatus");
 
         $pageOrderResult = array();
+        $index = 0;
         foreach ($pageOrder as $pageOrderRow) {
-            $pageOrderResult[$pageOrderRow->codePK] = $pageOrderRow->codeName;
+            $pageOrderResult[$index] = [
+                "codePK" => $pageOrderRow->codePK,
+                "codeName" => $pageOrderRow->codeName
+            ];
+            $index++;
         }
 
         return $pageOrderResult;
