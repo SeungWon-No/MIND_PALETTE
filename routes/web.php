@@ -6,7 +6,9 @@ use App\Http\Controllers\Advisor\AdvisorIndexController;
 use App\Http\Controllers\Advisor\Login\AdvisorLoginController;
 use App\Http\Controllers\Advisor\Logout\AdvisorLogoutController;
 use App\Http\Controllers\Common\FileUploadController;
+use App\Http\Controllers\Common\PASSAuthController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
+use App\Http\Controllers\Mobile\Advice\ProcessInformationController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
 use App\Http\Controllers\Mobile\Advice\SampleController;
 use App\Http\Controllers\Mobile\FreeAdvice\AnxietyController;
@@ -21,14 +23,22 @@ use App\Http\Controllers\Mobile\Logout\LogoutController;
 use App\Http\Controllers\Mobile\Mypage\MyPageController;
 use Illuminate\Support\Facades\Route;
 
-const CSS_VERSION = "1";
-const JS_VERSION = "1";
+const CSS_VERSION = "2";
+const JS_VERSION = "2";
 
 $mobileSubDomain = env('MOBILE_SUB_DOMAIN', 'dev-m');
 $advisorSubDomain = env('ADVISOR_SUB_DOMAIN', 'dev-advisor');
 
 Route::middleware(['autoLogin'])->group(function () {
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]);
+    Route::get("/sample",SampleController::class);
+//    Route::get('/test', function () {
+//        return phpinfo();
+//    });
+
+    Route::post('/auth', PASSAuthController::class);
+    Route::get('/auth/return', [PASSAuthController::class, "authReturn"]);
+
     Route::get("/sample",SampleController::class);
 });
 
@@ -45,6 +55,27 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware(['autoLogin'])-
 
     Route::get('/freeAdviceRequest',RequestInfoController::class);
     Route::post('/createFreeAdvice',[RequestInfoController::class,"create"]);
+
+    Route::get('/HTPInformation', function () {
+        return view('/mobile/etc/HTPInformation'); // 상세 페이지
+    });
+    Route::get('/adviceProcessInformation', function () {
+        return view('/mobile/etc/adviceInformation'); // 상세 페이지
+    });
+
+});
+
+Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware(['autoLogin','loginValid'])->group(function () {
+    Route::get("/adviceAgree", AgreeController::class);
+    Route::resource("/requestAdvice", RequestAdviceController::class)->only([
+        'index', 'store'
+    ]);
+    Route::resource("/mypage", MyPageController::class);
+    Route::get("/logout", LogoutController::class);
+
+    Route::get("/processInformation/{counselingPK}", ProcessInformationController::class);
+    Route::get("/adviceInformation/{counselingPK}", [ProcessInformationController::class,"adviceInformation"]);
+    Route::get("/paintingHouseTimer/{counselingPK}", [ProcessInformationController::class, "paintingHouseTimer"]);
 });
 
 Route::domain($mobileSubDomain .'.maeumpalette.com')
@@ -65,15 +96,6 @@ Route::domain($mobileSubDomain .'.maeumpalette.com')
     Route::post('/selfWorth/{counselingTemplatePK}',[SelfWorthController::class,"create"]);
 });
 
-Route::domain($mobileSubDomain .'.maeumpalette.com')->middleware(['autoLogin','loginValid'])->group(function () {
-    Route::get("/adviceAgree", AgreeController::class);
-    Route::resource("/requestAdvice", RequestAdviceController::class)->only([
-        'index', 'store'
-    ]);
-
-    Route::resource("/mypage", MyPageController::class);
-    Route::get("/logout", LogoutController::class);
-});
 
 Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
     Route::get('/', AdvisorIndexController::class);
@@ -90,7 +112,7 @@ Route::domain($advisorSubDomain.'.maeumpalette.com')->group(function () {
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]); // 파일업로드
 
     Route::get('/detail', function () { // 상세 페이지
-        return view('/advisor/counseling'); 
+        return view('/advisor/counseling');
     });
     Route::get('/profile', function () {
         return view('/advisor/profile');

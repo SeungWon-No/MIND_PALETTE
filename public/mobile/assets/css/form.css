@@ -132,6 +132,11 @@ input[type=number]::-webkit-outer-spin-button {
 .form-checkbox.survey input:checked + .form-check-icon {background:#000;}
 .form-checkbox.survey input:checked + .form-check-icon > em {color:#fff; font-weight:700;}
 
+.form-checkbox.type2 .form-check-icon:before {top:50%; margin-top:-10px; background:url(../images/icon/icon-checkbox-img-gray.png) center center no-repeat; background-size:100%;}
+.form-checkbox.type2 .form-check-icon:after {top:50%; margin-top:-10px; background:url(../images/icon/icon-checkbox-img-orange.png) center center no-repeat; background-size:100%;}
+.form-checkbox.type2 .form-check-icon > em {font-size:13px; line-height:1.3;}
+
+
 /* 라디오박스형 */
 .form-radiobox {position:relative;display:inline-block; line-height:20px;}
 .form-radiobox input {position:absolute; top:0; left:0; display:block; width:100%; height:100%; opacity:0; cursor:pointer;}
@@ -204,6 +209,9 @@ input[type=number]::-webkit-outer-spin-button {
 .form-label-input {display:flex; align-items:center;}
 .form-label-input > input {flex:1; min-width:72px;}
 .form-label-input .char {flex:0 0 auto; font-size:15px; color:#000; margin-left:6px;}
+.form-label-input.inline-flex {display:inline-flex;}
+.form-label-input.inline-flex > input {min-width:0; width:auto;}
+.form-label-input.inline-flex + .form-label-input.inline-flex {margin-left:18px;}
 
 .form-horizontal-items .grid-layout-inner {margin:0 -7px; flex-wrap:nowrap;}
 .form-horizontal-items .grid-layout-cell {padding:0 7px;}
@@ -245,3 +253,41 @@ input[type=number]::-webkit-outer-spin-button {
 .form-survey-horizontal-inputs.check4 .btn-survey-nav:nth-child(2) > em {font-weight:700; color:#fff;}
 .form-survey-horizontal-inputs.check4 .btn-survey-nav:nth-child(3) > em {font-weight:700; color:#fff;}
 .form-survey-horizontal-inputs.check4 .btn-survey-nav:nth-child(4) > em {font-weight:700; color:#fff;}
+
+.form-survey-horizontal-inputs.six.check1 .bar,
+.form-survey-horizontal-inputs.six.check2 .bar{background-color:#6ECEAB;}
+
+.form-survey-horizontal-inputs.six.check3 .bar,
+.form-survey-horizontal-inputs.six.check4 .bar{background-color:#FFA113;}
+
+.form-survey-horizontal-inputs.six.check5 .bar,
+.form-survey-horizontal-inputs.six.check6 .bar{background-color:#FF6C7E;}
+
+.form-survey-horizontal-inputs.six.check1 .bar {width:16.66%;}
+.form-survey-horizontal-inputs.six.check2 .bar {width:33.33%;}
+.form-survey-horizontal-inputs.six.check3 .bar {width:49.98%;}
+.form-survey-horizontal-inputs.six.check4 .bar {width:66.66%;}
+.form-survey-horizontal-inputs.six.check5 .bar {width:83.32%;}
+.form-survey-horizontal-inputs.six.check6 .bar {width:100%;}
+.form-survey-horizontal-inputs.six.check1 .btn-survey-nav:nth-child(1) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check2 .btn-survey-nav:nth-child(1) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check2 .btn-survey-nav:nth-child(2) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check3 .btn-survey-nav:nth-child(1) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check3 .btn-survey-nav:nth-child(2) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check3 .btn-survey-nav:nth-child(3) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check4 .btn-survey-nav:nth-child(1) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check4 .btn-survey-nav:nth-child(2) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check4 .btn-survey-nav:nth-child(3) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check4 .btn-survey-nav:nth-child(4) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check5 .btn-survey-nav:nth-child(1) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check5 .btn-survey-nav:nth-child(2) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check5 .btn-survey-nav:nth-child(3) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check5 .btn-survey-nav:nth-child(4) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check5 .btn-survey-nav:nth-child(5) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check6 .btn-survey-nav:nth-child(1) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check6 .btn-survey-nav:nth-child(2) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check6 .btn-survey-nav:nth-child(3) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check6 .btn-survey-nav:nth-child(4) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check6 .btn-survey-nav:nth-child(5) > em{font-weight:700; color:#fff;}
+.form-survey-horizontal-inputs.six.check6 .btn-survey-nav:nth-child(6) > em{font-weight:700; color:#fff;}
+
