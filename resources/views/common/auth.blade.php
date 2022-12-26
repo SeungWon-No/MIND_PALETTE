@@ -30,7 +30,7 @@
         <script>request();</script>
     @else
         //요청 실패 페이지로 리턴
-        <script>alert('".$RSLT_CD." : ".$RSLT_MSG."'); self.close();</script>
+        <script>alert('{{$RSLT_CD}} : {{$RSLT_MSG}}'); self.close();</script>
     @endif
 @else
     <script>
