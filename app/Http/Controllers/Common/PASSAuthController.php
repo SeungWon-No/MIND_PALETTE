@@ -11,7 +11,7 @@ class PASSAuthController extends Controller
     {
         $SITE_NAME	=	$request->SITE_NAME;
         // $SITE_URL 	=   "forkliftdream.com";
-        $SITE_URL 	=   "m.forkliftdream.com";
+        $SITE_URL 	=   "m.maeumpalette.com";
 
         $CP_CD = "V60440000000";
 
