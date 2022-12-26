@@ -18,4 +18,9 @@ class Questions extends Model
             ->get();
     }
 
+    public static function findFixQuestions($questionsPK) {
+        return Questions::whereIn('questionsPK',$questionsPK)
+            ->orderBy("questionsOrder", "ASC")
+            ->get();
+    }
 }

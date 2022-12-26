@@ -84,13 +84,13 @@
                     <div class="main-about">
                         <div class="main-about-inner">
                             <div class="main-about-cell">
-                                <a href="#" class="card-item card-icon">
+                                <a href="/HTPInformation" class="card-item card-icon">
                                     <div class="item-icon"><div class="icon icon-ui-draw"></div></div>
                                     <div class="item-subject">HTP 검사란?</div>
                                 </a>
                             </div>
                             <div class="main-about-cell">
-                                <a href="#" class="card-item card-icon">
+                                <a href="/adviceProcessInformation" class="card-item card-icon">
                                     <div class="item-icon"><div class="icon icon-ui-text"></div></div>
                                     <div class="item-subject">검사 진행 방법</div>
                                 </a>
