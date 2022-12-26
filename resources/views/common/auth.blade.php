@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마음팔레트</title>
-    @if($ret == 0)
+@if($ret == 0)
         <script>
             function request(){
                 document.form1.action = "{{$popupUrl}}";
@@ -26,15 +26,12 @@
     <input type="hidden" name="target_id" value="">
     <!-- 필수 항목 //-->
 </form>
-    <?php
-    if ({{$RSLT_CD}} == "B000") {
-        //인증요청
-        echo ("<script>request();</script>");
-    } else {
+    @if ($RSLT_CD == "B000")
+        <script>request();</script>
+    @else
         //요청 실패 페이지로 리턴
-        echo ("<script>alert('".$RSLT_CD." : ".$RSLT_MSG."'); self.close();</script>");
-    }
-    ?>
+        <script>alert('".$RSLT_CD." : ".$RSLT_MSG."'); self.close();</script>
+    @endif
 @else
     <script>
         alert('Fuction Fail / ret: {{$ret}}');
