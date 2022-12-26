@@ -208,8 +208,22 @@
             <div class="page-bottom-ui"><a id="nextButton" class="btn btn-orange btn-large-size btn-page-action disabled">다음으로</a></div>
         </div>
     </div>
+
+    <form name="phoneAuth" action="/auth" method="post">
+        @csrf
+        <input type="hidden" name="CP_CD" maxlength="12" size="16" value="">
+        <input type="hidden" name="SITE_NAME" maxlength="20" size="24" value="마음팔레트">
+    </form>
 </section>
 <script>
+
+    function phoneAuthSubmit() {
+        window.open("/auth", "auth_popup", "width=430,height=640,scrollbars=yes");
+        var form1 = document.phoneAuth;
+        form1.target = "auth_popup";
+        form1.submit();
+    }
+
     function allAgree() {
         if ($("#allChecked").is(":checked")) {
             $(".check-agree-checkbox").prop('checked',false);
@@ -231,7 +245,8 @@
     function checkNextButtonStatus() {
         if (checkAgreeStatus()) {
             $("#nextButton").removeClass("disabled");
-            $("#nextButton").attr("href",'/join/create');
+            // $("#nextButton").attr("href",'/join/create');
+            $("#nextButton").attr("href",'javascript:phoneAuthSubmit()');
         } else {
             $("#nextButton").addClass("disabled");
             $("#nextButton").removeAttr("href");
