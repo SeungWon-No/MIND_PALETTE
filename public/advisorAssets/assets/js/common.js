@@ -116,13 +116,49 @@ tableAddBtn.forEach((addBtn) => {
 
     //   targetTableTr.appendChild(tableTr);
     // } else 
-    if (targetTable.classList.contains('member-table--03')) {
+    // if (targetTable.classList.contains('member-table--03')) {
 
-      const table03Content = '<tr class="table-row"><td class="table-col no-padding"><div class="select-box"><button class="select-box__label" type="button">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">현재 근무지</li><li class="select-option">이전 근무지</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="기관검색"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label" type="button">근무형태 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">근무형태</li><li class="select-option">풀타임</li><li class="select-option">파트타임</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="담당업무"></td><td class="table-col"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td></tr>';
+    //   const table03Content = `<tr class="table-row">
+    //                             <td class="table-col no-padding">
+    //                               <div class="select-box">
+    //                                 <button class="select-box__label" type="button">선택
+    //                                   <span class="icon select-down-icon"></span>
+    //                                 </button>
+    //                                 <ul class="select-option__list">
+    //                                   <li class="select-option">선택</li>
+    //                                   <li class="select-option">현재 근무지</li>
+    //                                   <li class="select-option">이전 근무지</li>
+    //                                 </ul>
+    //                               </div>
+    //                             </td>
+    //                             <td class="table-col">
+    //                               <input type="text" class="tabel-form__control" placeholder="기관검색">
+    //                             </td>
+    //                             <td class="table-col no-padding">
+    //                               <div class="select-box">
+    //                                 <button class="select-box__label" type="button">근무형태
+    //                                   <span class="icon select-down-icon"></span>
+    //                                 </button>
+    //                                 <ul class="select-option__list">
+    //                                   <li class="select-option">근무형태</li>
+    //                                   <li class="select-option">풀타임</li>
+    //                                   <li class="select-option">파트타임</li>
+    //                                 </ul>
+    //                               </div>
+    //                             </td>
+    //                             <td class="table-col">
+    //                               <input type="text" class="tabel-form__control" placeholder="담당업무">
+    //                             </td>
+    //                             <td class="table-col">
+    //                               <label class="table-file__label">
+    //                                 <input type="file" class="table-file"> 첨부하기
+    //                               </label>
+    //                             </td>
+    //                           </tr>`;
 
-      tableTr.innerHTML = table03Content;
-      targetTableTr.appendChild(tableTr);
-    }
+    //   tableTr.innerHTML = table03Content;
+    //   targetTableTr.appendChild(tableTr);
+    // }
 
     customSelectControl();
   })

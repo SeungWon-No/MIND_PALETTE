@@ -147,7 +147,7 @@
                 <div class="form-group__label">상담경력</div>
                 <div class="form-group__item">
                   <div class="form-group__data">
-                    <input id="career" name="" type="career" class="form-control" placeholder="예) 3년이상, 6개월 이상">
+                    <input id="counselingCareer1" name="counselingCareer1" type="career" class="form-control" placeholder="예) 3년이상, 6개월 이상">
                   </div>
                   <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                 </div>
@@ -163,43 +163,42 @@
                       <th style="width: 110px;">증명서 사본</th>
                     </tr>
                 </thead>
+                <input type="hidden" id="careerCount" name="careerCount" value="1"/>
                 <tbody class="member-table__body">
-                  <tr class="table-row">
+                  <tr class="table-row" data-index="1">
                     <td class="table-col no-padding">
                       <div class="select-box">
-                        <button class="select-box__label">선택<span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
+                        <input type="hidden" id="careerType1" name="careerType1" value="-1"/>
+                        <button class="select-box__label" type="button">선택<span class="icon select-down-icon"></span></button>
                         <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option" value="현재 근무지">현재 근무지</li>
-                          <li class="select-option" value="이전 근무지">이전 근무지</li>
+                          <li class="select-option" onclick="changeCareerType('1','-1')">선택</li>
+                          <li class="select-option" onclick="changeCareerType('1','331')">현재 근무지</li>
+                          <li class="select-option" onclick="changeCareerType('1','332')">이전 근무지</li>
                         </ul>
                       </div>
                     </td>
                     <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="기관검색">
+                      <input id="companyName1" name="companyName1" type="text" class="tabel-form__control" placeholder="기관검색">
                     </td>
                     <td class="table-col no-padding">
                       <div class="select-box">
-                        <button class="select-box__label">근무형태 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
+                        <input type="hidden" id="employmentType1" name="employmentType1" value="-1"/>
+                        <button class="select-box__label" type="button">근무형태 <span class="icon select-down-icon"></span></button>
                         <ul class="select-option__list">
-                          <li class="select-option">근무형태</li>
-                          <li class="select-option" value="풀타임">풀타임</li>
-                          <li class="select-option" value="파트타임">파트타임</li>
+                          <li class="select-option" onclick="changeEmploymentType('1','-1')">근무형태</li>
+                          <li class="select-option" onclick="changeEmploymentType('1','333')">풀타임</li>
+                          <li class="select-option" onclick="changeEmploymentType('1','334')">파트타임</li>
                         </ul>
                       </div>
                     </td>
                     <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="담당업무">
+                      <input id="assignedTask" name="assignedTask" type="text" class="tabel-form__control" placeholder="담당업무">
                     </td>
                     <td class="table-col">
                       <label class="table-file__label">
-                        <input type="file" class="table-file">
+                      <input id="career" type="file" class="table-file attachedFilePath" data-index="1">
+                        <input id="career-attachedFilePath1" name="career-attachedFilePath1" type="hidden">
                         첨부하기
-                        <!-- 파일올렸을때
-                          <span class="table-file__name">증명서.png</span>
-                        //파일올렸을때 -->
                       </label>
                     </td>
                   </tr>
@@ -222,21 +221,20 @@
     </div>
 </form>
 <script>
+  let educationIndex = 1;
+  let qualificationIndex = 1;
+  let careerIndex = 1;
   $(".table-add__btn").on("click",function (e) {
-    var type = this.id;
+    var type = this.id; // 추가하기 버튼의 id값
 
       // 학력 사항
       if (type == 'addEducation') {
-        let educationIndex = 1;
         educationIndex++;
         $("#educationCount").val(educationIndex);
-
         const targetTable = this.previousElementSibling;
         const targetTableTr = targetTable.querySelector('.member-table__body');
-
         const tableTr = document.createElement('tr');
         tableTr.classList.add('table-row');
-
         const table01Content = `<td class="table-col no-padding">
                                     <div class="select-box">
                                         <input type="hidden" id="degree`+educationIndex+`" name="degree`+educationIndex+`" value="-1"/>
@@ -280,14 +278,12 @@
         tableTr.innerHTML = table01Content;
         targetTableTr.appendChild(tableTr);
 
+      // 자격사항
       }else if(type == 'addQualification'){
-        let qualificationIndex = 1
         qualificationIndex++;
         $("#qualificationCount").val(qualificationIndex);
-
         const targetTable = this.previousElementSibling;
         const targetTableTr = targetTable.querySelector('.member-table__body');
-
         const tableTr = document.createElement('tr');
         tableTr.classList.add('table-row');
         const table02Content = `<tr class="table-row">
@@ -307,7 +303,53 @@
                                 </tr>`;
         tableTr.innerHTML = table02Content;
         targetTableTr.appendChild(tableTr);
-      }
+
+      // 경력사항
+      }else{
+        careerIndex++;
+        $("#careerCount").val(careerIndex);
+        const targetTable = this.previousElementSibling;
+        const targetTableTr = targetTable.querySelector('.member-table__body');
+        const tableTr = document.createElement('tr');
+        const table03Content = `<td class="table-col no-padding">
+                                  <div class="select-box">
+                                    <input type="hidden" id="careerType`+careerIndex+`" name="careerType`+careerIndex+`" value="-1"/>
+                                    <button class="select-box__label" type="button">선택<span class="icon select-down-icon"></span></button>
+                                    <ul class="select-option__list">
+                                      <li class="select-option" onclick="changeCareerType('`+careerIndex+`','-1')">선택</li>
+                                      <li class="select-option" onclick="changeCareerType('`+careerIndex+`','331')">현재 근무지</li>
+                                      <li class="select-option" onclick="changeCareerType('`+careerIndex+`','332')">이전 근무지</li>
+                                    </ul>
+                                  </div>
+                                </td>
+                                <td class="table-col">
+                                  <input id="companyName" name="companyName" type="text" class="tabel-form__control" placeholder="기관검색">
+                                </td>
+                                <td class="table-col no-padding">
+                                  <div class="select-box">
+                                    <input type="hidden" id="employmentType`+careerIndex+`" name="employmentType`+careerIndex+`" value="-1"/>
+                                    <button class="select-box__label" type="button">근무형태 <span class="icon select-down-icon"></span></button>
+                                    <ul class="select-option__list">
+                                      <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','-1')">근무형태</li>
+                                      <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','333')">풀타임</li>
+                                      <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','334')">파트타임</li>
+                                    </ul>
+                                  </div>
+                                </td>
+                                <td class="table-col">
+                                  <input id="assignedTask" name="assignedTask" type="text" class="tabel-form__control" placeholder="담당업무">
+                                </td>
+                                <td class="table-col">
+                                  <label class="table-file__label">
+                                  <input id="career" type="file" class="table-file attachedFilePath" data-index="`+careerIndex+`">
+                                    <input id="career-attachedFilePath`+careerIndex+`" name="career-attachedFilePath`+careerIndex+`" type="hidden">
+                                    첨부하기
+                                  </label>
+                                </td>`;
+
+      tableTr.innerHTML = table03Content;
+      targetTableTr.appendChild(tableTr);
+    }
     });
 
     // 학과 selectBox
@@ -318,6 +360,16 @@
     // 졸업여부 selectBox
     function changeGraduation(index,value) {
         $("#graduation"+index).val(value);
+    }
+
+    // 근무지 구분 selectBox
+    function changeCareerType(index,value) {
+        $("#careerType"+index).val(value);
+    }
+
+    // 근무형태 selectBox
+    function changeEmploymentType(index,value) {
+        $("#employmentType"+index).val(value);
     }
 
     
