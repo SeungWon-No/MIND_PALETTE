@@ -106,7 +106,7 @@
         </div>
       </form>
       <label class="label-checkbox member mg-t-53">
-        <input id="agreeCheckbox" name="agreeCheckbox" type="checkbox" class="form-checkbox" onclick="agreeCheckbox()">
+        <input id="agreeCheckbox" name="agreeCheckbox" type="checkbox" class="form-checkbox" onclick="window.agreeCheckbox()">
         <span class="icon check-off-round"></span>
         <em>(필수) </em> 서비스 이용약관 및 개인정보 처리방침에 동의합니다.
       </label>

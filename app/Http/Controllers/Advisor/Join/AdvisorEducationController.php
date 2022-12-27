@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Advisor\Join;
 use App\Http\Controllers\Controller;
 use App\Models\EducationLevel;
 use App\Models\Qualification;
+use App\Models\Career;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,10 +20,13 @@ class AdvisorEducationController extends Controller{ //TODO: Education이 아니
 
             $qualificationCount = $request->qualificationCount ?? 0;
             $advisorQualification = array();
+
+            $career = $request->careerCount ?? 0;
+            $advisorCareer = array();
             
             DB::beginTransaction();
             
-            // 학력 사항 INSERT 처리
+            // 학력 사항 INSERT
             for ($index = 1; $index <= $educationCount ; $index++) {
 
                 $advisorEducation[$index] = [
@@ -32,7 +36,7 @@ class AdvisorEducationController extends Controller{ //TODO: Education이 아니
                     'department' => $request['department'.$index],  // 학과
                     'major' => $request['major'.$index],    // 전공
                     'graduation' => (integer)$request['graduation'.$index], // 졸업여부
-                    'certificateFilePath' => $request['attachedFilePath'.$index],   // 첨부파일 경로
+                    'certificateFilePath' => $request['education-attachedFilePath'.$index],   // 첨부파일 경로
                     'createDate' => $nowDateTime,
                     'updateDate' => $nowDateTime,
                 ];
@@ -50,7 +54,7 @@ class AdvisorEducationController extends Controller{ //TODO: Education이 아니
                 $educationLevel->save();
             }
 
-            // 자격사항 INSERT 처리
+            // 자격사항 INSERT
             for ($index = 1; $index <= $qualificationCount; $index++) {
                 $advisorQualification[$index] = [
                     'advisorPK' => session('advisorLogin')[0]['advisorPK'], // 사용자 PK (session)
@@ -68,6 +72,33 @@ class AdvisorEducationController extends Controller{ //TODO: Education이 아니
                 $qualification->updateDate = $advisorQualification[$index]['updateDate'];
                 $qualification->createDate = $advisorQualification[$index]['createDate'];
                 $qualification->save();
+            }
+
+            // 경력사항 INSERT
+            for ($index = 1; $index <= $qualificationCount; $index++) {
+                $advisorCareer[$index] = [
+                    'advisorPK' => session('advisorLogin')[0]['advisorPK'], // 사용자 PK (session)
+                    'counselingCareer'=>$request['counselingCareer'],
+                    'careerType'=>$request['careerType'.$index],
+                    'companyName'=>$request['companyName'.$index],
+                    'employmentType'=>$request['employmentType'.$index],
+                    'assignedTask'=>$request['assignedTask'.$index],
+                    'certificateFilePath'=>$request['career-attachedFilePath'.$index],
+                    'createDate' => $nowDateTime,
+                    'updateDate' => $nowDateTime,
+                ];
+                $career = new Career;
+                $career->advisorPK = $advisorCareer[$index]['advisorPK'];
+                $career->counselingCareer = $advisorCareer[$index]['counselingCareer'];
+                $career->careerType = $advisorCareer[$index]['careerType'];
+                $career->companyName = $advisorCareer[$index]['companyName'];
+                $career->employmentType = $advisorCareer[$index]['employmentType'];
+                $career->assignedTask = $advisorCareer[$index]['assignedTask'];
+                $career->certificateFilePath = $advisorCareer[$index]['certificateFilePath'];
+                $career->createDate = $advisorCareer[$index]['createDate'];
+                $career->updateDate = $advisorCareer[$index]['updateDate'];
+                $career->save();
+
             }
 
             DB::commit();

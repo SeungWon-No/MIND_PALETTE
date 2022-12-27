@@ -147,7 +147,7 @@
                 <div class="form-group__label">상담경력</div>
                 <div class="form-group__item">
                   <div class="form-group__data">
-                    <input id="counselingCareer1" name="counselingCareer1" type="career" class="form-control" placeholder="예) 3년이상, 6개월 이상">
+                    <input id="counselingCareer" name="counselingCareer" type="career" class="form-control" placeholder="예) 3년이상, 6개월 이상">
                   </div>
                   <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                 </div>
@@ -208,7 +208,7 @@
             </div>
           </div>
           <label class="label-checkbox member mg-t-53">
-            <input type="checkbox" class="form-checkbox">
+          <input id="agreeCheckbox" name="agreeCheckbox" type="checkbox" class="form-checkbox" onclick="window.agreeCheckbox()">
             <span class="icon check-off-round"></span>
             <em>(필수)</em> 입력한 정보는 모두 사실이며, 추후 사실이 아님이 확인되는 경우 즉각 상담활동이 중지됨을 확인하였습니다.
           </label>
@@ -224,132 +224,247 @@
   let educationIndex = 1;
   let qualificationIndex = 1;
   let careerIndex = 1;
+
+  // 학력사항 유효성 검사
+  function validEducation(){
+    var degree = $("#degree"+educationIndex).val();
+    var schoolName = $("#schoolName"+educationIndex).val();
+    var department = $("#department"+educationIndex).val();
+    var major = $("#major"+educationIndex).val();
+    var graduation = $("#graduation"+educationIndex).val();
+    var educationAttachedFilePath = $("#education-attachedFilePath"+educationIndex).val();
+
+    if (degree == -1) {
+      $("#degree"+educationIndex).focus();
+      alert('학위를 선택해주세요.');
+      return false;
+    }else if(schoolName == ''){
+      $("#schoolName"+educationIndex).focus();
+      alert('학교를 작성해주세요.');
+      return false;
+    }else if(department == ''){
+      $("#department"+educationIndex).focus();
+      alert('학과를 작성해주세요.');
+      return false;
+    }else if(major == ''){
+      $("#major"+educationIndex).focus();
+      alert('전공을 작성해주세요.');
+      return false;
+    }else if(graduation == -1){
+      $("#graduation"+educationIndex).focus();
+      alert('졸업여부를 선택해주세요.');
+      return false;
+    }else if(educationAttachedFilePath == ''){
+      $("#graduation"+educationIndex).focus();
+      alert('증명서 사본을 첨부해주세요.');
+      return false;
+    }else{
+      educationIndex++;
+      return true;
+    }
+  }
+
+  // 자격사항 유효성 검사
+  function validQualification(){
+    var issuance = $("#issuance"+qualificationIndex).val();
+    var licenseTitle = $("#licenseTitle"+qualificationIndex).val();
+    var qualificationAttachedFilePath = $("#qualification-attachedFilePath"+educationIndex).val();
+
+    if (issuance == '') {
+      $("#issuance"+qualificationIndex).focus();
+      alert('발행처를 작성해주세요.');
+      return false;
+    }else if(licenseTitle == ''){
+      $("#licenseTitle"+qualificationIndex).focus();
+      alert('자격이름을 작성해주세요.');
+      return false;
+    }else if(qualificationAttachedFilePath == ''){
+      $("#qualification-attachedFilePath"+educationIndex).focus();
+      alert('증명서 사본을 첨부해주세요.');
+      return false;
+    }else{
+      qualificationIndex++;
+      return true;
+    }
+  }
+
+  // 경력사항 유효성 검사
+  function validCareer(){
+    var counselingCareer = $("#counselingCareer").val();
+    var careerType = $("#careerType"+careerIndex).val();
+    var companyName = $("#companyName"+careerIndex).val();
+    var employmentType = $("#employmentType"+careerIndex).val();
+    var assignedTask = $("#assignedTask"+careerIndex).val();
+    var careerAttachedFilePath = $("#career-attachedFilePath"+careerIndex).val();
+
+    if (counselingCareer == '') {
+      $("#counselingCareer").focus();
+      alert('상담경력을 입력해주세요.');
+      return false;
+    }else if(careerType == -1){
+      $("#careerType"+educationIndex).focus();
+      alert('근무지 구분을 선택해주세요.');
+      return false;
+    }else if(companyName == ''){
+      $("#companyName"+educationIndex).focus();
+      alert('기관/회사명을 작성해주세요.');
+      return false;
+    }else if(employmentType == -1){
+      $("#employmentType"+educationIndex).focus();
+      alert('근무형태를 선택해주세요.');
+      return false;
+    }else if(assignedTask == ''){
+      $("#assignedTask"+educationIndex).focus();
+      alert('담당업무를 작성해주세요.');
+      return false;
+    }else if(careerAttachedFilePath == ''){
+      $("#career-attachedFilePath"+educationIndex).focus();
+      alert('증명서 사본을 첨부해주세요.');
+      return false;
+    }else{
+      careerIndex++;
+      return true;
+    }
+  }
+
   $(".table-add__btn").on("click",function (e) {
     var type = this.id; // 추가하기 버튼의 id값
-
+    
       // 학력 사항
       if (type == 'addEducation') {
-        educationIndex++;
-        $("#educationCount").val(educationIndex);
-        const targetTable = this.previousElementSibling;
-        const targetTableTr = targetTable.querySelector('.member-table__body');
-        const tableTr = document.createElement('tr');
-        tableTr.classList.add('table-row');
-        const table01Content = `<td class="table-col no-padding">
-                                    <div class="select-box">
-                                        <input type="hidden" id="degree`+educationIndex+`" name="degree`+educationIndex+`" value="-1"/>
-                                        <button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
-                                        <ul class="select-option__list">
-                                          <li class="select-option" onclick="changeDegree('`+educationIndex+`','-1')">선택</li>
-                                          <li class="select-option" onclick="changeDegree('`+educationIndex+`','325')">학사</li>
-                                          <li class="select-option" onclick="changeDegree('`+educationIndex+`','326')">석사</li>
-                                          <li class="select-option" onclick="changeDegree('`+educationIndex+`','327')">박사</li>
-                                        </ul>
-                                    </div>
-                                </td>
-                                <td class="table-col">
-                                  <input id="schoolName`+educationIndex+`" name="schoolName`+educationIndex+`" type="text" class="tabel-form__control" placeholder="학교명">
-                                </td>
-                                <td class="table-col">
-                                  <input id="department`+educationIndex+`" name="department`+educationIndex+`" type="text" class="tabel-form__control" placeholder="학과명">
-                                </td>
-                                <td class="table-col">
-                                  <input id="major`+educationIndex+`" name="major`+educationIndex+`" type="text" class="tabel-form__control" placeholder="전공">
-                                </td>
-                                <td class="table-col no-padding">
-                                    <div class="select-box">
-                                        <input type="hidden" id="graduation`+educationIndex+`" name="graduation`+educationIndex+`" value="-1"/>
-                                        <button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
-                                        <ul class="select-option__list">
-                                          <li class="select-option" onclick="changeGraduation('`+educationIndex+`','-1')">선택</li>
-                                          <li class="select-option" onclick="changeGraduation('`+educationIndex+`','328')">졸업</li>
-                                          <li class="select-option" onclick="changeGraduation('`+educationIndex+`','329')">재학</li>
-                                          <li class="select-option" onclick="changeGraduation('`+educationIndex+`','330')">수료</li>
-                                        </ul>
-                                    </div>
-                                </td>
-                                <td class="table-col cursor">
-                                    <label class="table-file__label">
-                                        <input id="education" type="file" class="table-file attachedFilePath" data-index="`+educationIndex+`">
-                                        <input id="education-attachedFilePath`+educationIndex+`" name="education-attachedFilePath`+educationIndex+`" type="hidden">
-                                        첨부하기
-                                    </label>
-                                </td>`;
-        tableTr.innerHTML = table01Content;
-        targetTableTr.appendChild(tableTr);
+        var validEducation = window.validEducation();
+        if (validEducation == true) {
+          educationIndex++;
+          $("#educationCount").val(educationIndex);
+          const targetTable = this.previousElementSibling;
+          const targetTableTr = targetTable.querySelector('.member-table__body');
+          const tableTr = document.createElement('tr');
+          tableTr.classList.add('table-row');
+          const table01Content = `<td class="table-col no-padding">
+                                      <div class="select-box">
+                                          <input type="hidden" id="degree`+educationIndex+`" name="degree`+educationIndex+`" value="-1"/>
+                                          <button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
+                                          <ul class="select-option__list">
+                                            <li class="select-option" onclick="changeDegree('`+educationIndex+`','-1')">선택</li>
+                                            <li class="select-option" onclick="changeDegree('`+educationIndex+`','325')">학사</li>
+                                            <li class="select-option" onclick="changeDegree('`+educationIndex+`','326')">석사</li>
+                                            <li class="select-option" onclick="changeDegree('`+educationIndex+`','327')">박사</li>
+                                          </ul>
+                                      </div>
+                                  </td>
+                                  <td class="table-col">
+                                    <input id="schoolName`+educationIndex+`" name="schoolName`+educationIndex+`" type="text" class="tabel-form__control" placeholder="학교명">
+                                  </td>
+                                  <td class="table-col">
+                                    <input id="department`+educationIndex+`" name="department`+educationIndex+`" type="text" class="tabel-form__control" placeholder="학과명">
+                                  </td>
+                                  <td class="table-col">
+                                    <input id="major`+educationIndex+`" name="major`+educationIndex+`" type="text" class="tabel-form__control" placeholder="전공">
+                                  </td>
+                                  <td class="table-col no-padding">
+                                      <div class="select-box">
+                                          <input type="hidden" id="graduation`+educationIndex+`" name="graduation`+educationIndex+`" value="-1"/>
+                                          <button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
+                                          <ul class="select-option__list">
+                                            <li class="select-option" onclick="changeGraduation('`+educationIndex+`','-1')">선택</li>
+                                            <li class="select-option" onclick="changeGraduation('`+educationIndex+`','328')">졸업</li>
+                                            <li class="select-option" onclick="changeGraduation('`+educationIndex+`','329')">재학</li>
+                                            <li class="select-option" onclick="changeGraduation('`+educationIndex+`','330')">수료</li>
+                                          </ul>
+                                      </div>
+                                  </td>
+                                  <td class="table-col cursor">
+                                      <label class="table-file__label">
+                                          <input id="education" type="file" class="table-file attachedFilePath" data-index="`+educationIndex+`">
+                                          <input id="education-attachedFilePath`+educationIndex+`" name="education-attachedFilePath`+educationIndex+`" type="hidden">
+                                          첨부하기
+                                      </label>
+                                  </td>`;
+          tableTr.innerHTML = table01Content;
+          targetTableTr.appendChild(tableTr);
+        }else{
+          return false;
+        }
 
       // 자격사항
       }else if(type == 'addQualification'){
-        qualificationIndex++;
-        $("#qualificationCount").val(qualificationIndex);
-        const targetTable = this.previousElementSibling;
-        const targetTableTr = targetTable.querySelector('.member-table__body');
-        const tableTr = document.createElement('tr');
-        tableTr.classList.add('table-row');
-        const table02Content = `<tr class="table-row">
-                                  <td class="table-col">
-                                    <input id="issuance`+qualificationIndex+`" name="issuance`+qualificationIndex+`" type="text" class="tabel-form__control" placeholder="발행처">
-                                  </td>
-                                  <td class="table-col">
-                                    <input id="licenseTitle`+qualificationIndex+`" name="licenseTitle`+qualificationIndex+`" type="text" class="tabel-form__control" placeholder="자격이름">
-                                  </td>
-                                  <td class="table-col cursor">
-                                    <label class="table-file__label">
-                                      <input id="qualification" type="file" class="table-file attachedFilePath" data-index="`+qualificationIndex+`">
-                                      <input id="qualification-attachedFilePath`+qualificationIndex+`" name="qualification-attachedFilePath`+qualificationIndex+`" type="hidden">
-                                      첨부하기
-                                    </label>
-                                  </td>
-                                </tr>`;
-        tableTr.innerHTML = table02Content;
-        targetTableTr.appendChild(tableTr);
-
+        var validQualification = window.validQualification();
+        if (validQualification == true) {
+          qualificationIndex++;
+          $("#qualificationCount").val(qualificationIndex);
+          const targetTable = this.previousElementSibling;
+          const targetTableTr = targetTable.querySelector('.member-table__body');
+          const tableTr = document.createElement('tr');
+          tableTr.classList.add('table-row');
+          const table02Content = `<tr class="table-row">
+                                    <td class="table-col">
+                                      <input id="issuance`+qualificationIndex+`" name="issuance`+qualificationIndex+`" type="text" class="tabel-form__control" placeholder="발행처">
+                                    </td>
+                                    <td class="table-col">
+                                      <input id="licenseTitle`+qualificationIndex+`" name="licenseTitle`+qualificationIndex+`" type="text" class="tabel-form__control" placeholder="자격이름">
+                                    </td>
+                                    <td class="table-col cursor">
+                                      <label class="table-file__label">
+                                        <input id="qualification" type="file" class="table-file attachedFilePath" data-index="`+qualificationIndex+`">
+                                        <input id="qualification-attachedFilePath`+qualificationIndex+`" name="qualification-attachedFilePath`+qualificationIndex+`" type="hidden">
+                                        첨부하기
+                                      </label>
+                                    </td>
+                                  </tr>`;
+          tableTr.innerHTML = table02Content;
+          targetTableTr.appendChild(tableTr);
+        }else{
+          return false;
+        }
+        
       // 경력사항
       }else{
-        careerIndex++;
-        $("#careerCount").val(careerIndex);
-        const targetTable = this.previousElementSibling;
-        const targetTableTr = targetTable.querySelector('.member-table__body');
-        const tableTr = document.createElement('tr');
-        const table03Content = `<td class="table-col no-padding">
-                                  <div class="select-box">
-                                    <input type="hidden" id="careerType`+careerIndex+`" name="careerType`+careerIndex+`" value="-1"/>
-                                    <button class="select-box__label" type="button">선택<span class="icon select-down-icon"></span></button>
-                                    <ul class="select-option__list">
-                                      <li class="select-option" onclick="changeCareerType('`+careerIndex+`','-1')">선택</li>
-                                      <li class="select-option" onclick="changeCareerType('`+careerIndex+`','331')">현재 근무지</li>
-                                      <li class="select-option" onclick="changeCareerType('`+careerIndex+`','332')">이전 근무지</li>
-                                    </ul>
-                                  </div>
-                                </td>
-                                <td class="table-col">
-                                  <input id="companyName" name="companyName" type="text" class="tabel-form__control" placeholder="기관검색">
-                                </td>
-                                <td class="table-col no-padding">
-                                  <div class="select-box">
-                                    <input type="hidden" id="employmentType`+careerIndex+`" name="employmentType`+careerIndex+`" value="-1"/>
-                                    <button class="select-box__label" type="button">근무형태 <span class="icon select-down-icon"></span></button>
-                                    <ul class="select-option__list">
-                                      <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','-1')">근무형태</li>
-                                      <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','333')">풀타임</li>
-                                      <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','334')">파트타임</li>
-                                    </ul>
-                                  </div>
-                                </td>
-                                <td class="table-col">
-                                  <input id="assignedTask" name="assignedTask" type="text" class="tabel-form__control" placeholder="담당업무">
-                                </td>
-                                <td class="table-col">
-                                  <label class="table-file__label">
-                                  <input id="career" type="file" class="table-file attachedFilePath" data-index="`+careerIndex+`">
-                                    <input id="career-attachedFilePath`+careerIndex+`" name="career-attachedFilePath`+careerIndex+`" type="hidden">
-                                    첨부하기
-                                  </label>
-                                </td>`;
-
-      tableTr.innerHTML = table03Content;
-      targetTableTr.appendChild(tableTr);
-    }
+        var validCareer = window.validCareer();
+        if (validCareer == true) {
+          careerIndex++;
+          $("#careerCount").val(careerIndex);
+          const targetTable = this.previousElementSibling;
+          const targetTableTr = targetTable.querySelector('.member-table__body');
+          const tableTr = document.createElement('tr');
+          const table03Content = `<td class="table-col no-padding">
+                                    <div class="select-box">
+                                      <input type="hidden" id="careerType`+careerIndex+`" name="careerType`+careerIndex+`" value="-1"/>
+                                      <button class="select-box__label" type="button">선택<span class="icon select-down-icon"></span></button>
+                                      <ul class="select-option__list">
+                                        <li class="select-option" onclick="changeCareerType('`+careerIndex+`','-1')">선택</li>
+                                        <li class="select-option" onclick="changeCareerType('`+careerIndex+`','331')">현재 근무지</li>
+                                        <li class="select-option" onclick="changeCareerType('`+careerIndex+`','332')">이전 근무지</li>
+                                      </ul>
+                                    </div>
+                                  </td>
+                                  <td class="table-col">
+                                    <input id="companyName`+careerIndex+`" name="companyName`+careerIndex+`" type="text" class="tabel-form__control" placeholder="기관검색">
+                                  </td>
+                                  <td class="table-col no-padding">
+                                    <div class="select-box">
+                                      <input type="hidden" id="employmentType`+careerIndex+`" name="employmentType`+careerIndex+`" value="-1"/>
+                                      <button class="select-box__label" type="button">근무형태 <span class="icon select-down-icon"></span></button>
+                                      <ul class="select-option__list">
+                                        <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','-1')">근무형태</li>
+                                        <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','333')">풀타임</li>
+                                        <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','334')">파트타임</li>
+                                      </ul>
+                                    </div>
+                                  </td>
+                                  <td class="table-col">
+                                    <input id="assignedTask`+careerIndex+`" name="assignedTask`+careerIndex+`" type="text" class="tabel-form__control" placeholder="담당업무">
+                                  </td>
+                                  <td class="table-col">
+                                    <label class="table-file__label">
+                                    <input id="career" type="file" class="table-file attachedFilePath" data-index="`+careerIndex+`">
+                                      <input id="career-attachedFilePath`+careerIndex+`" name="career-attachedFilePath`+careerIndex+`" type="hidden">
+                                      첨부하기
+                                    </label>
+                                  </td>`;
+        tableTr.innerHTML = table03Content;
+        targetTableTr.appendChild(tableTr);
+        }
+      }
     });
 
     // 학과 selectBox
@@ -383,6 +498,11 @@
           save(this, type);
       }
     });
+
+    function cancel() {
+      alert('파일 업로드 취소되었습니다.');
+    }
+
     function save(imageObject, type) {
         const imageIndex = $(imageObject).data("index");
         const imageInput = $(imageObject)[0];
@@ -404,22 +524,29 @@
                   $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
 
                 } else {
-                   console.log(data.message);
+                    console.log(data.message);
                 }
             },
             err: function(err){
                 console.log("err:", err)
             }
         });
-
         $(imageObject).val("");
     }
-    function cancel() {
-        alert('파일 업로드 취소되었습니다.');
+
+    // 필수 약관 동의 확인
+    function agreeCheckbox(){
+      var checkResult = $('[name=agreeCheckbox]').prop('checked');
+      return checkResult;
     }
     
     function submitForm() {
+      var agreeCheckbox = window.agreeCheckbox();
+      if (agreeCheckbox == true) {
         $("#nextStepForm").submit();
+      }else{
+        alert('필수 사항에 동의해주세요.');
+      }
     }
 
 </script>
