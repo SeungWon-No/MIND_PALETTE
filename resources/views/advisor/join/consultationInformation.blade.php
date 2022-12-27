@@ -90,8 +90,8 @@
                     </td>
                     <td class="table-col cursor">
                       <label class="table-file__label">
-                        <input type="file" class="table-file attachedFilePath" data-index="1">
-                        <input id="attachedFilePath1" name="attachedFilePath1" type="hidden">
+                        <input id="education" type="file" class="table-file attachedFilePath" data-index="1">
+                        <input id="education-attachedFilePath1" name="education-attachedFilePath1" type="hidden">
                         첨부하기
                       </label>
                     </td>
@@ -124,8 +124,8 @@
                     </td>
                     <td class="table-col cursor">
                       <label class="table-file__label">
-                        <input type="file" class="table-file attachedFilePath" data-index="1">
-                        <input id="attachedFilePath1" name="attachedFilePath1" type="hidden">
+                        <input id="qualification" type="file" class="table-file attachedFilePath" data-index="1">
+                        <input id="qualification-attachedFilePath1" name="qualification-attachedFilePath1" type="hidden">
                         첨부하기
                       </label>
                     </td>
@@ -272,8 +272,8 @@
                                 </td>
                                 <td class="table-col cursor">
                                     <label class="table-file__label">
-                                        <input type="file" class="table-file attachedFilePath" data-index="`+educationIndex+`">
-                                        <input id="attachedFilePath`+educationIndex+`" name="attachedFilePath`+educationIndex+`" type="hidden">
+                                        <input id="education" type="file" class="table-file attachedFilePath" data-index="`+educationIndex+`">
+                                        <input id="education-attachedFilePath`+educationIndex+`" name="education-attachedFilePath`+educationIndex+`" type="hidden">
                                         첨부하기
                                     </label>
                                 </td>`;
@@ -299,8 +299,8 @@
                                   </td>
                                   <td class="table-col cursor">
                                     <label class="table-file__label">
-                                      <input type="file" class="table-file attachedFilePath" data-index="`+qualificationIndex+`">
-                                      <input id="attachedFilePath`+qualificationIndex+`" name="attachedFilePath`+qualificationIndex+`" type="hidden">
+                                      <input id="qualification" type="file" class="table-file attachedFilePath" data-index="`+qualificationIndex+`">
+                                      <input id="qualification-attachedFilePath`+qualificationIndex+`" name="qualification-attachedFilePath`+qualificationIndex+`" type="hidden">
                                       첨부하기
                                     </label>
                                   </td>
@@ -320,25 +320,23 @@
         $("#graduation"+index).val(value);
     }
 
-    function submitForm() {
-        $("#nextStepForm").submit();
-    }
-
+    
     // 파일 업로드
-    $(document).on('change','.table-file.attachedFilePath',function(){
-        if($(this).val() === ""){
-            // 파일 취소
-            cancel();
-        } else {
-            save(this);
-        }
+    $(document).on('change','.table-file',function(){
+      var type = this.id;
+      if($(this).val() === ""){
+          // 파일 취소
+          cancel();
+      } else {
+          save(this, type);
+      }
     });
-    function save(imageObject) {
+    function save(imageObject, type) {
         const imageIndex = $(imageObject).data("index");
         const imageInput = $(imageObject)[0];
         const formData = new FormData();
         formData.append("file", imageInput.files[0]);
-        formData.append("oldFilePath", $("#attachedFilePath"+imageIndex).val());
+        formData.append("oldFilePath", $("#"+type+"-attachedFilePath"+imageIndex).val());
 
         $.ajax({
             type:"POST",
@@ -351,7 +349,7 @@
             success: function(json){
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
-                    $("#attachedFilePath"+imageIndex).val(data.filePath);
+                  $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
 
                 } else {
                    console.log(data.message);
@@ -367,7 +365,10 @@
     function cancel() {
         alert('파일 업로드 취소되었습니다.');
     }
-
+    
+    function submitForm() {
+        $("#nextStepForm").submit();
+    }
 
 </script>
 @include('advisor/common/footer')

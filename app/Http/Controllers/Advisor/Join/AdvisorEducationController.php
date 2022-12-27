@@ -3,19 +3,26 @@ namespace App\Http\Controllers\Advisor\Join;
 
 use App\Http\Controllers\Controller;
 use App\Models\EducationLevel;
+use App\Models\Qualification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AdvisorEducationController extends Controller{
+class AdvisorEducationController extends Controller{ //TODO: Education이 아니라 해당 페이지 관련 CONTROLLER로 사용
 
     public function store(Request $request)
     {
         try {
             $nowDateTime = date('Y-m-d H:i:s');
+
             $educationCount = $request->educationCount ?? 0;
             $advisorEducation = array();
 
+            $qualificationCount = $request->qualificationCount ?? 0;
+            $advisorQualification = array();
+            
             DB::beginTransaction();
+            
+            // 학력 사항 INSERT 처리
             for ($index = 1; $index <= $educationCount ; $index++) {
 
                 $advisorEducation[$index] = [
@@ -38,10 +45,31 @@ class AdvisorEducationController extends Controller{
                 $educationLevel->major = $advisorEducation[$index]['major'];
                 $educationLevel->graduationStatus = $advisorEducation[$index]['graduation'];
                 $educationLevel->certificateFilePath = $advisorEducation[$index]['certificateFilePath'];
-                $educationLevel->createDate = $advisorEducation[$index]['createDate'];
                 $educationLevel->updateDate = $advisorEducation[$index]['updateDate'];
+                $educationLevel->createDate = $advisorEducation[$index]['createDate'];
                 $educationLevel->save();
             }
+
+            // 자격사항 INSERT 처리
+            for ($index = 1; $index <= $qualificationCount; $index++) {
+                $advisorQualification[$index] = [
+                    'advisorPK' => session('advisorLogin')[0]['advisorPK'], // 사용자 PK (session)
+                    'issuingAgency'=>$request['issuance'.$index],
+                    'certificateName'=>$request['licenseTitle'.$index],
+                    'certificateFilePath'=>$request['qualification-attachedFilePath'.$index],
+                    'createDate' => $nowDateTime,
+                    'updateDate' => $nowDateTime,
+                ];
+                $qualification = new Qualification;
+                $qualification->advisorPK = $advisorQualification[$index]['advisorPK'];
+                $qualification->issuingAgency = $advisorQualification[$index]['issuingAgency'];
+                $qualification->certificateName = $advisorQualification[$index]['certificateName'];
+                $qualification->certificateFilePath = $advisorQualification[$index]['certificateFilePath'];
+                $qualification->updateDate = $advisorQualification[$index]['updateDate'];
+                $qualification->createDate = $advisorQualification[$index]['createDate'];
+                $qualification->save();
+            }
+
             DB::commit();
             return redirect('/advisor/consultationInformation');
 
