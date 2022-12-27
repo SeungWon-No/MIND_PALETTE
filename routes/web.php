@@ -89,12 +89,14 @@ Route::middleware(['autoLogin','freeAdviceVerify'])->group(function () {
     Route::post('/selfWorth/{counselingTemplatePK}',[SelfWorthController::class,"create"]);
 });
 
-Route::prefix('advisor')->group(function () {
+Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/advisor/
     Route::get('/', AdvisorIndexController::class);
     Route::resource("/login",AdvisorLoginController::class)->only([
         'index', 'store'
     ]);
-    Route::post('/education',[AdvisorEducationController::class,"store"]);
+
+    Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 학력사항 
+
     Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
     Route::resource('/join', AdvisorJoinController::class)->only([ // 회원가입

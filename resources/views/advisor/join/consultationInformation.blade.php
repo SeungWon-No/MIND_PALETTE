@@ -98,7 +98,7 @@
                   </tr>
                 </tbody>
               </table>
-              <button type="button" id="addCareer" class="table-add__btn">추가하기</button>
+              <button type="button" id="addEducation" class="table-add__btn">추가하기</button>
             </div>
           </div>
           <div class="member-cell">
@@ -113,42 +113,26 @@
                       <th style="width: 159px;">증명서 사본</th>
                     </tr>
                 </thead>
+                <input type="hidden" id="qualificationCount" name="qualificationCount" value="1"/>
                 <tbody class="member-table__body">
                   <tr class="table-row">
                     <td class="table-col">
-                      <input id="publisher" name="publisher" type="text" class="tabel-form__control" placeholder="발행처">
+                      <input id="issuance1" name="issuance1" type="text" class="tabel-form__control" placeholder="발행처">
                     </td>
                     <td class="table-col">
-                      <input id="licenseTitle" name="licenseTitle" type="text" class="tabel-form__control" placeholder="자격이름">
+                      <input id="licenseTitle1" name="licenseTitle1" type="text" class="tabel-form__control" placeholder="자격이름">
                     </td>
-                    <td class="table-col">
+                    <td class="table-col cursor">
                       <label class="table-file__label">
-                        <input type="file" class="table-file">
+                        <input type="file" class="table-file attachedFilePath" data-index="1">
+                        <input id="attachedFilePath1" name="attachedFilePath1" type="hidden">
                         첨부하기
-                        <!-- 파일올렸을때
-                          <span class="table-file__name">증명서.png</span>
-                        //파일올렸을때 -->
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-row">
-                  <td class="table-col">
-                      <input id="issuance" name="issuance" type="text" class="tabel-form__control" placeholder="발행처">
-                    </td>
-                    <td class="table-col">
-                      <input id="licenseTitle" name="licenseTitle" type="text" class="tabel-form__control" placeholder="자격이름">
-                    </td>
-                    <td class="table-col">
-                      <label class="table-file__label">
-                        <input type="file" class="table-file">
-                        <!-- 파일올렸을때 -->
-                        <span class="table-file__name">증명서.png</span>
                       </label>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <button type="button" id="addCareer" class="table-add__btn">추가하기</button>
+              <button type="button" id="addQualification" class="table-add__btn">추가하기</button>
             </div>
           </div>
           <div class="member-cell">
@@ -219,43 +203,6 @@
                       </label>
                     </td>
                   </tr>
-                  <tr class="table-row">
-                    <td class="table-col no-padding">
-                      <div class="select-box">
-                        <button class="select-box__label">이전 근무지<span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option">현재 근무지</li>
-                          <li class="select-option">이전 근무지</li>
-                        </ul>
-                      </div>
-                    </td>
-                    <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="기관검색">
-                    </td>
-                    <td class="table-col no-padding">
-                      <div class="select-box">
-                        <button class="select-box__label">풀타임 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">근무형태</li>
-                          <li class="select-option">풀타임</li>
-                          <li class="select-option">파트타임</li>
-                        </ul>
-                      </div>
-                    </td>
-                    <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="담당업무">
-                    </td>
-                    <td class="table-col">
-                      <label class="table-file__label">
-                        <input type="file" class="table-file">
-                        <!-- 파일올렸을때 -->
-                          <span class="table-file__name">증명서.png</span>
-                      </label>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
               <button type="button" id="addCareer" class="table-add__btn">추가하기</button>
@@ -275,10 +222,12 @@
     </div>
 </form>
 <script>
+  $(".table-add__btn").on("click",function (e) {
+    var type = this.id;
 
-    let educationIndex = 1;
-    $("#addCareer").on("click",function () {
-
+      // 학력 사항
+      if (type == 'addEducation') {
+        let educationIndex = 1;
         educationIndex++;
         $("#educationCount").val(educationIndex);
 
@@ -325,72 +274,58 @@
                                     <label class="table-file__label">
                                         <input type="file" class="table-file attachedFilePath" data-index="`+educationIndex+`">
                                         <input id="attachedFilePath`+educationIndex+`" name="attachedFilePath`+educationIndex+`" type="hidden">
-                        첨부하기
+                                        첨부하기
                                     </label>
                                 </td>`;
         tableTr.innerHTML = table01Content;
-
         targetTableTr.appendChild(tableTr);
 
+      }else if(type == 'addQualification'){
+        let qualificationIndex = 1
+        qualificationIndex++;
+        $("#qualificationCount").val(qualificationIndex);
+
+        const targetTable = this.previousElementSibling;
+        const targetTableTr = targetTable.querySelector('.member-table__body');
+
+        const tableTr = document.createElement('tr');
+        tableTr.classList.add('table-row');
+        const table02Content = `<tr class="table-row">
+                                  <td class="table-col">
+                                    <input id="issuance`+qualificationIndex+`" name="issuance`+qualificationIndex+`" type="text" class="tabel-form__control" placeholder="발행처">
+                                  </td>
+                                  <td class="table-col">
+                                    <input id="licenseTitle`+qualificationIndex+`" name="licenseTitle`+qualificationIndex+`" type="text" class="tabel-form__control" placeholder="자격이름">
+                                  </td>
+                                  <td class="table-col cursor">
+                                    <label class="table-file__label">
+                                      <input type="file" class="table-file attachedFilePath" data-index="`+qualificationIndex+`">
+                                      <input id="attachedFilePath`+qualificationIndex+`" name="attachedFilePath`+qualificationIndex+`" type="hidden">
+                                      첨부하기
+                                    </label>
+                                  </td>
+                                </tr>`;
+        tableTr.innerHTML = table02Content;
+        targetTableTr.appendChild(tableTr);
+      }
     });
 
+    // 학과 selectBox
     function changeDegree(index,value) {
         $("#degree"+index).val(value);
     }
 
+    // 졸업여부 selectBox
     function changeGraduation(index,value) {
         $("#graduation"+index).val(value);
     }
-</script>
-<script>
+
     function submitForm() {
-      // console.log(getEducation());
         $("#nextStepForm").submit();
     }
 
-
-    // 학력사항
-    function getEducation () {
-      var degree = $('#educationInfo').text();
-      degree == '선택' ? '' : degree;
-      var schoolName = $('#schoolName').val();
-      var department = $('#department').val();
-      var major = $('#major').val();
-      var graduation = $('#graduationInfo').text();
-      graduation == '선택' ? '' : graduation;
-      var attachedFilePath = $('#attachedFilePath').val();
-
-      var result = {
-        'degree':degree,
-        'schoolName':schoolName,
-        'department':department,
-        'major':major,
-        'graduation':graduation,
-        'attachedFilePath':attachedFilePath,
-      };
-
-      return result;
-    }
-
-    // 자격사항
-    // function getQualification (){
-    //   var schoolName = $('#schoolName').val();
-    //   var department = $('#department').val();
-    //   var graduation = $('#graduationInfo').text();
-    //   var attachedFile = '';
-
-    //   var result = {
-    //     'degree':degree,
-    //     'graduation':graduation,
-    //     'attachedFile':attachedFile,
-    //   };
-
-    //   return result;
-    // }
-
     // 파일 업로드
     $(document).on('change','.table-file.attachedFilePath',function(){
-        alert(1);
         if($(this).val() === ""){
             // 파일 취소
             cancel();
@@ -432,19 +367,6 @@
     function cancel() {
         alert('파일 업로드 취소되었습니다.');
     }
-
-    // 추가하기
-    // $("#addCareer").click(function (){
-    //   addCareer();
-    // });
-    //
-    // function addCareer (){
-    //   alert('dd');
-    //
-    //
-    //
-    //
-    // }
 
 
 </script>
