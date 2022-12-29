@@ -15,8 +15,8 @@ class AdvisorLoginController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->session()->has('login')) {
-            return redirect('/')->with('error', '로그인 상태입니다.');
+        if ($request->session()->has('advisorLogin')) {
+            return redirect('/advisor/')->with('error', '로그인 상태입니다.');
         }
         return view("/advisor/login/login");
     }
@@ -26,19 +26,18 @@ class AdvisorLoginController extends Controller
         $email = $request["userEmail"] ?? "";
         $password = $request["userPassword"] ?? "";
 
-        if ($email == "" || $password == ""){
+        if ($email == "" || $password == "") {
             return view("/advisor/login/loginFail");
         }
 
         $advisor = Advisor::findUser($email, $password)->first();
-        if ($advisor) {
+        if ($advisor) { // 로그인 성공
             if (Hash::check($password, $advisor->password)) {
-                $this->login($request,  Advisor::findAdvisorInfo($advisor->advisorPK));
-                return redirect('/');
+                $this->login($request, Advisor::findAdvisorInfo($advisor->advisorPK));
+                return redirect("/advisor/");
             }
         }
-        return view("/advisor/login/loginFail");
-
+        return redirect("/advisor/loginFail");
     }
 
     public static function login($request, $advisor): RedirectResponse
@@ -49,7 +48,6 @@ class AdvisorLoginController extends Controller
 
         if ( $request->autoLogin == "true" ) {
             Cookie::queue(Cookie::forever('AD_AKTV', $advisor->advisorPK));
-
         }
 
         $loginData = [

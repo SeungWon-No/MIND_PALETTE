@@ -67,5 +67,8 @@ class Kernel extends HttpKernel
         'autoLogin' => \App\Http\Middleware\AutoLogin::class,
         'loginValid' => \App\Http\Middleware\LoginValid::class,
         "freeAdviceVerify" => FreeAdviceVerify::class,
+
+        'advisorAutoLogin' => \App\Http\Middleware\AdvisorAutoLogin::class,
+        'advisorLoginValid' => \App\Http\Middleware\AdvisorLoginValid::class,
     ];
 }
