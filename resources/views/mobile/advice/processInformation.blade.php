@@ -1,14 +1,14 @@
 @include('/mobile/common/start')
 @include('/mobile/common/header',[
     "isShowBackButton" => true,
-    "isShowCloseButton" => false,
+    "isShowCloseButton" => true,
     "title" => "HTP 검사 안내",
     "isShowProgress" => true,
     "progressValue" => $progressWidth
 ])
 <script>
     function pageClose(){
-        // pop.open('savePop');
+        pop.open('savePop');
     }
 </script>
 <section id="container" class="page-body">
@@ -54,5 +54,12 @@
         </div>
     </div>
 </section>
+
+<script>
+    function popupSaveAction() {
+        location.href = "/";
+    }
+</script>
+@include('/mobile/common/savePopup')
 @include('/mobile/common/end')
 

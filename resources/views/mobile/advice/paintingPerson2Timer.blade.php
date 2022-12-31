@@ -25,14 +25,12 @@
                 <div class="basic-data-group">
                     <!-- 필수값 체크시 valid-error 클래스 추가시 활성화 -->
                     <div id="cardBox" class="card-item card-draw">
-                        <div class="card-header"><h3 class="item-subject">House : 집 그리기</h3><div class="icon icon-house-white"></div></div>
+                        <div class="card-header"><h3 class="item-subject">Person : 사람2</h3><div class="icon icon-person-white"></div></div>
                         <div class="card-body">
-                            <div class="item-desc">
-                                아이에게 A4용지를 가로로 주면서
-                                <strong class="font-color-red">“(아파트나 빌라가 아닌) 집을 그리세요"</strong>
-                                라고 안내해줍니다. 아이가 편안하게 집중해서 그릴 수 있도록 환경을 만들어주며, 아이의 질문엔
+                            <div class="item-desc">아이에게 A4용지를 세로로 주면서
+                                <strong class="font-color-red">“다른 성별의 사람을 그리세요"</strong> 라고 안내해줍니다.
+                                아이가 편안하게 집중해서 그릴 수 있도록 환경을 만들어주며, 아이의 질문엔
                                 <strong class="font-color-red">“하고 싶은 대로 하면 된다"</strong> 라고 안내해줍니다.
-                                <br>종이를 돌려서 그려도 제지하지 않습니다.
                             </div>
                             <div class="draw-timer-info">
                                 <div class="txt" style="display:block;">그리기 시작 버튼을 터치하면 타이머가 실행됩니다.</div>
@@ -41,7 +39,7 @@
                             <div class="draw-timer-ui">
                                 <div class="left">
                                     <div style="display:block;">
-                                        @if(isset($answer["60"]))
+                                        @if(isset($answer["98"]))
                                             <button id="drawButton" onclick="timer()"
                                                     type="button"
                                                     class="btn-draw-timer-nav disabled">
@@ -59,8 +57,8 @@
                                 <div class="right">
                                     <div id="timerBox"class="draw-timer-value disabled">
                                         <div id="timerText" class="number">
-                                            @if(isset($answer["60"]))
-                                                {{$answer["60"]}}
+                                            @if(isset($answer["98"]))
+                                                {{$answer["98"]}}
                                             @else
                                                 00:00
                                             @endif
@@ -79,9 +77,9 @@
                         <fieldset>
                             <legend>그림 질문 입력 폼</legend>
                             <input type="hidden"
-                                   class="hiddenTimer" id="questions60" name="questions60"
-                                   @if(isset($answer["60"]))
-                                       value="{{$answer["60"]}}"
+                                   class="hiddenTimer" id="questions98" name="questions98"
+                                   @if(isset($answer["98"]))
+                                       value="{{$answer["98"]}}"
                                    @endif />
                             <div class="form-group">
                                 <div class="form-group-cell">
@@ -89,11 +87,11 @@
                                         <div class="form-item-label">그림을 그리는 순서가 어떻게 되나요?<em class="need">*</em></div>
                                         <div class="form-item-data">
                                             <input
-                                                id="questions61" name="questions61"
-                                                @if(isset($answer["61"]))
-                                                    value="{{$answer["61"]}}"
+                                                id="questions89" name="questions89"
+                                                @if(isset($answer["89"]))
+                                                    value="{{$answer["89"]}}"
                                                 @endif
-                                                type="text" placeholder="예) 지붕-벽-문-창문-기타 요소(굴뚝, 계단, 길...)"
+                                                type="text" placeholder="예) 얼굴-몸통-팔-다리-발"
                                                 onFocus="inputChange(this);" onKeyUp="checkQuestionsOrder();"
                                                 onfocusout="checkQuestionsOrder()"
                                                 onblur="inputBlur(this);" >
@@ -105,9 +103,9 @@
                                         <div class="form-item-label">지우개 사용 위치 및 횟수는 어떻게 되나요?<em class="need">*</em></div>
                                         <div class="form-item-data">
                                             <input
-                                                id="questions62" name="questions62"
-                                                @if(isset($answer["62"]))
-                                                    value="{{$answer["62"]}}"
+                                                id="questions90" name="questions90"
+                                                @if(isset($answer["90"]))
+                                                    value="{{$answer["90"]}}"
                                                 @endif
                                                 type="text" placeholder="예) 지붕 1번, 창문 1번"
                                                 onFocus="inputChange(this);" onKeyUp="checkQuestionsCount();"
@@ -164,7 +162,7 @@
     }
 
     function checkQuestionsTimer() {
-        var questions = $("#questions60").val();
+        var questions = $("#questions98").val();
         $("#cardBox").removeClass("valid-error");
         if (questions === "") {
             $("#cardBox").addClass("valid-error");
@@ -174,33 +172,33 @@
     }
 
     function checkQuestionsOrder() {
-        var questions = $("#questions61").val();
-        $("#questions61").removeClass("valid-error");
+        var questions = $("#questions89").val();
+        $("#questions89").removeClass("valid-error");
         if (questions === "") {
-            $("#questions61").addClass("valid-error");
+            $("#questions89").addClass("valid-error");
             return false;
         }
         return true;
     }
 
     function checkQuestionsCount() {
-        var questions = $("#questions62").val();
-        $("#questions62").removeClass("valid-error");
+        var questions = $("#questions90").val();
+        $("#questions90").removeClass("valid-error");
         if (questions === "") {
-            $("#questions62").addClass("valid-error");
+            $("#questions90").addClass("valid-error");
             return false;
         }
         return true;
     }
 
     function clearFrom() {
-        $("#questions60").val("");
-        $("#questions61").val("");
-        $("#questions62").val("");
+        $("#questions98").val("");
+        $("#questions89").val("");
+        $("#questions90").val("");
     }
 </script>
 <script src="/mobile/assets/js/CTRTimer.js?v={{JS_VERSION}}"></script>
-@if(isset($answer["60"]))
+@if(isset($answer["98"]))
     <script>
         paintingCompleteTimer();
     </script>
