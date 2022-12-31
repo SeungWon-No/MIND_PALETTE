@@ -96,24 +96,32 @@ Route::middleware(['autoLogin','freeAdviceVerify'])->group(function () {
     Route::post('/selfWorth/{counselingTemplatePK}',[SelfWorthController::class,"create"]);
 });
 
+// Advisor
 Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/advisor/
-    Route::get('/', AdvisorIndexController::class);
-    Route::resource("/login",AdvisorLoginController::class)->only([
-        'index', 'store'
-    ]);
+    Route::middleware(['advisorAutoLogin'])->group(function () {
 
-    Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 학력사항
+        Route::get('/', AdvisorIndexController::class); // 메인화면
+
+        Route::resource("/login",AdvisorLoginController::class)->only(['index', 'store']); // 로그인
+
+        Route::resource('/join', AdvisorJoinController::class)->only(['index', 'store', 'show']); // 상담사 회원가입
+
+        Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
+
+        Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 추가 정보입력
+
+        Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]);
+
+        Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]); // 파일 업로드
+
+    });
 
     Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
-    Route::resource('/join', AdvisorJoinController::class)->only([ // 회원가입
-        'index', 'store', 'show'
-    ]);
-    Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]);
+    Route::get('/loginFail', function () { // 로그인 실패시 화면
+        return view('/advisor/login/loginFail');
+    });
 
-    Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
-
-    Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]); // 파일업로드
 
     Route::get('/detail', function () { // 상세 페이지
         return view('/advisor/counseling');

@@ -91,7 +91,6 @@
                 <a href="#none" class="cont-heading__link">상담사 더보기 <span class="icon link-more-icon"></span></a>
               </div>
               <div class="expert-list">
-              <?/* 상담사 리스트 시작 */?>
                 <div class="expert-item">
                   <div class="expert-item__head">
                     <div class="expert-profile__photo">
@@ -121,7 +120,6 @@
                     </p>
                   </div>
                 </div>
-                <?/* 상담사 리스트 끝*/?>
               </div>
               <p class="notice-data">
                 <span class="icon notice-icon"></span>22년 11월 28일 14시 22분 기준 정보입니다.
@@ -183,7 +181,6 @@
                 <a href="#none" class="aside__heading__link">더보기<span class="icon link-more-icon"></span></a>
               </div>
               <div class="recent-history__list">
-                <?/* 최근 상담 내역 리스트 시작*/?>
                 <div class="recent-history__item">
                   <div class="recent-history__photo">
                     <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
@@ -199,7 +196,6 @@
                     </div>
                   </div>
                 </div>
-                <?/* 최근 상담 내역 리스트 끝*/?>
               </div>
             </div>
             <div class="my-prefer">
@@ -251,5 +247,10 @@
         </div>
       </main>
     </div>
+    <script>
+      function advice() {
+        
+    }
+    </script>
 @include('advisor/common/footer')
 @include('advisor/common/end')

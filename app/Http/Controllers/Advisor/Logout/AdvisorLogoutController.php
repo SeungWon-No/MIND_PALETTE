@@ -10,9 +10,9 @@ class AdvisorLogoutController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $request->session()->pull('login','');
-        Cookie::queue(Cookie::forget('AKTV'));
+        $request->session()->pull('advisorLogin','');
+        Cookie::queue(Cookie::forget('AD_AKTV'));
 
-        return redirect('/login');
+        return redirect('/advisor/login');
     }
 }

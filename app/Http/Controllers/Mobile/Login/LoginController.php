@@ -14,11 +14,9 @@ class LoginController extends Controller
 {
     public function index(Request $request)
     {
-
-        if ($request->session()->has('login')) {
-            return redirect('/')->with('error', '로그인 상태입니다.');
+        if ($request->session()->has('advisorLogin')) {
+            return redirect('/advisor/main')->with('error', '로그인 상태입니다.');
         }
-
         return view("/mobile/login/login");
     }
 
@@ -43,13 +41,16 @@ class LoginController extends Controller
 
     public static function login($request, $member): RedirectResponse
     {
+        $data = $request->session()->all();
+        print_r($data);
+        exit;
         Member::updateLoginDate($member->memberPK);
 
         $redirectUrl = (isset($request->redirectUrl)) ? $request->redirectUrl : "/";
 
         if ( $request->autoLogin == "true" ) {
             // dd($request->autoLogin);
-            Cookie::queue(Cookie::forever('AKTV', $member->memberPK));
+            Cookie::queue(Cookie::forever('AD_AKTV', $member->memberPK));
         }
 
         $loginData = [
