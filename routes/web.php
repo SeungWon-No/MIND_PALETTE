@@ -9,6 +9,7 @@ use App\Http\Controllers\Advisor\Logout\AdvisorLogoutController;
 use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Common\PASSAuthController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
+use App\Http\Controllers\Mobile\Advice\HTPController;
 use App\Http\Controllers\Mobile\Advice\ProcessInformationController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
 use App\Http\Controllers\Mobile\Advice\SampleController;
@@ -71,6 +72,12 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/processInformation/{counselingPK}", ProcessInformationController::class);
     Route::get("/adviceInformation/{counselingPK}", [ProcessInformationController::class,"adviceInformation"]);
     Route::get("/paintingHouseTimer/{counselingPK}", [ProcessInformationController::class, "paintingHouseTimer"]);
+    Route::get("/paintingTreeTimer/{counselingPK}", [ProcessInformationController::class, "paintingTreeTimer"]);
+    Route::get("/paintingPerson1Timer/{counselingPK}", [ProcessInformationController::class, "paintingPerson1Timer"]);
+    Route::get("/paintingPerson2Timer/{counselingPK}", [ProcessInformationController::class, "paintingPerson2Timer"]);
+    Route::get("/answerInformation/{counselingPK}", [ProcessInformationController::class, "answerInformation"]);
+    Route::get("/answerHouse/{counselingPK}", [ProcessInformationController::class, "answerHouse"]);
+    Route::post('/HTPSave/{counselingPK}', [HTPController::class, "save"]);
 });
 
 Route::middleware(['autoLogin','freeAdviceVerify'])->group(function () {
@@ -95,7 +102,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         'index', 'store'
     ]);
 
-    Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 학력사항 
+    Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 학력사항
 
     Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 

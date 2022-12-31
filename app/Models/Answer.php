@@ -41,6 +41,14 @@ class Answer extends Model
         return $answerResult->get()->first();
     }
 
+    public static function findCounselingAnswer($memberPK, $questionsPK, $counselingPK) {
+        $answerResult = Answer::select("answerPK");
+        $answerResult->where('memberPK','=',$memberPK);
+        $answerResult->where('questionsPK','=',$questionsPK)
+            ->where('counselingPK','=',$counselingPK);
+        return $answerResult->get()->first();
+    }
+
     public static function updateAnswer($answerPK, $updateValue) {
         return Answer::where('answerPK',$answerPK)
             ->update($updateValue);
@@ -51,5 +59,20 @@ class Answer extends Model
             ->where('counselingTemplatePK','=',$counselingTemplatePK)
             ->where('answerType','=',"293")
             ->get("cast(answer as unsigned) as sumCount")->first();
+    }
+    public static function findSpecificAnswers($memberPK, $freeCode, $counselingPK, $questionsType, $key) {
+        $answerResult = Answer::join("questions","questions.questionsPK","=","answer.questionsPK");
+
+        if ($memberPK != "") {
+            $answerResult->where('memberPK','=',$memberPK);
+        } else if ($freeCode != "") {
+            $answerResult->where('tempCounselingCode','=',$freeCode);
+        }
+        $answerResult->whereIn('answer.questionsPK', $key);
+        $answerResult->where('questionsType','=',$questionsType)
+            ->where('counselingPK','=',$counselingPK)
+            ->orderBy("questionsOrder", "ASC");
+
+        return $answerResult->get();
     }
 }
