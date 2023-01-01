@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Advisor\AdvisorIndexController;
 use App\Http\Controllers\Advisor\Join\AdvisorEducationController;
 use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
 use App\Http\Controllers\Advisor\Join\VerifyEmailDuplicationController;
-use App\Http\Controllers\Advisor\AdvisorIndexController;
 use App\Http\Controllers\Advisor\Login\AdvisorLoginController;
+use App\Http\Controllers\Advisor\Login\AdvisorFindController;
 use App\Http\Controllers\Advisor\Logout\AdvisorLogoutController;
+
 use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Common\PASSAuthController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
@@ -25,8 +27,8 @@ use App\Http\Controllers\Mobile\Logout\LogoutController;
 use App\Http\Controllers\Mobile\Mypage\MyPageController;
 use Illuminate\Support\Facades\Route;
 
-const CSS_VERSION = "2";
-const JS_VERSION = "2";
+const CSS_VERSION = "3";
+const JS_VERSION = "3";
 
 Route::middleware(['autoLogin'])->group(function () {
     Route::get('/', IndexController::class);
@@ -107,6 +109,7 @@ Route::middleware(['autoLogin','freeAdviceVerify'])->group(function () {
 
 // Advisor
 Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/advisor/
+
     Route::middleware(['advisorAutoLogin'])->group(function () {
 
         Route::get('/', AdvisorIndexController::class); // 메인화면
@@ -125,16 +128,18 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
     });
 
+    Route::get('/findIdPassword', AdvisorFindController::class); // 아이디, 패스워드 찾기
+
     Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
     Route::get('/loginFail', function () { // 로그인 실패시 화면
         return view('/advisor/login/loginFail');
     });
 
-
     Route::get('/detail', function () { // 상세 페이지
         return view('/advisor/counseling');
     });
+
     Route::get('/profile', function () {
         return view('/advisor/profile');
     });
