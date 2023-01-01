@@ -41,9 +41,6 @@ class LoginController extends Controller
 
     public static function login($request, $member): RedirectResponse
     {
-        $data = $request->session()->all();
-        print_r($data);
-        exit;
         Member::updateLoginDate($member->memberPK);
 
         $redirectUrl = (isset($request->redirectUrl)) ? $request->redirectUrl : "/";
