@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Code;
 use App\Models\Counseling;
+use App\Models\Questions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,7 +34,9 @@ class HTPController extends Controller
 
         switch ($nowURL) {
             case "adviceInformation":
-                return $this->adviceInformation($isClose, $pageStatus);
+            case "temperamentTestInformation":
+            case "applicationFormInformation":
+                return $this->saveInformation($isClose, $pageStatus);
             case "paintingHouseTimer":
                 return $this->paintingHouseTimer($request, $counselingPK, $isClose, $pageStatus);
             case "paintingTreeTimer":
@@ -44,12 +47,21 @@ class HTPController extends Controller
                 return $this->paintingPerson2Timer($request, $counselingPK, $isClose, $pageStatus);
             case "answerInformation":
                 return $this->answerInformation($isClose, $pageStatus);
+            case "answerHouse":
+            case "answerTree":
+            case "answerPerson1":
+            case "answerPerson2":
+            case "behaviorObservation":
+                return $this->saveAnswer($request, $counselingPK, $isClose, $pageStatus);
+            case "temperamentTestStep1":
+            case "temperamentTestStep2":
+                return $this->saveAnswer($request, $counselingPK, $isClose, $pageStatus,"empty");
         }
 
         dd($pageStatus);
     }
 
-    private function adviceInformation($isClose, $pageStatus) {
+    private function saveInformation($isClose, $pageStatus) {
         $nowDate = date("Y-m-d H:i:s");
 
         $result = [
@@ -297,6 +309,76 @@ class HTPController extends Controller
         return json_encode($result);
     }
 
+    private function saveAnswer($request, $counselingPK, $isClose, $pageStatus, $saveType = "") {
+        $nowDate = date("Y-m-d H:i:s");
+
+        $result = [
+            "status" => "fail",
+            "message" => "상담 신청 오류입니다. 증상이 계속되면 관리자에게 문의해주세요 [1]"
+        ];
+
+        try {
+            DB::beginTransaction();
+
+            $counselingStatus = ($isClose == "true") ? $pageStatus["nowPageCode"] : $pageStatus["nextPageCode"];
+            if ($isClose == "true") {
+                $nextStep = "/";
+            } else {
+                $nextStep = "/".$pageStatus["nextPage"]."/".$pageStatus["counselingPK"];
+            }
+
+            $questionsType = "";
+            switch ($pageStatus["nowPage"]) {
+                case "answerHouse":
+                    $questionsType = "302";
+                    break;
+                case "answerTree":
+                    $questionsType = "303";
+                    break;
+                case "answerPerson1":
+                    $questionsType = "304";
+                    break;
+                case "answerPerson2":
+                    $questionsType = "305";
+                    break;
+                case "behaviorObservation":
+                    $questionsType = "335";
+                    break;
+                case "temperamentTestStep1":
+                case "temperamentTestStep2":
+                    $questionsType = "336";
+                    break;
+                default :
+                    return json_encode($result);
+            }
+
+            $questions = Questions::findAllQuestion($questionsType);
+
+            foreach ($questions as $questionsRow) {
+                $formName = "questions".$questionsRow->questionsPK;
+
+                if ( $saveType == "" && isset($request[$formName])) {
+                    $this->saveCounselAnswer($request, $counselingPK, $questionsRow->questionsPK, $request[$formName], $nowDate);
+                } else if ( $saveType == "empty" && $request[$formName] != "") {
+                    $this->saveCounselAnswer($request, $counselingPK, $questionsRow->questionsPK, $request[$formName], $nowDate);
+                }
+            }
+
+            $this->updateCounselingStatus($pageStatus["counselingPK"], $counselingStatus, $nowDate);
+
+            $result = [
+                "status" => "success",
+                "message" => "",
+                "nextStep" => $nextStep
+            ];
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+
+        return json_encode($result);
+    }
 
     private function updateCounselingStatus($counselingPK, $counselingStatus,$nowDate) {
         $counseling = Counseling::find($counselingPK);
