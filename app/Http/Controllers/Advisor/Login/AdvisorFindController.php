@@ -8,12 +8,29 @@ use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AdvisorFindController extends Controller
 {
-    public function __invoke(Request $request)
+    public function index(Request $request)
     {
         return view("/advisor/login/loginFindEmail");
+    }
+
+    public function store(Request $request)
+    {
+        
+    }
+
+    public function find(Request $request)
+    {
+        $advisor = Advisor::findUser($);
+
+    }
+
+    public function show(Request $request)
+    {
+
     }
 
 }

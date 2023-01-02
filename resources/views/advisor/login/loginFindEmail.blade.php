@@ -12,13 +12,31 @@
           </div>
           <div class="login-tab__cont">
             <div class="login-tab__wrap">
-              <a href="#" class="login-tab active" data-tab="/loginFindEmail">아이디 찾기</a>
-              <a href="#" class="login-tab" data-tab="/loginFindPassword">비밀번호 찾기</a>
+              <a href="#" class="login-tab active">아이디 찾기</a>
+              <a href="/advisor/loginFindPassword" class="login-tab">비밀번호 찾기</a>
             </div>
             <div class="lgoin-tab__content">
+              <!-- defalut -->
               <div class="login-tab__desc">
                 회원정보에 등록한 전화번호를 입력하셔야<br>인증번호를 받으실 수 있습니다.
               </div>
+
+              <!-- success case -->
+              <div class="login-tab__desc">
+                고객님이 사용하신 이메일 아이디의 일부분입니다.
+              </div>
+              <div class="login-tab__desc">rcpc190***@gmail.com</div>
+
+              <!-- fail case -->
+              <div class="login-tab__desc">
+                인증하신 전화번호로<br>등록 된 계정이 없습니다.
+              </div>
+
+              <!-- withdrawal case  -->
+              <div class="login-tab__desc">
+                인증하신 전화번호는 이미 탈퇴하신 고객입니다.<br>재가입을 원하시면 고객센터(0000-000)으로 연락주세요.
+              </div>
+
             </div>
           </div>
           <div class="login-btn__wrap">
@@ -28,28 +46,9 @@
       </div>
     </div>
   </div>
+  <script src="../advisorAssets/assets/js/common.js?v={{JS_VERSION}}"></script>
 </body>
 </html>
 <script>
-	$(function() {
-		// tab operation
-		$('.login-tab').click(function() {
-			var activeTab = $(this).attr('data-tab');
-      console.log(activeTab);
-      return;
-      
-			$.ajax({
-				type : 'GET',                 //get방식으로 통신
-				url : activeTab + ".html",    //탭의 data-tab속성의 값으로 된 html파일로 통신
-				dataType : "html",            //html형식으로 값 읽기
-				error : function() {          //통신 실패시
-					alert('통신실패!');
-				},
-				success : function(data) {    //통신 성공시 탭 내용담는 div를 읽어들인 값으로 채운다.
-					$('#tabcontent').html(data);
-				}
-			});
-		});
-		$('#default').click();          
-	});
+  
 </script>
