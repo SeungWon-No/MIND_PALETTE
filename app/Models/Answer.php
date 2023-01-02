@@ -28,6 +28,36 @@ class Answer extends Model
 
         return $answerResult->get();
     }
+    public static function findCounselingAnswers($memberPK, $questionsType, $counselingPK, $offset, $limit) {
+        $answerResult = Answer::join("questions","questions.questionsPK","=","answer.questionsPK");
+
+        $answerResult->where('memberPK','=',$memberPK);
+        $answerResult->where('counselingPK','=',$counselingPK);
+
+        $answerResult->where('questionsType','=',$questionsType)
+            ->orderBy("questionsOrder", "ASC")
+            ->offset($offset)
+            ->limit($limit);
+
+        return $answerResult->get();
+    }
+
+    public static function findAllAnswer($memberPK, $freeCode, $questionsType, $counselingPK) {
+        $answerResult = Answer::join("questions","questions.questionsPK","=","answer.questionsPK");
+
+        if ($memberPK != "") {
+            $answerResult->where('memberPK','=',$memberPK);
+        } else if ($freeCode != "") {
+            $answerResult->where('tempCounselingCode','=',$freeCode);
+        }
+
+        $answerResult->where('questionsType','=',$questionsType)
+            ->where('counselingPK','=',$counselingPK)
+            ->orderBy("questionsOrder", "ASC");
+
+        return $answerResult->get();
+    }
+
 
     public static function findAnswer($memberPK, $freeCode, $questionsPK, $counselingTemplatePK) {
         $answerResult = Answer::select("answerPK");

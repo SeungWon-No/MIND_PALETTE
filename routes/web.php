@@ -52,6 +52,7 @@ Route::middleware(['autoLogin'])->group(function () {
     });
 
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]);
+    Route::post("/imageUpload", [FileUploadController::class,"imageUpload"]);
     Route::get("/sample",SampleController::class);
 //    Route::get('/test', function () {
 //        return phpinfo();
@@ -79,6 +80,14 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/paintingPerson2Timer/{counselingPK}", [ProcessInformationController::class, "paintingPerson2Timer"]);
     Route::get("/answerInformation/{counselingPK}", [ProcessInformationController::class, "answerInformation"]);
     Route::get("/answerHouse/{counselingPK}", [ProcessInformationController::class, "answerHouse"]);
+    Route::get("/answerTree/{counselingPK}", [ProcessInformationController::class, "answerTree"]);
+    Route::get("/answerPerson1/{counselingPK}", [ProcessInformationController::class, "answerPerson1"]);
+    Route::get("/answerPerson2/{counselingPK}", [ProcessInformationController::class, "answerPerson2"]);
+    Route::get("/behaviorObservation/{counselingPK}", [ProcessInformationController::class, "behaviorObservation"]);
+    Route::get("/temperamentTestInformation/{counselingPK}", [ProcessInformationController::class, "temperamentTestInformation"]);
+    Route::get("/temperamentTestStep1/{counselingPK}", [ProcessInformationController::class, "temperamentTestStep1"]);
+    Route::get("/temperamentTestStep2/{counselingPK}", [ProcessInformationController::class, "temperamentTestStep2"]);
+    Route::get("/applicationFormInformation/{counselingPK}", [ProcessInformationController::class, "applicationFormInformation"]);
     Route::post('/HTPSave/{counselingPK}', [HTPController::class, "save"]);
 });
 

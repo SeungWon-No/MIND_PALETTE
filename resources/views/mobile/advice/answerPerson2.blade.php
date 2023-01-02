@@ -2,7 +2,7 @@
 @include('/mobile/common/header',[
     "isShowBackButton" => true,
     "isShowCloseButton" => true,
-    "title" => "House : 집",
+    "title" => "Person : 사람2",
     "isShowProgress" => true,
     "progressValue" => $progressWidth
 ])
@@ -44,8 +44,8 @@
                                     @else
                                          style="display: none;"
                                     @endif>
-                                    <div class="icon icon-file-house"><div class="icon icon-file-add"></div></div>
-                                    <div class="info">집 그림을 올려주세요.</div>
+                                    <div class="icon icon-file-user2"><div class="icon icon-file-add"></div></div>
+                                    <div class="info">사람2 그림을 올려주세요.</div>
                                 </div>
                                 <img id="thumbImage"
                                      @if(isset($answer[$questions[0]->questionsPK]))
@@ -60,7 +60,7 @@
                                 />
                             </div>
                         </div>
-                        <div class="item-desc">(가로 용지)집 그림<em class="need">*</em></div>
+                        <div class="item-desc">(세로 용지)사람2 그림<em class="need">*</em></div>
                     </div>
                 </div>
                 <div class="basic-data-group">
@@ -288,20 +288,20 @@
     }
 
     function checkQuestionsOrder() {
-        var questions = $("#questions61").val();
-        $("#questions61").removeClass("valid-error");
+        var questions = $("#questions89").val();
+        $("#questions89").removeClass("valid-error");
         if (questions === "") {
-            $("#questions61").addClass("valid-error");
+            $("#questions89").addClass("valid-error");
             return false;
         }
         return true;
     }
 
     function checkQuestionsCount() {
-        var questions = $("#questions62").val();
-        $("#questions62").removeClass("valid-error");
+        var questions = $("#questions90").val();
+        $("#questions90").removeClass("valid-error");
         if (questions === "") {
-            $("#questions62").addClass("valid-error");
+            $("#questions90").addClass("valid-error");
             return false;
         }
         return true;

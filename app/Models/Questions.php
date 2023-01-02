@@ -18,4 +18,11 @@ class Questions extends Model
             ->get();
     }
 
+    public static function findAllQuestion($questionsType) {
+        return Questions::where('questionsType','=',$questionsType)
+            ->where("isDelete", "N")
+            ->orderBy("questionsOrder", "ASC")
+            ->get();
+    }
+
 }
