@@ -27,7 +27,11 @@
                                             <input type="hidden" class="hidden"
                                                    name="questions{{$questionsRow->questionsPK}}"
                                                    @if(isset($answer[$questionsRow->questionsPK]))
-                                                       value="{{$answer[$questionsRow->questionsPK]}}"
+                                                       @if(isset($scoreIndex["questions".$questionsRow->questionsPK]))
+                                                           value="{{$scoreIndex["questions".$questionsRow->questionsPK][($answer[$questionsRow->questionsPK]-1)]}}"
+                                                       @else
+                                                           value="{{$answer[$questionsRow->questionsPK]}}"
+                                                       @endif
                                                    @else
                                                        value=""
                                                 @endif

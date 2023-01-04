@@ -66,11 +66,15 @@ Route::middleware(['autoLogin'])->group(function () {
 
 Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/adviceAgree", AgreeController::class);
+    Route::get("/HTPRequestComplete/", [ProcessInformationController::class, "HTPRequestComplete"]);
     Route::resource("/requestAdvice", RequestAdviceController::class)->only([
         'index', 'store'
     ]);
     Route::resource("/mypage", MyPageController::class);
     Route::get("/logout", LogoutController::class);
+
+});
+Route::middleware(['autoLogin','loginValid','adviceVerify'])->group(function () {
 
     Route::get("/processInformation/{counselingPK}", ProcessInformationController::class);
     Route::get("/adviceInformation/{counselingPK}", [ProcessInformationController::class,"adviceInformation"]);
@@ -88,6 +92,9 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/temperamentTestStep1/{counselingPK}", [ProcessInformationController::class, "temperamentTestStep1"]);
     Route::get("/temperamentTestStep2/{counselingPK}", [ProcessInformationController::class, "temperamentTestStep2"]);
     Route::get("/applicationFormInformation/{counselingPK}", [ProcessInformationController::class, "applicationFormInformation"]);
+    Route::get("/personalData/{counselingPK}", [ProcessInformationController::class, "personalData"]);
+    Route::get("/familyRelations/{counselingPK}", [ProcessInformationController::class, "familyRelations"]);
+    Route::get("/reasonWrite/{counselingPK}", [ProcessInformationController::class, "reasonWrite"]);
     Route::post('/HTPSave/{counselingPK}', [HTPController::class, "save"]);
 });
 

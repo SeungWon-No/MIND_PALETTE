@@ -28,13 +28,27 @@ class Answer extends Model
 
         return $answerResult->get();
     }
-    public static function findCounselingAnswers($memberPK, $questionsType, $counselingPK, $offset, $limit) {
+    public static function findCounselingAnswer($memberPK, $questionsType, $counselingPK, $offset, $limit) {
         $answerResult = Answer::join("questions","questions.questionsPK","=","answer.questionsPK");
 
         $answerResult->where('memberPK','=',$memberPK);
         $answerResult->where('counselingPK','=',$counselingPK);
 
         $answerResult->where('questionsType','=',$questionsType)
+            ->orderBy("questionsOrder", "ASC")
+            ->offset($offset)
+            ->limit($limit);
+
+        return $answerResult->get();
+    }
+
+    public static function findCounselingAnswers($memberPK, $questionsType, $counselingPK, $offset, $limit) {
+        $answerResult = Answer::join("questions","questions.questionsPK","=","answer.questionsPK");
+
+        $answerResult->where('memberPK','=',$memberPK);
+        $answerResult->where('counselingPK','=',$counselingPK);
+
+        $answerResult->whereIn('questionsType',$questionsType)
             ->orderBy("questionsOrder", "ASC")
             ->offset($offset)
             ->limit($limit);
@@ -71,7 +85,7 @@ class Answer extends Model
         return $answerResult->get()->first();
     }
 
-    public static function findCounselingAnswer($memberPK, $questionsPK, $counselingPK) {
+    public static function findCounselingAnswerPK($memberPK, $questionsPK, $counselingPK) {
         $answerResult = Answer::select("answerPK");
         $answerResult->where('memberPK','=',$memberPK);
         $answerResult->where('questionsPK','=',$questionsPK)
@@ -90,6 +104,20 @@ class Answer extends Model
             ->where('answerType','=',"293")
             ->get("cast(answer as unsigned) as sumCount")->first();
     }
+    public static function sumCounselingAnswerScore($counselingPK) {
+        return Answer::select(DB::raw('sum(cast(answer as unsigned)) as sumScore'))
+            ->where('counselingPK','=',$counselingPK)
+            ->where('answerType','=',"293")
+            ->get("cast(answer as unsigned) as sumCount")->first();
+    }
+
+    public static function sumCounselingAnswerType($counselingPK,$questionsType) {
+        return Answer::select(DB::raw('sum(cast(answer as unsigned)) as sumScore'))
+            ->join('questions','answer.questionsPK','=','questions.questionsPK')
+            ->where('counselingPK','=',$counselingPK)
+            ->where('questionsType','=',$questionsType)->get()->first();
+    }
+
     public static function findSpecificAnswers($memberPK, $freeCode, $counselingPK, $questionsType, $key) {
         $answerResult = Answer::join("questions","questions.questionsPK","=","answer.questionsPK");
 

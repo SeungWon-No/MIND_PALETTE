@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdviceVerify;
 use App\Http\Middleware\FreeAdviceVerify;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'autoLogin' => \App\Http\Middleware\AutoLogin::class,
         'loginValid' => \App\Http\Middleware\LoginValid::class,
         "freeAdviceVerify" => FreeAdviceVerify::class,
+        "adviceVerify" => AdviceVerify::class,
 
         'advisorAutoLogin' => \App\Http\Middleware\AdvisorAutoLogin::class,
         'advisorLoginValid' => \App\Http\Middleware\AdvisorLoginValid::class,
