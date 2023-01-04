@@ -16,7 +16,7 @@ class PASSAuthController extends Controller
 
         $CP_CD = "V60440000000";
 
-        $RETURN_URL = "http://".$_SERVER['HTTP_HOST']."/auth/return";// 인증 완료 후 리턴될 URL (도메인 포함 full path)
+        $RETURN_URL = "https://".$_SERVER['HTTP_HOST']."/auth/return";// 인증 완료 후 리턴될 URL (도메인 포함 full path)
 
         //'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         //' 인증요청사유코드 (가이드 문서 참조)
