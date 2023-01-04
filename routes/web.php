@@ -135,8 +135,15 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
     });
 
-    Route::get('/findIdPassword', AdvisorFindController::class); // 아이디, 패스워드 찾기
+    Route::resource('/findIdPassword', AdvisorFindController::class); // 아이디, 패스워드 찾기
 
+    Route::get('/loginFindEmail', function () { // 아이디 찾기
+        return view('/advisor/login/loginFindEmail');
+    });
+    Route::get('/loginFindPassword', function () { // 비밀번호 찾기
+        return view('/advisor/login/loginFindPassword');
+    });
+    
     Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
     Route::get('/loginFail', function () { // 로그인 실패시 화면
