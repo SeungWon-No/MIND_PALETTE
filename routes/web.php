@@ -24,6 +24,7 @@ use App\Http\Controllers\Mobile\Join\EmailCheckController;
 use App\Http\Controllers\Mobile\Join\JoinController;
 use App\Http\Controllers\Mobile\Login\LoginController;
 use App\Http\Controllers\Mobile\Logout\LogoutController;
+use App\Http\Controllers\Mobile\MemberFind\IDFindController;
 use App\Http\Controllers\Mobile\Mypage\MyPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,11 @@ const JS_VERSION = "3";
 
 Route::middleware(['autoLogin'])->group(function () {
     Route::get('/', IndexController::class);
+    Route::get("/idFind",IDFindController::class);
+    Route::get('/joinAuth', function () {
+        return view('/mobile/join/auth');
+    });
+    Route::post("/memberAuthFind",[IDFindController::class,"memberAuthFind"]);
     Route::resource("/login",LoginController::class)->only([
         'index', 'store'
     ]);
@@ -143,7 +149,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
     Route::get('/loginFindPassword', function () { // 비밀번호 찾기
         return view('/advisor/login/loginFindPassword');
     });
-    
+
     Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
     Route::get('/loginFail', function () { // 로그인 실패시 화면

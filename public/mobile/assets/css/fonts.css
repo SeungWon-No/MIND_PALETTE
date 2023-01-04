@@ -92,3 +92,19 @@
 	font-display: swap;
 	src: local(''), url('../fonts/NanumSquareRoundL.woff2') format('woff2'), url('../fonts/NanumSquareRoundL.woff') format('woff');
 }
+
+/* 23.01.04 추가 */
+@font-face {
+  font-family: 'D-DIN';
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/D-DIN-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'D-DIN';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/D-DIN.woff2') format('woff2');
+}
+/* //23.01.04 추가 */

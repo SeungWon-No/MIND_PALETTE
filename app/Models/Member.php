@@ -31,6 +31,14 @@ class Member extends Model
             -> where('joinType','=','site')
             -> get();
     }
+
+    public static function findAuthUser($CI) {
+        return Member::join("memberAuth","member.memberPK","=","memberAuth.memberPK")
+            -> where('memberAuth.memberCI','=',$CI)
+            -> where('joinType','=','site')
+            -> whereNull('withdrawal')
+            -> get()->first();
+    }
     public static function updateLoginDate($memberPK){
         $nowDate = date("Y-m-d H:i:s");
 
