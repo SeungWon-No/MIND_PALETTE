@@ -53,8 +53,7 @@
                             <div class="form-group-item">
                                 <div class="form-item-label">이름<em class="need">*</em></div>
                                 <div class="form-item-data">
-                                    <input id="userName" name="userName" type="text" placeholder="이름" onFocus="inputChange(this);"
-                                           onKeyUp="inputChange(this);" onblur="inputBlur(this);">
+                                    <input id="userName" name="userName" type="text" value="{{$userName}}}">
                                     <div style="display:none">
                                         <div class="form-input-valid font-color-error">이름을 입력하세요.</div>
                                     </div>
@@ -67,24 +66,10 @@
                                 <div class="form-item-data">
                                     <div class="form-phone-confirm">
                                         <div class="form-control-btns">
-                                            <input id="userPhone" name="userPhone"
-                                                   type="text" placeholder="“-”없이 입력" onFocus="inputChange(this);"
-                                                   onKeyUp="inputChange(this);" onblur="inputBlur(this);" >
+                                            <input id="userPhone" name="userPhone" value="{{$userPhone}}}" >
                                             <button type="button" class="btn btn-outline-gray btn-inline btn-middle-size">
                                                 인증번호
                                             </button>
-                                        </div>
-                                        <div class="input">
-                                            <input type="text" placeholder="인증번호 입력" onFocus="inputChange(this);"
-                                                   onKeyUp="inputChange(this);" onblur="inputBlur(this);" >
-                                            <div style="display:none">
-                                                <div class="form-phone-timer">03:00</div>
-                                            </div>
-                                        </div>
-                                        <div style="display:none">
-                                            <div class="form-input-valid font-color-error">
-                                                <div id="error-info" style="display:none">유효 시간이 초과했습니다. 인증번호를 다시 받아주세요.</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

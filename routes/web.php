@@ -42,8 +42,9 @@ Route::middleware(['autoLogin'])->group(function () {
         'index', 'store'
     ]);
     Route::resource('/join', JoinController::class)->only([
-        'index', 'create', 'store', 'show'
+        'index', 'store', 'show'
     ]);
+    Route::post("/createMember", [JoinController::class,"createMember"]);
     Route::post("/emailCheck", EmailCheckController::class);
     Route::post('/findRegion/{id}', [RequestAdviceController::class,"findRegion"]);
 

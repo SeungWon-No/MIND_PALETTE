@@ -25,7 +25,7 @@ class IDFindController extends Controller
 
         if ($CI == "") {
             $result = [
-                "status" => "fail",
+                "status" => "error",
                 "message" => "인증 값이 존재하지 않습니다."
             ];
             return json_encode($result);
@@ -34,6 +34,17 @@ class IDFindController extends Controller
         $CI = Crypt::decryptString($CI);
 
         $member = Member::findAuthUser($CI);
-        dd($member);
+
+        $result = [
+            "status" => "success",
+            "message" => ""
+        ];
+
+        if ($member) {
+            $result["status"] = "fail";
+            $result["email"] = "aaaa@aaa.com";
+        }
+
+        return json_encode($result);
     }
 }

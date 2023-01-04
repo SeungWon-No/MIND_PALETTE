@@ -16,7 +16,7 @@
         <input type="hidden" name="CP_CD" maxlength="12" size="16" value="">
         <input type="hidden" name="SITE_NAME" maxlength="20" size="24" value="마음팔레트">
     </form>
-    <form name="joinForm" method="post" action="/join/create">
+    <form name="joinForm" method="post" action="/createMember">
         @csrf
         <input type="hidden" name="userName" value="">
         <input type="hidden" name="userPhone" value="">
@@ -42,8 +42,14 @@
             },
             async: false,
             headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
-            success:function(data){
-                emailCount = data;
+            success:function(json){
+
+                var data = JSON.parse(json);
+                if ( data.status === "success" ) {
+                    document.joinForm.submit();
+                } else {
+                    alert(data.message);
+                }
             }
         });
     }
