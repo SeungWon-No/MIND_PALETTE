@@ -24,7 +24,6 @@ class AdvisorFindController extends Controller
 
     public function find(Request $request)
     {
-        $advisor = Advisor::findUser($);
 
     }
 

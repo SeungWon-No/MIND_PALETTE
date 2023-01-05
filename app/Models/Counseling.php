@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property mixed $counselingPK
@@ -31,6 +33,45 @@ class Counseling extends Model
             ->offset(0)
             ->limit(10)
             ->get();
+    }
+
+    
+    // public static function getCounselingList(){
+    //     return Counseling::select("counselingPK", "counselorName", "counselorBirthday", "counselorGender")
+    //     ->orderBy("counselingPK", "DESC")
+    //     ->get();
+    // }
+
+    public static function getCounselingList(){
+        $getResult = DB::table('counseling')
+                    ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
+                    ->select("counseling.counselingPK", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+                    ->where('counseling.counselorGender', '=', '337') // 남자
+                    ->orWhere('counseling.counselorGender', '=', '338') // 여자
+                    ->orderBy("counselingPK", "DESC")
+                    ->get();
+
+        $counselingList = json_decode(json_encode($getResult), true);
+        
+        foreach($counselingList as $pk => $list){
+            $counselingList[$pk] = [
+                'counselingPK' => $list['counselingPK'],
+                'counselorName' => Crypt::decryptString($list['counselorName']),
+                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
+                'counselorGender' => $list['codeName'],
+            ];            
+        }
+        return $counselingList;
+    }
+
+    // 상담 대기 중인 건 수 [counselingStatus : 279]
+    public static function getWaitingCounseling(){
+        return Counseling::where('counselingCode', '=', '279')->count();
+    }
+
+    // 상담 완료 건수
+    public static function getCompleteCounseling(){
+        return Counseling::where('counselingCode', '=', '281')->count();
     }
 
 }

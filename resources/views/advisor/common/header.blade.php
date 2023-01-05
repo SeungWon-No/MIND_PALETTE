@@ -48,13 +48,27 @@
       <div class="header-bottom">
         <div class="header-bottom__inner">
           <nav class="nav">
-            <a href="/advisor/" class="nav-menu active">홈</a>
-            <a href="/advisor/detail" class="nav-menu">상담리스트</a>
-            <a href="#none" class="nav-menu">나의 상담 리스트</a>
-            <a href="#none" class="nav-menu">프로필</a>
-            <a href="#none" class="nav-menu">공지사항</a>
-            <a href="#none" class="nav-menu">1:1 상담</a>
+            <a id="main" href="/advisor/" class="nav-menu">홈</a>
+            <a id="counselingList" href="/advisor/counselingList" class="nav-menu">상담리스트</a>
+            <a id="myCounselingList" href="/advisor/myCounselingList" class="nav-menu">나의 상담 리스트</a>
+            <a id="profile" href="/advisor/profile" class="nav-menu">프로필</a>
+            <a id="notice" href="/advisor/notice" class="nav-menu">공지사항</a>
+            <a id="personalCounseling" href="/advisor/personalCounseling" class="nav-menu">1:1 상담</a>
           </nav>
         </div>
       </div>
+      <script>
+          var currentUrl = $(location).attr("href"); // 현재 페이지 url
+          var splitUrl = currentUrl.split("/");
+          // http://dev-m.maeumpalette.com:8080/[urlSection1]/[urlSection2]
+          var urlSection1 = splitUrl[3];
+          var urlSection2 = splitUrl[4];
+
+          if (urlSection1 == 'advisor' && urlSection2 == '') {
+            $("#main").attr("class", "nav-menu active");
+
+          }else{
+            $("#"+urlSection2).attr("class", "nav-menu active");
+          }
+      </script>
     </header>

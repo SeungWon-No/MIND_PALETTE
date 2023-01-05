@@ -7,6 +7,8 @@ use App\Http\Controllers\Advisor\Join\VerifyEmailDuplicationController;
 use App\Http\Controllers\Advisor\Login\AdvisorLoginController;
 use App\Http\Controllers\Advisor\Login\AdvisorFindController;
 use App\Http\Controllers\Advisor\Logout\AdvisorLogoutController;
+use App\Http\Controllers\Advisor\Notice\AdvisorNoticeController;
+use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingListController;
 
 use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Common\PASSAuthController;
@@ -110,7 +112,7 @@ Route::middleware(['autoLogin','freeAdviceVerify'])->group(function () {
 // Advisor
 Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/advisor/
 
-    Route::middleware(['advisorAutoLogin'])->group(function () {
+    Route::middleware(['advisorAutoLogin'])->group(function () { // 로그인 미들웨어
 
         Route::get('/', AdvisorIndexController::class); // 메인화면
 
@@ -143,11 +145,15 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         return view('/advisor/login/loginFail');
     });
 
-    Route::get('/detail', function () { // 상세 페이지
-        return view('/advisor/counseling');
+    Route::get("/counselingList", [AdvisorCounselingListController::class, "index"]); // 상담리스트
+
+    Route::get('/myCounselingList', function () { // 나의 상담리스트
+        return view('/advisor/navigation/myCounselingList');
     });
 
-    Route::get('/profile', function () {
-        return view('/advisor/profile');
+    Route::get('/profile', function () { // 프로필
+        return view('/advisor/navigation/profile');
     });
+
+    Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
 });
