@@ -26,6 +26,7 @@ use App\Http\Controllers\Mobile\Join\EmailCheckController;
 use App\Http\Controllers\Mobile\Join\JoinController;
 use App\Http\Controllers\Mobile\Login\LoginController;
 use App\Http\Controllers\Mobile\Logout\LogoutController;
+use App\Http\Controllers\Mobile\MemberFind\IDFindController;
 use App\Http\Controllers\Mobile\Mypage\MyPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,12 +35,18 @@ const JS_VERSION = "3";
 
 Route::middleware(['autoLogin'])->group(function () {
     Route::get('/', IndexController::class);
+    Route::get("/idFind",IDFindController::class);
+    Route::get('/joinAuth', function () {
+        return view('/mobile/join/auth');
+    });
+    Route::post("/memberAuthFind",[IDFindController::class,"memberAuthFind"]);
     Route::resource("/login",LoginController::class)->only([
         'index', 'store'
     ]);
     Route::resource('/join', JoinController::class)->only([
-        'index', 'create', 'store', 'show'
+        'index', 'store', 'show'
     ]);
+    Route::post("/createMember", [JoinController::class,"createMember"]);
     Route::post("/emailCheck", EmailCheckController::class);
     Route::post('/findRegion/{id}', [RequestAdviceController::class,"findRegion"]);
 
@@ -68,11 +75,15 @@ Route::middleware(['autoLogin'])->group(function () {
 
 Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/adviceAgree", AgreeController::class);
+    Route::get("/HTPRequestComplete/", [ProcessInformationController::class, "HTPRequestComplete"]);
     Route::resource("/requestAdvice", RequestAdviceController::class)->only([
         'index', 'store'
     ]);
     Route::resource("/mypage", MyPageController::class);
     Route::get("/logout", LogoutController::class);
+
+});
+Route::middleware(['autoLogin','loginValid','adviceVerify'])->group(function () {
 
     Route::get("/processInformation/{counselingPK}", ProcessInformationController::class);
     Route::get("/adviceInformation/{counselingPK}", [ProcessInformationController::class,"adviceInformation"]);
@@ -90,6 +101,9 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/temperamentTestStep1/{counselingPK}", [ProcessInformationController::class, "temperamentTestStep1"]);
     Route::get("/temperamentTestStep2/{counselingPK}", [ProcessInformationController::class, "temperamentTestStep2"]);
     Route::get("/applicationFormInformation/{counselingPK}", [ProcessInformationController::class, "applicationFormInformation"]);
+    Route::get("/personalData/{counselingPK}", [ProcessInformationController::class, "personalData"]);
+    Route::get("/familyRelations/{counselingPK}", [ProcessInformationController::class, "familyRelations"]);
+    Route::get("/reasonWrite/{counselingPK}", [ProcessInformationController::class, "reasonWrite"]);
     Route::post('/HTPSave/{counselingPK}', [HTPController::class, "save"]);
 });
 
@@ -138,7 +152,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
     Route::get('/loginFindPassword', function () { // 비밀번호 찾기
         return view('/advisor/login/loginFindPassword');
     });
-    
+
     Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
     Route::get('/loginFail', function () { // 로그인 실패시 화면

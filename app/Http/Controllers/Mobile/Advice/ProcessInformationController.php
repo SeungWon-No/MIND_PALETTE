@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Mobile\Advice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Util\CounselingTemplateTest;
 use App\Models\Answer;
+use App\Models\Code;
+use App\Models\Counseling;
 use App\Models\Questions;
 use Illuminate\Http\Request;
 
@@ -109,8 +112,9 @@ class ProcessInformationController extends Controller
         return view("mobile/advice/temperamentTestStep",[
             "counselingPK" => $counselingPK,
             "progressWidth" => 73.2,
-            "questions" => Questions::findQuestions(336,0,10),
-            "answer" => $this->getAnswerLimit($request,$counselingPK,336,0,10)
+            "questions" => Questions::findAnyQuestions([336,342,343,344],0,10),
+            "answer" => $this->getAnswersLimit($request,$counselingPK,[336,342,343,344],0,10),
+            "scoreIndex" => CounselingTemplateTest::$scoreValue
         ]);
     }
 
@@ -118,8 +122,9 @@ class ProcessInformationController extends Controller
         return view("mobile/advice/temperamentTestStep",[
             "counselingPK" => $counselingPK,
             "progressWidth" => 78.4,
-            "questions" => Questions::findQuestions(336,10,10),
-            "answer" => $this->getAnswerLimit($request,$counselingPK,336,10,10)
+            "questions" => Questions::findAnyQuestions([336,342,343,344],10,10),
+            "answer" => $this->getAnswersLimit($request,$counselingPK,[336,342,343,344],10,10),
+            "scoreIndex" => CounselingTemplateTest::$scoreValue
         ]);
     }
     public function applicationFormInformation(Request $request, $counselingPK) {
@@ -127,6 +132,32 @@ class ProcessInformationController extends Controller
             "counselingPK" => $counselingPK,
             "progressWidth" => 83.6,
         ]);
+    }
+    public function personalData(Request $request, $counselingPK) {
+        return view("mobile/advice/personalData",[
+            "counselingPK" => $counselingPK,
+            "progressWidth" => 88.8,
+            "counseling" => Counseling::find($counselingPK),
+            "genders" => Code::findCode("gender"),
+            "schools" => Code::findCode("school")
+        ]);
+    }
+    public function familyRelations(Request $request, $counselingPK) {
+        return view("mobile/advice/familyRelations",[
+            "counselingPK" => $counselingPK,
+            "progressWidth" => 94,
+            "counseling" => Counseling::find($counselingPK),
+        ]);
+    }
+    public function reasonWrite(Request $request, $counselingPK) {
+        return view("mobile/advice/reasonWrite",[
+            "counselingPK" => $counselingPK,
+            "progressWidth" => 100,
+            "counseling" => Counseling::find($counselingPK),
+        ]);
+    }
+    public function HTPRequestComplete(Request $request) {
+        return view("mobile/advice/HTPRequestComplete");
     }
     private function getAnswer($request, $counselingPK, $questionsType, $key) {
 
@@ -163,6 +194,22 @@ class ProcessInformationController extends Controller
     }
 
     private function getAnswerLimit($request, $counselingPK, $questionsType, $offset, $limit) {
+
+        $memberPK = "";
+        if ($request->session()->has("login")) {
+            $memberPK = $request->session()->get('login')[0]['memberPK'];
+        }
+
+        $answers = Answer::findCounselingAnswer($memberPK,$questionsType, $counselingPK, $offset, $limit);
+
+        $answerResult = array();
+        foreach ($answers as $answerRow) {
+            $answerResult[$answerRow->questionsPK] = $answerRow->answer;
+        }
+
+        return $answerResult;
+    }
+    private function getAnswersLimit($request, $counselingPK, $questionsType, $offset, $limit) {
 
         $memberPK = "";
         if ($request->session()->has("login")) {

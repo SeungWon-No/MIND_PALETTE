@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class PASSAuthController extends Controller
 {
@@ -15,7 +16,7 @@ class PASSAuthController extends Controller
 
         $CP_CD = "V60440000000";
 
-        $RETURN_URL = "http://".$_SERVER['HTTP_HOST']."/auth/return";// 인증 완료 후 리턴될 URL (도메인 포함 full path)
+        $RETURN_URL = "https://".$_SERVER['HTTP_HOST']."/auth/return";// 인증 완료 후 리턴될 URL (도메인 포함 full path)
 
         //'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         //' 인증요청사유코드 (가이드 문서 참조)
@@ -145,34 +146,24 @@ class PASSAuthController extends Controller
 
             if( $RSLT_CD == "B000" ) { // B000 : 정상건
                 // $RSLT_NAME  = iconv("utf-8","euckr",$output['RSLT_NAME']); // 다시 EUC-KR 로 변환
-                $RSLT_NAME  = $output['RSLT_NAME'];
-                $RSLT_BIRTHDAY	= $output['RSLT_BIRTHDAY'];
-                $RSLT_SEX_CD	= $output['RSLT_SEX_CD'];
-                $RSLT_NTV_FRNR_CD=$output['RSLT_NTV_FRNR_CD'];
+                $RSLT_NAME  = Crypt::encryptString($output['RSLT_NAME']);
 
-                $DI				= $output['DI'];
-                $CI 			= $output['CI'];
-                $CI_UPDATE		= $output['CI_UPDATE'];
-                $TEL_COM_CD		= $output['TEL_COM_CD'];
-                $TEL_NO			= $output['TEL_NO'];
+                $DI				= Crypt::encryptString($output['DI']);
+                $CI 			= Crypt::encryptString($output['CI']);
+                $TEL_NO			= Crypt::encryptString($output['TEL_NO']);
 
-                dd($output);
+//                $CI_UPDATE		= $output['CI_UPDATE'];
+//                $TEL_COM_CD		= $output['TEL_COM_CD'];
+//                $RSLT_BIRTHDAY	= $output['RSLT_BIRTHDAY'];
+//                $RSLT_SEX_CD	= $output['RSLT_SEX_CD'];
+//                $RSLT_NTV_FRNR_CD=$output['RSLT_NTV_FRNR_CD'];
 
-//                $hashName = Hash::make($RSLT_NAME);
-//                $hashPhone = Hash::make($TEL_NO);
-//                $hashCI = Hash::make($CI);
-//                $hashDI = Hash::make($DI);
-//
-//                $authResult = [
-//                    "DI" => $DI,
-//                    "hashDI" => $hashDI,
-//                    "CI" => $CI,
-//                    "hashCI" => $hashCI,
-//                    "name" => $RSLT_NAME,
-//                    "hashName" => $hashName,
-//                    "phone" => $TEL_NO,
-//                    "hashPhone" => $hashPhone,
-//                ];
+                $authResult = [
+                    "DI" => $DI,
+                    "CI" => $CI,
+                    "name" => $RSLT_NAME,
+                    "phone" => $TEL_NO,
+                ];
 
                 $isSuccess = true;
             }

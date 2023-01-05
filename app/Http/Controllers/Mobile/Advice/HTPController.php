@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Mobile\Advice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Util\CounselingTemplate;
+use App\Http\Util\CounselingTemplateTest;
 use App\Models\Answer;
 use App\Models\Code;
 use App\Models\Counseling;
 use App\Models\Questions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class HTPController extends Controller
@@ -56,6 +59,12 @@ class HTPController extends Controller
             case "temperamentTestStep1":
             case "temperamentTestStep2":
                 return $this->saveAnswer($request, $counselingPK, $isClose, $pageStatus,"empty");
+            case "personalData":
+                return $this->personalData($request, $counselingPK, $isClose, $pageStatus);
+            case "familyRelations":
+                return $this->familyRelations($request, $counselingPK, $isClose, $pageStatus);
+            case "reasonWrite":
+                return $this->reasonWrite($request, $counselingPK, $isClose, $pageStatus);
         }
 
         dd($pageStatus);
@@ -352,19 +361,109 @@ class HTPController extends Controller
                     return json_encode($result);
             }
 
-            $questions = Questions::findAllQuestion($questionsType);
+            if ($questionsType == "336") {
+                $questions = Questions::findAnyAllQuestions([336,342,343,344]);
+            } else {
+                $questions = Questions::findAllQuestion($questionsType);
+            }
 
+            $scoreValue = CounselingTemplateTest::$scoreValue;
             foreach ($questions as $questionsRow) {
                 $formName = "questions".$questionsRow->questionsPK;
 
                 if ( $saveType == "" && isset($request[$formName])) {
                     $this->saveCounselAnswer($request, $counselingPK, $questionsRow->questionsPK, $request[$formName], $nowDate);
                 } else if ( $saveType == "empty" && $request[$formName] != "") {
-                    $this->saveCounselAnswer($request, $counselingPK, $questionsRow->questionsPK, $request[$formName], $nowDate);
+                    $value = $request[$formName];
+                    if ($questionsType == "336") {
+                        $value = (isset($scoreValue[$formName])) ? $scoreValue[$formName][($value-1)]: $value;
+                    }
+                    $this->saveCounselAnswer($request, $counselingPK, $questionsRow->questionsPK, $value, $nowDate);
                 }
             }
 
             $this->updateCounselingStatus($pageStatus["counselingPK"], $counselingStatus, $nowDate);
+
+            $result = [
+                "status" => "success",
+                "message" => "",
+                "nextStep" => $nextStep
+            ];
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+
+        return json_encode($result);
+    }
+
+    private function personalData($request, $counselingPK, $isClose, $pageStatus) {
+        $nowDate = date("Y-m-d H:i:s");
+
+        $result = [
+            "status" => "fail",
+            "message" => "상담 신청 오류입니다. 증상이 계속되면 관리자에게 문의해주세요 [1]"
+        ];
+
+        try {
+            DB::beginTransaction();
+
+            $counselingStatus = ($isClose == "true") ? $pageStatus["nowPageCode"] : $pageStatus["nextPageCode"];
+            if ($isClose == "true") {
+                $nextStep = "/";
+            } else {
+                $nextStep = "/".$pageStatus["nextPage"]."/".$pageStatus["counselingPK"];
+            }
+
+            $counseling = Counseling::find($counselingPK);
+            if ($request->counselorName != "") {
+                $counseling->counselorName = Crypt::encryptString($request->counselorName);
+            }
+
+            if ($request->counselorBirthday != "") {
+                $counseling->counselorBirthday = Crypt::encryptString($request->counselorBirthday);
+            }
+
+            if ($request->counselorGender != "-1") {
+                $counseling->counselorGender = $request->counselorGender;
+            }
+
+            if ($request->counselorSchool != "-1") {
+                $counseling->counselorSchool = $request->counselorSchool;
+            }
+
+            if ($request->familyRelations1 != "") {
+                $counseling->familyRelations1 = $request->familyRelations1;
+            }
+
+            if ($request->familyRelations2 != "") {
+                $counseling->familyRelations2 = $request->familyRelations2;
+            }
+
+            if ($request->familyRelations3 != "") {
+                $counseling->familyRelations3 = $request->familyRelations3;
+            }
+
+            if ($request->specialty != "") {
+                $counseling->specialty = $request->specialty;
+            }
+
+            if ($request->hobby != "") {
+                $counseling->hobby = $request->hobby;
+            }
+
+            if ($request->friendship != "") {
+                $counseling->friendship = $request->friendship;
+            }
+
+            if ($request->relationshipTeacher != "") {
+                $counseling->relationshipTeacher = $request->relationshipTeacher;
+            }
+
+            $counseling->counselingStatus = $counselingStatus;
+            $counseling->updateDate = $nowDate;
+            $counseling->save();
 
             $result = [
                 "status" => "success",
@@ -380,6 +479,137 @@ class HTPController extends Controller
         return json_encode($result);
     }
 
+    private function familyRelations($request, $counselingPK, $isClose, $pageStatus) {
+        $nowDate = date("Y-m-d H:i:s");
+
+        $result = [
+            "status" => "fail",
+            "message" => "상담 신청 오류입니다. 증상이 계속되면 관리자에게 문의해주세요 [1]"
+        ];
+
+        try {
+            DB::beginTransaction();
+
+            $counselingStatus = ($isClose == "true") ? $pageStatus["nowPageCode"] : $pageStatus["nextPageCode"];
+            if ($isClose == "true") {
+                $nextStep = "/";
+            } else {
+                $nextStep = "/".$pageStatus["nextPage"]."/".$pageStatus["counselingPK"];
+            }
+
+            $counseling = Counseling::find($counselingPK);
+
+            if ($request->relationshipDad != "") {
+                $counseling->relationshipDad = $request->relationshipDad;
+            }
+
+            if ($request->relationshipMother != "") {
+                $counseling->relationshipMother = $request->relationshipMother;
+            }
+
+            if ($request->relationshipSiblings != "") {
+                $counseling->relationshipSiblings = $request->relationshipSiblings;
+            }
+
+            if ($request->relationshipSister != "") {
+                $counseling->relationshipSister = $request->relationshipSister;
+            }
+
+            if ($request->stressCauses != "") {
+                $stressCauses = str_replace("\n","<br/>",htmlspecialchars(urldecode($request->stressCauses)));
+                $counseling->stressCauses = $stressCauses;
+            }
+
+            $counseling->counselingStatus = $counselingStatus;
+            $counseling->updateDate = $nowDate;
+            $counseling->save();
+
+            $result = [
+                "status" => "success",
+                "message" => "",
+                "nextStep" => $nextStep
+            ];
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+
+        return json_encode($result);
+    }
+
+    private function reasonWrite($request, $counselingPK, $isClose, $pageStatus) {
+        $nowDate = date("Y-m-d H:i:s");
+
+        $result = [
+            "status" => "fail",
+            "message" => "상담 신청 오류입니다. 증상이 계속되면 관리자에게 문의해주세요 [1]"
+        ];
+
+        try {
+            DB::beginTransaction();
+
+            $counselingStatus = ($isClose == "true") ? $pageStatus["nowPageCode"] : $pageStatus["nextPageCode"];
+            if ($isClose == "true") {
+                $nextStep = "/";
+            } else {
+                if ($pageStatus["nextPage"] == "requestAdvice") {
+                    $nextStep = "/HTPRequestComplete";
+                } else {
+                    $nextStep = "/".$pageStatus["nextPage"]."/".$pageStatus["counselingPK"];
+                }
+
+            }
+
+            $counseling = Counseling::find($counselingPK);
+            if ($request->reasonInspection != "") {
+                $reasonInspection = str_replace("\n","<br/>",htmlspecialchars(urldecode($request->reasonInspection)));
+                $counseling->reasonInspection = $reasonInspection;
+            }
+
+            if ($isClose == "false") {
+                $questionsTypeRow = [
+                    "336" => "125",
+                    "342" => "126",
+                    "343" => "127",
+                    "344" => "128"
+                ];
+
+                foreach($questionsTypeRow as $key => $value) {
+
+                    $scoreResult = Answer::sumCounselingAnswerType($counselingPK,$key);
+                    $memberPK = $request->session()->get('login')[0]['memberPK'];
+
+                    $answer = new Answer;
+                    $answer->questionsPK = $value; //
+                    $answer->counselingPK = $counselingPK;
+                    $answer->answerType = 294;
+                    $answer->memberPK = $memberPK;
+                    $answer->answer = $scoreResult->sumScore;
+                    $answer->updateDate = $nowDate;
+                    $answer->createDate = $nowDate;
+                    $answer->save();
+                }
+            }
+
+
+            $counseling->counselingStatus = $counselingStatus;
+            $counseling->updateDate = $nowDate;
+            $counseling->save();
+
+            $result = [
+                "status" => "success",
+                "message" => "",
+                "nextStep" => $nextStep
+            ];
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+
+        return json_encode($result);
+    }
     private function updateCounselingStatus($counselingPK, $counselingStatus,$nowDate) {
         $counseling = Counseling::find($counselingPK);
         $counseling->counselingStatus = $counselingStatus;
@@ -390,7 +620,7 @@ class HTPController extends Controller
     private function saveCounselAnswer($request, $counselingPK, $questionsPK, $answerValue, $nowDate) {
 
         $memberPK = $request->session()->get('login')[0]['memberPK'];
-        $updateAnswer = Answer::findCounselingAnswer($memberPK,$questionsPK,$counselingPK);
+        $updateAnswer = Answer::findCounselingAnswerPK($memberPK,$questionsPK,$counselingPK);
 
         if ( $updateAnswer ) {
             $updateValue = [
@@ -453,6 +683,7 @@ class HTPController extends Controller
 
             $prePage = $object["codeName"];
         }
+
         return $pageStatus;
     }
 }

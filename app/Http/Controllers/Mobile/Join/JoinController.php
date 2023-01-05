@@ -20,13 +20,20 @@ class JoinController extends Controller
         }
         return view("/mobile/join/agree");
     }
-    public function create(Request $request)
+    public function createMember(Request $request)
     {
         if ($request->session()->has('login')) {
             return redirect('/')->with('error', '로그인 상태입니다.');
         }
-        return view("/mobile/join/create");
+
+        return view("/mobile/join/create",[
+            "userName" => $request->userName,
+            "userPhone" => $request->userPhone,
+            "DI" => $request->DI,
+            "CI" => $request->CI,
+        ]);
     }
+
 
     public function store(Request $request)
     {

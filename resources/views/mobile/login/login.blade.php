@@ -4,6 +4,7 @@
         <div class="login-wrap">
             <div class="login-inner">
                 <div class="login-logo"></div>
+                <div class="login-logo__desc">마음팔레트</div>
                 <div class="login-input-wrap">
                     <fieldset>
                         <legend>로그인 입력 폼</legend>
@@ -28,7 +29,7 @@
                                 <input id="autoLogin"  name="autoLogin" type="checkbox" />
                                 <span class="form-check-icon"><em>로그인 유지</em></span>
                             </label>
-                            <a href="#">계정 정보를 잊으셧나요?</a>
+                            <a href="/idFind">계정 정보를 잊으셧나요?</a>
                         </div>
                         <div style="display:block">
                             <div class="form-input-valid font-color-error">
