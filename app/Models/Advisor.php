@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * @property mixed $advisorPK
@@ -53,4 +54,32 @@ class Advisor extends Model
         return Advisor::where('advisorPK','=',$advisorPK)->first();
     }
     
+    public static function getAdvisorProfile($advisorPK){
+        $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
+        $advisorProfile = json_decode(json_encode($getAdvisorInfo), true);
+
+        $advisorProfile = [
+            'advisorName' => Crypt::decryptString($advisorProfile['advisorName']),
+            //Todo : 상담사 이름, 소속기관, 상담내역(작성중, 상담완료) 추가
+        ];
+        return $advisorProfile;
+    }
+
+    public static function getAdvisorList(){
+        $getAdvisorList = Advisor::select('advisorPK', 'advisorName', 'briefIntroduction')->get(); 
+        // 프로필사진, 이름, 별점, 상담 진행 횟수, 자기소개
+        $advisorList = json_decode(json_encode($getAdvisorList), true);
+
+        foreach($advisorList as $pk => $list){
+            $advisorList[$pk] = [
+                'advisorPK' => $list['advisorPK'],
+                'advisorName' => Crypt::decryptString($list['advisorName']),
+                'briefIntroduction' => $list['briefIntroduction'],
+            ];            
+        }
+        return $advisorList;
+
+    }
+
+
 }

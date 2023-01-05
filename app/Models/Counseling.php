@@ -35,13 +35,6 @@ class Counseling extends Model
             ->get();
     }
 
-    
-    // public static function getCounselingList(){
-    //     return Counseling::select("counselingPK", "counselorName", "counselorBirthday", "counselorGender")
-    //     ->orderBy("counselingPK", "DESC")
-    //     ->get();
-    // }
-
     public static function getCounselingList(){
         $getResult = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')

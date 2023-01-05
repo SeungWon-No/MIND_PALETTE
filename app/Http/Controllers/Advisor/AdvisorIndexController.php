@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Advisor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advisor;
 use App\Models\Counseling;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -22,18 +23,20 @@ class AdvisorIndexController extends Controller
         //$waitingCount = Counseling::getWaitingCounseling(); // 상담 대기 건수
         //$completeCount = Counseling::getCompleteCounseling();// 상담 완료 건수
         
-        $counselingList = Counseling::getCounselingList(); // 전체 상담 리스트
-
-        // 임의 값 지정
-        $waitingCount = 999;
+        $waitingCount = 999; // 임의 값 지정
         $completeCount = 777;
-        
+        $counselingList = Counseling::getCounselingList(); // 전체 상담 리스트
+        $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
+        $advisorList = Advisor::getAdvisorList(); // 상담사 리스트
+
 
         return view("/advisor/main",[   // 상담사 메인 페이지 
             "isLogin" => $isLogin,
             "waitingCount" => $waitingCount,
             "completeCount" => $completeCount,
             "counselingList" => $counselingList,
+            "advisorProfile" => $advisorProfile,
+            "advisorList" => $advisorList,
         ]);
     }
 

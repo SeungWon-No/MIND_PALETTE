@@ -91,14 +91,14 @@
               <a href="#none" class="cont-heading__link">상담사 더보기 <span class="icon link-more-icon"></span></a>
             </div>
             <div class="expert-list">
-              <!-- list items -->
+            @foreach ($advisorList as $list)
               <div class="expert-item">
                 <div class="expert-item__head">
                   <div class="expert-profile__photo">
                     <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="expert-profile__img">
                   </div>
                   <div class="expert-profile">
-                    <div class="expert-name">아무개 전문 상담사</div>
+                    <div class="expert-name">{{$list['advisorName']}}</div>
                     <div class="expert-star__review">
                       <span class="icon star-review-icon"></span>
                       <div class="star-review__score">4.0</div>
@@ -112,11 +112,11 @@
                 <div class="expert-item__body">
                   <h5 class="expert-introduce">자기소개</h5>
                   <p class="expert-introduce__desc">
-                    아이의 전문적인 상담이 필요하신가요? 아이만을 위한 ‘개인적인 공간'에서 편안하게 고민을 털어 놓아주세요.꽁꽁 사매고 있던 짐을 나눠드릴 수 있는 시간들이 되실거라 기대합니다.
+                    {{$list['briefIntroduction']}}
                   </p>
                 </div>
               </div>
-              <!-- list items -->
+            @endforeach
             </div>
             <p class="notice-data">
               <span class="icon notice-icon"></span>22년 11월 28일 14시 22분 기준 정보입니다.
@@ -132,7 +132,7 @@
               <div class="account-profile">
                 <div class="account-profile__cell">
                   <div class="account-profile__info">
-                    <div class="account-profile__name">김아무 상담사</div>
+                    <div class="account-profile__name">{{$advisorProfile['advisorName']}}</div>
                     <div class="account-profile__center">사랑 마음 센터</div>
                   </div>
                 </div>
