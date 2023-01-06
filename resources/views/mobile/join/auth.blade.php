@@ -7,8 +7,13 @@
 <section id="container" class="page-body">
     <div class="page-contents page-write">
         <!-- 20221225 수정  -->
-        <div class="member-find-desc">안전한 회원가입을 위해<br>본인 인증을 해주세요.</div>
-        <div class="page-bottom-ui"><a href="javascript:phoneAuthSubmit()" class="btn btn-orange btn-large-size btn-page-action">휴대폰 인증하기</a></div>
+        <div id="infoText" class="member-find-desc">안전한 회원가입을 위해<br>본인 인증을 해주세요.</div>
+        <div class="page-bottom-ui">
+            <a
+                id="buttonText"
+                href="javascript:phoneAuthSubmit()"
+                class="btn btn-orange btn-large-size btn-page-action">휴대폰 인증하기</a>
+        </div>
         <!-- //20221225 수정  -->
     </div>
     <form name="phoneAuth" action="/auth" method="post">
@@ -47,6 +52,10 @@
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
                     document.joinForm.submit();
+                } else if ( data.status === "fail" ) {
+                    $("#infoText").html("이미 가입하신 이메일 계정이<br/>존재합니다.<br/>"+data.email);
+                    $("#buttonText").text('로그인');
+                    $("#buttonText").attr("href",'/login');
                 } else {
                     alert(data.message);
                 }
