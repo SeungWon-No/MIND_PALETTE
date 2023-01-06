@@ -8,5 +8,6 @@ class MemberAuth extends Model
 {
     protected $table = 'memberAuth';
     protected $primaryKey = null;
+    public $incrementing = false;
     public $timestamps = false;
 }
