@@ -1,16 +1,24 @@
 @include('/mobile/common/start')
 @include('/mobile/common/header',[
     "isShowBackButton" => true,
-    "isShowCloseButton" => false,
+    "isShowCloseButton" => true,
     "title" => "회원가입"
 ])
+<script>
+    function pageClose(){
+        location.href = '/';
+    }
+</script>
 <section id="container" class="page-body">
     <form id="joinForm" name="joinForm" action="/join" method="post" autocomplete="off">
         @csrf
+        <!-- 20221212 수정 : 클래스명 추가 -->
         <div class="page-contents page-write">
+            <!-- //20221212 수정 -->
             <div class="join-wrap">
                 <fieldset>
                     <legend>회원가입 입력 폼</legend>
+                    <!-- 20221220 수정 -->
                     <div class="form-group">
                         <div class="form-group-cell">
                             <div class="form-group-item">
@@ -40,8 +48,8 @@
                                     </div>
                                     <div class="input">
                                         <input id="pwConfirm" onfocusout="confirmPassword()"
-                                            type="password" placeholder="비밀번호 재입력" onFocus="inputChange(this);"
-                                            maxlength="20" onKeyUp="inputChange(this);" onblur="inputBlur(this);" >
+                                               type="password" placeholder="비밀번호 재입력" onFocus="inputChange(this);"
+                                               maxlength="20" onKeyUp="inputChange(this);" onblur="inputBlur(this);" >
                                         <div id="error-password-confirm-info" style="display:none">
                                             <div class="form-input-valid font-color-error">비밀번호가 일치하지 않습니다.</div>
                                         </div>
@@ -49,34 +57,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group-cell">
-                            <div class="form-group-item">
-                                <div class="form-item-label">이름<em class="need">*</em></div>
-                                <div class="form-item-data">
-                                    <input id="userName" name="userName" type="text" value="{{$userName}}}">
-                                    <div style="display:none">
-                                        <div class="form-input-valid font-color-error">이름을 입력하세요.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group-cell">
-                            <div class="form-group-item">
-                                <div class="form-item-label">휴대전화<em class="need">*</em></div>
-                                <div class="form-item-data">
-                                    <div class="form-phone-confirm">
-                                        <div class="form-control-btns">
-                                            <input id="userPhone" name="userPhone" value="{{$userPhone}}}" >
-                                            <button type="button" class="btn btn-outline-gray btn-inline btn-middle-size">
-                                                인증번호
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+                    <input type="hidden" name="userName" value="{{$userName}}">
+                    <input type="hidden" name="userPhone" value="{{$userPhone}}">
+                    <input type="hidden" name="DI" value="{{$DI}}">
+                    <input type="hidden" name="CI" value="{{$CI}}">
+                    <!-- //20221220 수정 -->
                 </fieldset>
+                <!-- btn클래스에 disabled클래스 추가시 비활성화 표현 -->
                 <div class="page-bottom-ui"><a href="javascript:submitForm()" class="btn btn-orange btn-large-size btn-page-action">회원가입</a></div>
             </div>
         </div>

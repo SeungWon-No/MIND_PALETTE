@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Mobile\Login\LoginController;
 use App\Models\Member;
 use App\Models\MemberAgree;
+use App\Models\MemberAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -26,18 +27,43 @@ class JoinController extends Controller
             return redirect('/')->with('error', '로그인 상태입니다.');
         }
 
-        return view("/mobile/join/create",[
-            "userName" => $request->userName,
-            "userPhone" => $request->userPhone,
-            "DI" => $request->DI,
-            "CI" => $request->CI,
-        ]);
+        try {
+            $userName = $request->userName ?? '';
+            $userPhone = $request->userPhone ?? '';
+            $DI = $request->DI ?? '';
+            $CI = $request->CI ?? '';
+
+            Crypt::decryptString($userName);
+            Crypt::decryptString($userPhone);
+            Crypt::decryptString($DI);
+            Crypt::decryptString($CI);
+
+            return view("/mobile/join/create",[
+                "userName" => $userName,
+                "userPhone" => $userPhone,
+                "DI" => $DI,
+                "CI" => $CI,
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', '본인 인증 정보가 없습니다.');
+        }
     }
 
 
     public function store(Request $request)
     {
         try{
+
+            $userName = $request->userName ?? '';
+            $userPhone = $request->userPhone ?? '';
+            $DI = $request->DI ?? '';
+            $CI = $request->CI ?? '';
+
+            Crypt::decryptString($userName);
+            Crypt::decryptString($userPhone);
+            $DI = Crypt::decryptString($DI);
+            $CI = Crypt::decryptString($CI);
+
             DB::beginTransaction();
             $nowDate = date("Y-m-d H:i:s");
 
@@ -53,14 +79,21 @@ class JoinController extends Controller
             $member = new Member;
             $member->email = $request["userEmail"] ?? '';
             $member->pw = Hash::make($request['userPassword']);
-            $member->memberName = Crypt::encryptString($request['userName']) ?? '';
-            $member->phone = Crypt::encryptString($request['userPhone']) ?? '';
+            $member->memberName = $userName;
+            $member->phone = $userPhone;
             $member->mbAgreePK = $agreePK;
-            $member->auth = 'N';
+            $member->auth = 'Y';
             $member->lastLoginDate = $nowDate;
             $member->updateDate = $nowDate;
             $member->createDate = $nowDate;
             $member->save();
+
+            $memberAuth = new MemberAuth;
+            $memberAuth->memberPK = $member->memberPK;
+            $memberAuth->memberCI = $CI;
+            $memberAuth->memberDI = $DI;
+            $memberAuth->createDate = $nowDate;
+            $memberAuth->save();
 
             $request->redirectUrl = "/join/completion";
             DB::commit();
