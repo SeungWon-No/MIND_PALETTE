@@ -41,8 +41,11 @@ class IDFindController extends Controller
         ];
 
         if ($member) {
+            $memberEmailArray = explode("@",$member->email);
+            $memberEmailId = $memberEmailArray[0]."**";
+            $memberEmailId = substr($memberEmailId,0,2);
             $result["status"] = "fail";
-            $result["email"] = "aaaa@aaa.com";
+            $result["email"] = $memberEmailId."**@".$memberEmailArray[1];
         }
 
         return json_encode($result);
