@@ -4,11 +4,6 @@
     "isShowCloseButton" => false,
     "title" => "HTP란?",
 ])
-<script>
-    function pageClose(){
-        pop.open('savePop');
-    }
-</script>
 <section id="container" class="page-body">
     <div class="page-contents">
         <div class="basic-data-group">
@@ -25,7 +20,9 @@
                 <h3 class="con-title">HTP 검사의 특징</h3>
                 <ul>
                     <li><div class="desc">쉬운 실시 (준비물 : 연필, 종이, 지우개)</div></li>
-                    <li><div class="desc">쉬운 실시 (준비물 : 연필, 종이, 지우개)</div></li>
+                    <!-- 20221226 수정 -->
+                    <li><div class="desc">시간이 많이 걸리지 않음 (약 20분 소요)</div></li>
+                    <!-- //20221226 수정 -->
                     <li><div class="desc">언어 표현이 수줍은 아동, 외국인 등 능동적으로 그림을 통해 자신을 표현 가능</div></li>
                 </ul>
             </div>

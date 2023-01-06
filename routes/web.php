@@ -71,6 +71,13 @@ Route::middleware(['autoLogin'])->group(function () {
     Route::get('/auth/return', [PASSAuthController::class, "authReturn"]);
 
     Route::get("/sample",SampleController::class);
+
+    Route::get('/privacyStatement', function () {
+        return view('/mobile/etc/privacyStatement'); // 상세 페이지
+    });
+    Route::get('/terms', function () {
+        return view('/mobile/etc/terms'); // 상세 페이지
+    });
 });
 
 Route::middleware(['autoLogin','loginValid'])->group(function () {
