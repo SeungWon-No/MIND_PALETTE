@@ -24,7 +24,7 @@
                 회원 가입 시 등록한 휴대폰 번호와 일치해야 합니다.
               </div>
             </div>
-            
+
             <!-- input new password form -->
             <form id="newPasswordForm" name="newPasswordForm" action="/advisor/findIdPassword" method="POST">
              @csrf
@@ -102,5 +102,9 @@
       $('#valid-error-confirmNewPassword').attr("style", "display:''; color:#ff0000").html('비밀번호를 입력해주세요.');
       return false;
     }
+  }
+
+  function submitForm(){
+    $("#newPasswordForm").submit();
   }
 </script>
