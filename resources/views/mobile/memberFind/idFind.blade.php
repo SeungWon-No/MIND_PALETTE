@@ -20,7 +20,7 @@
                 </div>
             </div>
             <!-- 20221220 수정  -->
-            <div class="member-find-desc">휴대폰 인증을 통해<br>고객님의 아이디를 찾습니다.</div>
+            <div id="infoText"  class="member-find-desc">휴대폰 인증을 통해<br>고객님의 아이디를 찾습니다.</div>
             <div id="email" style="display: none" class="member-find-result"></div>
             <div class="page-bottom-ui">
                 <a
