@@ -4,6 +4,11 @@
     "isShowCloseButton" => true,
     "title" => "회원가입",
 ])
+<script>
+    function pageClose(){
+        location.href = '/';
+    }
+</script>
 <section id="container" class="page-body">
     <div class="page-contents page-write">
         <!-- 20221225 수정  -->
