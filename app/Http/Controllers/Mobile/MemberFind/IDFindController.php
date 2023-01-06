@@ -43,7 +43,7 @@ class IDFindController extends Controller
         if ($member) {
             $memberEmailArray = explode("@",$member->email);
             $memberEmailId = (strlen($memberEmailArray[0]) < 4) ? $memberEmailArray[0]."**" : $memberEmailArray[0];
-            $memberEmailId = substr($memberEmailId,0,strlen($memberEmailArray[0])-3);
+            $memberEmailId = substr($memberEmailId,0,strlen($memberEmailArray[0])-2);
             $result["status"] = "fail";
             $result["email"] = $memberEmailId."**@".$memberEmailArray[1];
         }
