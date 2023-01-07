@@ -134,7 +134,6 @@ class Answer extends Model
         return $answerResult->get();
     }
 
-
     public static function findHTPImage($counselingPK) {
         $images = Answer::select("questionsPK", "answer")
                 ->where("counselingPK",$counselingPK)
@@ -147,6 +146,21 @@ class Answer extends Model
             else if ($image->questionsPK == 69) $returnValue["tree"] = $image->answer;
             else if ($image->questionsPK == 78) $returnValue["person1"] = $image->answer;
             else if ($image->questionsPK == 88) $returnValue["person2"] = $image->answer;
+        }
+        return $returnValue;
+    }
+    public static function findTemperamentTest($counselingPK) {
+        $temperamentTests = Answer::select("questionsPK", "answer")
+            ->where("counselingPK",$counselingPK)
+            ->whereIN("questionsPK",[125,126,127,128])
+            ->get();
+
+        $returnValue = [];
+        foreach ($temperamentTests as $temperamentTest) {
+            if ($temperamentTest->questionsPK == 125) $returnValue["emotion"] = $temperamentTest->answer/25*100;
+            else if ($temperamentTest->questionsPK == 126) $returnValue["action"] = $temperamentTest->answer/25*100;
+            else if ($temperamentTest->questionsPK == 127) $returnValue["relationshipAdaptation"] = $temperamentTest->answer/25*100;
+            else if ($temperamentTest->questionsPK == 128) $returnValue["relationshipPursuit"] = $temperamentTest->answer/25*100;
         }
         return $returnValue;
     }
