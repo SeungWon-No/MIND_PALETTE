@@ -13,6 +13,12 @@
       "M" => "orange",
       "H" => "red"
     ];
+
+    $levelTitle = [
+      "L" => "낮음(L)수준",
+      "M" => "보통(M)수준",
+      "H" => "높음(H)수준"
+    ];
 @endphp
 <section id="container" class="page-body">
     <div class="page-contents">
@@ -122,12 +128,12 @@
                                                         <div class="graph-x-line"></div>
                                                         <div class="graph-x-line green-line point-line"></div>
                                                         <div class="graph-x-line"></div>
+                                                        <div class="graph-x-line"></div>
                                                         <div class="graph-x-line yellow-line point-line"></div>
+                                                        <div class="graph-x-line "></div>
+                                                        <div class="graph-x-line"></div>
                                                         <div class="graph-x-line"></div>
                                                         <div class="graph-x-line red-line point-line"></div>
-                                                        <div class="graph-x-line"></div>
-                                                        <div class="graph-x-line"></div>
-                                                        <div class="graph-x-line"></div>
                                                     </div>
                                                 </div>
                                                 <div class="graph-x-labels">
@@ -135,14 +141,14 @@
                                                     <div class="graph-x-label hide"><div class="label-value">0</div></div>
                                                     <div class="graph-x-label hide"><div class="label-value">10</div></div>
                                                     <div class="graph-x-label hide"><div class="label-value">20</div></div>
-                                                    <div class="graph-x-label"><div class="label-value">30</div></div>
+                                                    <div class="graph-x-label"><div class="label-value">32</div></div>
                                                     <div class="graph-x-label hide"><div class="label-value">40</div></div>
-                                                    <div class="graph-x-label"><div class="label-value">50</div></div>
-                                                    <div class="graph-x-label hide"><div class="label-value">60</div></div>
-                                                    <div class="graph-x-label"><div class="label-value">70</div></div>
+                                                    <div class="graph-x-label hide"><div class="label-value">50</div></div>
+                                                    <div class="graph-x-label "><div class="label-value">64</div></div>
+                                                    <div class="graph-x-label hide"><div class="label-value">70</div></div>
                                                     <div class="graph-x-label hide"><div class="label-value">80</div></div>
                                                     <div class="graph-x-label hide"><div class="label-value">90</div></div>
-                                                    <div class="graph-x-label hide"><div class="label-value">100</div></div>
+                                                    <div class="graph-x-label "><div class="label-value">100</div></div>
                                                 </div>
                                                 <div class="graph-y-labels">
                                                     <div class="graph-y-label"><div class="label-name">정서표현</div><div class="label-value">{{$temperamentTest["emotion"]}}점</div></div>
@@ -221,17 +227,19 @@
                                                     <tbody>
                                                     <tr>
                                                         <td colspan="5">
-                                                            <div class="result-analysis-graph-data"><div class="bar green" style="width:20%;"></div></div>
-                                                            <div class="result-analysis-graph-data"><div class="bar orange" style="width:50%;"></div></div>
-                                                            <div class="result-analysis-graph-data"><div class="bar red" style="width:70%;"></div></div>
+                                                            <div class="result-analysis-graph-data">
+                                                                <div class="bar {{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}" style="width:{{$temperamentTest["emotion"]}}%;"></div>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="result-analysis-graph-value"><div class="item-value"><strong class="font-color-red">90점</strong></div></div>
-                                            <div class="result-analysis-graph-value"><div class="item-value"><strong class="font-color-orange">50점</strong></div></div>
-                                            <div class="result-analysis-graph-value"><div class="item-value"><strong class="font-color-green">20점</strong></div></div>
+                                            <div class="result-analysis-graph-value">
+                                                <div class="item-value">
+                                                    <strong class="font-color-{{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}">{{$temperamentTest["emotion"]}}점</strong>
+                                                </div>
+                                            </div>
 
                                             <div class="result-analysis-desc">
                                                 <div class="txt"><strong>※30 이하: 정서적 절제(Emotional Moderation)</strong>, 자신이 느끼는 부정정서를 외부로 표현하지 않고 심사숙고하는 경향</div>
@@ -240,18 +248,11 @@
                                         </div>
                                     </div>
                                     <div class="result-analysis-view">
-                                        <div class="result-headline">정서표현 지수는 <strong class="font-color-green">낮음(L)수준</strong>입니다.</div>
-                                        <div class="result-headline">행동표현 지수는 <strong class="font-color-green">낮음(L)수준</strong>입니다.</div>
-                                        <div class="result-headline">관계적응 지수는 <strong class="font-color-green">낮음(L)수준</strong>입니다.</div>
-                                        <div class="result-headline">관계추구 지수는 <strong class="font-color-green">낮음(L)수준</strong>입니다.</div>
-                                        <div class="result-headline">정서표현 지수는 <strong class="font-color-orange">보통(M)수준</strong>입니다.</div>
-                                        <div class="result-headline">행동표현 지수는 <strong class="font-color-orange">보통(M)수준</strong>입니다.</div>
-                                        <div class="result-headline">관계적응 지수는 <strong class="font-color-orange">보통(M)수준</strong>입니다.</div>
-                                        <div class="result-headline">관계추구 지수는 <strong class="font-color-orange">보통(M)수준</strong>입니다.</div>
-                                        <div class="result-headline">정서표현 지수는 <strong class="font-color-red">높음(H)수준</strong>입니다.</div>
-                                        <div class="result-headline">행동표현 지수는 <strong class="font-color-red">높음(H)수준</strong>입니다.</div>
-                                        <div class="result-headline">관계적응 지수는 <strong class="font-color-red">높음(H)수준</strong>입니다.</div>
-                                        <div class="result-headline">관계추구 지수는 <strong class="font-color-red">높음(H)수준</strong>입니다.</div>
+                                        <div class="result-headline">정서표현 지수는
+                                            <strong class="font-color-{{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}">
+                                                {{$levelTitle[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}
+                                            </strong>입니다.
+                                        </div>
                                         <div class="result-desc">이 척도에서 높은 점수를 보이는 자녀는 강한 감정 표현형으로 자신이 원하는 것과 원하지 않는 것에 대한 선호도가 분명할 수 있습니다. 타인이 정해놓은 규칙이나 행동들보다는 자유롭게 자신이 추구하는 즐거움을 탐색하려는 모습이 강하며, 심리적으로 좌절스럽거나 불편한 상황을 잘 견디지 못하고 피하려는 경향을 보일 수 있습니다.<br><br>부정 정서는 주로 개인의 목표와 일치하지 않는 일을 경험할 때 발생한다는 점에서 대체로 자녀가 경험하고 싶어 하지 않은 정서라고 볼 수 있습니다. 그러나 그러한 느낌을 잘 알아차리고, 이를 자신의 것으로 수용하고, 표현할 수 있는 능력을 키우는 것은 자녀가 건강한 삶을 영위하는데 매우 중요합니다.<br><br>부모가 자녀를 관찰하였을 때, 사소한 일에도 쉽게 성을 내고 분노를 밖으로 드러낸다면 이 부분을 살펴보시기 바랍니다. 자녀는 현재 정서교육이 필요한 시기입니다.잦은 부정적 정서 폭발은 자신과 타인이 합의되지 않은 상황에서 극적으로 이루어지므로 자녀는 부정적 피드백에 노출되거나 자기통제에 실패했다는 반복적 경험으로 낮은 자존감을 초래할 수 있습니다.부모는 쉽게 폭발하는 자녀의 정서에 크게 반응하거나 제한하기보다는 감정과 행동을 읽어주며, 부모가 느끼는 감정도 알려줄 필요가 있습니다. 부정적인 감정에 대해서 언어로 적절히 표현할 수 있고, 자율성과 책임감을 기를 수 있습니다.</div>
                                     </div>
                                 </div>

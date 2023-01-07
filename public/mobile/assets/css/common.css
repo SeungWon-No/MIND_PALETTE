@@ -215,7 +215,7 @@ button.btn-small-size {height:32px; font-size:14px; border-radius:16px;}
 .basic-data-group {margin-top:40px;}
 .basic-data-group.none,
 .basic-data-group:first-child,
-.basic-data-group:only-child {margin-top:0 !important;} 
+.basic-data-group:only-child {margin-top:0 !important;}
 .basic-data-group.middle {margin-top:56px;}
 .basic-data-group.msmall {margin-top:32px;}
 .basic-data-group.small {margin-top:20px;}
@@ -890,10 +890,10 @@ table.result-table > tbody > tr:nth-child(2n) > th {background:#F8F8F8;}
 .graph-x-labels .graph-x-label:nth-child(1) {bottom:0%;}
 .graph-x-labels .graph-x-label:nth-child(2) {bottom:10%;}
 .graph-x-labels .graph-x-label:nth-child(3) {bottom:20%;}
-.graph-x-labels .graph-x-label:nth-child(4) {bottom:30%;}
+.graph-x-labels .graph-x-label:nth-child(4) {bottom:32%;}
 .graph-x-labels .graph-x-label:nth-child(5) {bottom:40%;}
 .graph-x-labels .graph-x-label:nth-child(6) {bottom:50%;}
-.graph-x-labels .graph-x-label:nth-child(7) {bottom:60%;}
+.graph-x-labels .graph-x-label:nth-child(7) {bottom:64%;}
 .graph-x-labels .graph-x-label:nth-child(8) {bottom:70%;}
 .graph-x-labels .graph-x-label:nth-child(9) {bottom:80%;}
 .graph-x-labels .graph-x-label:nth-child(10) {bottom:90%;}
@@ -909,10 +909,10 @@ table.result-table > tbody > tr:nth-child(2n) > th {background:#F8F8F8;}
 .graph-grid-area .graph-x-line:nth-child(1) {bottom:0%; border-bottom-color:#C8CFDA; z-index: 10;}
 .graph-grid-area .graph-x-line:nth-child(2) {bottom:10%;}
 .graph-grid-area .graph-x-line:nth-child(3) {bottom:20%;}
-.graph-grid-area .graph-x-line:nth-child(4) {bottom:30%;}
+.graph-grid-area .graph-x-line:nth-child(4) {bottom:32%;}
 .graph-grid-area .graph-x-line:nth-child(5) {bottom:40%;}
 .graph-grid-area .graph-x-line:nth-child(6) {bottom:50%;}
-.graph-grid-area .graph-x-line:nth-child(7) {bottom:60%;}
+.graph-grid-area .graph-x-line:nth-child(7) {bottom:64%;}
 .graph-grid-area .graph-x-line:nth-child(8) {bottom:70%;}
 .graph-grid-area .graph-x-line:nth-child(9) {bottom:80%;}
 .graph-grid-area .graph-x-line:nth-child(10) {bottom:90%;}
@@ -923,12 +923,12 @@ table.result-table > tbody > tr:nth-child(2n) > th {background:#F8F8F8;}
 .graph-grid-area .graph-x-line.red-line {border-color:#FF6C7E;}
 .graph-grid-area .graph-x-line.point-line {border-bottom-style:dashed}
 
-.graph-data-area {position:absolute;top:0;left:0;right:0;bottom:0;width:auto;height:auto;margin:auto; z-index:50; 
+.graph-data-area {position:absolute;top:0;left:0;right:0;bottom:0;width:auto;height:auto;margin:auto; z-index:50;
 
 }
 .graph-data-bars {display:flex; width:100%; height:100%;}
 .graph-data-bars .graph-data-bar {flex:1; position:relative;}
-.graph-data-bars .graph-data-bar .bar {position:absolute; bottom:0; left:50%; display:block; width:50%; transform:translate(-50% , 0%); background:#000; max-width:40px; 
+.graph-data-bars .graph-data-bar .bar {position:absolute; bottom:0; left:50%; display:block; width:50%; transform:translate(-50% , 0%); background:#000; max-width:40px;
   border-bottom: 1px solid #C8CFDA;
 }
 .graph-data-bars .graph-data-bar .bar.red {background:#FF6C7E;}
@@ -1001,7 +1001,7 @@ table.result-table > tbody > tr:nth-child(2n) > th {background:#F8F8F8;}
 .advice-guide-items:nth-child(4):before {content:'4';}
 .advice-guide-items:nth-child(5):before {content:'5';}
 .advice-guide-items + .advice-guide-items {margin-top:8px;}
-.advice-guide-items .item-info {display:flex; height:120px; flex-direction:column; justify-content:center; padding:0 20px 0 20px; border-radius:16px; background:#FFF3DD;text-align:left;} 
+.advice-guide-items .item-info {display:flex; height:120px; flex-direction:column; justify-content:center; padding:0 20px 0 20px; border-radius:16px; background:#FFF3DD;text-align:left;}
 .advice-guide-items .item-subject {font-size:15px; color:#000; font-weight:700; width:100%; text-align:left;}
 .advice-guide-items .item-desc {font-size:15px; color:#4c4c4c; margin-top:5px; width:100%; text-align:left; word-break:keep-all;}
 
@@ -1444,7 +1444,7 @@ a.result-download {
   line-height: 16px;
   letter-spacing: -0.02em;
   border: 1px solid #C8CFDA;
-  border-top: unset;  
+  border-top: unset;
 }
 .analysis-table__head th:nth-of-type(1) {
   border-left: unset;
