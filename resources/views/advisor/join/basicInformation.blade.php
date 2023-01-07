@@ -107,7 +107,7 @@
                 <p class="form-group-text pass">
                   * 연락 가능한 휴대전화 번호를 입력해주세요.
                 </p>
-                <button class="form-control__btn passbtn" onclick="javascript:phoneAuthSubmit()">휴대폰 인증하기</button>
+                <button type="button" class="form-control__btn passbtn" onclick="javascript:phoneAuthSubmit()">휴대폰 인증하기</button>
             </div>
             </div>
         </div>
@@ -180,8 +180,8 @@
     var validEmailDuplicationResult = emailDuplicationCheck('submit'); // 이메일 중복체크
     var validPasswordResult = validPasswordCheck(); // 비밀번호 체크
     var validConfirmUserPasswordResult = validConfirmUserPasswordCheck(); // 비밀번호 확인 체크
-    var validUserNameResult = vaildUserNameCheck(); // 이름 체크
-    var validUserPhonNumberResult = vaildUserPhonNumberCheck(); // 휴대폰 번호 체크
+    //var validUserNameResult = vaildUserNameCheck(); // 이름 체크
+    //var validUserPhonNumberResult = vaildUserPhonNumberCheck(); // 휴대폰 번호 체크
     var validServiceAgreeCheckboxResult = serviceAgreeCheck(); // 필수 동의 체크 여부
     var validPolicyAgreeCheckboxResult = policyAgreeCheck(); // 필수 동의 체크 여부
     
@@ -194,12 +194,13 @@
     }else if(validPasswordResult == false){
       return alert('비밀번호를 확인해주세요.');
 
-    }else if(validUserNameResult == false){
-      return alert('이름을 확인해주세요.');
+    // }else if(validUserNameResult == false){
+    //   return alert('이름을 확인해주세요.');
 
-    }else if(validUserPhonNumberResult == false){
-      return alert('휴대폰 번호를 확인해주세요.');
+    // }else if(validUserPhonNumberResult == false){
+    //   return alert('휴대폰 번호를 확인해주세요.');
 
+    // }
     }else if(validConfirmUserPasswordResult == false ){
       return alert('비밀번호가 일치하지 않습니다.');
 
@@ -320,47 +321,47 @@
   }
 
   // 이름 유효성 추가 
-  function vaildUserNameCheck(){
-    var userName = $('#userName').val();
-    var regExp = /^[가-힣a-zA-Z]+$/; // 한글과 영문만 가능
-    var checkResult = regExp.test(userName);
+  // function vaildUserNameCheck(){
+  //   var userName = $('#userName').val();
+  //   var regExp = /^[가-힣a-zA-Z]+$/; // 한글과 영문만 가능
+  //   var checkResult = regExp.test(userName);
 
 
-    if (userName == '') {
-      $('#valid-error-userName').attr("style", "display:''").html('* 이름을 입력해주세요.');
-      return false;
+  //   if (userName == '') {
+  //     $('#valid-error-userName').attr("style", "display:''").html('* 이름을 입력해주세요.');
+  //     return false;
 
-    }else if(checkResult == false){
-      $('#valid-error-userName').attr("style", "display:''").html('* 한글과 영문 대소문자만 가능합니다.');
-      return false;
+  //   }else if(checkResult == false){
+  //     $('#valid-error-userName').attr("style", "display:''").html('* 한글과 영문 대소문자만 가능합니다.');
+  //     return false;
 
-    }else{
-      $('#valid-error-userName').attr("style", "display: none");
-      return true;
-    }
+  //   }else{
+  //     $('#valid-error-userName').attr("style", "display: none");
+  //     return true;
+  //   }
 
-  }
+  // }
 
   // 휴대폰 번호 유효성 추가
-  function vaildUserPhonNumberCheck(){
-    var userPhonNumber = $('#userPhoneNumber').val();
-    var regExp = /^[0-9]+$/; // 숫자만 가능
-    var checkResult = regExp.test(userPhonNumber);
+  // function vaildUserPhonNumberCheck(){
+  //   var userPhonNumber = $('#userPhoneNumber').val();
+  //   var regExp = /^[0-9]+$/; // 숫자만 가능
+  //   var checkResult = regExp.test(userPhonNumber);
 
-    if (userPhonNumber == '') {
-      $('#valid-error-userPhonNumber').attr("style", "display:''").html('* 휴대폰 번호를 입력해주세요.');
-      return false;
+  //   if (userPhonNumber == '') {
+  //     $('#valid-error-userPhonNumber').attr("style", "display:''").html('* 휴대폰 번호를 입력해주세요.');
+  //     return false;
       
-    }else if (checkResult == false || userPhonNumber.length > 11) {
-      $('#valid-error-userPhonNumber').attr("style", "display:''").html('* 휴대폰 번호를 정확히 입력해주세요.');
-      return false;
+  //   }else if (checkResult == false || userPhonNumber.length > 11) {
+  //     $('#valid-error-userPhonNumber').attr("style", "display:''").html('* 휴대폰 번호를 정확히 입력해주세요.');
+  //     return false;
 
-    }else{
-      $('#valid-error-userPhonNumber').attr("style", "display: none");
-      return true;
-    }
+  //   }else{
+  //     $('#valid-error-userPhonNumber').attr("style", "display: none");
+  //     return true;
+  //   }
 
-  }
+  // }
 
   //필수 서비스 이용약관 동의
   function serviceAgreeCheck(){
