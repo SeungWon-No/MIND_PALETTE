@@ -94,6 +94,8 @@ class IDFindController extends Controller
             return json_encode($result);
         }
 
+        dd(Hash::make($pwChangeEmail),$pwChangeEmailHash);
+
         if (Hash::make($pwChangeEmail) != $pwChangeEmailHash) {
             $result = [
                 "status" => "error",
