@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Advisor\Join;
 use App\Http\Controllers\Advisor\Login\AdvisorLoginController;
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
+use App\Models\AdvisorAuth;
 use App\Models\MemberAgree;
+use App\Models\MemberAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -34,16 +36,24 @@ class AdvisorJoinController extends Controller{
             $advisor = new Advisor();
             $advisor->email = $request["userEmail"] ?? '';
             $advisor->password = Hash::make($request['userPassword']);
-            $advisor->advisorName = Crypt::encryptString($request['userName']) ?? '';
-            $advisor->phone = Crypt::encryptString($request['userPhoneNumber']) ?? '';
+            $advisor->advisorName = $request['userName'] ?? '';
+            $advisor->phone = $request['userPhoneNumber'] ?? '';
+            $di = Crypt::decryptString($request['DI']) ?? '';
+            $ci = Crypt::decryptString($request['CI']) ?? '';
             $advisor->mbAgreePK = $memberAgree->mbAgreePK;
-            //$member->auth = 'N';
+            //$advisor->auth = 'Y';
             $advisor->advisorStatus = '1';
             $advisor->lastLoginDate = $nowDate;
             $advisor->updateDate = $nowDate;
             $advisor->createDate = $nowDate;
-
             $advisor->save();
+
+            $advisorAuth = new AdvisorAuth();
+            $advisorAuth->advisorPK = $advisor->advisorPK;
+            $advisorAuth->advisorCI = $ci;
+            $advisorAuth->advisorDI = $di;
+            $advisorAuth->createDate = $nowDate;
+            $advisorAuth->save();
 
 
             $request->redirectUrl = "/advisor/consultationInformation";

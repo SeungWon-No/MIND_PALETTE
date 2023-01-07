@@ -30,6 +30,11 @@
       </div>
       <form id="joinForm" name="joinForm" action="/advisor/join" method="POST" autocomplete="off">
       @csrf
+        <input type="hidden" name="userName" value="">
+        <input type="hidden" name="userPhone" value="">
+        <input type="hidden" name="DI" value="">
+        <input type="hidden" name="CI" value="">
+        
         <div class="member-cell pd-56-114-105">
             <div class="member-group">
             <div class="form-group join">
@@ -77,7 +82,7 @@
                 </p>
                 </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <div class="member-label">이름<em class="need">*</em></div>
                 <div class="form-group__item">
                 <div class="form-group__data">
@@ -96,13 +101,13 @@
                 </div>
                 <div id="valid-error-userPhoneNumber" class="join-alert__desc" style="display: none">* 휴대폰 번호를 입력해주세요.</div>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group join">
                 <div class="member-label">실명인증</div>
                 <p class="form-group-text pass">
                   * 연락 가능한 휴대전화 번호를 입력해주세요.
                 </p>
-                <button class="form-control__btn passbtn">휴대폰 인증하기</button>
+                <button class="form-control__btn passbtn" onclick="javascript:phoneAuthSubmit()">휴대폰 인증하기</button>
             </div>
             </div>
         </div>
@@ -124,7 +129,13 @@
       </div>
     </div>
   </div>
+  <form name="phoneAuth" action="/auth" method="post">
+        @csrf
+        <input type="hidden" name="CP_CD" maxlength="12" size="16" value="">
+        <input type="hidden" name="SITE_NAME" maxlength="20" size="24" value="마음팔레트">
+  </form>
 </div>
+
 @include('advisor/common/footer')
 <article id="serviceAgreeCheck" class="layer-pop__wrap">
     <div class="layer-pop__parent">
@@ -362,6 +373,20 @@
     var checkResult = $('[name=policyAgree]').prop('checked');
     return checkResult;
   }
+
+
+  // 휴대폰 본인인증
+  function phoneAuthSubmit() {
+        window.open("/auth", "auth_popup", "width=430,height=640,scrollbars=yes");
+        var form1 = document.phoneAuth;
+        form1.target = "auth_popup";
+        form1.submit();
+    }
+
+    function authSuccess() {
+
+        
+    }
 
 </script>
 @include('advisor/common/end')
