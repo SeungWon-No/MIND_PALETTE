@@ -36,10 +36,14 @@ const JS_VERSION = "3";
 Route::middleware(['autoLogin'])->group(function () {
     Route::get('/', IndexController::class);
     Route::get("/idFind",IDFindController::class);
+    Route::get("/pwFind",function () {
+        return view('/mobile/memberFind/pwFind'); // 상세 페이지
+    });
     Route::get('/joinAuth', function () {
         return view('/mobile/join/auth');
     });
     Route::post("/memberAuthFind",[IDFindController::class,"memberAuthFind"]);
+    Route::post("/memberAuthCheck",[IDFindController::class,"memberAuthCheck"]);
     Route::resource("/login",LoginController::class)->only([
         'index', 'store'
     ]);
