@@ -195,7 +195,7 @@
 
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
-                    $("#pwChangeEmail").val($("#userEmail").value());
+                    $("#pwChangeEmail").val($("#userEmail").val());
                     $("#pwChangeEmailHash").val(data.email);
                     $("#PWFindContainer").css("display","none");
                     $("#PWFindNewContainer").css("display","block");
