@@ -128,7 +128,7 @@
         </div>
     </div>
 </section>
-<section id="PWFindCompleteContainer" class="page-body">
+<section id="PWFindCompleteContainer" class="page-body" style="display: none">
     <div class="page-contents page-write">
         <div class="member-find-wrap">
             <div class="page-tab">
