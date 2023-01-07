@@ -4,6 +4,16 @@
     "isShowCloseButton" => false,
     "title" => "HTP 상담 결과"
 ])
+@php
+    use App\Http\Util\CounselingTemplate;
+    $counselingTemplate = new CounselingTemplate;
+
+    $levelColor = [
+      "L" => "green",
+      "M" => "orange",
+      "H" => "red"
+    ];
+@endphp
 <section id="container" class="page-body">
     <div class="page-contents">
         <div class="advice-view">
@@ -81,10 +91,21 @@
                                             <div class="graph-inner">
                                                 <div class="graph-data-area">
                                                     <div class="graph-data-bars">
-                                                        <div class="graph-data-bar"><div style="height:90%;" class="bar red"></div></div>
-                                                        <div class="graph-data-bar"><div style="height:50%;" class="bar orange"></div></div>
-                                                        <div class="graph-data-bar"><div style="height:20%;" class="bar green"></div></div>
-                                                        <div class="graph-data-bar"><div style="height:65%;" class="bar orange"></div></div>
+                                                        <div class="graph-data-bar">
+                                                            <div style="height:{{$temperamentTest["emotion"]}}%;"
+                                                                 class="bar {{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}"></div>
+                                                        </div>
+                                                        <div class="graph-data-bar">
+                                                            <div style="height:{{$temperamentTest["action"]}}%;"
+                                                                 class="bar {{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["action"])]}}"></div>
+                                                        </div>
+                                                        <div class="graph-data-bar">
+                                                            <div style="height:{{$temperamentTest["relationshipAdaptation"]}}%;"
+                                                                 class="bar {{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipAdaptation"])]}}"></div>
+                                                        </div>
+                                                        <div class="graph-data-bar">
+                                                            <div style="height:{{$temperamentTest["relationshipPursuit"]}}%;" class="bar orange"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="graph-grid-area">
@@ -124,10 +145,10 @@
                                                     <div class="graph-x-label hide"><div class="label-value">100</div></div>
                                                 </div>
                                                 <div class="graph-y-labels">
-                                                    <div class="graph-y-label"><div class="label-name">정서표현</div><div class="label-value">90점</div></div>
-                                                    <div class="graph-y-label"><div class="label-name">행동표현</div><div class="label-value">50점</div></div>
-                                                    <div class="graph-y-label"><div class="label-name">관계적응</div><div class="label-value">20점</div></div>
-                                                    <div class="graph-y-label"><div class="label-name">관계추구</div><div class="label-value">65점</div></div>
+                                                    <div class="graph-y-label"><div class="label-name">정서표현</div><div class="label-value">{{$temperamentTest["emotion"]}}점</div></div>
+                                                    <div class="graph-y-label"><div class="label-name">행동표현</div><div class="label-value">{{$temperamentTest["action"]}}점</div></div>
+                                                    <div class="graph-y-label"><div class="label-name">관계적응</div><div class="label-value">{{$temperamentTest["relationshipAdaptation"]}}점</div></div>
+                                                    <div class="graph-y-label"><div class="label-name">관계추구</div><div class="label-value">{{$temperamentTest["relationshipPursuit"]}}점</div></div>
                                                 </div>
                                             </div>
                                         </div>

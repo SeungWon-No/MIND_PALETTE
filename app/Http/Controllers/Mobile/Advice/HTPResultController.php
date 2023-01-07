@@ -32,7 +32,7 @@ class HTPResultController extends Controller
         return view("/mobile/advice/result",[
             "counseling" => $counseling,
             "images" => Answer::findHTPImage($counselingPK),
-            "findTemperamentTest"=>Answer::findTemperamentTest($counselingPK)
+            "temperamentTest"=>Answer::findTemperamentTest($counselingPK)
         ]);
     }
 }

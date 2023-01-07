@@ -183,9 +183,9 @@ class CounselingTemplate {
 
     public static function getTemperamentTestLevel($score) {
         $level = "";
-        if ($score <= 8) {
+        if ($score <= 32) {
             $level = "L";
-        } else if ($score <= 16) {
+        } else if ($score <= 64) {
             $level = "M";
         } else {
             $level = "H";
