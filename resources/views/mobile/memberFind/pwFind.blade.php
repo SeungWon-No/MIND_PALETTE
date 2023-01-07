@@ -167,7 +167,6 @@
         return true;
     }
     function phoneAuthSubmit() {
-        return false;
         if (!checkEmail()) {
             return false;
         }
