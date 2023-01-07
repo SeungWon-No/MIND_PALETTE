@@ -46,6 +46,7 @@ Route::middleware(['autoLogin'])->group(function () {
     });
     Route::post("/memberAuthFind",[IDFindController::class,"memberAuthFind"]);
     Route::post("/memberAuthCheck",[IDFindController::class,"memberAuthCheck"]);
+    Route::post("/changeMemberPassword",[IDFindController::class,"changeMemberPassword"]);
     Route::resource("/login",LoginController::class)->only([
         'index', 'store'
     ]);

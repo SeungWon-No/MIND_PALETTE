@@ -10,7 +10,7 @@
     }
 </script>
 
-<section id="container" class="page-body">
+<section id="PWFindContainer" class="page-body">
     <div class="page-contents page-write">
         <div class="member-find-wrap">
             <div class="page-tab">
@@ -64,6 +64,85 @@
         <input type="hidden" name="CI" value="">
     </form>
 </section>
+<section id="PWFindNewContainer" class="page-body" style="display: none">
+    <form name="pwChangeForm">
+        @csrf
+        <input type="hidden" name="email" id="pwChangeEmail" value="">
+        <input type="hidden" name="email" id="pwChangeEmailHash" value="">
+        <div class="page-contents page-write">
+            <div class="member-find-wrap">
+                <div class="page-tab">
+                    <div class="page-tab-inner">
+                        <!-- 활성화시 actived클래스 추가 -->
+                        <div class="tab-cell"><a href="/idFind" class="btn-tab-item"><span>아이디 찾기</span></a></div>
+                        <div class="tab-cell actived"><a class="btn-tab-item"><span>비밀번호 찾기</span></a></div>
+                    </div>
+                </div>
+                <div class="member-find-desc">새로운 비밀번호로 변경합니다.</div>
+                <fieldset>
+                    <legend>비밀번호 찾기 입력 폼</legend>
+                    <div class="form-group">
+                        <div class="form-group-cell">
+                            <div class="form-group-item">
+                                <div class="form-item-label">새 비밀번호</div>
+                                <div class="form-item-data">
+                                    <div class="input">
+                                        <input id="userPassword" name="userPassword"
+                                               type="password" placeholder="영문+숫자+특수문자 8~20자 입력" onFocus="inputChange(this);"
+                                               maxlength="20" onfocusout="checkPassword()"
+                                               onKeyUp="inputChange(this);" onblur="inputBlur(this);">
+                                        <div id="error-password-info"  style="display:none">
+                                            <div class="form-input-valid font-color-error">영문+숫자+특수문자 8~20자를 입력하셔야 합니다.</div>
+                                        </div>
+                                    </div>
+                                    <div class="input">
+                                        <input id="pwConfirm" onfocusout="confirmPassword()"
+                                               type="password" placeholder="비밀번호 재입력" onFocus="inputChange(this);"
+                                               maxlength="20" onKeyUp="inputChange(this);" onblur="inputBlur(this);" >
+                                        <div id="error-password-confirm-info" style="display:none">
+                                            <div class="form-input-valid font-color-error">비밀번호가 일치하지 않습니다.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="page-bottom-ui"><a href="#" class="btn btn-orange btn-large-size btn-page-action">저장</a></div>
+            </div>
+        </div>
+    </form>
+</section>
+<section id="PWFindNoneContainer" class="page-body" style="display: none">
+    <div class="page-contents page-write">
+        <div class="member-find-wrap">
+            <div class="page-tab">
+                <div class="page-tab-inner">
+                    <!-- 활성화시 actived클래스 추가 -->
+                    <div class="tab-cell"><a href="#" class="btn-tab-item"><span>아이디 찾기</span></a></div>
+                    <div class="tab-cell actived"><a href="#" class="btn-tab-item"><span>비밀번호 찾기</span></a></div>
+                </div>
+            </div>
+            <div class="member-find-desc">입력하신 아이디로<br>등록된 계정이 없습니다.</div>
+            <div class="page-bottom-ui"><a href="javascript:resetPassword()" class="btn btn-orange btn-large-size btn-page-action">재입력</a></div>
+        </div>
+    </div>
+</section>
+<section id="PWFindCompleteContainer" class="page-body">
+    <div class="page-contents page-write">
+        <div class="member-find-wrap">
+            <div class="page-tab">
+                <div class="page-tab-inner">
+                    <!-- 활성화시 actived클래스 추가 -->
+                    <div class="tab-cell"><a href="#" class="btn-tab-item"><span>아이디 찾기</span></a></div>
+                    <div class="tab-cell actived"><a href="#" class="btn-tab-item"><span>비밀번호 찾기</span></a></div>
+                </div>
+            </div>
+            <div class="member-find-desc">비밀번호가 성공적으로 변경되었습니다.<br>홈에서 다시 로그인해주세요.</div>
+            <div class="page-bottom-ui"><a href="#" class="btn btn-orange btn-large-size btn-page-action">로그인</a></div>
+        </div>
+    </div>
+</section>
 <script>
     function checkEmail() {
         var email = $("#userEmail");
@@ -88,6 +167,7 @@
         return true;
     }
     function phoneAuthSubmit() {
+        return false;
         if (!checkEmail()) {
             return false;
         }
@@ -105,8 +185,9 @@
 
         $.ajax({
             type:'POST',
-            url:'/memberAuthFind',
+            url:'/memberAuthCheck',
             data: {
+                "email" : $("#userEmail").value(),
                 "CI" : document.joinForm.CI.value
             },
             async: false,
@@ -115,15 +196,13 @@
 
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
-                    $("#infoText").html("인증된 전화번호로<br>등록된 계정이 없습니다.");
-                    $("#buttonText").text('돌아가기');
-                    $("#buttonText").attr("href",'/login');
+                    $("#pwChangeEmail").val($("#userEmail").value());
+                    $("#pwChangeEmailHash").val(data.email);
+                    $("#PWFindContainer").css("display","none");
+                    $("#PWFindNewContainer").css("display","block");
                 } else if ( data.status === "fail" ) {
-                    $("#infoText").html("고객님이 사용하신<br>이메일 아이디의 일부분입니다.");
-                    $("#email").text(data.email);
-                    $("#email").css("display","block");
-                    $("#buttonText").text('로그인');
-                    $("#buttonText").attr("href",'/login');
+                    $("#PWFindContainer").css("display","none");
+                    $("#PWFindNoneContainer").css("display","block");
                 } else {
                     alert(data.message);
                 }
@@ -131,6 +210,87 @@
         });
     }
 
+    function changePassword() {
+
+        var checkValid = true;
+        checkValid = (checkPassword() && checkValid);
+        checkValid = (confirmPassword() && checkValid);
+
+        if (checkValid) {
+            var queryString = $("form[name=pwChangeForm]").serialize() ;
+            $.ajax({
+                type:'POST',
+                url:'/changeMemberPassword',
+                data: queryString,
+                async: false,
+                headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+                success:function(json){
+                    var data = JSON.parse(json);
+                    if ( data.status === "success" ) {
+                        $("#PWFindNewContainer").css("display","none");
+                        $("#PWFindCompleteContainer").css("display","block");
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+            $("#joinForm").submit();
+        }
+
+    }
+
+    function resetPassword() {
+        $("#userEmail").val("");
+        $("#PWFindContainer").css("display","block");
+        $("#PWFindNoneContainer").css("display","none");
+    }
+
+    function checkPassword() {
+        var userPassword = $("#userPassword").val();
+        var regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+
+        $("#userPassword").removeClass("valid-error");
+        $("#error-password-info").css("display","none");
+
+        if ($("#userPassword").val() === "" ) {
+            $("#userPassword").addClass("valid-error");
+            $("#error-password-info").html(" <div class='form-input-valid font-color-error'>비밀번호를 입력해주세요.</div>");
+            $("#error-password-info").css("display","block");
+            return false;
+        }
+
+        if (!regExp.test(userPassword)) {
+            $("#userPassword").addClass("valid-error");
+            $("#error-password-info").html(" <div class='form-input-valid font-color-error'>영문+숫자+특수문자 8~20자를 입력하셔야 합니다.</div>");
+            $("#error-password-info").css("display","block");
+            return false;
+        }
+
+        if (userPassword.length < 8 || userPassword.length > 20) {
+            $("#userPassword").addClass("valid-error");
+            $("#error-password-info").html(" <div class='form-input-valid font-color-error'>영문+숫자+특수문자 8~20자를 입력하셔야 합니다.</div>");
+            $("#error-password-info").css("display","block");
+            return false;
+        }
+
+        return true;
+    }
+
+    function confirmPassword() {
+        if ($("#userPassword").val() === "" ) {
+            return false;
+        }
+        $("#pwConfirm").removeClass("valid-error");
+        $("#error-password-confirm-info").css("display","none");
+        if ($("#userPassword").val() !== $("#pwConfirm").val() ) {
+
+            $("#pwConfirm").addClass("valid-error");
+            $("#error-password-confirm-info").html(" <div class='form-input-valid font-color-error'>비밀번호가 일치하지 않습니다.</div>");
+            $("#error-password-confirm-info").css("display","block");
+            return false;
+        }
+        return true;
+    }
 </script>
 @include('/mobile/common/end')
 

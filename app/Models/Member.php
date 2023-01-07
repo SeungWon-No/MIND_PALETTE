@@ -58,4 +58,9 @@ class Member extends Model
     public static function findMemberInfo($memberPK) {
         return Member::where('memberPK','=',$memberPK)->first();
     }
+
+    public static function updatePassword($email, $password) {
+        Member::where('email',$email)
+            ->update(['password'=> $password]);
+    }
 }

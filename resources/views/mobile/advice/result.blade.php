@@ -8,16 +8,19 @@
     use App\Http\Util\CounselingTemplate;
     $counselingTemplate = new CounselingTemplate;
 
-    $levelColor = [
-      "L" => "green",
-      "M" => "orange",
-      "H" => "red"
-    ];
-
-    $levelTitle = [
-      "L" => "낮음(L)수준",
-      "M" => "보통(M)수준",
-      "H" => "높음(H)수준"
+    $levelInfo = [
+      "L" => [
+          "class" => "green",
+          "title" => "낮음(L)수준"
+      ],
+      "M" => [
+          "class" => "orange",
+          "title" => "보통(M)수준",
+      ],
+      "H" => [
+          "class" => "red",
+          "title" => "높음(H)수준"
+      ],
     ];
 @endphp
 <section id="container" class="page-body">
@@ -99,15 +102,15 @@
                                                     <div class="graph-data-bars">
                                                         <div class="graph-data-bar">
                                                             <div style="height:{{$temperamentTest["emotion"]}}%;"
-                                                                 class="bar {{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}"></div>
+                                                                 class="bar {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]["class"]}}"></div>
                                                         </div>
                                                         <div class="graph-data-bar">
                                                             <div style="height:{{$temperamentTest["action"]}}%;"
-                                                                 class="bar {{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["action"])]}}"></div>
+                                                                 class="bar {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["action"])]["class"]}}"></div>
                                                         </div>
                                                         <div class="graph-data-bar">
                                                             <div style="height:{{$temperamentTest["relationshipAdaptation"]}}%;"
-                                                                 class="bar {{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipAdaptation"])]}}"></div>
+                                                                 class="bar {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipAdaptation"])]["class"]}}"></div>
                                                         </div>
                                                         <div class="graph-data-bar">
                                                             <div style="height:{{$temperamentTest["relationshipPursuit"]}}%;" class="bar orange"></div>
@@ -228,7 +231,7 @@
                                                     <tr>
                                                         <td colspan="5">
                                                             <div class="result-analysis-graph-data">
-                                                                <div class="bar {{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}" style="width:{{$temperamentTest["emotion"]}}%;"></div>
+                                                                <div class="bar {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]["class"]}}" style="width:{{$temperamentTest["emotion"]}}%;"></div>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -237,7 +240,7 @@
                                             </div>
                                             <div class="result-analysis-graph-value">
                                                 <div class="item-value">
-                                                    <strong class="font-color-{{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}">{{$temperamentTest["emotion"]}}점</strong>
+                                                    <strong class="font-color-{{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]["class"]}}">{{$temperamentTest["emotion"]}}점</strong>
                                                 </div>
                                             </div>
 
@@ -249,35 +252,199 @@
                                     </div>
                                     <div class="result-analysis-view">
                                         <div class="result-headline">정서표현 지수는
-                                            <strong class="font-color-{{$levelColor[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}">
-                                                {{$levelTitle[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]}}
+                                            <strong class="font-color-{{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]["class"]}}">
+                                                {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])]["title"]}}
                                             </strong>입니다.
                                         </div>
-                                        <div class="result-desc">이 척도에서 높은 점수를 보이는 자녀는 강한 감정 표현형으로 자신이 원하는 것과 원하지 않는 것에 대한 선호도가 분명할 수 있습니다. 타인이 정해놓은 규칙이나 행동들보다는 자유롭게 자신이 추구하는 즐거움을 탐색하려는 모습이 강하며, 심리적으로 좌절스럽거나 불편한 상황을 잘 견디지 못하고 피하려는 경향을 보일 수 있습니다.<br><br>부정 정서는 주로 개인의 목표와 일치하지 않는 일을 경험할 때 발생한다는 점에서 대체로 자녀가 경험하고 싶어 하지 않은 정서라고 볼 수 있습니다. 그러나 그러한 느낌을 잘 알아차리고, 이를 자신의 것으로 수용하고, 표현할 수 있는 능력을 키우는 것은 자녀가 건강한 삶을 영위하는데 매우 중요합니다.<br><br>부모가 자녀를 관찰하였을 때, 사소한 일에도 쉽게 성을 내고 분노를 밖으로 드러낸다면 이 부분을 살펴보시기 바랍니다. 자녀는 현재 정서교육이 필요한 시기입니다.잦은 부정적 정서 폭발은 자신과 타인이 합의되지 않은 상황에서 극적으로 이루어지므로 자녀는 부정적 피드백에 노출되거나 자기통제에 실패했다는 반복적 경험으로 낮은 자존감을 초래할 수 있습니다.부모는 쉽게 폭발하는 자녀의 정서에 크게 반응하거나 제한하기보다는 감정과 행동을 읽어주며, 부모가 느끼는 감정도 알려줄 필요가 있습니다. 부정적인 감정에 대해서 언어로 적절히 표현할 수 있고, 자율성과 책임감을 기를 수 있습니다.</div>
+                                        <div class="result-desc">{!! CounselingTemplate::$temperamentTestLevelInfo['emotion'][$counselingTemplate->getTemperamentTestLevel($temperamentTest["emotion"])] !!}</div>
                                     </div>
                                 </div>
-                                <!-- btn클래스에 disabled클래스 추가시 비활성화 표현 -->
-                                <div class="page-bottom-ui small"><a href="#" class="btn btn-orange btn-large-size btn-page-action">HTP검사 결과 보기</a></div>
+                            </div>
+                            <div class="basic-data-group small">
+                                <div class="result-card">
+                                    <div class="result-analysis-top">
+                                        <h4 class="con-title">세부 분석 결과 - 행동표현 지수</h4>
+                                        <div class="item-desc">행동표현(활동성)의 척도는 아동의 전체적 활동량을<br/>측정하기 위한 척도입니다.</div>
+                                        <div class="result-analysis-graph">
+                                            <div class="result-analysis-graph-table">
+                                                <table>
+                                                    <colgroup>
+                                                        <col style="width:29%"/>
+                                                        <col style="width:14%"/>
+                                                        <col style="width:14%"/>
+                                                        <col style="width:14%"/>
+                                                        <col style="width:29%"/>
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th rowspan="2"><strong>낮음</strong></th>
+                                                        <th colspan="3"><strong>보통</strong></th>
+                                                        <th rowspan="2"><strong>높음</strong></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>이하</th>
+                                                        <th>보통</th>
+                                                        <th>이상</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="result-analysis-graph-data">
+                                                                <div class="bar {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["action"])]["class"]}}" style="width:{{$temperamentTest["action"]}}%;"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="result-analysis-graph-value">
+                                                <div class="item-value">
+                                                    <strong class="font-color-{{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["action"])]["class"]}}">{{$temperamentTest["action"]}}점</strong>
+                                                </div>
+                                            </div>
+
+                                            <div class="result-analysis-desc">
+                                                <div class="txt"><strong>※30 이하: 비활동적 행동표현(Inactive Behavior)</strong>, 비활동적인 것을 좋아하고 좀처럼 지루해하지 않으며, 자신에게 익숙한 방식을 고수하려는 경향</div>
+                                                <div class="txt"><strong>※70 이상: 자유 분방(Freewheeling))</strong>, 강한 행동 표현형으로 새로운 자극에 이끌려 행동이 활성화되는 성향</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="result-analysis-view">
+                                        <div class="result-headline">행동표현 지수는
+                                            <strong class="font-color-{{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["action"])]["class"]}}">
+                                                {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["action"])]["title"]}}
+                                            </strong>입니다.
+                                        </div>
+                                        <div class="result-desc">{!! CounselingTemplate::$temperamentTestLevelInfo['action'][$counselingTemplate->getTemperamentTestLevel($temperamentTest["action"])] !!}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="basic-data-group small">
+                                <div class="result-card">
+                                    <div class="result-analysis-top">
+                                        <h4 class="con-title">세부 분석 결과 - 관계적응 지수</h4>
+                                        <div class="item-desc">관계적응의 척도는 아동이 낯선 상황이나 낯선 환경에 대한<br/>적응방식을 측정하기 위한 척도입니다.</div>
+                                        <div class="result-analysis-graph">
+                                            <div class="result-analysis-graph-table">
+                                                <table>
+                                                    <colgroup>
+                                                        <col style="width:29%"/>
+                                                        <col style="width:14%"/>
+                                                        <col style="width:14%"/>
+                                                        <col style="width:14%"/>
+                                                        <col style="width:29%"/>
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th rowspan="2"><strong>낮음</strong></th>
+                                                        <th colspan="3"><strong>보통</strong></th>
+                                                        <th rowspan="2"><strong>높음</strong></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>이하</th>
+                                                        <th>보통</th>
+                                                        <th>이상</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="result-analysis-graph-data">
+                                                                <div class="bar {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipAdaptation"])]["class"]}}" style="width:{{$temperamentTest["relationshipAdaptation"]}}%;"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="result-analysis-graph-value">
+                                                <div class="item-value">
+                                                    <strong class="font-color-{{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipAdaptation"])]["class"]}}">{{$temperamentTest["relationshipAdaptation"]}}점</strong>
+                                                </div>
+                                            </div>
+
+                                            <div class="result-analysis-desc">
+                                                <div class="txt"><strong>※30 이하: 자발적 관계적응(Voluntary relational adaptation)</strong>, 사람에 대한 관심, 신뢰, 믿음이 있으며 낯선 환경에 개방적인 성향</div>
+                                                <div class="txt"><strong>※70 이상: 비자발적 관계적응 / 수줍음(involuntary relational adaptation / shyness)</strong>, 낯선 환경에 놓일 때 생길 수 있는 위험에 대비해 조심스럽고 신중하게 접근하는 경향</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="result-analysis-view">
+                                        <div class="result-headline">관계적응 지수는
+                                            <strong class="font-color-{{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipAdaptation"])]["class"]}}">
+                                                {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipAdaptation"])]["title"]}}
+                                            </strong>입니다.
+                                        </div>
+                                        <div class="result-desc">{!! CounselingTemplate::$temperamentTestLevelInfo['relationshipAdaptation'][$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipAdaptation"])] !!}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="basic-data-group small">
+                                <div class="result-card">
+                                    <div class="result-analysis-top">
+                                        <h4 class="con-title">세부 분석 결과 - 관계추구 지수</h4>
+                                        <div class="item-desc">관계추구 척도는 긴밀한 대인관계를 맺기 위해 외향적<br/>관계추구 혹은 내향적 관계추구를 측정하기 위한 척도입니다.</div>
+                                        <div class="result-analysis-graph">
+                                            <div class="result-analysis-graph-table">
+                                                <table>
+                                                    <colgroup>
+                                                        <col style="width:29%"/>
+                                                        <col style="width:14%"/>
+                                                        <col style="width:14%"/>
+                                                        <col style="width:14%"/>
+                                                        <col style="width:29%"/>
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th rowspan="2"><strong>낮음</strong></th>
+                                                        <th colspan="3"><strong>보통</strong></th>
+                                                        <th rowspan="2"><strong>높음</strong></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>이하</th>
+                                                        <th>보통</th>
+                                                        <th>이상</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="result-analysis-graph-data">
+                                                                <div class="bar {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipPursuit"])]["class"]}}" style="width:{{$temperamentTest["relationshipPursuit"]}}%;"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="result-analysis-graph-value">
+                                                <div class="item-value">
+                                                    <strong class="font-color-{{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipPursuit"])]["class"]}}">{{$temperamentTest["relationshipPursuit"]}}점</strong>
+                                                </div>
+                                            </div>
+
+                                            <div class="result-analysis-desc">
+                                                <div class="txt"><strong>※30 이하: 내향적 관계추구(Introverted Relationship)</strong>, 자기 내면에 집중하는 기질로 깊이 있는 관계를 유지하면서 소수의 사람과 밀접한 관계를 이어가는 경향</div>
+                                                <div class="txt"><strong>※70 이상: 외향적 관계추구(Extroverted Relationship)</strong>, 열정적이고 사교적인 특성이 있어서 타인과 함께할 때 즐거움을 느끼고 협조적인 경향</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="result-analysis-view">
+                                        <div class="result-headline">관계추구 지수는
+                                            <strong class="font-color-{{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipPursuit"])]["class"]}}">
+                                                {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipPursuit"])]["title"]}}
+                                            </strong>입니다.
+                                        </div>
+                                        <div class="result-desc">{!! CounselingTemplate::$temperamentTestLevelInfo['relationshipPursuit'][$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipPursuit"])] !!}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- //기질검사 -->
                         <!-- HTP검사 -->
                         <!-- actived 클래스 추가시 활성화 -->
                         <div class="tab-data actived">
-                            <div class="result-card">
-                                <div class="result-htp-top">
-                                    <h3 class="con-title">우리 아이 HTP검사 결과</h3>
-                                    <!-- 23.01.04 문구수정 -->
-                                    <div class="item-detail">
-                                        <div class="item-title"><div class="icon icon-note-warning"></div><h4>아동심리전문가 소견</h4></div>
-                                        <div class="item-desc">집, 나무, 사람 그림검사의 해석이란 htp그림을 통하여 성격의 여러 면을 밝혀나가는 것을 말합니다. 이 해석은 htp검사와 함께 사용하는 다른 심리검사의 결과와 행동관찰, PDI(사후질문과정)를 고려하고, 피검자에게 적용하기에 가장 적절하고 유용할 것으로 판단되는 이론적 틀에 따라 종합적이고 전체적으로 해석 되어져야 합니다.<br><br>즉 그림만 가지고 성격의 단면을 추론하는 맹분석(blind analysis)의 해석은 위험한 것이라고 할 수 있습니다. 때문에 이 검사의 해석은 자녀의 단편적인 모습을 보여줄 수 있을 뿐 추후 보다 정확한 검사를 원할 시 전문가를 찾아 재수행하는 것이 좋습니다.</div>
-                                    </div>
-                                    <!--// 23.01.04 문구수정 -->
-                                </div>
-                                <div class="result-htp-view">
-                                    에디터영역
-                                </div>
-                            </div>
                             <!-- btn클래스에 disabled클래스 추가시 비활성화 표현 -->
                             <div class="page-bottom-ui small"><a href="#" class="btn btn-orange btn-large-size btn-page-action">기질검사 결과 보기</a></div>
                             <div class="basic-data-group">
