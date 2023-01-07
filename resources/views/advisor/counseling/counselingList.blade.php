@@ -61,24 +61,24 @@
                 <!-- case 3-1. [end + danger] counseling end danger -->
                 <!-- case 3-2. [end + need-care] counseling end need-care -->
 
-                <!-- list items -->
-                <li class="counseling">
-                  <a href="#none" class="counseling-thumb">
-                    <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
-                  </a>
-                  <div class="counseling-user__info">
-                    <div class="counseling-user__name">홍길동</div>
-                    <div class="counseling-user__year">191898</div>
-                    <div class="counseling-user__gender">남아</div>
-                  </div>
-                  <div class="counseling-code__cell">
-                    <div class="counseling-code__detail">상담코드:<span class="counseling-code">2143426</span></div>
-                  </div>
-                  <div class="counseling-link__cell">
-                    <a href="#none" class="counseling-link">상담하기</a>
-                  </div>
-                </li>
-                <!-- list items -->
+                @foreach ($counselingList as $list)
+                  <li class="counseling">
+                    <a href="#none" class="counseling-thumb">
+                      <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
+                    </a>
+                    <div class="counseling-user__info">
+                      <div class="counseling-user__name">{{$list['counselorName']}}</div>
+                      <div class="counseling-user__year">{{$list['counselorBirthday']}}</div>
+                      <div class="counseling-user__gender">{{$list['counselorGender']}}</div>
+                    </div>
+                    <div class="counseling-code__cell">
+                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingPK']}}</span></div>
+                    </div>
+                    <div class="counseling-link__cell">
+                      <a href="#none" class="counseling-link">상담하기</a>
+                    </div>
+                  </li>
+                @endforeach
               </ul>
               <div class="paging-box">
                 <a href="#none" class="paging-prev"><span class="icon pagin-perv-icon"></span></a>
@@ -89,7 +89,7 @@
               </div>
             </div>
           </div>
-        </div> <!--column-left end-->
+        </div>
         <div class="column-right">
           <div class="account">
             <div class="account-info__cell">
@@ -99,7 +99,7 @@
               <div class="account-profile">
                 <div class="account-profile__cell">
                   <div class="account-profile__info">
-                    <div class="account-profile__name">김아무 상담사</div>
+                    <div class="account-profile__name">{{$advisorProfile['advisorName']}}</div>
                     <div class="account-profile__center">사랑 마음 센터</div>
                   </div>
                 </div>

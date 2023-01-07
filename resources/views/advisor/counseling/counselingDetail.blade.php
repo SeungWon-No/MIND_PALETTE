@@ -210,7 +210,7 @@
               <div class="detail-info__avater"></div>
               <div class="detail-info__cell">
                 <div class="detail-info__label">이름</div>
-                <div class="detail-info__name">홍길동</div>
+                <div class="detail-info__name">{{$clientInfo['clientName']}}</div>
               </div>
             </div>
             <!-- 22.12.29 수정 -->
@@ -232,45 +232,45 @@
                     <div class="kid-info__item-wrap">
                       <div class="kid-info__item">
                         <div class="kid-info__label">생년월일</div>
-                        <div class="kid-info__content">2005.05.38</div>
+                        <div class="kid-info__content">{{$clientInfo['counselorBirthday']}}</div>
                       </div>
                       <div class="kid-info__item">
                         <div class="kid-info__label">학교</div>
-                        <div class="kid-info__content">밝음 초등학교</div>
+                        <div class="kid-info__content">{{$clientInfo['counselorSchool']}}</div>
                       </div>
                     </div>
                     <div class="kid-info__item-wrap">
                       <div class="kid-info__item">
                         <div class="kid-info__label">성별</div>
-                        <div class="kid-info__content">여아</div>
+                        <div class="kid-info__content">{{$clientInfo['counselorGender']}}</div>
                       </div>
                       <div class="kid-info__item">
                         <div class="kid-info__label">취미활동</div>
-                        <div class="kid-info__content">친구들과 소꿉놀이하기</div>
+                        <div class="kid-info__content">{{$clientInfo['hobby']}}</div>
                       </div>
                     </div>
                     <div class="kid-info__item-wrap">
                       <div class="kid-info__item">
                         <div class="kid-info__label">가족관계</div>
-                        <div class="kid-info__content">1남 2녀중 3째</div>
+                        <div class="kid-info__content">{{$clientInfo['familyRelations1']}}남 
+                        {{$clientInfo['familyRelations2']}}녀중 
+                        {{$clientInfo['familyRelations3']}}째</div>
                       </div>
                       <div class="kid-info__item">
                         <div class="kid-info__label">장점 , 특기</div>
-                        <div class="kid-info__content">친구들의 말을 잘 들어줌 , 그림을 잘그림</div>
+                        <div class="kid-info__content">{{$clientInfo['specialty']}}</div>
                       </div>
                     </div>
                     <div class="kid-info__item">
                       <div class="kid-info__label">교우관계</div>
                       <div class="kid-info__content">
-                        반에서 친한 애들 몇명과 평소에는 잘 지내나 학교에서만 그렇고, 그 이상으로 친한 친구들이 없습니다. 아이가 깊은 관계를 두려워 하는것인지 몇번 물어보았고 
-                        친구들에게 미움 받는게 싫어서 학교에서만 밝게 행동한다고 말했습니다. 집에서는 조용하고 수줍음이 많은 편이라 학교에서도 그런 줄 알았는데 학교에서는 잘 
-                        지내기 위해서 애쓰고 있었나봅니다.
+                      {{$clientInfo['friendship']}}
                       </div>
                     </div>
                     <div class="kid-info__item">
                       <div class="kid-info__label">교사와의<br>관계</div>
                       <div class="kid-info__content">
-                        잦은 교류가 있지는 않고, 가끔 상담을 하긴 하지만 선생님께서 아이에게 별다른 관심을 안주는 듯 합니다. 아이도 선생님 말은 곧잘  따르지만 의지는 못하고 있습니다.
+                      {{$clientInfo['relationshipTeacher']}}
                       </div>
                     </div>
                   </div>
@@ -283,7 +283,7 @@
                           <span class="icon father-icon"></span>부
                         </div>
                         <div class="family-info__desc">
-                          아이와 데면데면합니다. 일이 바빠 자주 아이와 놀아주지 못해서 아이가 낯을 가려요.
+                        {{$clientInfo['relationshipDad']}}
                         </div>
                       </div>
                       <div class="family-info__item">
@@ -291,7 +291,7 @@
                           <span class="icon mother-icon"></span>모
                         </div>
                         <div class="family-info__desc">
-                          아이가 수업이 끝나고 집에오면 항상 이야기를 나눕니다. 아이의 말을 경청하려 노력은 하고 있지만 나가서 친구들과 노는것이 위험하다 여겨질 때가 많아서 자주 못 놀게할 때가 많습니다.
+                        {{$clientInfo['relationshipMother']}}
                         </div>
                       </div>
                       <div class="family-info__item">
@@ -299,7 +299,7 @@
                           <span class="icon brother-icon"></span>형제
                         </div>
                         <div class="family-info__desc">
-                          장난기가 많고 장난을 많이 치는 편입니다. 막내에게 가끔 심한 장난을 쳐서 다칠 때도 있고, 잘 놀아주는 듯 하다가도 말을 안들어서 종종 싸웁니다.
+                        {{$clientInfo['relationshipSiblings']}}
                         </div>
                       </div>
                       <div class="family-info__item">
@@ -307,14 +307,14 @@
                           <span class="icon sister-icon"></span>자매
                         </div>
                         <div class="family-info__desc">
-                          사이가 좋은 자매사이에요. 종종 속이야기도 나누는것 같고 길동이가 제일 잘 따르고 있어요.
+                        {{$clientInfo['relationshipSister']}}
                         </div>
                       </div>
                     </div>
                     <div class="family-info__last">
                       <div class="family-info__label">가족내력 및 스트레스 요인</div>
                       <div class="family-info__desc">
-                        어머니 쪽에 천식유전이 있어서 길동이도 약간의 천식 기운이있어요. 약은 계속 복용중이고 이거 때문에도 아이가 밖으로 나가서 놀때 천식에 안좋을까봐 걱정이 됩니다.
+                      {{$clientInfo['stressCauses']}}
                       </div>
                     </div>
                   </div>
@@ -322,7 +322,7 @@
                 <div class="content-cell">
                   <div class="reason-info">
                     <p class="reason-info__desc">
-                      아이가 학교 이외의 장소에서는 친구들과 깊게 교류하지 못하고  집에서만 있으려 하는 일이 잦고. 아이에게 물어보아도 아이도 이유를 잘 몰라 답답해 하고 있습니다. 심층적인 상담과 분석으로 아이의 생각을 알고싶고, 해결할 수 있는 방법을 알고싶어서 신청하게 되었어요. 
+                    {{$clientInfo['reasonInspection']}}
                     </p>
                   </div>
                 </div>
