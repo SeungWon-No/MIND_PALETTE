@@ -1,3 +1,26 @@
+@php
+  use App\Http\Util\CounselingTemplate;
+  $counselingTemplate = new CounselingTemplate;
+
+  $level = [
+    "L" => "green",
+    "M" => "yellow",
+    "H" => "red",
+  ];
+
+  $levelText = [
+    "L" => "낮음(L)",
+    "M" => "보통(M)",
+    "H" => "높음(H)",
+  ];
+
+  $levelClass = [
+    "L" => "low",
+    "M" => "mid",
+    "H" => "high",
+  ];
+
+@endphp
 @include('advisor/common/header')
     <div id="container">
       <div class="detail-top__cont">
@@ -360,7 +383,8 @@
                   <div class="result-info">
                     <div class="result-info__left">
                       <div class="result-info__item">
-                        <div class="result-info__label">정서표현지수는 <span class="high">높음(H)</span>  수준입니다.</div>
+                        <div class="result-info__label">정서표현지수는 <span class="{{$levelClass[$counselingTemplate->getTemperamentTestLevel($temperamentTest['emotion'])]}}">
+                          {{$levelText[$counselingTemplate->getTemperamentTestLevel($temperamentTest['emotion'])]}}수준</span>입니다.</div>
                         <div class="result-info__content">
                           <div class="result-info__desc">
                             이 척도에서 높은 점수를 보이는 자녀는 강한 감정 표현형으로 자신이 원하는 것과 원하지 않는 것에 대한 선호도가 분명할 수 있습니다. 타인이 정해놓은 규칙이나 행동들보다는 자유롭게 자신이 추구하는 즐거움을 탐색하려는 모습이 강하며, 심리적으로 좌절스럽거나 불편한 상황을 잘 견디지 못하고 피하려는 경향을 보일 수 있습니다.부정 정서는 주로 개인의 목표와 일치하지 않는 일을 경험할 때 발생한다는 점에서 대체로 자녀가 경험하고 싶어 하지 않은 정서라고 볼 수 있습니다. 그러나 그러한 느낌을 잘 알아차리고, 이를 자신의 것으로 수용하고, 표현할 수 있는 능력을 키우는 것은 자녀가 건강한 삶을 영위하는데 매우 중요합니다.부모가 자녀를 관찰하였을 때, 사소한 일에도 쉽게 성을 내고 분노를 밖으로 드러낸다면 이 부분을 살펴보시기 바랍니다. 자녀는 현재 정서교육이 필요한 시기입니다.잦은 부정적 정서 폭발은 자신과 타인이 합의되지 않은 상황에서 극적으로 이루어지므로 자녀는 부정적 피드백에 노출되거나 자기통제에 실패했다는 반복적 경험으로 낮은 자존감을 초래할 수 있습니다.부모는 쉽게 폭발하는 자녀의 정서에 크게 반응하거나 제한하기보다는 감정과 행동을 읽어주며, 부모가 느끼는 감정도 알려줄 필요가 있습니다. 부정적인 감정에 대해서 언어로 적절히 표현할 수 있고, 자율성과 책임감을 기를 수 있습니다.
@@ -369,7 +393,8 @@
                       </div>
                       
                       <div class="result-info__item">
-                        <div class="result-info__label">행동표현 지수는 <span class="mid">보통(M) 수준</span>입니다.</div>
+                        <div class="result-info__label">행동표현 지수는 <span class="{{$levelClass[$counselingTemplate->getTemperamentTestLevel($temperamentTest['action'])]}}">
+                          {{$levelText[$counselingTemplate->getTemperamentTestLevel($temperamentTest['action'])]}} 수준</span>입니다.</div>
                         <div class="result-info__content">
                           <div class="result-info__desc">
                             이 척도에서 높은 점수를 보이는 자녀는 강한 감정 표현형으로 자신이 원하는 것과 원하지 않는 것에 대한 선호도가 분명할 수 있습니다. 타인이 정해놓은 규칙이나 행동들보다는 자유롭게 자신이 추구하는 즐거움을 탐색하려는 모습이 강하며, 심리적으로 좌절스럽거나 불편한 상황을 잘 견디지 못하고 피하려는 경향을 보일 수 있습니다.부정 정서는 주로 개인의 목표와 일치하지 않는 일을 경험할 때 발생한다는 점에서 대체로 자녀가 경험하고 싶어 하지 않은 정서라고 볼 수 있습니다. 그러나 그러한 느낌을 잘 알아차리고, 이를 자신의 것으로 수용하고, 표현할 수 있는 능력을 키우는 것은 자녀가 건강한 삶을 영위하는데 매우 중요합니다.부모가 자녀를 관찰하였을 때, 사소한 일에도 쉽게 성을 내고 분노를 밖으로 드러낸다면 이 부분을 살펴보시기 바랍니다. 자녀는 현재 정서교육이 필요한 시기입니다.잦은 부정적 정서 폭발은 자신과 타인이 합의되지 않은 상황에서 극적으로 이루어지므로 자녀는 부정적 피드백에 노출되거나 자기통제에 실패했다는 반복적 경험으로 낮은 자존감을 초래할 수 있습니다.부모는 쉽게 폭발하는 자녀의 정서에 크게 반응하거나 제한하기보다는 감정과 행동을 읽어주며, 부모가 느끼는 감정도 알려줄 필요가 있습니다. 부정적인 감정에 대해서 언어로 적절히 표현할 수 있고, 자율성과 책임감을 기를 수 있습니다.
@@ -377,7 +402,8 @@
                         </div>
                       </div>
                       <div class="result-info__item">
-                        <div class="result-info__label">관계적응 지수는 <span class="low">낮음(L) 수준</span>입니다.</div>
+                        <div class="result-info__label">관계적응 지수는 <span class="{{$levelClass[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipAdaptation'])]}}">
+                          {{$levelText[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipAdaptation'])]}} 수준</span>입니다.</div>
                         <div class="result-info__content">
                           <div class="result-info__desc">
                             이 척도에서 높은 점수를 보이는 자녀는 강한 감정 표현형으로 자신이 원하는 것과 원하지 않는 것에 대한 선호도가 분명할 수 있습니다. 타인이 정해놓은 규칙이나 행동들보다는 자유롭게 자신이 추구하는 즐거움을 탐색하려는 모습이 강하며, 심리적으로 좌절스럽거나 불편한 상황을 잘 견디지 못하고 피하려는 경향을 보일 수 있습니다.부정 정서는 주로 개인의 목표와 일치하지 않는 일을 경험할 때 발생한다는 점에서 대체로 자녀가 경험하고 싶어 하지 않은 정서라고 볼 수 있습니다. 그러나 그러한 느낌을 잘 알아차리고, 이를 자신의 것으로 수용하고, 표현할 수 있는 능력을 키우는 것은 자녀가 건강한 삶을 영위하는데 매우 중요합니다.부모가 자녀를 관찰하였을 때, 사소한 일에도 쉽게 성을 내고 분노를 밖으로 드러낸다면 이 부분을 살펴보시기 바랍니다. 자녀는 현재 정서교육이 필요한 시기입니다.잦은 부정적 정서 폭발은 자신과 타인이 합의되지 않은 상황에서 극적으로 이루어지므로 자녀는 부정적 피드백에 노출되거나 자기통제에 실패했다는 반복적 경험으로 낮은 자존감을 초래할 수 있습니다.부모는 쉽게 폭발하는 자녀의 정서에 크게 반응하거나 제한하기보다는 감정과 행동을 읽어주며, 부모가 느끼는 감정도 알려줄 필요가 있습니다. 부정적인 감정에 대해서 언어로 적절히 표현할 수 있고, 자율성과 책임감을 기를 수 있습니다.
@@ -385,7 +411,8 @@
                         </div>
                       </div>
                       <div class="result-info__item">
-                        <div class="result-info__label">관계추구 지수는 <span class="high">높음(H)</span>수준입니다.</div>
+                        <div class="result-info__label">관계추구 지수는 <span class="{{$levelClass[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipPursuit'])]}}">
+                          {{$levelText[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipPursuit'])]}}</span>수준입니다.</div>
                         <div class="result-info__content">
                           <div class="result-info__desc">
                             이 척도에서 높은 점수를 보이는 자녀는 강한 감정 표현형으로 자신이 원하는 것과 원하지 않는 것에 대한 선호도가 분명할 수 있습니다. 타인이 정해놓은 규칙이나 행동들보다는 자유롭게 자신이 추구하는 즐거움을 탐색하려는 모습이 강하며, 심리적으로 좌절스럽거나 불편한 상황을 잘 견디지 못하고 피하려는 경향을 보일 수 있습니다.부정 정서는 주로 개인의 목표와 일치하지 않는 일을 경험할 때 발생한다는 점에서 대체로 자녀가 경험하고 싶어 하지 않은 정서라고 볼 수 있습니다. 그러나 그러한 느낌을 잘 알아차리고, 이를 자신의 것으로 수용하고, 표현할 수 있는 능력을 키우는 것은 자녀가 건강한 삶을 영위하는데 매우 중요합니다.부모가 자녀를 관찰하였을 때, 사소한 일에도 쉽게 성을 내고 분노를 밖으로 드러낸다면 이 부분을 살펴보시기 바랍니다. 자녀는 현재 정서교육이 필요한 시기입니다.잦은 부정적 정서 폭발은 자신과 타인이 합의되지 않은 상황에서 극적으로 이루어지므로 자녀는 부정적 피드백에 노출되거나 자기통제에 실패했다는 반복적 경험으로 낮은 자존감을 초래할 수 있습니다.부모는 쉽게 폭발하는 자녀의 정서에 크게 반응하거나 제한하기보다는 감정과 행동을 읽어주며, 부모가 느끼는 감정도 알려줄 필요가 있습니다. 부정적인 감정에 대해서 언어로 적절히 표현할 수 있고, 자율성과 책임감을 기를 수 있습니다.
@@ -404,16 +431,20 @@
                                   bar에 클래스 red, yellow, green로 색구별
                                 -->
                               <div class="graph-bar">
-                                <div class="bar red" style="height: 90%;"></div>
+                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['emotion'])]}}" 
+                                style="height:{{$temperamentTest['emotion']}}%;"></div>
                               </div>
                               <div class="graph-bar">
-                                <div class="bar yellow" style="height: 50%;"></div>
+                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['action'])]}}" 
+                                style="height:{{$temperamentTest['action']}}%;"></div>
                               </div>
                               <div class="graph-bar">
-                                <div class="bar green" style="height: 20%;"></div>
+                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipAdaptation'])]}}" 
+                                style="height:{{$temperamentTest['relationshipAdaptation']}}%;"></div>
                               </div>
                               <div class="graph-bar ">
-                                <div class="bar yellow" style="height: 65%;"></div>
+                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipPursuit'])]}}" 
+                                style="height:{{$temperamentTest['relationshipPursuit']}}%;"></div>
                               </div>
                             </div>
                           </div>
@@ -472,25 +503,25 @@
                             <div class="graph-y-label">
                               <div class="label-y-value">
                                 정서표현
-                                <span class="graph-result">90점</span>
+                                <span class="graph-result">{{$temperamentTest['emotion']}}점</span>
                               </div>
                             </div>
                             <div class="graph-y-label">
                               <div class="label-y-value">
                                 행동표현
-                                <span class="graph-result">50점</span>
+                                <span class="graph-result">{{$temperamentTest['action']}}점</span>
                               </div>
                             </div>
                             <div class="graph-y-label">
                               <div class="label-y-value">
                                 관계적응
-                                <span class="graph-result">20점</span>
+                                <span class="graph-result">{{$temperamentTest['relationshipAdaptation']}}점</span>
                               </div>
                             </div>
                             <div class="graph-y-label">
                               <div class="label-y-value">
                                 관계추구
-                                <span class="graph-result">65점</span>
+                                <span class="graph-result">{{$temperamentTest['relationshipPursuit']}}점</span>
                               </div>
                             </div>
                           </div>

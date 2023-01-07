@@ -45,7 +45,8 @@ class AdvisorCounselingDetailController extends Controller
             'clientInfo' => $clientInfo,
             'images' => $images,
             "questions" => Questions::findAllQuestion(335),
-            "answer" => $this->getAllAnswer($request, 1, 335, $clientInfo['memberPK'])
+            "answer" => $this->getAllAnswer($request, 1, 335, $clientInfo['memberPK']),
+            "temperamentTest"=>Answer::findTemperamentTest(1)
         ]);
     }
 
