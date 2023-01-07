@@ -67,8 +67,8 @@
 <section id="PWFindNewContainer" class="page-body" style="display: none">
     <form name="pwChangeForm">
         @csrf
-        <input type="hidden" name="email" id="pwChangeEmail" value="">
-        <input type="hidden" name="email" id="pwChangeEmailHash" value="">
+        <input type="hidden" name="pwChangeEmail" id="pwChangeEmail" value="">
+        <input type="hidden" name="pwChangeEmailHash" id="pwChangeEmailHash" value="">
         <div class="page-contents page-write">
             <div class="member-find-wrap">
                 <div class="page-tab">
