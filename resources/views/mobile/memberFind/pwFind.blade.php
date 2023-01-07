@@ -108,7 +108,7 @@
                         </div>
                     </div>
                 </fieldset>
-                <div class="page-bottom-ui"><a href="#" class="btn btn-orange btn-large-size btn-page-action">저장</a></div>
+                <div class="page-bottom-ui"><a href="javascript:changePassword()" class="btn btn-orange btn-large-size btn-page-action">저장</a></div>
             </div>
         </div>
     </form>
@@ -139,7 +139,7 @@
                 </div>
             </div>
             <div class="member-find-desc">비밀번호가 성공적으로 변경되었습니다.<br>홈에서 다시 로그인해주세요.</div>
-            <div class="page-bottom-ui"><a href="#" class="btn btn-orange btn-large-size btn-page-action">로그인</a></div>
+            <div class="page-bottom-ui"><a href="/" class="btn btn-orange btn-large-size btn-page-action">로그인</a></div>
         </div>
     </div>
 </section>
