@@ -7,7 +7,7 @@
             <div class="detail-item__wrap active">
               <div class="detail-item">
                 <div class="detail-item__photo">
-                  <img src="../advisorAssets/assets/images/detail-item-01.png" alt="" class="detail-item__img">
+                  <img src="{{URL::asset('/storage/image/thumb/'.$images['house'])}}" alt="" class="detail-item__img">
                   <div class="detail-item__btn-wrap">
                     <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                     <button type="button" class="detail-item__btn doc"><span class="icon document-icon"></span></button>
@@ -17,7 +17,7 @@
               </div>
               <div class="detail-item">
                 <div class="detail-item__photo">
-                  <img src="../advisorAssets/assets/images/detail-item-02.png" alt="" class="detail-item__img">
+                  <img src="{{URL::asset('/storage/image/thumb/'.$images['tree'])}}" alt="" class="detail-item__img">
                   <div class="detail-item__btn-wrap">
                     <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                     <button type="button" class="detail-item__btn doc"><span class="icon document-icon"></span></button>
@@ -27,7 +27,7 @@
               </div>
               <div class="detail-item">
                 <div class="detail-item__photo">
-                  <img src="../advisorAssets/assets/images/detail-item-03.png" alt="" class="detail-item__img">
+                  <img src="{{URL::asset('/storage/image/thumb/'.$images['person1'])}}" alt="" class="detail-item__img">
                   <div class="detail-item__btn-wrap">
                     <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                     <button type="button" class="detail-item__btn doc"><span class="icon document-icon"></span></button>
@@ -37,7 +37,7 @@
               </div>
               <div class="detail-item">
                 <div class="detail-item__photo">
-                  <img src="../advisorAssets/assets/images/detail-item-04.png" alt="" class="detail-item__img">
+                  <img src="{{URL::asset('/storage/image/thumb/'.$images['person2'])}}" alt="" class="detail-item__img">
                   <div class="detail-item__btn-wrap">
                     <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                     <button type="button" class="detail-item__btn doc"><span class="icon document-icon"></span></button>
@@ -328,32 +328,33 @@
                 </div>
                 <div class="content-cell">
                   <div class="observ-info">
+                    @php
+                    $index = 0;
+                    @endphp
+                    @foreach($questions as $list)
+                    @if($index == 0)
                     <div class="observe-info__left">
-                      <!-- 대답이 아니오 일때 observe-info__answer에 클래스 no 추가 -->
-                      <div class="observe-info__item">
-                        <div class="observe-info__question">Q1. 아이가 부모의 지시를 잘 따랐나요?</div>
-                        <div class="observe-info__answer">네</div>
-                      </div>
-                      <div class="observe-info__item">
-                        <div class="observe-info__question">Q2. 아이가 충동적이거나 산만한 모습을 보였나요?</div>
-                        <div class="observe-info__answer">네</div>
-                      </div>
-                      <div class="observe-info__item">
-                        <div class="observe-info__question">Q3. 아이가 침착하게 집중하는 모습을 보였나요?</div>
-                        <div class="observe-info__answer no">아니오</div>
-                      </div>
-                    </div>
+                    @elseif($index == 3)
                     <div class="observe-info__right">
+                    @endif
                       <div class="observe-info__item">
-                        <div class="observe-info__question">Q4. 아이가 자신만만하게 그림을 그렸나요?</div>
+                        <div class="observe-info__question">{{$list->questions}}</div>
+                        @if($answer[$list->questionsPK] == "Y")
                         <div class="observe-info__answer">네</div>
+                        @else
+                        <div class="observe-info__answer no">아니요</div>
+                        @endif
                       </div>
-                      <div class="observe-info__item">
-                        <div class="observe-info__question">Q5. 아이가 실수를 지나치게 두려워했나요?</div>
-                        <div class="observe-info__answer">네</div>
+                      @if($index == 2)
                       </div>
+                      @elseif($index == 5)
+                      </div>
+                      @endif
+                      @php
+                      $index++;
+                      @endphp
+                      @endforeach
                     </div>
-                  </div>
                 </div>
                 <div class="content-cell">
                   <div class="result-info">

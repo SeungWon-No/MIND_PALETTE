@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Advisor\Counseling;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Counseling;
+use App\Models\Questions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -15,6 +16,7 @@ class AdvisorCounselingDetailController extends Controller
         $getClientInfo = Counseling::find(1);
         $clientInfo = json_decode(json_encode($getClientInfo), true);
         $clientInfo = [
+            'memberPK' => $clientInfo['memberPK'],
             'clientName' => Crypt::decryptString($clientInfo['counselorName']), // 상담 대상 이름
             'counselorBirthday' => Crypt::decryptString($clientInfo['counselorBirthday']), // 생년월일
             'counselorSchool' => $clientInfo['counselorSchool'], // 학교
@@ -34,10 +36,27 @@ class AdvisorCounselingDetailController extends Controller
             'reasonInspection' => $clientInfo['reasonInspection'], // 심리 상담 사유    
         ];
 
-        $image = Answer::findHTPImage(1);
-        dd($image);
+        $images = Answer::findHTPImage(1);
+
+
+
+        
         return view("/advisor/counseling/counselingDetail", [
-            'clientInfo' => $clientInfo
+            'clientInfo' => $clientInfo,
+            'images' => $images,
+            "questions" => Questions::findAllQuestion(335),
+            "answer" => $this->getAllAnswer($request, 1, 335, $clientInfo['memberPK'])
         ]);
+    }
+
+    private function getAllAnswer($request, $counselingPK, $questionsType, $memberPK) {
+
+        $answers = Answer::findAllAnswer($memberPK,"",$questionsType, $counselingPK);
+        
+        $answerResult = array();
+        foreach ($answers as $answerRow) {
+            $answerResult[$answerRow->questionsPK] = $answerRow->answer;
+        }
+        return $answerResult;
     }
 }
