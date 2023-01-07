@@ -180,4 +180,16 @@ class CounselingTemplate {
             ]
         ],
     ];
+
+    public static function getTemperamentTestLevel($score) {
+        $level = "";
+        if ($score <= 8) {
+            $level = "L";
+        } else if ($score <= 16) {
+            $level = "M";
+        } else {
+            $level = "H";
+        }
+        return $level;
+    }
 }
