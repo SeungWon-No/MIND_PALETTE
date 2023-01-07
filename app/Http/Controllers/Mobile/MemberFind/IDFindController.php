@@ -64,6 +64,8 @@ class IDFindController extends Controller
             return json_encode($result);
         }
 
+        $CI = Crypt::decryptString($CI);
+
         $member = Member::findAuthUserEmail($CI,$email);
         $result = [
             "status" => "fail",

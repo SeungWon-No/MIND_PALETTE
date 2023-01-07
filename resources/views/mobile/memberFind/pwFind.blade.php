@@ -119,7 +119,7 @@
             <div class="page-tab">
                 <div class="page-tab-inner">
                     <!-- 활성화시 actived클래스 추가 -->
-                    <div class="tab-cell"><a href="#" class="btn-tab-item"><span>아이디 찾기</span></a></div>
+                    <div class="tab-cell"><a href="/idFind" class="btn-tab-item"><span>아이디 찾기</span></a></div>
                     <div class="tab-cell actived"><a href="#" class="btn-tab-item"><span>비밀번호 찾기</span></a></div>
                 </div>
             </div>
@@ -134,7 +134,7 @@
             <div class="page-tab">
                 <div class="page-tab-inner">
                     <!-- 활성화시 actived클래스 추가 -->
-                    <div class="tab-cell"><a href="#" class="btn-tab-item"><span>아이디 찾기</span></a></div>
+                    <div class="tab-cell"><a href="/idFind" class="btn-tab-item"><span>아이디 찾기</span></a></div>
                     <div class="tab-cell actived"><a href="#" class="btn-tab-item"><span>비밀번호 찾기</span></a></div>
                 </div>
             </div>
