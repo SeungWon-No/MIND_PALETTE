@@ -61,6 +61,6 @@ class Member extends Model
 
     public static function updatePassword($email, $password) {
         Member::where('email',$email)
-            ->update(['password'=> $password]);
+            ->update(['pw'=> $password]);
     }
 }
