@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mobile\Advice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Util\StringUtil;
 use App\Models\Code;
 use App\Models\Counseling;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class RequestAdviceController extends Controller
     {
 
         $nowDate = date("Y-m-d H:i:s");
+        $nowDay = date("Y-m-d");
 
         $applicantName = (isset($request->applicantName)) ? $request->applicantName : '';
         $relationship = (isset($request->relationshipCode)) ? $request->relationshipCode : -1;
@@ -41,6 +43,7 @@ class RequestAdviceController extends Controller
         $memberPK = $request->session()->get('login')[0]['memberPK'];
         $counseling = new Counseling;
         $counseling->memberPK = $memberPK;
+        $counseling->counselingCode = $nowDay."-".StringUtil::generateRandomString(5);
         $counseling->applicantName = Crypt::encryptString($applicantName);
         $counseling->relationship = $relationship;
         $counseling->phone = Crypt::encryptString($phone);

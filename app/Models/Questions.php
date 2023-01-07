@@ -37,5 +37,4 @@ class Questions extends Model
             ->orderBy("questionsOrder", "ASC")
             ->get();
     }
-
 }

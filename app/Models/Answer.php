@@ -133,4 +133,21 @@ class Answer extends Model
 
         return $answerResult->get();
     }
+
+
+    public static function findHTPImage($counselingPK) {
+        $images = Answer::select("questionsPK", "answer")
+                ->where("counselingPK",$counselingPK)
+                ->whereIN("questionsPK",[68,69,78,88])
+                ->get();
+
+        $returnValue = [];
+        foreach ($images as $image) {
+            if ($image->questionsPK == 68) $returnValue["house"] = $image->answer;
+            else if ($image->questionsPK == 69) $returnValue["tree"] = $image->answer;
+            else if ($image->questionsPK == 78) $returnValue["person1"] = $image->answer;
+            else if ($image->questionsPK == 88) $returnValue["person2"] = $image->answer;
+        }
+        return $returnValue;
+    }
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Common\PASSAuthController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
 use App\Http\Controllers\Mobile\Advice\HTPController;
+use App\Http\Controllers\Mobile\Advice\HTPResultController;
 use App\Http\Controllers\Mobile\Advice\ProcessInformationController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
 use App\Http\Controllers\Mobile\Advice\SampleController;
@@ -87,6 +88,7 @@ Route::middleware(['autoLogin'])->group(function () {
 Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/adviceAgree", AgreeController::class);
     Route::get("/HTPRequestComplete/", [ProcessInformationController::class, "HTPRequestComplete"]);
+    Route::get("/HTPResult/{counselingPK}", HTPResultController::class);
     Route::resource("/requestAdvice", RequestAdviceController::class)->only([
         'index', 'store'
     ]);
