@@ -186,7 +186,7 @@
             type:'POST',
             url:'/memberAuthCheck',
             data: {
-                "email" : $("#userEmail").value(),
+                "email" : $("#userEmail").val(),
                 "CI" : document.joinForm.CI.value
             },
             async: false,
