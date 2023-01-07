@@ -94,9 +94,7 @@ class IDFindController extends Controller
             return json_encode($result);
         }
 
-        dd(Hash::make($pwChangeEmail),$pwChangeEmailHash);
-
-        if (Hash::make($pwChangeEmail) != $pwChangeEmailHash) {
+        if (!Hash::check($pwChangeEmail, $pwChangeEmailHash)) {
             $result = [
                 "status" => "error",
                 "message" => "인증 값이 다릅니다."
