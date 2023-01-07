@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * @property mixed $counselingPK
+ * @property mixed $counselingCode
  * @property mixed $memberPK
  * @property mixed $advisorPK
  * @property mixed $applicantName
@@ -45,14 +46,14 @@ class Counseling extends Model
                     ->get();
 
         $counselingList = json_decode(json_encode($getResult), true);
-        
+
         foreach($counselingList as $pk => $list){
             $counselingList[$pk] = [
                 'counselingPK' => $list['counselingPK'],
                 'counselorName' => Crypt::decryptString($list['counselorName']),
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
-            ];            
+            ];
         }
         return $counselingList;
     }
