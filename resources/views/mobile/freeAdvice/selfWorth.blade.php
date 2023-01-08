@@ -42,10 +42,10 @@
                                                 @endif
                                             >
                                             <div class="form-survey-btns">
-                                                <button type="button" class="btn-survey-nav"><em>0</em></button>
                                                 <button type="button" class="btn-survey-nav"><em>1</em></button>
                                                 <button type="button" class="btn-survey-nav"><em>2</em></button>
                                                 <button type="button" class="btn-survey-nav"><em>3</em></button>
+                                                <button type="button" class="btn-survey-nav"><em>4</em></button>
                                             </div>
                                             <div class="bar"></div>
                                         </div>
@@ -70,7 +70,7 @@
             var $parent = $(this).parents('.form-survey-horizontal-inputs');
             var $index = $(this).index() ;
             $parent.removeClass('check1 check2 check3 check4').addClass('check' + ($index + 1) );
-            $parent.find('input').val($index);
+            $parent.find('input').val($index+ 1);
             checkLoadData();
         });
 
@@ -84,7 +84,7 @@
             if($(this).find('input.hidden').val() != ''){
                 checkOptionLength++;
                 var $index = parseInt($(this).find('input.hidden').val());
-                $(this).find('.form-survey-horizontal-inputs').removeClass('check1 check2 check3 check4').addClass('check' + ($index + 1) );
+                $(this).find('.form-survey-horizontal-inputs').removeClass('check1 check2 check3 check4').addClass('check' + ($index) );
             };
         });
 

@@ -25,7 +25,7 @@ class RequestAdviceController extends Controller
     {
 
         $nowDate = date("Y-m-d H:i:s");
-        $nowDay = date("Y-m-d");
+        $nowDay = date("ymd");
 
         $applicantName = (isset($request->applicantName)) ? $request->applicantName : '';
         $relationship = (isset($request->relationshipCode)) ? $request->relationshipCode : -1;

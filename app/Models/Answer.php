@@ -104,11 +104,12 @@ class Answer extends Model
             ->where('answerType','=',"293")
             ->get("cast(answer as unsigned) as sumCount")->first();
     }
-    public static function sumCounselingAnswerScore($counselingPK) {
+
+    public static function sumCounselingTemplateAnswerType($counselingTemplatePK,$questionsType) {
         return Answer::select(DB::raw('sum(cast(answer as unsigned)) as sumScore'))
-            ->where('counselingPK','=',$counselingPK)
-            ->where('answerType','=',"293")
-            ->get("cast(answer as unsigned) as sumCount")->first();
+            ->join('questions','answer.questionsPK','=','questions.questionsPK')
+            ->where('counselingTemplatePK','=',$counselingTemplatePK)
+            ->where('questionsType','=',$questionsType)->get()->first();
     }
 
     public static function sumCounselingAnswerType($counselingPK,$questionsType) {

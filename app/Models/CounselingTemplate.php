@@ -15,4 +15,14 @@ class CounselingTemplate extends Model
             ->where('memberPK','=',$userPK);
     }
 
+    public static function findCounselingTemplateAnswer($counselingTemplatePK, $questionsPK) {
+        return CounselingTemplate::join("answer","counselingTemplate.counselingTemplatePK","=","answer.counselingTemplatePK")
+            ->where("counselingTemplate.counselingTemplatePK",$counselingTemplatePK)
+            ->where("answer.questionsPK",$questionsPK)->get()->first();
+    }
+
+    public static function updateCounselingTemplate($memberPK, $freeCode) {
+        CounselingTemplate::where('tempCounselingCode',$freeCode)
+            ->update(["memberPK" => $memberPK]);
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Models\CounselingTemplate;
 
 class LoginController extends Controller
 {
@@ -42,6 +43,12 @@ class LoginController extends Controller
     public static function login($request, $member): RedirectResponse
     {
         Member::updateLoginDate($member->memberPK);
+
+        if ( Cookie::has('FREE_ADVICE') ) {
+            $freeCode = Cookie::get('FREE_ADVICE');
+            CounselingTemplate::updateCounselingTemplate($member->memberPK,$freeCode);
+            Cookie::queue(Cookie::forget('FREE_ADVICE'));
+        }
 
         $redirectUrl = (isset($request->redirectUrl)) ? $request->redirectUrl : "/";
 

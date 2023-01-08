@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Mobile\FreeAdvice;
 use App\Http\Controllers\Controller;
 use App\Http\Util\CounselingTemplate;
 use App\Models\Answer;
+use App\Models\CounselingTemplateResult;
 use App\Models\Questions;
 use Cookie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class AnxietyController extends Controller
@@ -123,8 +125,8 @@ class AnxietyController extends Controller
                 break;
             case "anxietyStep3" :
                 $nowStep = "step3";
-                $counselingStatus = ($request->isClose == "true") ? 297 :298;
-                $nextStep = "/selfWorthStep1/".$counselingTemplatePK;
+                $counselingStatus = ($request->isClose == "true") ? 297 :350;
+                $nextStep = "/anxietyResult/".$counselingTemplatePK;
                 break;
         }
 
@@ -163,6 +165,37 @@ class AnxietyController extends Controller
             }
 
             $counselingTemplate = \App\Models\CounselingTemplate::find($counselingTemplatePK);
+            if ( $counselingStatus == 350) {
+                $scoreResult = Answer::sumCounselingTemplateAnswerType($counselingTemplatePK,288);
+                $updateAnswer = Answer::findAnswer($memberPK,$freeCode,130,$counselingTemplatePK);
+                if ( $updateAnswer ) {
+                    $updateValue = [
+                        "answer" => $scoreResult->sumScore,
+                        "updateDate" => $nowDate
+                    ];
+                    Answer::updateAnswer($updateAnswer->answerPK,$updateValue);
+                } else {
+                    $answer = new Answer;
+                    $answer->questionsPK = 130;
+                    $answer->counselingTemplatePK = $counselingTemplatePK;
+                    $answer->answerType = 294;
+                    if ( $memberPK != "") {
+                        $answer->memberPK = $memberPK;
+                    } else if ($freeCode != "") {
+                        $answer->tempCounselingCode = $freeCode;
+                    }
+                    $answer->answer = $scoreResult->sumScore;
+                    $answer->updateDate = $nowDate;
+                    $answer->createDate = $nowDate;
+                    $answer->save();
+                }
+
+                $resultScore = CounselingTemplateResult::findResultScore(350,$scoreResult->sumScore);
+
+                if ($resultScore) {
+                    $counselingTemplate->counselingTemplateResultPK = $resultScore->counselingTemplateResultPK;
+                }
+            }
             $counselingTemplate->counselingStatus = $counselingStatus;
             $counselingTemplate->updateDate = $nowDate;
             $counselingTemplate->save();
@@ -182,6 +215,35 @@ class AnxietyController extends Controller
         }
     }
 
+    public function anxietyResult(Request $request, $counselingTemplatePK) {
+
+        $counselingTemplate = \App\Models\CounselingTemplate::findCounselingTemplateAnswer($counselingTemplatePK,130);
+        $result = CounselingTemplateResult::find($counselingTemplate->counselingTemplateResultPK);
+
+        $colorClass = ["green","orange","orange","red"];
+        $freeInfoData = [
+            "title" => "우리 아이 불안 검사 결과",
+            "name" => Crypt::decryptString($counselingTemplate->counselorName),
+            "code" => $counselingTemplate->counselingTemplateCode,
+            "createDate" => $counselingTemplate->createDate,
+            "levelClass" => "", //three
+            "levelIcon" => ($result->resultScore+1),
+            "level" => $result->resultScore,
+            "label" => "불안", //우울, 불안, 자아존중감,
+            "levelWidth" => ($result->resultScore+1)*25,
+            "iconType" => "2",
+            "score" => $counselingTemplate->answer,
+            "statusText" => $result->counselingTitle,
+            "resultText" => $result->counselingResult,
+            "isLogin" => $request->session()->has("login"),
+            "infoText" => "※채점 방식 : 역채점 없음"
+        ];
+
+        return view("/mobile/freeAdvice/result",[
+            "freeInfoData" =>  $freeInfoData,
+            "colorClass" =>$colorClass
+        ]);
+    }
 
     private function answerResult($memberPK,$freeCode, $step, $questionsOption) {
         $returnValue = null;
