@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class CounselingTemplate extends Model
 {
@@ -11,7 +12,7 @@ class CounselingTemplate extends Model
     public $timestamps = false;
 
     public static function findFreeCounselingResult($userPK) {
-        return CounselingTemplate::select("counselorName","counselingStatus","updateDate")
+        return CounselingTemplate::select(DB::raw("'FREE' as type"),"counselorName","counselingStatus","updateDate")
             ->where('memberPK','=',$userPK);
     }
 
