@@ -21,7 +21,7 @@
               </div>
               <div class="login-tab__desc">$findEmail</div>
             </div>
-            @else if($findEmail && $withdrawal)
+            @elseif($findEmail && $withdrawal)
             <div class="login-tab__desc">
                 인증하신 전화번호는 이미 탈퇴하신 고객입니다.<br>재가입을 원하시면 고객센터(0000-000)으로 연락주세요.
             </div>
