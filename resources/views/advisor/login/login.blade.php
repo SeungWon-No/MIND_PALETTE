@@ -25,7 +25,7 @@
                 <span class="icon icon-size-15 check-bx-off-icon"></span>로그인유지
               </label>
               <div class="login-support">
-                <a href="/advisor/findIdPassword" class="find-info__link">아이디 • 비밀번호 찾기</a>
+                <a href="/advisor/loginFindId" class="find-info__link">아이디 • 비밀번호 찾기</a>
                 <a href="/advisor/join" class="join-member-link">회원가입</a>
               </div>
             </div>
