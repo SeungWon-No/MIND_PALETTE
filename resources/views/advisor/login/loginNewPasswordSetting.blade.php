@@ -1,7 +1,3 @@
-@php
-echo $state;
-echo $advisorPK;
-@endphp
 @include('advisor/common/loginForm/loginHeader')
 <body>
   <div id="wrapper">

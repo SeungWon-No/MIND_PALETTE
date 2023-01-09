@@ -57,7 +57,6 @@
   }
 
   function authSuccess() {
-    alert(1);
     $("#joinForm").submit();
   }
 </script>
