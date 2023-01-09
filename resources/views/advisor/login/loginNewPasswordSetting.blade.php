@@ -9,16 +9,7 @@
               <a href="/advisor/findIdPassword" class="login-tab">아이디 찾기</a>
               <a href="#" class="login-tab active">비밀번호 찾기</a>
             </div>
-            <!-- defalut form -->
-            <div class="lgoin-tab__content">
-              <div class="login-tab__desc">
-                회원 정보에 등록하신 휴대폰으로 인증
-              </div>
-              <div class="login-tab__desc-s">
-                회원 가입 시 등록한 휴대폰 번호와 일치해야 합니다.
-              </div>
-            </div>
-
+            @if($state == 'true')
             <form id="newPasswordSetting" name="newPasswordSetting" action="/advisor/newPasswordSetting" method="POST" autocomplete="off">
               @csrf
               <!-- input new password form -->
@@ -37,6 +28,11 @@
                   </div>
               </div>
             </form>
+            @else
+              <div class="login-tab__desc">
+                인증하신 전화번호로<br>등록 된 계정이 없습니다.
+              </div>
+            @endif
           </div>
           <div class="login-btn__wrap">
           <a href="#" class="login-btn" onclick="">휴대폰 인증</a>
