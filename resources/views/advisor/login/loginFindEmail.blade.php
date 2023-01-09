@@ -32,7 +32,7 @@
             @endif
           </div>
           <div class="login-btn__wrap">
-          <a href="#" class="login-btn" onclick="javascript:phoneAuthSubmit()">휴대폰 인증</a>
+          <a href="/advisor/login" class="login-btn">확인 (로그인 하기)</a>
           </div>
         </div>
       </div>
