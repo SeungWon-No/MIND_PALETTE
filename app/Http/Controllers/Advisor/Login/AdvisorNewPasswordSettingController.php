@@ -16,11 +16,12 @@ class AdvisorNewPasswordSettingController extends Controller
         $advisorPK = $request['advisorPK'];
         $newPassword = $request['newPassword'];
 
-        $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
+        $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK); // 상담사 정보 조회
         
         
-        //$test = Hash::make($newPassword);
-        if($newPassword == Crypt::decryptString($getAdvisorInfo['password'])){
+        $test = Crypt::decryptString($getAdvisorInfo['password']);
+        dd($test);
+        if($newPassword){
             dd('true');
         }else{
             dd('false');
@@ -29,9 +30,9 @@ class AdvisorNewPasswordSettingController extends Controller
             try {
                 DB::beginTransaction();
 
-                DB::table('advisor')
-                ->where('advisorPK', $getAdvisorInfo['advisorPK'])
-                ->update(['votes' => 1]);
+                // DB::table('advisor')
+                // ->where('advisorPK', $getAdvisorInfo['advisorPK'])
+                // ->update(['votes' => 1]);
 
 
     
