@@ -81,8 +81,9 @@ class Advisor extends Model
 
     }
 
-    public static function updateNewPassword(){
-        
+    public static function updateNewPassword($advisorPK){
+        dd($advisorPK);
+        return '';
     }
 
 
