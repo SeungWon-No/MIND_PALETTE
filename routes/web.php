@@ -174,7 +174,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
     });
 
-    Route::get('/findIdPassword', function () { // 아이디, 패스워드 찾기 페이지
+    Route::get('/loginFindId', function () { // 아이디, 패스워드 찾기 페이지
         return view('/advisor/login/loginFindEmailPassword');
     });
 
