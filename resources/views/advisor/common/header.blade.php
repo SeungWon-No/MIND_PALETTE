@@ -30,7 +30,7 @@
           <div class="header-top__left">
             <h1 class="logo">마음팔레트
               <a href="/advisor/" class="logo-link">
-                <img src="/advisorAssets/assets/images/logo.png" alt="마음팔레트 로고" class="logo-img">
+                <img src="/advisorAssets/assets/images/login-logo.png" alt="마음팔레트 로고" class="logo-img">
               </a>
             </h1>
           </div>
