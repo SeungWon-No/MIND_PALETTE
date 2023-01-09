@@ -11,7 +11,7 @@
           </div>
           <div class="login-tab__cont">
             <div class="login-tab__wrap">
-              <a href="/advisor/findIdPassword" class="login-tab">아이디 찾기</a>
+              <a href="/advisor/loginFindId" class="login-tab">아이디 찾기</a>
               <a href="#" class="login-tab active">비밀번호 찾기</a>
             </div>
             <!-- defalut form -->
