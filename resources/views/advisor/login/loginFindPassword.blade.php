@@ -24,7 +24,7 @@
               </div>
             </div>
 
-            <form id="findPasswordForm" name="findPasswordForm" action="/advisor/loginFindPassword" method="POST" autocomplete="off">
+            <form id="findPasswordForm" name="findPasswordForm" action="/advisor/newPasswordSetting" method="POST" autocomplete="off">
               @csrf
               <input type="hidden" name="userName" value="">
               <input type="hidden" name="userPhone" value="">
