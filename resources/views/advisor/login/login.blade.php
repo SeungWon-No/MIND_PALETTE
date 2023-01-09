@@ -7,7 +7,6 @@
       <div class="login-box">
           <div class="login-inner">
             <div class="login-heading">
-              <p class="login-heading__desc">아동 심리케어 플랫폼</p>
               <div class="login-logo">
                 <img src="../advisorAssets/assets/images/login-logo.png" alt="" class="login-logo__img">
               </div>

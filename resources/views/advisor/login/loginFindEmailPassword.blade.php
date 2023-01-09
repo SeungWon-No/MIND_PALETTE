@@ -11,28 +11,23 @@
           </div>
           <div class="login-tab__cont">
             <div class="login-tab__wrap">
-              <a href="/advisor/findIdPassword" class="login-tab">아이디 찾기</a>
-              <a href="#" class="login-tab active">비밀번호 찾기</a>
+              <a href="#" class="login-tab active">아이디 찾기</a>
+              <a href="/advisor/loginFindPassword" class="login-tab">비밀번호 찾기</a>
             </div>
-            <!-- defalut form -->
             <div class="lgoin-tab__content">
               <div class="login-tab__desc">
-                회원 정보에 등록하신 휴대폰으로 인증
-              </div>
-              <div class="login-tab__desc-s">
-                회원 가입 시 등록한 휴대폰 번호와 일치해야 합니다.
+                회원정보에 등록한 전화번호를 입력하셔야<br>인증번호를 받으실 수 있습니다.
               </div>
             </div>
-
-            <form id="findPasswordForm" name="findPasswordForm" action="/advisor/newPasswordSetting" method="POST" autocomplete="off">
-              @csrf
-              <input type="hidden" name="userName" value="">
-              <input type="hidden" name="userPhone" value="">
-              <input type="hidden" name="DI" value="">
-              <input type="hidden" name="CI" value="">
-            </form>
           </div>
           <div class="login-btn__wrap">
+          <form id="findEmailForm" name="findEmailForm" action="/advisor/loginFindEmail" method="POST" autocomplete="off">
+          @csrf
+            <input type="hidden" name="userName" value="">
+            <input type="hidden" name="userPhone" value="">
+            <input type="hidden" name="DI" value="">
+            <input type="hidden" name="CI" value="">
+          </form>
           <a href="#" class="login-btn" onclick="javascript:phoneAuthSubmit()">휴대폰 인증</a>
           </div>
         </div>
@@ -48,16 +43,14 @@
 </body>
 </html>
 <script>
-
   function phoneAuthSubmit() {
         window.open("/auth", "auth_popup", "width=430, height=640, scrollbars=yes");
         var form1 = document.phoneAuth;
         form1.target = "auth_popup";
         form1.submit();
-  }
+    }
 
   function authSuccess() {
-    alert(1);
-    $("#findPasswordForm").submit();
+    $("#findEmailForm").submit();
   }
 </script>
