@@ -39,12 +39,6 @@ class Advisor extends Model
         return Advisor::where('email','=',$userEmail)->count();
     }
 
-    public static function findPassword($userPassword) {
-        return Advisor::select('advisorPK')
-                        ->where('password','=',$userPassword)
-                        ->get();
-    }
-
     public static function findUser($userEmail) {
         return Advisor::where('email','=',$userEmail)
             -> get();

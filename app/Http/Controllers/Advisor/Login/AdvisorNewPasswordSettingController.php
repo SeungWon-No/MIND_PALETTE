@@ -12,25 +12,22 @@ class AdvisorNewPasswordSettingController extends Controller
 {
     public function __invoke(Request $request)
     {
-        dd($request);
-        $newPassword = Hash::make($request['newPassword']);
-        $confirmNewPassword = Hash::make($request['confirmNewPassword']);
-        dd($newPassword."/".$confirmNewPassword);
+        $advisorPK = $request['advisorPK'];
+        $newPassword = $request['newPassword'];
 
-        if ($newPassword == $confirmNewPassword){
-            $getAdvisorPk = Advisor::findPassword($newPassword);
-            dd($getAdvisorPk);
-            try {
-                DB::beginTransaction();
+        $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
+        dd($getAdvisorInfo);
+        try {
+            DB::beginTransaction();
 
 
-                DB::commit();
-                
-            }catch(\Exception $e){
+            DB::commit();
+            
+        }catch(\Exception $e){
 
-            } 
+        } 
 
-        }
+        
         $advisor = new Advisor();
         $advisor->password = Hash::make($request['newPassword']);
         $advisor->password = Hash::make($request['confirmNewPassword']);
