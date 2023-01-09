@@ -15,10 +15,15 @@ class AdvisorNewPasswordSettingController extends Controller
     {
         $advisorPK = $request['advisorPK'];
         $newPassword = $request['newPassword'];
-
         $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK); // 상담사 정보 조회
         
-        dd($request);
+        
+        
+        
+        
+        $qq = Hash::make($request['newPassword']);
+        dd($qq);
+
         if($newPassword){
             dd('true');
         }else{
