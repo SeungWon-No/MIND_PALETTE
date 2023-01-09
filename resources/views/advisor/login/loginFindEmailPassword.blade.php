@@ -23,8 +23,6 @@
           <div class="login-btn__wrap">
           <form id="findEmailForm" name="findEmailForm" action="/advisor/loginFindEmail" method="POST" autocomplete="off">
           @csrf
-            <input type="hidden" name="userName" value="">
-            <input type="hidden" name="userPhone" value="">
             <input type="hidden" name="DI" value="">
             <input type="hidden" name="CI" value="">
           </form>
