@@ -24,7 +24,7 @@
               </div>
             </div>
 
-            <form id="joinForm" name="joinForm" action="/advisor/newPasswordSetting" method="POST" autocomplete="off">
+            <form id="joinForm" name="joinForm" action="/advisor/loginPasswordAuth" method="POST" autocomplete="off">
               @csrf
               <input type="hidden" name="userName" value="">
               <input type="hidden" name="userPhone" value="">

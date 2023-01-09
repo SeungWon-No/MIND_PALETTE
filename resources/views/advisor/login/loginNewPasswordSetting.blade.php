@@ -94,5 +94,22 @@
     }
   }
 
+  function submitForm() {
+
+    var validPasswordResult = validPasswordCheck(); // 비밀번호 체크
+    var validConfirmUserPasswordResult = validConfirmUserPasswordCheck(); // 비밀번호 확인 체크
+
+    if(validPasswordResult == false){
+      return alert('비밀번호를 확인해주세요.');
+
+    }else if(validConfirmUserPasswordResult == false ){
+      return alert('비밀번호가 일치하지 않습니다.');
+
+    }else{
+      $("#newPasswordSetting").submit();
+    }
+
+  }
+
   
 </script>
