@@ -19,7 +19,7 @@
               <div class="login-tab__desc">
                 고객님이 사용하신 이메일 아이디의 일부분입니다.
               </div>
-              <div class="login-tab__desc">$findEmail</div>
+              <div class="login-tab__desc">{{findEmail}}</div>
             </div>
             @elseif($findEmail && $withdrawal)
             <div class="login-tab__desc">
