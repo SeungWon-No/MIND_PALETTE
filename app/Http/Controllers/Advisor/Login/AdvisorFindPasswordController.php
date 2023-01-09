@@ -23,7 +23,8 @@ class AdvisorFindPasswordController extends Controller
         }
 
         return view("/advisor/login/loginNewPasswordSetting",[   // 상담사 메인 페이지 
-            "state" => $state
+            "state" => $state,
+            "advisorPK" => $getAdvisorInfo
         ]);
     }
 

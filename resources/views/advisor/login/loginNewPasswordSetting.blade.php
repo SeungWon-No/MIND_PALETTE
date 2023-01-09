@@ -1,5 +1,6 @@
 @php
 echo $state;
+echo $advisorPK;
 @endphp
 @include('advisor/common/loginForm/loginHeader')
 <body>
@@ -15,6 +16,7 @@ echo $state;
             @if($state == 'true')
             <form id="newPasswordSetting" name="newPasswordSetting" action="/advisor/newPasswordSetting" method="POST" autocomplete="off">
               @csrf
+              <input type="hidden" name="advisorPK" value="{{$advisorPK}}">
               <!-- input new password form -->
               <div class="login-input__wrap find-pwd">
                 <div class="login-input__cell">

@@ -12,6 +12,7 @@ class AdvisorNewPasswordSettingController extends Controller
 {
     public function __invoke(Request $request)
     {
+        dd($request);
         $newPassword = Hash::make($request['newPassword']);
         $confirmNewPassword = Hash::make($request['confirmNewPassword']);
         dd($newPassword."/".$confirmNewPassword);
