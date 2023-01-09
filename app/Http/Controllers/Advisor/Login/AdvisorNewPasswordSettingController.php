@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Advisor\Login;
 
 use App\Http\Controllers\Controller;
-use App\Models\Advisor;
 use App\Models\AdvisorAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Str;
 
-class AdvisorFindPasswordController extends Controller
+class AdvisorNewPasswordSettingController extends Controller
 {
     public function __invoke(Request $request)
     {
