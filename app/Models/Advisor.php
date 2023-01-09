@@ -81,5 +81,9 @@ class Advisor extends Model
 
     }
 
+    public static function updateNewPassword(){
+        
+    }
+
 
 }
