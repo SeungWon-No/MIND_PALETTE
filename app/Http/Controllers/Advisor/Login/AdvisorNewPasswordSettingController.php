@@ -16,7 +16,7 @@ class AdvisorNewPasswordSettingController extends Controller
         $advisorPK = $request['advisorPK'];
         $newPassword = $request['newPassword'];
         $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
-        Advisor::updateNewPassword($getAdvisorInfo['advisorPK']);
+        Advisor::updateNewPassword($getAdvisorInfo['advisorPK'], $newPassword);
         
     }
 
