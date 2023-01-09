@@ -31,7 +31,7 @@ class AdvisorFindEmailController extends Controller
         }  
         
         
-        return view("/advisor/login/loginFindEmail",[   // 상담사 메인 페이지 
+        return view("/advisor/login/loginFindEmail",[
             "findEmail" => $maskAdvisorEmail ?? '',
             "withdrawal" => $getAdvisorInfo['withdrawal'] ?? '',
         ]);
