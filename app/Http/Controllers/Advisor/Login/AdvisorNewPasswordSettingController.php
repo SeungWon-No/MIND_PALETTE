@@ -14,6 +14,7 @@ class AdvisorNewPasswordSettingController extends Controller
     {
         $newPassword = Hash::make($request['newPassword']);
         $confirmNewPassword = Hash::make($request['confirmNewPassword']);
+        dd($newPassword."/".$confirmNewPassword);
 
         if ($newPassword == $confirmNewPassword){
             $getAdvisorPk = Advisor::findPassword($newPassword);
