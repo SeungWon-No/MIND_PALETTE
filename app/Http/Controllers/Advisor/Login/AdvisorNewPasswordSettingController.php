@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Advisor\Login;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AdvisorFindPasswordController extends Controller
+class AdvisorNewPasswordSettingController extends Controller
 {
     public function __invoke(Request $request)
     {
