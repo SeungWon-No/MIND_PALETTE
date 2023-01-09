@@ -20,10 +20,10 @@ class AdvisorFindController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
         $nowDate = date("Y-m-d H:i:s");
         $di = Crypt::decryptString($request['DI']) ?? '';
         $ci = Crypt::decryptString($request['CI']) ?? '';
+        dd($di."/".$ci);
 
         $advisorAuth = new AdvisorAuth();
         $getFindAdvisorEmail = AdvisorAuth::findAdvisorEmail($di, $ci);
