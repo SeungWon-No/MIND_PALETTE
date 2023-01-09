@@ -23,7 +23,7 @@ class AdvisorFindController extends Controller
 
         $sliceAdvisorId = Str::before($getAdvisorInfo['email'], '@');
         $sliceAdvisorEmail = Str::after($getAdvisorInfo['email'], '@');
-        $maskAdvisorId = Str::mask($sliceAdvisorId, '*', -99, 3);
+        $maskAdvisorId = Str::mask($sliceAdvisorId, '*', 3);
         dd($sliceAdvisorId."/".$sliceAdvisorEmail."/".$maskAdvisorId);
         
         return view("/advisor/login/loginFindEmail",[   // 상담사 메인 페이지 
