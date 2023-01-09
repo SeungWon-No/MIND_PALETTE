@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Advisor\Login;
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,8 +19,8 @@ class AdvisorNewPasswordSettingController extends Controller
         $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
         
         
-        $test = Hash::make($newPassword);
-        if($test == $getAdvisorInfo['password']){
+        //$test = Hash::make($newPassword);
+        if($newPassword == Crypt::decryptString($getAdvisorInfo['password'])){
             dd('true');
         }else{
             dd('false');
