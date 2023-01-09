@@ -165,4 +165,19 @@ class Answer extends Model
         }
         return $returnValue;
     }
+
+
+    public static function findHTPImageRow($memberPK) {
+        $images = Answer::select("counselingPK", "answer")
+            ->where("memberPK",$memberPK)
+            ->whereNotNull('counselingPK')
+            ->where("questionsPK",[68])
+            ->get();
+
+        $returnValue = array();
+        foreach ($images as $image) {
+            $returnValue[$image->counselingPK] = $image->answer;
+        }
+        return $returnValue;
+    }
 }

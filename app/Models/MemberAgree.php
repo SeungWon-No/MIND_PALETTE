@@ -18,4 +18,9 @@ class MemberAgree extends Model
     protected $primaryKey = 'mbAgreePK';
     public $timestamps = false;
 
+    public static function updateAgree1($mbAgreePK, $value) {
+        MemberAgree::where("mbAgreePK",$mbAgreePK)
+            ->update(["notiAgree1" => $value]);
+    }
+
 }

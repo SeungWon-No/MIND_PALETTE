@@ -28,4 +28,15 @@ class Code extends Model
             ->where('parentsCodePK','=',-1)
             ->orderBy('codeOrder', 'ASC')->get();
     }
+
+    public static function findCodeType($codeType) {
+        $codeRow = Code::where("codeType",$codeType)
+            ->where('used','=',"Y")->get();
+
+        $value = array();
+        foreach ($codeRow as $code) {
+            $value[$code->codePK] = $code->codeName;
+        }
+        return $value;
+    }
 }

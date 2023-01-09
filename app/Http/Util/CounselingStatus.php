@@ -26,56 +26,67 @@ class CounselingStatus {
             "title" => "(우울)",
             "status" => "작성중",
             "class" => "gray",
+            "link" => "/depressionStep1/"
         ],
         "291" => [
             "title" => "(우울)",
             "status" => "작성중",
             "class" => "gray",
+            "link" => "/depressionStep2/"
         ],
         "292" => [
             "title" => "(우울)",
             "status" => "작성중",
             "class" => "gray",
+            "link" => "/depressionStep3/"
         ],
         "349" => [
             "title" => "(우울)",
             "status" => "상담 완료",
             "class" => "silver",
+            "link" => "/depressionResult/"
         ],
         "295" => [
             "title" => "(불안)",
             "status" => "작성중",
             "class" => "gray",
+            "link" => "/anxietyStep1/"
         ],
         "296" => [
             "title" => "(불안)",
             "status" => "작성중",
             "class" => "gray",
+            "link" => "/anxietyStep2/"
         ],
         "297" => [
             "title" => "(불안)",
             "status" => "작성중",
             "class" => "gray",
+            "link" => "/anxietyStep3/"
         ],
         "350" => [
             "title" => "(불안)",
             "status" => "상담 완료",
             "class" => "silver",
+            "link" => "/anxietyResult/"
         ],
         "298" => [
             "title" => "(자아존중감)",
             "status" => "작성중",
             "class" => "gray",
+            "link" => "/selfWorthStep1/"
         ],
         "299" => [
             "title" => "(자아존중감)",
             "status" => "작성중",
             "class" => "gray",
+            "link" => "/selfWorthStep2/"
         ],
         "351" => [
             "title" => "(자아존중감)",
             "status" => "상담 완료",
             "class" => "silver",
+            "link" => "/selfWorthResult/"
         ],
     ];
 }
