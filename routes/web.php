@@ -167,12 +167,11 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         return view('/advisor/login/loginFindEmailPassword');
     });
 
-    Route::post('/loginFindEmail', AdvisorFindEmailController::class); // 이메일 찾기
-
-    Route::get('/loginFindPassword', function () { // 패스워드 찾기 페이지
+    Route::get('/loginFindPassword', function () { // 패스워드 휴대폰 인증 페이지
         return view('/advisor/login/loginFindPassword');
     });
 
+    Route::post('/loginFindEmail', AdvisorFindEmailController::class); // 이메일 찾기
     Route::post('/newPasswordSetting', AdvisorNewPasswordSettingController::class); // 비밀번호 찾기
 
     Route::get("/logout", AdvisorLogoutController::class); // 로그아웃

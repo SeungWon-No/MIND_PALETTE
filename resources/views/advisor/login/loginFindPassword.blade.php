@@ -57,6 +57,7 @@
   }
 
   function authSuccess() {
+    alert(1);
     $("#findPasswordForm").submit();
   }
 </script>
