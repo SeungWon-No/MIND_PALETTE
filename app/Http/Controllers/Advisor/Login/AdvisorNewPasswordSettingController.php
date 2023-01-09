@@ -16,42 +16,8 @@ class AdvisorNewPasswordSettingController extends Controller
         $advisorPK = $request['advisorPK'];
         $newPassword = $request['newPassword'];
         $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
-        $advisorInfo = json_decode(json_encode($getAdvisorInfo), true);
-
-        $dd = [
-            'newPassword' => Crypt::decryptString($advisorInfo['password']),
-        ];
-        dd($dd);
+        Advisor::updateNewPassword($getAdvisorInfo['advisorPK']);
         
-        
-        
-        
-        $qq = Hash::make($request['newPassword']);
-        $tt = Crypt::decryptString($qq);
-        dd($tt);
-
-        if($newPassword){
-            dd('true');
-        }else{
-            dd('false');
-        }
-        if ($getAdvisorInfo) {
-            try {
-                DB::beginTransaction();
-
-                // DB::table('advisor')
-                // ->where('advisorPK', $getAdvisorInfo['advisorPK'])
-                // ->update(['votes' => 1]);
-
-
-    
-    
-                DB::commit();
-                
-            }catch(\Exception $e){
-    
-            } 
-        };
     }
 
 }
