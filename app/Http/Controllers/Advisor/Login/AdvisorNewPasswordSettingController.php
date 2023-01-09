@@ -15,8 +15,9 @@ class AdvisorNewPasswordSettingController extends Controller
     {
         $advisorPK = $request['advisorPK'];
         $newPassword = $request['newPassword'];
-        $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK); // 상담사 정보 조회
-        
+        $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
+        $getAdvisorInfo = json_decode(json_encode($getAdvisorInfo), true);
+        dd($getAdvisorInfo);
         
         
         
