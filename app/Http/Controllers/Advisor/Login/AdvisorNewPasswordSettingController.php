@@ -16,21 +16,20 @@ class AdvisorNewPasswordSettingController extends Controller
         $newPassword = $request['newPassword'];
 
         $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
-        dd($getAdvisorInfo);
-        try {
-            DB::beginTransaction();
+        dd($getAdvisorInfo['advisorPK']);
+        if ($getAdvisorInfo) {
+            try {
+                DB::beginTransaction();
 
 
-            DB::commit();
-            
-        }catch(\Exception $e){
-
-        } 
-
-        
-        $advisor = new Advisor();
-        $advisor->password = Hash::make($request['newPassword']);
-        $advisor->password = Hash::make($request['confirmNewPassword']);
+    
+    
+                DB::commit();
+                
+            }catch(\Exception $e){
+    
+            } 
+        };
     }
 
 }
