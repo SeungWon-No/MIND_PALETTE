@@ -24,7 +24,7 @@
               </div>
             </div>
 
-            <form id="findPasswordForm" name="findPasswordForm" action="/advisor/newPasswordSetting" method="POST" autocomplete="off">
+            <form id="joinForm" name="joinForm" action="/advisor/newPasswordSetting" method="POST" autocomplete="off">
               @csrf
               <!-- <input type="hidden" name="userName" value="">
               <input type="hidden" name="userPhone" value="">
@@ -58,6 +58,6 @@
 
   function authSuccess() {
     alert(1);
-    $("#findPasswordForm").submit();
+    $("#joinForm").submit();
   }
 </script>
