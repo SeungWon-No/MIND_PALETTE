@@ -13,7 +13,8 @@ class AdvisorAuth extends Model
 
 
     public static function findAdvisorEmail($di, $ci){
-        $findAdvisorEmail = AdvisorAuth::where('advisorCI','=', $ci)
+        $findAdvisorEmail = AdvisorAuth::select('advisorPK')
+                            ->where('advisorCI','=', $ci)
                             ->where('advisorDI', '=', $di)
                             ->get();
         return $findAdvisorEmail;
