@@ -20,6 +20,7 @@ class AdvisorFindController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         $nowDate = date("Y-m-d H:i:s");
 
         $advisor = new Advisor();
@@ -30,7 +31,6 @@ class AdvisorFindController extends Controller
 
         $advisorAuth = new AdvisorAuth();
         $getFindAdvisorEmail = AdvisorAuth::findAdvisorEmail($di, $ci);
-        dd($getFindAdvisorEmail);
 
 
         
