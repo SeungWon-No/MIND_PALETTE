@@ -22,10 +22,6 @@ class AdvisorFindController extends Controller
     {
         dd($request);
         $nowDate = date("Y-m-d H:i:s");
-
-        $advisor = new Advisor();
-        $advisor->advisorName = $request['userName'] ?? '';
-        $advisor->phone = $request['userPhone'] ?? '';
         $di = $request['DI'] ?? '';
         $ci = $request['CI'] ?? '';
 
