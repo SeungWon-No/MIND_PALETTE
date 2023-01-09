@@ -22,8 +22,8 @@ class AdvisorFindController extends Controller
     {
         dd($request);
         $nowDate = date("Y-m-d H:i:s");
-        $di = $request['DI'] ?? '';
-        $ci = $request['CI'] ?? '';
+        $di = Crypt::decryptString($request['DI']) ?? '';
+        $ci = Crypt::decryptString($request['CI']) ?? '';
 
         $advisorAuth = new AdvisorAuth();
         $getFindAdvisorEmail = AdvisorAuth::findAdvisorEmail($di, $ci);
