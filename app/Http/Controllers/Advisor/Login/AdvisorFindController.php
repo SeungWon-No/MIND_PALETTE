@@ -24,11 +24,10 @@ class AdvisorFindController extends Controller
         $di = Crypt::decryptString($request['DI']) ?? '';
         $ci = Crypt::decryptString($request['CI']) ?? '';
 
-        $advisorAuth = new AdvisorAuth();
+        //$advisorAuth = new AdvisorAuth();
         $getFindAdvisorEmail = AdvisorAuth::findAdvisorEmail($di, $ci);
-        dd($getFindAdvisorEmail[0]['advisorPK']);
-
-        
+        $getAdvisorInfo = Advisor::findAdvisorInfo($getFindAdvisorEmail[0]['advisorPK']);
+        dd($getAdvisorInfo); 
     }
 
     public function find(Request $request)
