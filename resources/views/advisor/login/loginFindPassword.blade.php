@@ -26,10 +26,10 @@
 
             <form id="findPasswordForm" name="findPasswordForm" action="/advisor/newPasswordSetting" method="POST" autocomplete="off">
               @csrf
-              <input type="hidden" name="userName" value="">
+              <!-- <input type="hidden" name="userName" value="">
               <input type="hidden" name="userPhone" value="">
               <input type="hidden" name="DI" value="">
-              <input type="hidden" name="CI" value="">
+              <input type="hidden" name="CI" value=""> -->
             </form>
           </div>
           <div class="login-btn__wrap">
