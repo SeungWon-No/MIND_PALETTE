@@ -1,3 +1,6 @@
+@php
+echo $state;
+@endphp
 @include('advisor/common/loginForm/loginHeader')
 <body>
   <div id="wrapper">
@@ -35,7 +38,7 @@
             @endif
           </div>
           <div class="login-btn__wrap">
-          <a href="#" class="login-btn" onclick="">휴대폰 인증</a>
+          <a href="#" class="login-btn" onclick="submitForm()">비밀번호 변경</a>
           </div>
         </div>
       </div>
