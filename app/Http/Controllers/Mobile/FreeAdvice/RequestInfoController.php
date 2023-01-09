@@ -67,7 +67,7 @@ class RequestInfoController extends Controller
                 "status" => "success",
                 "counselingTemplatePK" => $counselingTemplate->counselingTemplatePK
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return json_encode([
                 "status" => "fail",

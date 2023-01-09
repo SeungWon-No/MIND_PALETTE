@@ -12,7 +12,7 @@ class CounselingTemplate extends Model
     public $timestamps = false;
 
     public static function findFreeCounselingResult($userPK) {
-        return CounselingTemplate::select(DB::raw("'FREE' as type"),"counselorName","counselingStatus","updateDate")
+        return CounselingTemplate::select(DB::raw("'FREE' as type, counselingTemplatePK as PK"),"counselorName","counselingStatus","updateDate")
             ->where('memberPK','=',$userPK);
     }
 

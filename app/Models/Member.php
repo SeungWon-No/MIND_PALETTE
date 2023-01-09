@@ -29,6 +29,7 @@ class Member extends Model
     public static function findUser($userEmail) {
         return Member::where('email','=',$userEmail)
             -> where('joinType','=','site')
+            -> whereNull('withdrawal')
             -> get();
     }
 
@@ -62,5 +63,23 @@ class Member extends Model
     public static function updatePassword($email, $password) {
         Member::where('email',$email)
             ->update(['pw'=> $password]);
+    }
+
+    public static function updatePKPassword($memberPK, $password) {
+        Member::where('memberPK',$memberPK)
+            ->update(['pw'=> $password]);
+    }
+
+    public static function findNotiAgree($memberPK) {
+        return Member::select("memberAgree.mbAgreePK","notiAgree1")
+            ->join("memberAgree","member.mbAgreePK","memberAgree.mbAgreePK")
+            ->where("memberPK",$memberPK)
+            ->get()->first();
+    }
+
+    public static function withdrawal($memberPK){
+        $nowDate = date("Y-m-d H:i:s");
+        Member::where('memberPK',$memberPK)
+            ->update(['withdrawal'=> $nowDate]);
     }
 }

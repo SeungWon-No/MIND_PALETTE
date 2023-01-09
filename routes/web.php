@@ -30,7 +30,11 @@ use App\Http\Controllers\Mobile\Join\JoinController;
 use App\Http\Controllers\Mobile\Login\LoginController;
 use App\Http\Controllers\Mobile\Logout\LogoutController;
 use App\Http\Controllers\Mobile\MemberFind\IDFindController;
+use App\Http\Controllers\Mobile\Mypage\AppSettingController;
 use App\Http\Controllers\Mobile\Mypage\MyPageController;
+use App\Http\Controllers\Mobile\Mypage\PasswordChangeController;
+use App\Http\Controllers\Mobile\Mypage\PayListController;
+use App\Http\Controllers\Mobile\Mypage\WithdrawalController;
 use Illuminate\Support\Facades\Route;
 
 const CSS_VERSION = "3";
@@ -95,6 +99,13 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::resource("/requestAdvice", RequestAdviceController::class)->only([
         'index', 'store'
     ]);
+    Route::get("/MyPage/payList", PayListController::class);
+    Route::get("/MyPage/AppSetting", AppSettingController::class);
+    Route::get("/MyPage/withdrawal", WithdrawalController::class);
+    Route::get("/MyPage/passwordChange", PasswordChangeController::class);
+    Route::post("/MyPage/changeAgree", [AppSettingController::class,"changeAgree"]);
+    Route::post("/MyPage/withdrawalPrc", [WithdrawalController::class,"withdrawalPrc"]);
+    Route::post("/MyPage/passwordChangePrc", [PasswordChangeController::class,"passwordChangePrc"]);
     Route::resource("/mypage", MyPageController::class);
     Route::get("/logout", LogoutController::class);
 

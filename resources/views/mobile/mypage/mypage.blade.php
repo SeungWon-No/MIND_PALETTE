@@ -24,7 +24,7 @@
                 <div class="item-ui"><a href="/logout" class="btn-logout">로그아웃</a></div>
             </div>
             <div class="mypage-menu">
-                <a href="#" class="btn-mypage-menu">
+                <a href="/MyPage/passwordChange" class="btn-mypage-menu">
                     <div class="icon icon-password-gray"></div>
                     <div class="txt">비밀번호 변경</div>
                 </a>
@@ -32,7 +32,7 @@
                     <div class="icon icoh-phone-gray"></div>
                     <div class="txt">전화번호 변경</div>
                 </a>
-                <a href="#" class="btn-mypage-menu">
+                <a href="/MyPage/AppSetting" class="btn-mypage-menu">
                     <div class="icon icon-setting-gray"></div>
                     <div class="txt">앱 설정</div>
                 </a>
@@ -40,7 +40,7 @@
             <div class="gallery-list-wrap">
                 <div class="gallery-list-top">
                     <div class="gallery-list-title">우리 아이 상담 내역<em>{{$counselingCount}}</em></div>
-                    <a href="#" class="btn-more-ui">결제내역</a>
+                    <a href="/MyPage/payList" class="btn-more-ui">결제내역</a>
                 </div>
                 <div class="gallery-list-body">
                     <!-- 내용이 있을 때 -->
@@ -49,16 +49,21 @@
                     <div class="gallery-list-group">
                         @foreach($counselingRow as $counseling)
                             @php
+                                $link = "#";
                                 $payStatus = "matching";
                                 if ($counseling->type == "PAY") {
                                     if (in_array($counseling->counselingStatus, $payCounselingWritingCode)) {
                                         $payStatus = "write";
+                                        $link = "/".$statusCode[$counseling->counselingStatus]."/".$counseling->PK;
                                     } else if ($counseling->counselingStatus == "281") {
                                         $payStatus = "complete";
+                                        $link = "/HTPResult/".$counseling->PK;
                                     }
+                                } else {
+                                    $link = $counselingStatus[$counseling->counselingStatus]["link"].$counseling->PK;
                                 }
                             @endphp
-                            <a href="#" class="gallery-list-item">
+                            <a href="{{$link}}" class="gallery-list-item">
                                 <div class="item-thumb">
                                     <div class="thumb">
                                         @if($counseling->type == "FREE")
@@ -77,7 +82,7 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                <img src="../assets/images/@picture.png" alt=""/>
+                                                <img src="/storage/image/thumb/{{$HTPImageRow[$counseling->PK]}}" alt=""/>
                                             @endif
                                         @endif
                                     </div>

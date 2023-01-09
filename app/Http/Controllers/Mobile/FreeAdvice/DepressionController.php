@@ -240,7 +240,7 @@ class DepressionController extends Controller
                 "status" => "success",
                 "nextStep" => $nextStep
             ]);
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
 
             DB::rollBack();
             return json_encode([
