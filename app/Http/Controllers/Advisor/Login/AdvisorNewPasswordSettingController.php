@@ -22,7 +22,8 @@ class AdvisorNewPasswordSettingController extends Controller
         
         
         $qq = Hash::make($request['newPassword']);
-        dd($qq);
+        $tt = Crypt::decryptString($qq);
+        dd($tt);
 
         if($newPassword){
             dd('true');
