@@ -5,9 +5,8 @@
       <div class="login-box">
         <div class="login-inner">
           <div class="login-heading">
-            <p class="login-heading__desc">아동 심리케어 플랫폼</p>
             <div class="login-logo">
-              <img src="../advisorAssets/assets/images/login-logo.png" alt="" class="login-logo__img">
+            <img src="../advisorAssets/assets/images/login-logo.png" alt="" class="login-logo__img">
             </div>
           </div>
           <div class="login-tab__cont">
@@ -22,33 +21,54 @@
               </div>
 
               <!-- success case -->
-              <div class="login-tab__desc">
+              <!-- <div class="login-tab__desc">
                 고객님이 사용하신 이메일 아이디의 일부분입니다.
               </div>
-              <div class="login-tab__desc">rcpc190***@gmail.com</div>
+              <div class="login-tab__desc">rcpc190***@gmail.com</div> -->
 
               <!-- fail case -->
-              <div class="login-tab__desc">
+              <!-- <div class="login-tab__desc">
                 인증하신 전화번호로<br>등록 된 계정이 없습니다.
-              </div>
+              </div> -->
 
               <!-- withdrawal case  -->
-              <div class="login-tab__desc">
+              <!-- <div class="login-tab__desc">
                 인증하신 전화번호는 이미 탈퇴하신 고객입니다.<br>재가입을 원하시면 고객센터(0000-000)으로 연락주세요.
-              </div>
+              </div> -->
 
             </div>
           </div>
           <div class="login-btn__wrap">
-            <a href="#none" class="login-btn">휴대폰 인증</a>
+          <form id="joinForm" name="joinForm" action="/advisor/findIdPassword" method="POST" autocomplete="off">
+          @csrf
+            <input type="hidden" name="userName" value="">
+            <input type="hidden" name="userPhone" value="">
+            <input type="hidden" name="DI" value="">
+            <input type="hidden" name="CI" value="">
+          </form>
+          <a href="#none" class="login-btn" onclick="javascript:phoneAuthSubmit()">휴대폰 인증</a>
           </div>
         </div>
       </div>
     </div>
+    <form name="phoneAuth" action="/auth" method="post">
+        @csrf
+        <input type="hidden" name="CP_CD" maxlength="12" size="16" value="">
+        <input type="hidden" name="SITE_NAME" maxlength="20" size="24" value="마음팔레트">
+    </form>
   </div>
   <script src="../advisorAssets/assets/js/common.js?v={{JS_VERSION}}"></script>
 </body>
 </html>
 <script>
-  
+  function phoneAuthSubmit() {
+        window.open("/auth", "auth_popup", "width=430, height=640, scrollbars=yes");
+        var form1 = document.phoneAuth;
+        form1.target = "auth_popup";
+        form1.submit();
+    }
+
+  function authSuccess() {
+    
+  }
 </script>

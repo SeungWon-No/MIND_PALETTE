@@ -82,26 +82,6 @@
                 </p>
                 </div>
             </div>
-            <!-- <div class="form-group">
-                <div class="member-label">이름<em class="need">*</em></div>
-                <div class="form-group__item">
-                <div class="form-group__data">
-                    <input id="userName" name="userName" type="text" class="form-control name" placeholder="변경 불가하니 정확히 입력해주세요." 
-                    onkeyup="vaildUserNameCheck()" required>
-                </div>
-                <div id="valid-error-userName" class="join-alert__desc" style="display: none">* 이름을 입력해주세요.</div>
-                </div>
-            </div>
-            <div class="form-group join">
-                <div class="member-label">휴대폰 번호<em class="need">*</em></div>
-                <div class="form-group__item">
-                <div class="form-group__data">
-                    <input id="userPhoneNumber" name="userPhoneNumber" type="tel" class="form-control wd-239" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)" 
-                    onkeyup="vaildUserPhonNumberCheck()" required>
-                </div>
-                <div id="valid-error-userPhoneNumber" class="join-alert__desc" style="display: none">* 휴대폰 번호를 입력해주세요.</div>
-                </div>
-            </div> -->
             <div class="form-group join">
                 <div class="member-label">실명인증</div>
                 <p class="form-group-text pass">
@@ -180,8 +160,6 @@
     var validEmailDuplicationResult = emailDuplicationCheck('submit'); // 이메일 중복체크
     var validPasswordResult = validPasswordCheck(); // 비밀번호 체크
     var validConfirmUserPasswordResult = validConfirmUserPasswordCheck(); // 비밀번호 확인 체크
-    //var validUserNameResult = vaildUserNameCheck(); // 이름 체크
-    //var validUserPhonNumberResult = vaildUserPhonNumberCheck(); // 휴대폰 번호 체크
     var validServiceAgreeCheckboxResult = serviceAgreeCheck(); // 필수 동의 체크 여부
     var validPolicyAgreeCheckboxResult = policyAgreeCheck(); // 필수 동의 체크 여부
     
@@ -194,13 +172,6 @@
     }else if(validPasswordResult == false){
       return alert('비밀번호를 확인해주세요.');
 
-    // }else if(validUserNameResult == false){
-    //   return alert('이름을 확인해주세요.');
-
-    // }else if(validUserPhonNumberResult == false){
-    //   return alert('휴대폰 번호를 확인해주세요.');
-
-    // }
     }else if(validConfirmUserPasswordResult == false ){
       return alert('비밀번호가 일치하지 않습니다.');
 
@@ -320,49 +291,6 @@
     }
   }
 
-  // 이름 유효성 추가 
-  // function vaildUserNameCheck(){
-  //   var userName = $('#userName').val();
-  //   var regExp = /^[가-힣a-zA-Z]+$/; // 한글과 영문만 가능
-  //   var checkResult = regExp.test(userName);
-
-
-  //   if (userName == '') {
-  //     $('#valid-error-userName').attr("style", "display:''").html('* 이름을 입력해주세요.');
-  //     return false;
-
-  //   }else if(checkResult == false){
-  //     $('#valid-error-userName').attr("style", "display:''").html('* 한글과 영문 대소문자만 가능합니다.');
-  //     return false;
-
-  //   }else{
-  //     $('#valid-error-userName').attr("style", "display: none");
-  //     return true;
-  //   }
-
-  // }
-
-  // 휴대폰 번호 유효성 추가
-  // function vaildUserPhonNumberCheck(){
-  //   var userPhonNumber = $('#userPhoneNumber').val();
-  //   var regExp = /^[0-9]+$/; // 숫자만 가능
-  //   var checkResult = regExp.test(userPhonNumber);
-
-  //   if (userPhonNumber == '') {
-  //     $('#valid-error-userPhonNumber').attr("style", "display:''").html('* 휴대폰 번호를 입력해주세요.');
-  //     return false;
-      
-  //   }else if (checkResult == false || userPhonNumber.length > 11) {
-  //     $('#valid-error-userPhonNumber').attr("style", "display:''").html('* 휴대폰 번호를 정확히 입력해주세요.');
-  //     return false;
-
-  //   }else{
-  //     $('#valid-error-userPhonNumber').attr("style", "display: none");
-  //     return true;
-  //   }
-
-  // }
-
   //필수 서비스 이용약관 동의
   function serviceAgreeCheck(){
     var checkResult = $('[name=serviceAgree]').prop('checked');
@@ -384,10 +312,9 @@
         form1.submit();
     }
 
-    function authSuccess() {
-
-        
-    }
+  function authSuccess() {
+    
+  }
 
 </script>
 @include('advisor/common/end')
