@@ -17,7 +17,11 @@ class AdvisorNewPasswordSettingController extends Controller
         $newPassword = $request['newPassword'];
         $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
         $advisorInfo = json_decode(json_encode($getAdvisorInfo), true);
-        dd(Crypt::decryptString($advisorInfo['password']));
+
+        $dd = [
+            'newPassword' => Crypt::decryptString($advisorInfo['password']),
+        ];
+        dd($dd);
         
         
         
