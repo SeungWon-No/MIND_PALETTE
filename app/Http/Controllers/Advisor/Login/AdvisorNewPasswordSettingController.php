@@ -18,9 +18,7 @@ class AdvisorNewPasswordSettingController extends Controller
 
         $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK); // 상담사 정보 조회
         
-        
-        $test = Crypt::decryptString($getAdvisorInfo['password']);
-        dd($test);
+        dd($request);
         if($newPassword){
             dd('true');
         }else{
