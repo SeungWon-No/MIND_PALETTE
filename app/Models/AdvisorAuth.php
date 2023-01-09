@@ -16,5 +16,6 @@ class AdvisorAuth extends Model
         $findAdvisorEmail = AdvisorAuth::where('advisorCI','=', $ci)
                             ->where('advisorDI', '=', $di)
                             ->get();
+        return $findAdvisorEmail;
     }
 }

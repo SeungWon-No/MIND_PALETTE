@@ -46,7 +46,7 @@
             <input type="hidden" name="DI" value="">
             <input type="hidden" name="CI" value="">
           </form>
-          <a href="#none" class="login-btn" onclick="javascript:phoneAuthSubmit()">휴대폰 인증</a>
+          <a href="#" class="login-btn" onclick="javascript:phoneAuthSubmit()">휴대폰 인증</a>
           </div>
         </div>
       </div>
@@ -69,6 +69,6 @@
     }
 
   function authSuccess() {
-    
+    $("#joinForm").submit();
   }
 </script>
