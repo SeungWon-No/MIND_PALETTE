@@ -20,12 +20,11 @@ class AdvisorFindController extends Controller
 
         //$advisorAuth = new AdvisorAuth();
         $getFindAdvisorEmail = AdvisorAuth::findAdvisorEmail($di, $ci);
-        $getAdvisorEmail = Advisor::findAdvisorInfo($getFindAdvisorEmail[0]['advisorPK']);
-        $getAdvisorWithdrawalState = Advisor::findAdvisorInfo($getFindAdvisorEmail[0]['withdrawal']);
+        $getAdvisorInfo = Advisor::findAdvisorInfo($getFindAdvisorEmail[0]['advisorPK']);
 
         return view("/advisor/loginFindEmail",[   // 상담사 메인 페이지 
-            "findEmail" => $getAdvisorEmail['email'],
-            "withdrawal" => $getAdvisorWithdrawalState['withdrawal'],
+            "findEmail" => $getAdvisorInfo['email'],
+            "withdrawal" => $getAdvisorInfo['withdrawal'] ?? '',
         ]);
     }
 
