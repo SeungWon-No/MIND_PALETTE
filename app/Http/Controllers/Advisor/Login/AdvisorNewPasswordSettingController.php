@@ -20,7 +20,9 @@ class AdvisorNewPasswordSettingController extends Controller
         
         $test = Hash::make($newPassword);
         if($test == $getAdvisorInfo['password']){
-            dd('같음');
+            dd('true');
+        }else{
+            dd('false');
         }
         if ($getAdvisorInfo) {
             try {
