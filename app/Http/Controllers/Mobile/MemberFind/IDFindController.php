@@ -64,6 +64,8 @@ class IDFindController extends Controller
             return json_encode($result);
         }
 
+        $CI = Crypt::decryptString($CI);
+
         $member = Member::findAuthUserEmail($CI,$email);
         $result = [
             "status" => "fail",
@@ -76,5 +78,43 @@ class IDFindController extends Controller
         }
 
         return json_encode($result);
+    }
+
+    public function changeMemberPassword(Request $request) {
+
+        $pwChangeEmail = $request->pwChangeEmail ?? '';
+        $pwChangeEmailHash = $request->pwChangeEmailHash ?? '';
+        $userPassword = $request->userPassword ?? '';
+
+        if ($pwChangeEmail == "" || $pwChangeEmailHash == "" || $userPassword == "") {
+            $result = [
+                "status" => "error",
+                "message" => "필수 값이 존재하지 않습니다."
+            ];
+            return json_encode($result);
+        }
+
+        if (!Hash::check($pwChangeEmail, $pwChangeEmailHash)) {
+            $result = [
+                "status" => "error",
+                "message" => "인증 값이 다릅니다."
+            ];
+            return json_encode($result);
+        }
+
+        try {
+            Member::updatePassword($pwChangeEmail,Hash::make($userPassword));
+            $result = [
+                "status" => "success",
+            ];
+
+            return json_encode($result);
+        }catch (\Exception $e) {
+            $result = [
+                "status" => "error",
+                "message" => "패스워드 변경 실패입니다. 증상이 계속되면 관리자에게 문의해주세요"
+            ];
+            return json_encode($result);
+        }
     }
 }

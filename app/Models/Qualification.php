@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed|string $isDelete
  * @property mixed|string $qualification
  * @property mixed|string $createDate
- * @property mixed|string $isDelete
  */
 class Qualification extends Model
 {
@@ -29,5 +28,5 @@ class Qualification extends Model
     //     return EducationLevel::where('advisorPK','=',$advisorPK)
     //         -> all();
     // }
-    
+
 }

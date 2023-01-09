@@ -9,6 +9,7 @@ use App\Models\CounselingTemplateResult;
 use App\Models\Questions;
 use Cookie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class SelfWorthController extends Controller
@@ -89,8 +90,8 @@ class SelfWorthController extends Controller
                 break;
             case "selfWorthStep2" :
                 $nowStep = "step2";
-                $counselingStatus = ($request->isClose == "true") ? 299 : 300;
-                $nextStep = "/";
+                $counselingStatus = ($request->isClose == "true") ? 299 : 351;
+                $nextStep = "/selfWorthResult/".$counselingTemplatePK;
                 break;
         }
 
@@ -130,10 +131,9 @@ class SelfWorthController extends Controller
 
             $counselingTemplate = \App\Models\CounselingTemplate::find($counselingTemplatePK);
 
-            if ($request->step == "selfWorthStep2" && $request->isClose == "false") {
-
-                $scoreResult = Answer::sumAnswerScore($counselingTemplatePK);
-                $updateAnswer = Answer::findAnswer($memberPK,$freeCode,59,$counselingTemplatePK);
+            if ( $counselingStatus == 351) {
+                $scoreResult = Answer::sumCounselingTemplateAnswerType($counselingTemplatePK,289);
+                $updateAnswer = Answer::findAnswer($memberPK,$freeCode,131,$counselingTemplatePK);
                 if ( $updateAnswer ) {
                     $updateValue = [
                         "answer" => $scoreResult->sumScore,
@@ -142,7 +142,7 @@ class SelfWorthController extends Controller
                     Answer::updateAnswer($updateAnswer->answerPK,$updateValue);
                 } else {
                     $answer = new Answer;
-                    $answer->questionsPK = 59;
+                    $answer->questionsPK = 131;
                     $answer->counselingTemplatePK = $counselingTemplatePK;
                     $answer->answerType = 294;
                     if ( $memberPK != "") {
@@ -156,7 +156,8 @@ class SelfWorthController extends Controller
                     $answer->save();
                 }
 
-                $resultScore = CounselingTemplateResult::findResultScore($scoreResult->sumScore);
+                $resultScore = CounselingTemplateResult::findResultScore(351,$scoreResult->sumScore);
+
                 if ($resultScore) {
                     $counselingTemplate->counselingTemplateResultPK = $resultScore->counselingTemplateResultPK;
                 }
@@ -178,6 +179,39 @@ class SelfWorthController extends Controller
                 "message" => "무료 상담 오류입니다. 증상이 계속되면 관리자에게 문의해주세요"
             ]);
         }
+    }
+
+
+
+    public function selfWorthResult(Request $request, $counselingTemplatePK) {
+
+        $counselingTemplate = \App\Models\CounselingTemplate::findCounselingTemplateAnswer($counselingTemplatePK,131);
+        $result = CounselingTemplateResult::find($counselingTemplate->counselingTemplateResultPK);
+
+
+        $colorClass = ["red","orange","green"];
+        $freeInfoData = [
+            "title" => "우리 아이 자아존중감 검사 결과",
+            "name" => Crypt::decryptString($counselingTemplate->counselorName),
+            "code" => $counselingTemplate->counselingTemplateCode,
+            "createDate" => $counselingTemplate->createDate,
+            "levelClass" => "three", //
+            "levelIcon" => ($result->resultScore+1),
+            "level" => $result->resultScore,
+            "label" => "자아존중감", //우울, 불안, 자아존중감,
+            "levelWidth" => ($result->resultScore+1)*33.3,
+            "iconType" => "3",
+            "score" => $counselingTemplate->answer,
+            "statusText" => $result->counselingTitle,
+            "resultText" => $result->counselingResult,
+            "isLogin" => $request->session()->has("login"),
+            "infoText" => "※채점 방식 : 일부 역채점 있음"
+        ];
+
+        return view("/mobile/freeAdvice/result",[
+            "freeInfoData" =>  $freeInfoData,
+            "colorClass" => $colorClass
+        ]);
     }
 
 

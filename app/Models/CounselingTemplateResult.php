@@ -10,8 +10,9 @@ class CounselingTemplateResult extends Model
     protected $primaryKey = 'counselingTemplateResultPK';
     public $timestamps = false;
 
-    public static function findResultScore($resultScore) {
+    public static function findResultScore($type, $resultScore) {
         return CounselingTemplateResult::select("counselingTemplateResultPK")
+            ->where('templateType','=',$type)
             ->where('minScore','<=',$resultScore)
             ->where('maxScore','>=',$resultScore)->get()->first();
     }

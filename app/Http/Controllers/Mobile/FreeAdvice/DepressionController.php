@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Mobile\FreeAdvice;
 use App\Http\Controllers\Controller;
 use App\Http\Util\CounselingTemplate;
 use App\Models\Answer;
+use App\Models\CounselingTemplateResult;
 use App\Models\Questions;
 use Cookie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class DepressionController extends Controller
@@ -94,6 +96,36 @@ class DepressionController extends Controller
         ]);
     }
 
+    public function depressionResult(Request $request, $counselingTemplatePK) {
+
+        $counselingTemplate = \App\Models\CounselingTemplate::findCounselingTemplateAnswer($counselingTemplatePK,129);
+        $result = CounselingTemplateResult::find($counselingTemplate->counselingTemplateResultPK);
+
+        $colorClass = ["green","orange","orange","red"];
+        $freeInfoData = [
+            "title" => "우리 아이 우울 검사 결과",
+            "name" => Crypt::decryptString($counselingTemplate->counselorName),
+            "code" => $counselingTemplate->counselingTemplateCode,
+            "createDate" => $counselingTemplate->createDate,
+            "levelClass" => "", //three
+            "levelIcon" => ($result->resultScore+1),
+            "level" => $result->resultScore,
+            "label" => "우울", //우울, 불안, 자아존중감,
+            "levelWidth" => ($result->resultScore+1)*25,
+            "iconType" => "1",
+            "score" => $counselingTemplate->answer,
+            "statusText" => $result->counselingTitle,
+            "resultText" => $result->counselingResult,
+            "isLogin" => $request->session()->has("login"),
+            "infoText" => "※채점 방식 : 역채점 없음"
+        ];
+
+        return view("/mobile/freeAdvice/result",[
+            "freeInfoData" =>  $freeInfoData,
+            "colorClass" => $colorClass
+        ]);
+    }
+
 
     public function create(Request $request, $counselingTemplatePK)
     {
@@ -124,8 +156,8 @@ class DepressionController extends Controller
                 break;
             case "depressionStep3" :
                 $nowStep = "step3";
-                $counselingStatus = ($request->isClose == "true") ? 292 : 295;
-                $nextStep = "/anxietyStep1/".$counselingTemplatePK;
+                $counselingStatus = ($request->isClose == "true") ? 292 : 349;
+                $nextStep = "/depressionResult/".$counselingTemplatePK;
                 break;
         }
 
@@ -166,6 +198,39 @@ class DepressionController extends Controller
             }
 
             $counselingTemplate = \App\Models\CounselingTemplate::find($counselingTemplatePK);
+
+            if ( $counselingStatus == 349) {
+                $scoreResult = Answer::sumCounselingTemplateAnswerType($counselingTemplatePK,287);
+                $updateAnswer = Answer::findAnswer($memberPK,$freeCode,129,$counselingTemplatePK);
+                if ( $updateAnswer ) {
+                    $updateValue = [
+                        "answer" => $scoreResult->sumScore,
+                        "updateDate" => $nowDate
+                    ];
+                    Answer::updateAnswer($updateAnswer->answerPK,$updateValue);
+                } else {
+                    $answer = new Answer;
+                    $answer->questionsPK = 129;
+                    $answer->counselingTemplatePK = $counselingTemplatePK;
+                    $answer->answerType = 294;
+                    if ( $memberPK != "") {
+                        $answer->memberPK = $memberPK;
+                    } else if ($freeCode != "") {
+                        $answer->tempCounselingCode = $freeCode;
+                    }
+                    $answer->answer = $scoreResult->sumScore;
+                    $answer->updateDate = $nowDate;
+                    $answer->createDate = $nowDate;
+                    $answer->save();
+                }
+
+                $resultScore = CounselingTemplateResult::findResultScore(349,$scoreResult->sumScore);
+
+                if ($resultScore) {
+                    $counselingTemplate->counselingTemplateResultPK = $resultScore->counselingTemplateResultPK;
+                }
+            }
+
             $counselingTemplate->counselingStatus = $counselingStatus;
             $counselingTemplate->updateDate = $nowDate;
             $counselingTemplate->save();

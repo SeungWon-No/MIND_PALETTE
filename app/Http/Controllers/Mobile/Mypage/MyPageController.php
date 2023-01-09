@@ -3,13 +3,25 @@
 namespace App\Http\Controllers\Mobile\Mypage;
 
 use App\Http\Controllers\Controller;
+use App\Http\Util\CounselingStatus;
+use App\Models\Counseling;
 use Illuminate\Http\Request;
 
 class MyPageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view("mobile/mypage/mypage");
+        $memberPK = $request->session()->get('login')[0]["memberPK"];
+        $counselingRow = Counseling::findAllCounseling($memberPK);
+        $counselingCount = $counselingRow->count();
+
+        return view("mobile/mypage/mypage",[
+            "counselingRow" => $counselingRow,
+            "counselingCount" => $counselingCount,
+            "counselingStatus" => CounselingStatus::$counselingStatus,
+            "payCounselingWritingCode" => CounselingStatus::$payCounselingWritingCode,
+            "payCounselingStatus" => CounselingStatus::$payCounselingStatus,
+        ]);
     }
 
     /**

@@ -46,6 +46,7 @@ Route::middleware(['autoLogin'])->group(function () {
     });
     Route::post("/memberAuthFind",[IDFindController::class,"memberAuthFind"]);
     Route::post("/memberAuthCheck",[IDFindController::class,"memberAuthCheck"]);
+    Route::post("/changeMemberPassword",[IDFindController::class,"changeMemberPassword"]);
     Route::resource("/login",LoginController::class)->only([
         'index', 'store'
     ]);
@@ -125,15 +126,18 @@ Route::middleware(['autoLogin','freeAdviceVerify'])->group(function () {
     Route::get('/depressionStep1/{counselingTemplatePK}',[DepressionController::class,"depressionStep1"]);
     Route::get('/depressionStep2/{counselingTemplatePK}',[DepressionController::class,"depressionStep2"]);
     Route::get('/depressionStep3/{counselingTemplatePK}',[DepressionController::class,"depressionStep3"]);
+    Route::get('/depressionResult/{counselingTemplatePK}',[DepressionController::class,"depressionResult"]);
     Route::post('/depression/{counselingTemplatePK}',[DepressionController::class,"create"]);
 
     Route::get('/anxietyStep1/{counselingTemplatePK}',[AnxietyController::class,"anxietyStep1"]);
     Route::get('/anxietyStep2/{counselingTemplatePK}',[AnxietyController::class,"anxietyStep2"]);
     Route::get('/anxietyStep3/{counselingTemplatePK}',[AnxietyController::class,"anxietyStep3"]);
+    Route::get('/anxietyResult/{counselingTemplatePK}',[AnxietyController::class,"anxietyResult"]);
     Route::post('/anxiety/{counselingTemplatePK}',[AnxietyController::class,"create"]);
 
     Route::get('/selfWorthStep1/{counselingTemplatePK}',[SelfWorthController::class,"selfWorthStep1"]);
     Route::get('/selfWorthStep2/{counselingTemplatePK}',[SelfWorthController::class,"selfWorthStep2"]);
+    Route::get('/selfWorthResult/{counselingTemplatePK}',[SelfWorthController::class,"selfWorthResult"]);
     Route::post('/selfWorth/{counselingTemplatePK}',[SelfWorthController::class,"create"]);
 });
 
