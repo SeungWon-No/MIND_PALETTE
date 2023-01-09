@@ -21,7 +21,7 @@
             </div>
           </div>
           <div class="login-btn__wrap">
-          <form id="joinForm" name="joinForm" action="/advisor/loginFindEmail" method="POST" autocomplete="off">
+          <form id="findEmailForm" name="findEmailForm" action="/advisor/loginFindEmail" method="POST" autocomplete="off">
           @csrf
             <input type="hidden" name="userName" value="">
             <input type="hidden" name="userPhone" value="">
@@ -51,6 +51,6 @@
     }
 
   function authSuccess() {
-    $("#joinForm").submit();
+    $("#findEmailForm").submit();
   }
 </script>

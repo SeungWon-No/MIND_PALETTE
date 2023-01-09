@@ -8,9 +8,8 @@ use App\Models\AdvisorAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class AdvisorFindController extends Controller
+class AdvisorFindEmailController extends Controller
 {
     public function __invoke(Request $request)
     {

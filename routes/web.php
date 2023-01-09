@@ -5,7 +5,8 @@ use App\Http\Controllers\Advisor\Join\AdvisorEducationController;
 use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
 use App\Http\Controllers\Advisor\Join\VerifyEmailDuplicationController;
 use App\Http\Controllers\Advisor\Login\AdvisorLoginController;
-use App\Http\Controllers\Advisor\Login\AdvisorFindController;
+use App\Http\Controllers\Advisor\Login\AdvisorFindEmailController;
+use App\Http\Controllers\Advisor\Login\AdvisorFindPasswordController;
 use App\Http\Controllers\Advisor\Logout\AdvisorLogoutController;
 use App\Http\Controllers\Advisor\Notice\AdvisorNoticeController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingListController;
@@ -166,11 +167,13 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         return view('/advisor/login/loginFindEmailPassword');
     });
 
-    Route::post('/loginFindEmail', AdvisorFindController::class); 
+    Route::post('/loginFindEmail', AdvisorFindEmailController::class); // 이메일 찾기
 
-    Route::get('/loginFindPassword', function () { // 비밀번호 찾기
+    Route::get('/loginFindPassword', function () { // 패스워드 찾기 페이지
         return view('/advisor/login/loginFindPassword');
     });
+
+    Route::post('/loginFindPassword', AdvisorFindPasswordController::class); // 비밀번호 찾기
 
     Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
