@@ -27,7 +27,7 @@ class AdvisorFindController extends Controller
         //$advisorAuth = new AdvisorAuth();
         $getFindAdvisorEmail = AdvisorAuth::findAdvisorEmail($di, $ci);
         $getAdvisorInfo = Advisor::findAdvisorInfo($getFindAdvisorEmail[0]['advisorPK']);
-        dd($getAdvisorInfo); 
+        dd($getAdvisorInfo['email']); 
     }
 
     public function find(Request $request)
