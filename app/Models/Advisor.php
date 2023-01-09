@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @property mixed $advisorPK
@@ -82,8 +83,8 @@ class Advisor extends Model
     }
 
     public static function updateNewPassword($advisorPK, $newPassword){
-        dd($advisorPK."|".$newPassword);
-        return '';
+        $cryptNewPassword = Hash::make($newPassword);
+        Advisor::where('advisorPK', $advisorPK)->update(['password'=> $cryptNewPassword]);
     }
 
 
