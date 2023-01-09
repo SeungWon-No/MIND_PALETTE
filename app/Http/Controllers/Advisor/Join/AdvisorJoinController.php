@@ -37,7 +37,7 @@ class AdvisorJoinController extends Controller{
             $advisor->email = $request["userEmail"] ?? '';
             $advisor->password = Hash::make($request['userPassword']);
             $advisor->advisorName = $request['userName'] ?? '';
-            $advisor->phone = $request['userPhoneNumber'] ?? '';
+            $advisor->phone = $request['userPhone'] ?? '';
             $di = Crypt::decryptString($request['DI']) ?? '';
             $ci = Crypt::decryptString($request['CI']) ?? '';
             $advisor->mbAgreePK = $memberAgree->mbAgreePK;
