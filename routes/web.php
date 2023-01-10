@@ -38,8 +38,8 @@ use App\Http\Controllers\Mobile\Mypage\PayListController;
 use App\Http\Controllers\Mobile\Mypage\WithdrawalController;
 use Illuminate\Support\Facades\Route;
 
-const CSS_VERSION = "3";
-const JS_VERSION = "3";
+const CSS_VERSION = "4";
+const JS_VERSION = "4";
 
 Route::middleware(['autoLogin'])->group(function () {
     Route::get('/', IndexController::class);
@@ -165,11 +165,12 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
         Route::resource('/join', AdvisorJoinController::class)->only(['index', 'store', 'show']); // 상담사 회원가입
 
+        Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]);
+
         Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
 
         Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 추가 정보입력
 
-        Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]);
 
         Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]); // 파일 업로드
 

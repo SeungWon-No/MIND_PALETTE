@@ -6,7 +6,7 @@
         <div class="login-inner">
           <div class="login-heading">
             <div class="login-logo">
-            <img src="../advisorAssets/assets/images/login-logo.png" alt="" class="login-logo__img">
+            <a href="/advisor/"><img src="../advisorAssets/assets/images/login-logo.png" alt="" class="login-logo__img"></a>
             </div>
           </div>
           <div class="login-tab__cont">
