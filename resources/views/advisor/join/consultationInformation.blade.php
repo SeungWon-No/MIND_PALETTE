@@ -92,8 +92,7 @@
                       <label id="table-file__label" class="table-file__label">
                         <input id="education" type="file" class="table-file attachedFilePath" data-index="1">
                         <input id="education-attachedFilePath1" name="education-attachedFilePath1" type="hidden">
-                        <div id="file_name_education" style="display: '';">첨부하기</div>
-                        <span id="table-file__name_education" class="table-file__name" style="display: none;"></span>
+                        첨부하기
                       </label>
                     </td>
                   </tr>
@@ -127,8 +126,7 @@
                       <label id="" class="table-file__label">
                         <input id="qualification" type="file" class="table-file attachedFilePath" data-index="1">
                         <input id="qualification-attachedFilePath1" name="qualification-attachedFilePath1" type="hidden">
-                        <div id="file_name_qualification" style="display: '';">첨부하기</div>
-                        <span id="table-file__name_qualification" class="table-file__name" style="display: none;"></span>
+                        첨부하기
                       </label>
                     </td>
                   </tr>
@@ -200,8 +198,7 @@
                       <label class="table-file__label">
                       <input id="career" type="file" class="table-file attachedFilePath" data-index="1">
                         <input id="career-attachedFilePath1" name="career-attachedFilePath1" type="hidden">
-                        <div id="file_name_career" style="display: '';">첨부하기</div>
-                        <span id="table-file__name_career" class="table-file__name" style="display: none;"></span>
+                        첨부하기
                       </label>
                     </td>
                   </tr>
@@ -524,13 +521,8 @@
             success: function(json){
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
-                  var filePath = $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
-                  if (!filePath == '') {
-                    var fileName = document.getElementById(type).files[0].name; // 첨부파일명
-                    $("#file_name_"+ type).attr("style", "display:none");
-                    $("#table-file__name_"+ type).attr("style", "display:''").html(fileName);
-                  }
-
+                  $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
+                  
                 } else {
                     console.log(data.message);
                 }

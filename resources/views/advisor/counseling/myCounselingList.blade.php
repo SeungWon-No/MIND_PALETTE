@@ -1,57 +1,55 @@
-@php
-print_r($counselingList);
-@endphp
 @include('advisor/common/header')
-<div id="container">
+    <div id="container">
       <div class="column-wrapper">
         <div class="column-left">
-          <div class="counseling-wrap">
-            <div class="counseling-fillter__tab">
-              <button type="button" class="counseling-filter__btn active" style="background:var(--point-green-color)">
-                <span class="sun-icon"></span>
-                <div class="filter__btn-tit">인천시 아동<br> 마음정신건강 지수 </div>
-                <div class="counseling-status">
-                  <span class="counseling-status__num">92</span>
-                  <span class="counseling-status__unit">%</span>
-                </div>
-              </button>
-              <button type="button" class="counseling-filter__btn active" style="background:var(--point-blue-color)">
-                <div class="filter__btn-tit">상담대기</div>
-                <div class="counseling-status">
-                  <span class="counseling-status__num">{{$waitingCount}}</span>
-                  <span class="counseling-status__unit">건</span>
-                </div>
-              </button>
-              <button type="button" class="counseling-filter__btn active" style="background:var(--primary-color)">
-                <div class="filter__btn-tit">상담완료</div>
-                <div class="counseling-status">
-                  <span class="counseling-status__num">{{$completeCount}}</span>
-                  <span class="counseling-status__unit">건</span>
-                </div>
-              </button>
-              <button type="button" class="counseling-filter__btn active" style="background:var(--point-red-color)">
-                <div class="filter__btn-tit">주의 / 위험</div>
-                <div class="counseling-status">
-                  <span class="counseling-status__num">2</span>
-                  <span class="counseling-status__unit">건</span>
-                </div>
-              </button>
-              <button type="button" class="counseling-filter__btn active" style="background:var(--font-grray-color)">
-                <div class="filter__btn-tit">상담불가</div>
-                <div class="counseling-status">
-                  <span class="counseling-status__num">1</span>
-                  <span class="counseling-status__unit">건</span>
-                </div>
-              </button>
-            </div>
-          </div>
           <div class="counseling-cont">
-            <!-- notice on / off -->
-            <div class="counseling-notice">
-              <a href="#none" class="counseling-notice__link"><span class="icon notice-alarm-icon"></span>[공지사항] 상담중 처리에 대한 안내문 공지.</a>
+            <div class="counseling-tab__wrap">
+              <a href="#" class="counseling-tab__btn active">전체</a>
+              <a href="#" class="counseling-tab__btn">상담대기</a>
+              <a href="#" class="counseling-tab__btn">상담완료</a>
+              <a href="#" class="counseling-tab__btn">주의/위험</a>
+              <a href="#" class="counseling-tab__btn">상담불가</a>
             </div>
-            <div class="cont-heading">
-              <h3 class="cont-heading__tit">대기중인 그림상담</h3>
+            <div class="counseling-search__wrap">
+              <div class="counseling-search__left">
+                <div class="select-box">
+                  <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
+                  <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
+                  <ul class="select-option__list">
+                    <li class="select-option">아이이름</li>
+                    <li class="select-option">상담코드</li>
+                  </ul>                      
+                </div>
+                <div class="counseling-search__group">
+                  <input type="text" class="counseling-search__form" placeholder="검색 입력">
+                </div>
+              </div>
+            </div>
+            <div class="counseling-list__heading">
+              <!-- 탭에 따라 문구변경 
+                전체-> 전체내역
+                상담대기-> 상담대기 내역
+                상담완료->상담완료 내역
+                주의/위험->주의/위험 내역
+                상담불가-> 상담불가 내역 
+              -->
+              <h3 class="counseling-list__tit">전체내역</h3>
+              <div class="counseling-sort__wrap">
+                <div class="counseling-sort__btns">
+                  <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
+                  <a href="#" class="counseling-sort active">전체</a>
+                  <a href="#" class="counseling-sort">12월</a>
+                  <a href="#" class="counseling-sort">11월</a>
+                  <a href="#" class="counseling-sort">10월</a>
+                </div>
+                <div class="counseling-sort__datepicker">
+                  <input type="text" id="sdate" autocomplete="off">
+                  <span class="datepicker-unit">~</span>
+                  <input type="text" id="edate" autocomplete="off">
+
+                  <button type="button" class="datepicker-apply__btn">조회<span class="icon search-apply-icon"></span></button>
+                </div>
+              </div>
             </div>
             <div class="counseling-list__wrap">
               <ul class="counseling-list">
@@ -82,48 +80,13 @@ print_r($counselingList);
                 @endforeach
               </ul>
               <div class="paging-box">
-                @foreach ($counselingList['links'] as $link)
-                  <a href="{{ $link['url'] }}" class="paging-num active">{{ $link['label'] }}</a>
-                @endforeach
+                <a href="#none" class="paging-prev"><span class="icon pagin-perv-icon"></span></a>
+                <a href="#none" class="paging-num active">1</a>
+                <a href="#none" class="paging-num">2</a>
+                <a href="#none" class="paging-num">3</a>
+                <a href="#none" class="paging-next"><span class="icon pagin-next-icon"></span></a>
               </div>
             </div>
-          </div>
-          <div class="expert-cont">
-            <div class="cont-heading">
-              <h3 class="cont-heading__tit">상담사 리스트</h3>
-              <a href="#none" class="cont-heading__link">상담사 더보기 <span class="icon link-more-icon"></span></a>
-            </div>
-            <div class="expert-list">
-            @foreach ($advisorList['data'] as $list)
-              <div class="expert-item">
-                <div class="expert-item__head">
-                  <div class="expert-profile__photo">
-                    <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="expert-profile__img">
-                  </div>
-                  <div class="expert-profile">
-                    <div class="expert-name">{{$list['advisorName']}}</div>
-                    <div class="expert-star__review">
-                      <span class="icon star-review-icon"></span>
-                      <div class="star-review__score">4.0</div>
-                      <div class="star-review__unit">/ 5</div>
-                    </div>
-                    <div class="expert-exp">
-                      팔레트 상담 <span class="expert-exp__num">1242</span>회 진행
-                    </div>
-                  </div>
-                </div>
-                <div class="expert-item__body">
-                  <h5 class="expert-introduce">자기소개</h5>
-                  <p class="expert-introduce__desc">
-                    {{$list['briefIntroduction']}}
-                  </p>
-                </div>
-              </div>
-            @endforeach
-            </div>
-            <p class="notice-data">
-              <span class="icon notice-icon"></span>22년 11월 28일 14시 22분 기준 정보입니다.
-            </p>
           </div>
         </div>
         <div class="column-right">
@@ -220,7 +183,16 @@ print_r($counselingList);
                 <h4 class="aside__heading__tit">서비스에 대한 만족도 평가</h4>
               </div>
               <div class="service-eval__wrap">
-              <svg class="service-eval__svg" width="180" height="320" xmlns="http://www.w3.org/2000/svg">
+                <!-- 22.12.30 수정 -->
+                <svg class="service-eval__svg" width="180" height="320" xmlns="http://www.w3.org/2000/svg">
+                  <!-- 
+                    점수가 90%이면 
+                    <g class="arcCircle">의 offset-distance는 90%
+                    <path class="arcGraphValue">의 stroke-dashoffset는 10%
+                    점수가 10%이면
+                    <g class="arcCircle">의 offset-distance는 10%
+                    <path class="arcGraphValue">의 stroke-dashoffset는 90%
+                  -->
                   <path class="arcGraph" stroke-linecap="round" d="M 10,90 A 1 1, 0, 0 1, 170 90"></path>
                   <path class="arcGraphValue" stroke-linecap="round" d="M 10,90 A 1 1, 0, 0 1, 170 90"></path>
                   <g class="arcCircle">
@@ -235,8 +207,10 @@ print_r($counselingList);
                   </div>
                   <div class="service-eval__desc">5점 만점 기준</div>
                 </div>
+                <!--// 22.12.30 수정 -->
               </div>
             </div>
+          <!--// 22.12.29 수정 -->
           </div>
           <div class="aside__link-banners">
             <a href="#" class="aside__link-banner aside__link-banner--top">
@@ -250,4 +224,52 @@ print_r($counselingList);
       </div>
     </div>
 @include('advisor/common/footer')
-@include('advisor/common/end')
+  </div>
+  <script src="../advisorAssets/assets/js/common.js"></script>
+
+  <!-- datepicker-->
+  <script src="../advisorAssets/assets/js/jquery-ui.min.js"></script>
+  <script>
+    
+    $.datepicker.regional['ko'] = {
+        closeText: '닫기',
+        prevText: '이전달',
+        nextText: '다음달',
+        currentText: '오늘',
+        monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)','7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        dayNames: ['일','월','화','수','목','금','토'],
+        dayNamesShort: ['일','월','화','수','목','금','토'],
+        dayNamesMin: ['일','월','화','수','목','금','토'],
+        weekHeader: 'Wk',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 0,
+        isRTL: false,
+        showMonthAfterYear: true,
+        yearSuffix: '',
+        showOn: 'both',
+        buttonText: "달력",
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        yearRange: 'c-99:c+99',
+        buttonImage: "../advisorAssets/assets/images/icon/datepicker-icon.png",
+        buttonImageOnly: true,
+    };
+    $.datepicker.setDefaults($.datepicker.regional['ko']);
+
+    $('#sdate').datepicker();
+    $('#sdate').datepicker("option", "maxDate", $("#edate").val());
+    $('#sdate').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#edate").datepicker( "option", "minDate", selectedDate );
+    });
+
+    $('#edate').datepicker();
+    $('#edate').datepicker("option", "minDate", $("#sdate").val());
+    $('#edate').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#sdate").datepicker( "option", "maxDate", selectedDate );
+    });
+
+  </script>
+</body>
+</html>

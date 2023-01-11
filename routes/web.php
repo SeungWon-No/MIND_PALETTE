@@ -11,6 +11,7 @@ use App\Http\Controllers\Advisor\Login\AdvisorNewPasswordSettingController;
 use App\Http\Controllers\Advisor\Logout\AdvisorLogoutController;
 use App\Http\Controllers\Advisor\Notice\AdvisorNoticeController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingListController;
+use App\Http\Controllers\Advisor\Counseling\AdvisorMyCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingDetailController;
 
 use App\Http\Controllers\Common\FileUploadController;
@@ -194,14 +195,11 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         return view('/advisor/login/loginFail');
     });
 
-    Route::get("/counselingList", [AdvisorCounselingListController::class, "index"]); // 상담리스트
+    Route::resource("/counselingList", AdvisorCounselingListController::class); // 상담리스트
 
-    // Route::get('/myCounselingList', function () { // 나의 상담리스트
-    //     return view('/advisor/navigation/myCounselingList');
-    // });
+    Route::get("/myCounselingList", [AdvisorMyCounselingListController::class, "index"]); // 상담리스트
 
-    Route::get("/counselingDetail", [AdvisorCounselingDetailController::class, "index"]); // 상담 내용
-
+    Route::resource("/counselingDetail", AdvisorCounselingDetailController::class); // 상담 내용
 
     Route::get('/profile', function () { // 프로필
         return view('/advisor/navigation/profile');

@@ -61,21 +61,21 @@
                 <!-- case 3-1. [end + danger] counseling end danger -->
                 <!-- case 3-2. [end + need-care] counseling end need-care -->
 
-                @foreach ($counselingList as $list)
+                @foreach ($counselingList['data'] as $list)
                   <li class="counseling">
-                    <a href="#none" class="counseling-thumb">
+                    <a href="#" class="counseling-thumb">
                       <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
                       <div class="counseling-user__name">{{$list['counselorName']}}</div>
                       <div class="counseling-user__year">{{$list['counselorBirthday']}}</div>
-                      <div class="counseling-user__gender">{{$list['counselorGender']}}</div>
+                      <div class="counseling-user__gender">{{$list['counselorGender']}}</div> 
                     </div>
                     <div class="counseling-code__cell">
                       <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingPK']}}</span></div>
                     </div>
                     <div class="counseling-link__cell">
-                      <a href="#none" class="counseling-link">상담하기</a>
+                      <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-link">상담하기</a>
                     </div>
                   </li>
                 @endforeach
@@ -227,7 +227,6 @@
 @include('advisor/common/footer')
   </div>
   <script src="../advisorAssets/assets/js/common.js"></script>
-
   <!-- datepicker-->
   <script src="../advisorAssets/assets/js/jquery-ui.min.js"></script>
   <script>
@@ -271,6 +270,22 @@
         $("#sdate").datepicker( "option", "maxDate", selectedDate );
     });
 
+    function takeCounseling($counselingPK){
+      var counselingPK = $counselingPK;
+
+      $.ajax({
+        type:'GET',
+        url:'/advisor/counselingList/'+counselingPK,
+        data: {
+            "counselingPK" : counselingPK
+        },
+        async: false,
+        headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+        success:function(data){
+            console.log(data);
+        }
+      });
+    }
   </script>
 </body>
 </html>

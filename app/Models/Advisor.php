@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -73,6 +74,25 @@ class Advisor extends Model
 
         foreach($advisorList as $pk => $list){
             $advisorList[$pk] = [
+                'advisorPK' => $list['advisorPK'],
+                'advisorName' => Crypt::decryptString($list['advisorName']),
+                'briefIntroduction' => $list['briefIntroduction'],
+            ];            
+        }
+        return $advisorList;
+
+    }
+
+    public static function pagination(){
+        $pagination = DB::table('advisor')
+        ->select('advisorPK', 'advisorName', 'briefIntroduction')
+        ->paginate(3);
+
+        // 프로필사진, 이름, 별점, 상담 진행 횟수, 자기소개
+        $advisorList = json_decode(json_encode($pagination), true);
+        
+        foreach($advisorList['data'] as $key => $list){
+            $advisorList['data'][$key] = [
                 'advisorPK' => $list['advisorPK'],
                 'advisorName' => Crypt::decryptString($list['advisorName']),
                 'briefIntroduction' => $list['briefIntroduction'],

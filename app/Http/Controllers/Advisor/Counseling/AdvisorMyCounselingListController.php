@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use App\Models\Counseling;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class AdvisorCounselingListController extends Controller
+class AdvisorMyCounselingListController extends Controller
 {
     public function index(Request $request)
     {
@@ -19,12 +18,10 @@ class AdvisorCounselingListController extends Controller
         }else{
             return view("/advisor/login/login");
         }
-
-        //$counselingList = Counseling::getCounselingList(); // 전체 상담 리스트
+        //$counselingList = Counseling::getMyCounselingList($advisorPK); // 나의 상담 리스트
         $counselingList = Counseling::pagination(); // 전체 상담 리스트
         $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
-       
-        return view("/advisor/counseling/counselingList",[   // 상담사 메인 페이지 
+        return view("/advisor/counseling/myCounselingList",[   // 상담사 메인 페이지 
             "isLogin" => $isLogin,
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
@@ -32,6 +29,11 @@ class AdvisorCounselingListController extends Controller
     }
 
     public function store(Request $request)
+    {
+        
+    }
+
+    public function show(Request $request)
     {
         
     }

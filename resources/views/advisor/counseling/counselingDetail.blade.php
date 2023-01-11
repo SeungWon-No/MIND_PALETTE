@@ -80,7 +80,7 @@
                   <div class="detail-item__slide swiper-slide">
                     <div class="detail-item__cell">
                       <div class="detail-item__photo">
-                        <img src="../advisorAssets/assets/images/detail-item-01.png" alt="" class="detail-item__img">
+                        <img src="/advisorAssets/assets/images/detail-item-01.png" alt="" class="detail-item__img">
                         <div class="detail-item__btn-wrap">
                           <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                           <button type="button" class="detail-item__btn doc active"><span class="icon document-icon"></span></button>
@@ -114,7 +114,7 @@
                   <div class="detail-item__slide swiper-slide">
                     <div class="detail-item__cell">
                       <div class="detail-item__photo">
-                        <img src="../assets/images/detail-item-02.png" alt="" class="detail-item__img">
+                        <img src="/assets/images/detail-item-02.png" alt="" class="detail-item__img">
                         <div class="detail-item__btn-wrap">
                           <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                           <button type="button" class="detail-item__btn doc active"><span class="icon document-icon"></span></button>
@@ -148,7 +148,7 @@
                   <div class="detail-item__slide swiper-slide">
                     <div class="detail-item__cell">
                       <div class="detail-item__photo">
-                        <img src="../advisorAssets/assets/images/detail-item-03.png" alt="" class="detail-item__img">
+                        <img src="/advisorAssets/assets/images/detail-item-03.png" alt="" class="detail-item__img">
                         <div class="detail-item__btn-wrap">
                           <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                           <button type="button" class="detail-item__btn doc active"><span class="icon document-icon"></span></button>
@@ -186,7 +186,7 @@
                   <div class="detail-item__slide swiper-slide">
                     <div class="detail-item__cell">
                       <div class="detail-item__photo">
-                        <img src="../advisorAssets/assets/images/detail-item-04.png" alt="" class="detail-item__img">
+                        <img src="/advisorAssets/assets/images/detail-item-04.png" alt="" class="detail-item__img">
                         <div class="detail-item__btn-wrap">
                           <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                           <button type="button" class="detail-item__btn doc active"><span class="icon document-icon"></span></button>
@@ -548,7 +548,7 @@
           <div class="counselor-before__cont">
             <div class="counselor-common__info">
               <div class="common-info__photo">
-                <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="common-info__img">
+                <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="common-info__img">
               </div>
               <div class="common-info__name">김아무 상담사</div>
             </div>
@@ -610,6 +610,6 @@
     </div>
   </article>
   
-  <script src="../advisorAssets/assets/js/common.js"></script>
+  <script src="/advisorAssets/assets/js/common.js"></script>
 </body>
 </html>
