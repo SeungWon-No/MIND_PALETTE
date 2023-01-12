@@ -187,7 +187,7 @@
                                 </div>
                                 <div class="item-icon"><img src="../mobile/assets/images/icon/icon-banner-program.png" alt="" width="72"></div>
                             </a>
-                            <a href="#" class="card-item card-banner">
+                            <a href="/counselingCenter" class="card-item card-banner">
                                 <div class="item-info">
                                     <div class="item-subject"><em class="font-color-darkblue">인근 상담 센터</em></div>
                                     <div class="item-desc">가장 가까운 곳에서<br>정확한 진단을 받아보세요.</div>

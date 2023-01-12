@@ -22,6 +22,7 @@ use App\Http\Controllers\Mobile\Advice\HTPResultController;
 use App\Http\Controllers\Mobile\Advice\ProcessInformationController;
 use App\Http\Controllers\Mobile\Advice\RequestAdviceController;
 use App\Http\Controllers\Mobile\Advice\SampleController;
+use App\Http\Controllers\Mobile\CounselingCenter\CounselingCenterController;
 use App\Http\Controllers\Mobile\FreeAdvice\AnxietyController;
 use App\Http\Controllers\Mobile\FreeAdvice\DepressionController;
 use App\Http\Controllers\Mobile\FreeAdvice\RequestInfoController;
@@ -77,10 +78,8 @@ Route::middleware(['autoLogin'])->group(function () {
 
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]);
     Route::post("/imageUpload", [FileUploadController::class,"imageUpload"]);
-    Route::get("/sample",SampleController::class);
-//    Route::get('/test', function () {
-//        return phpinfo();
-//    });
+
+    Route::get("/counselingCenter",CounselingCenterController::class);
 
     Route::post('/auth', PASSAuthController::class);
     Route::get('/auth/return', [PASSAuthController::class, "authReturn"]);
