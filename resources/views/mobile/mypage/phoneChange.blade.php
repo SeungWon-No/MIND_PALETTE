@@ -50,7 +50,7 @@
             success:function(json){
                 var data = JSON.parse(json);
                 $("#toastMessage").html(data.message);
-                common.toastPopOpen('pwChangeConfirm');
+                common.toastPopOpen('phoneChangeConfirm');
             }
         });
     }
