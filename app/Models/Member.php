@@ -70,6 +70,11 @@ class Member extends Model
             ->update(['pw'=> $password]);
     }
 
+    public static function updatePKPhone($memberPK, $phone) {
+        Member::where('memberPK',$memberPK)
+            ->update(['phone'=> $phone]);
+    }
+
     public static function findNotiAgree($memberPK) {
         return Member::select("memberAgree.mbAgreePK","notiAgree1")
             ->join("memberAgree","member.mbAgreePK","memberAgree.mbAgreePK")
