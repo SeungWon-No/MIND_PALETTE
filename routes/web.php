@@ -13,6 +13,7 @@ use App\Http\Controllers\Advisor\Notice\AdvisorNoticeController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorMyCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingDetailController;
+use App\Http\Controllers\Advisor\Counseling\AdvisorSearchingDataContoroller;
 
 use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Common\PASSAuthController;
@@ -210,4 +211,6 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
     });
 
     Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
+
+    Route::post('/searchingData', AdvisorSearchingDataContoroller::class); // 상담내역 검색
 });

@@ -1,6 +1,3 @@
-@php
-print_r($counselingList);
-@endphp
 @include('advisor/common/header')
 <div id="container">
       <div class="column-wrapper">
@@ -64,7 +61,7 @@ print_r($counselingList);
 
                 @foreach ($counselingList['data'] as $list)
                   <li class="counseling">
-                    <a href="#" class="counseling-thumb">
+                    <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
                       <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
@@ -175,7 +172,7 @@ print_r($counselingList);
               <!-- list items -->
               <a href="#none" class="recent-history__item">
                 <div class="recent-history__photo">
-                  <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
+                  <img src="/advisorAssets/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
                 </div>
                 <div class="recent-history__info-wrap">
                   <div class="recent-history__info">
@@ -240,10 +237,10 @@ print_r($counselingList);
           </div>
           <div class="aside__link-banners">
             <a href="#" class="aside__link-banner aside__link-banner--top">
-              <img src="../advisorAssets/assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
+              <img src="/advisorAssets/assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
             </a>
             <a href="#" class="aside__link-banner aside__link-banner--bottom">
-              <img src="../advisorAssets/assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
+              <img src="/advisorAssets/assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
             </a>
           </div>
         </div>

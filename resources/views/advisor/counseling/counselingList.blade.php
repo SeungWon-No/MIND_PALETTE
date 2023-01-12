@@ -11,18 +11,21 @@
               <a href="#" class="counseling-tab__btn">주의/위험</a>
               <a href="#" class="counseling-tab__btn">상담불가</a>
             </div>
+            <form id="searchForm" name="searchForm" action="/advisor/searchingData" method="POST">
+              @csrf
             <div class="counseling-search__wrap">
               <div class="counseling-search__left">
                 <div class="select-box">
-                  <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
+                  <input type="hidden" id="selectBoxCategory" name="selectBoxCategory" value="-1"/>
+                  <button id="select-box__label" class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
                   <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                   <ul class="select-option__list">
-                    <li class="select-option">아이이름</li>
-                    <li class="select-option">상담코드</li>
+                    <li id="searchingName" name="searchingName" class="select-option" onclick="window.selectBoxCategory('counselorName')">아이이름</li>
+                    <li id="searchingCode" name="searchingCode" class="select-option" onclick="window.selectBoxCategory('counselingCode')">상담코드</li>
                   </ul>                      
                 </div>
                 <div class="counseling-search__group">
-                  <input type="text" class="counseling-search__form" placeholder="검색 입력">
+                  <input type="text" class="counseling-search__form" name="searchingText" onkeyup="window.searchingText()" placeholder="검색 입력">
                 </div>
               </div>
             </div>
@@ -44,14 +47,15 @@
                   <a href="#" class="counseling-sort">10월</a>
                 </div>
                 <div class="counseling-sort__datepicker">
-                  <input type="text" id="sdate" autocomplete="off">
+                  <input type="text" id="sdate" name="sdate" autocomplete="off" val="" onclick="window.formatStartDate()">
                   <span class="datepicker-unit">~</span>
-                  <input type="text" id="edate" autocomplete="off">
+                  <input type="text" id="edate" name="edate" autocomplete="off" val="" onclick="window.formatEndDate()">
 
-                  <button type="button" class="datepicker-apply__btn">조회<span class="icon search-apply-icon"></span></button>
+                  <button type="button" class="datepicker-apply__btn" onclick="searchingData()">조회<span class="icon search-apply-icon"></span></button>
                 </div>
               </div>
             </div>
+            </form>
             <div class="counseling-list__wrap">
               <ul class="counseling-list">
                 <!-- case에 맞게 class명에 추가 -->
@@ -63,8 +67,8 @@
 
                 @foreach ($counselingList['data'] as $list)
                   <li class="counseling">
-                    <a href="#" class="counseling-thumb">
-                      <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
+                    <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
+                      <img src="/advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
                       <div class="counseling-user__name">{{$list['counselorName']}}</div>
@@ -72,7 +76,7 @@
                       <div class="counseling-user__gender">{{$list['counselorGender']}}</div> 
                     </div>
                     <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingPK']}}</span></div>
+                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingCode']}}</span></div>
                     </div>
                     <div class="counseling-link__cell">
                       <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-link">상담하기</a>
@@ -81,11 +85,9 @@
                 @endforeach
               </ul>
               <div class="paging-box">
-                <a href="#none" class="paging-prev"><span class="icon pagin-perv-icon"></span></a>
-                <a href="#none" class="paging-num active">1</a>
-                <a href="#none" class="paging-num">2</a>
-                <a href="#none" class="paging-num">3</a>
-                <a href="#none" class="paging-next"><span class="icon pagin-next-icon"></span></a>
+                @foreach ($counselingList['links'] as $link)
+                  <a href="{{ $link['url'] }}" class="paging-num active">{{ $link['label'] }}</a>
+                @endforeach
               </div>
             </div>
           </div>
@@ -94,7 +96,7 @@
           <div class="account">
             <div class="account-info__cell">
               <div class="account-profile__photo">
-                <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="account-profile__img">
+                <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="account-profile__img">
               </div>
               <div class="account-profile">
                 <div class="account-profile__cell">
@@ -139,7 +141,7 @@
               <!-- list items -->
               <a href="#none" class="recent-history__item">
                 <div class="recent-history__photo">
-                  <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
+                  <img src="/advisorAssets/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
                 </div>
                 <div class="recent-history__info-wrap">
                   <div class="recent-history__info">
@@ -215,10 +217,10 @@
           </div>
           <div class="aside__link-banners">
             <a href="#" class="aside__link-banner aside__link-banner--top">
-              <img src="../advisorAssets/assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
+              <img src="/advisorAssets/assets/images/aside-link-01.png" alt="" class="aside__link-banner-img">
             </a>
             <a href="#" class="aside__link-banner aside__link-banner--bottom">
-              <img src="../advisorAssets/assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
+              <img src="/advisorAssets/assets/images/aside-link-02.png" alt="" class="aside__link-banner-img">
             </a>
           </div>
         </div>
@@ -282,9 +284,36 @@
         async: false,
         headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
         success:function(data){
-            console.log(data);
+          
         }
       });
+    }
+
+    // 검색 카테고리
+    function selectBoxCategory(value) {
+      $("#selectBoxCategory").val(value);
+    }
+
+    // 검색어
+    function searchingText(){
+      $('input[name=searchingText]').val();
+    }
+
+    // 날짜 선택 
+    function formatStartDate(){
+      var getStartDate = $( "#sdate" ).datepicker("getDate");
+      var formatStartDate = $.datepicker.formatDate("yy-mm-dd", getStartDate);
+      $( "#sdate" ).val(formatStartDate);
+    }
+
+    function formatEndDate(){
+      var getEndDate = $( "#edate" ).datepicker("getDate");
+      var formatEndDate = $.datepicker.formatDate("yy-mm-dd", getEndDate);
+      $( "#edate" ).val(formatEndDate);
+    }
+
+    function searchingData(){
+      $('#searchForm').submit();
     }
   </script>
 </body>
