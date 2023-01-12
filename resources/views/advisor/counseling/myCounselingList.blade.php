@@ -10,18 +10,21 @@
               <a href="#" class="counseling-tab__btn">주의/위험</a>
               <a href="#" class="counseling-tab__btn">상담불가</a>
             </div>
+            <form id="searchForm" name="searchForm" action="/advisor/searchingData" method="POST">
+              @csrf
             <div class="counseling-search__wrap">
               <div class="counseling-search__left">
                 <div class="select-box">
-                  <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
+                  <input type="hidden" id="selectBoxCategory" name="selectBoxCategory" value="-1"/>
+                  <button id="select-box__label" class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
                   <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                   <ul class="select-option__list">
-                    <li class="select-option">아이이름</li>
-                    <li class="select-option">상담코드</li>
+                    <li id="searchingName" name="searchingName" class="select-option" onclick="window.selectBoxCategory('counselorName')">아이이름</li>
+                    <li id="searchingCode" name="searchingCode" class="select-option" onclick="window.selectBoxCategory('counselingCode')">상담코드</li>
                   </ul>                      
                 </div>
                 <div class="counseling-search__group">
-                  <input type="text" class="counseling-search__form" placeholder="검색 입력">
+                  <input type="text" class="counseling-search__form" name="searchingText" onkeyup="window.searchingText()" placeholder="검색 입력">
                 </div>
               </div>
             </div>
@@ -43,14 +46,15 @@
                   <a href="#" class="counseling-sort">10월</a>
                 </div>
                 <div class="counseling-sort__datepicker">
-                  <input type="text" id="sdate" autocomplete="off">
+                  <input type="text" id="sdate" name="sdate" autocomplete="off" val="" onclick="window.formatStartDate()">
                   <span class="datepicker-unit">~</span>
-                  <input type="text" id="edate" autocomplete="off">
+                  <input type="text" id="edate" name="edate" autocomplete="off" val="" onclick="window.formatEndDate()">
 
-                  <button type="button" class="datepicker-apply__btn">조회<span class="icon search-apply-icon"></span></button>
+                  <button type="button" class="datepicker-apply__btn" onclick="searchingData()">조회<span class="icon search-apply-icon"></span></button>
                 </div>
               </div>
             </div>
+            </form>
             <div class="counseling-list__wrap">
               <ul class="counseling-list">
                 <!-- case에 맞게 class명에 추가 -->
@@ -267,6 +271,33 @@
     $('#edate').datepicker("option", "onClose", function ( selectedDate ) {
         $("#sdate").datepicker( "option", "maxDate", selectedDate );
     });
+
+    // 검색 카테고리
+    function selectBoxCategory(value) {
+      $("#selectBoxCategory").val(value);
+    }
+
+    // 검색어
+    function searchingText(){
+      $('input[name=searchingText]').val();
+    }
+
+    // 날짜 선택 
+    function formatStartDate(){
+      var getStartDate = $( "#sdate" ).datepicker("getDate");
+      var formatStartDate = $.datepicker.formatDate("yy-mm-dd", getStartDate);
+      $( "#sdate" ).val(formatStartDate);
+    }
+
+    function formatEndDate(){
+      var getEndDate = $( "#edate" ).datepicker("getDate");
+      var formatEndDate = $.datepicker.formatDate("yy-mm-dd", getEndDate);
+      $( "#edate" ).val(formatEndDate);
+    }
+
+    function searchingData(){
+      $('#searchForm').submit();
+    }
 
   </script>
 </body>

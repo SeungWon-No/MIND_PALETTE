@@ -14,6 +14,7 @@ use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorMyCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingDetailController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorSearchingDataContoroller;
+use App\Http\Controllers\Advisor\Profile\AdvisorProfileController;
 
 use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Common\PASSAuthController;
@@ -176,42 +177,43 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
         Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
 
-        Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 추가 정보입력
+        Route::resource('/profile', AdvisorProfileController::class); // 상담사 프로필
+        
+        Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
+        Route::resource("/counselingList", AdvisorCounselingListController::class); // 상담리스트
 
-        Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]); // 파일 업로드
+        Route::get("/myCounselingList", [AdvisorMyCounselingListController::class, "index"]); // my 상담리스트
+
+        Route::resource("/counselingDetail", AdvisorCounselingDetailController::class); // 상담 내용
+
+        Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
 
     });
+
 
     Route::get('/loginFindId', function () { // 아이디, 패스워드 찾기 페이지
         return view('/advisor/login/loginFindEmailPassword');
     });
-
+    
     Route::get('/loginFindPassword', function () { // 패스워드 휴대폰 인증 페이지
         return view('/advisor/login/loginFindPassword');
     });
 
     Route::post('/loginFindEmail', AdvisorFindEmailController::class); // 이메일 찾기
+
     Route::post('/loginPasswordAuth', AdvisorFindPasswordController::class); // 비밀번호 찾기
+
     Route::post('/newPasswordSetting', AdvisorNewPasswordSettingController::class); // 새 비밀번호 설정
 
-    Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
+    Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 추가 정보입력
+
+    Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]); // 파일 업로드
+
 
     Route::get('/loginFail', function () { // 로그인 실패시 화면
         return view('/advisor/login/loginFail');
     });
-
-    Route::resource("/counselingList", AdvisorCounselingListController::class); // 상담리스트
-
-    Route::get("/myCounselingList", [AdvisorMyCounselingListController::class, "index"]); // 상담리스트
-
-    Route::resource("/counselingDetail", AdvisorCounselingDetailController::class); // 상담 내용
-
-    Route::get('/profile', function () { // 프로필
-        return view('/advisor/navigation/profile');
-    });
-
-    Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
 
     Route::post('/searchingData', AdvisorSearchingDataContoroller::class); // 상담내역 검색
 });

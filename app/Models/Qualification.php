@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property mixed $certificatePK
@@ -20,13 +21,24 @@ class Qualification extends Model
     protected $primaryKey = 'certificatePK';
     public $timestamps = false;
 
-    // public static function findAdvisorEducationLevel($advisorPK) {
-    //     return EducationLevel::where('advisorPK','=',$advisorPK)->count();
-    // }
 
-    // public static function getAdvisorEducationInfo($advisorPK) {
-    //     return EducationLevel::where('advisorPK','=',$advisorPK)
-    //         -> all();
-    // }
+    public static function getAdvisorQualificationInfo($advisorPK) {
+        $getAdvisorQualificationInfo = DB::table('qualification')
+                                        ->select('advisorPK', 'issuingAgency', 'certificateName', 'certificateFilePath')
+                                        ->where('advisorPK','=',$advisorPK)
+                                        ->get();
+                                        
+        $advisorQualificationInfo = json_decode(json_encode($getAdvisorQualificationInfo), true);
+
+        foreach($advisorQualificationInfo as $key => $list){
+            $advisorQualificationInfo[$key] = [
+                'advisorPK' => $list['advisorPK'],
+                'issuingAgency' => $list['issuingAgency'],
+                'certificateName' => $list['certificateName'],
+                'certificateFilePath' => $list['certificateFilePath'],
+            ];
+        }
+        return $advisorQualificationInfo;
+    }
 
 }

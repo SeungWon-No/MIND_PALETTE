@@ -186,7 +186,7 @@ class Counseling extends Model
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.createDate', '>=', $sdate)
             ->where('counseling.createDate', '<=', $edate)
-            ->where('counseling.counselorName', 'like', '"%' . $searchingText . '%"')
+            ->where('counseling.counselorName', 'like', '%'. $searchingText .'%')
             ->orderBy("counselingPK", "DESC")
             ->paginate(10);
 
@@ -196,7 +196,7 @@ class Counseling extends Model
             $counselingList['data'][$key] = [
                 'counselingPK' => $list['counselingPK'],
                 'counselingCode' => $list['counselingCode'],
-                'counselorName' => $list['counselorName'], // 암호화 빠질 수 있음
+                'counselorName' => $list['counselorName'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
             ];

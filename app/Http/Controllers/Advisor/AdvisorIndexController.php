@@ -26,7 +26,6 @@ class AdvisorIndexController extends Controller
         $completeCount = 777;
         $counselingList = Counseling::pagination(); // 전체 상담 리스트
         $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
-        //$advisorList = Advisor::getAdvisorList(); // 상담사 리스트
         $advisorList = Advisor::pagination(); // 상담사 리스트
 
         return view("/advisor/main",[   // 상담사 메인 페이지 

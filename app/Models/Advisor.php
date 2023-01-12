@@ -57,13 +57,25 @@ class Advisor extends Model
     }
     
     public static function getAdvisorProfile($advisorPK){
-        $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
-        $advisorProfile = json_decode(json_encode($getAdvisorInfo), true);
+        $getAdvisorProfile = DB::table('advisor')
+            ->select(
+                'advisorPK',
+                'advisorName',
+                'briefIntroduction',
+                'detailedDescription'
+            )
+            ->where('advisorPK', '=', $advisorPK)
+            ->get();
+
+        $advisorProfile = json_decode(json_encode($getAdvisorProfile), true);
 
         $advisorProfile = [
-            'advisorName' => Crypt::decryptString($advisorProfile['advisorName']),
-            //Todo : 상담사 이름, 소속기관, 상담내역(작성중, 상담완료) 추가
+            'advisorPK' => $advisorProfile[0]['advisorPK'],
+            'advisorName' => Crypt::decryptString($advisorProfile[0]['advisorName']),
+            'briefIntroduction' => $advisorProfile[0]['briefIntroduction'],
+            'detailedDescription' => $advisorProfile[0]['detailedDescription'],
         ];
+
         return $advisorProfile;
     }
 
