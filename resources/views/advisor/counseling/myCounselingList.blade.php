@@ -62,7 +62,7 @@
 
                 @foreach ($counselingList['data'] as $list)
                   <li class="counseling">
-                    <a href="#" class="counseling-thumb">
+                    <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
                       <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
@@ -80,11 +80,9 @@
                 @endforeach
               </ul>
               <div class="paging-box">
-                <a href="#none" class="paging-prev"><span class="icon pagin-perv-icon"></span></a>
-                <a href="#none" class="paging-num active">1</a>
-                <a href="#none" class="paging-num">2</a>
-                <a href="#none" class="paging-num">3</a>
-                <a href="#none" class="paging-next"><span class="icon pagin-next-icon"></span></a>
+                @foreach ($counselingList['links'] as $link)
+                  <a href="{{ $link['url'] }}" class="paging-num active">{{ $link['label'] }}</a>
+                @endforeach
               </div>
             </div>
           </div>
