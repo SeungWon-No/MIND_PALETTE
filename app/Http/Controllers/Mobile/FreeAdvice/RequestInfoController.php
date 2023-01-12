@@ -55,7 +55,7 @@ class RequestInfoController extends Controller
 
                 $counselingTemplate->tempCounselingCode = $freeCode;
             }
-            $counselingTemplate->counselorName = Crypt::encryptString($counselorName);
+            $counselingTemplate->counselorName = $counselorName;
             $counselingTemplate->counselingStatus = $testCode; //depressionStep1
             $counselingTemplate->counselingTemplateCode = $nowDay."-".StringUtil::generateRandomString(5);
             $counselingTemplate->updateDate = $nowDate;

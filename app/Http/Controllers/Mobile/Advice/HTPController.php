@@ -418,7 +418,7 @@ class HTPController extends Controller
 
             $counseling = Counseling::find($counselingPK);
             if ($request->counselorName != "") {
-                $counseling->counselorName = Crypt::encryptString($request->counselorName);
+                $counseling->counselorName = $request->counselorName;
             }
 
             if ($request->counselorBirthday != "") {

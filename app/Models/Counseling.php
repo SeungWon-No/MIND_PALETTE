@@ -56,7 +56,7 @@ class Counseling extends Model
         foreach($counselingList as $pk => $list){
             $counselingList[$pk] = [
                 'counselingPK' => $list['counselingPK'],
-                'counselorName' => Crypt::decryptString($list['counselorName']),
+                'counselorName' => $list['counselorName'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
             ];
@@ -79,7 +79,7 @@ class Counseling extends Model
         foreach($counselingList['data'] as $key => $list){
             $counselingList['data'][$key] = [
                 'counselingPK' => $list['counselingPK'],
-                'counselorName' => Crypt::decryptString($list['counselorName']),
+                'counselorName' => $list['counselorName'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
             ];
@@ -87,7 +87,7 @@ class Counseling extends Model
         //dd($counselingList['data']);
         return $counselingList;
     }
-    
+
 
     // 상담 대기 중인 건 수 [counselingStatus : 279]
     public static function getWaitingCounseling(){
@@ -99,8 +99,8 @@ class Counseling extends Model
         return Counseling::where('counselingCode', '=', '281')->count();
     }
 
-    public static function getMyCounselingList($advisorPK){ // my 상담 리스트 
-        
+    public static function getMyCounselingList($advisorPK){ // my 상담 리스트
+
         $getResult = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
                     ->select("counseling.counselingPK", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
@@ -113,7 +113,7 @@ class Counseling extends Model
         foreach($myCounselingList as $pk => $list){
             $myCounselingList[$pk] = [
                 'counselingPK' => $list['counselingPK'],
-                'counselorName' => Crypt::decryptString($list['counselorName']),
+                'counselorName' => $list['counselorName'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
             ];
@@ -122,28 +122,28 @@ class Counseling extends Model
     }
 
     public static function getCounselingDetail($counselingPK){
-        
+
         $getResult = DB::table('counseling')
                     ->join('code as codeGender', 'counseling.counselorGender', '=', 'codeGender.codePK')
                     ->join('code as codeSchool', 'counseling.counselorSchool', '=', 'codeSchool.codePK')
                     ->select("counseling.counselingPK",
                              "counseling.memberPK",
-                             "counseling.counselorName", 
-                             "counseling.counselorBirthday", 
+                             "counseling.counselorName",
+                             "counseling.counselorBirthday",
                              "codeSchool.codeName as counselorSchool",
                              "codeGender.codeName as counselorGender",
-                             "counseling.hobby", 
-                             "counseling.familyRelations1", 
-                             "counseling.familyRelations2", 
-                             "counseling.familyRelations3", 
-                             "counseling.specialty", 
-                             "counseling.friendship", 
-                             "counseling.relationshipTeacher", 
-                             "counseling.relationshipDad", 
-                             "counseling.relationshipMother", 
-                             "counseling.relationshipSiblings", 
-                             "counseling.relationshipSister", 
-                             "counseling.stressCauses", 
+                             "counseling.hobby",
+                             "counseling.familyRelations1",
+                             "counseling.familyRelations2",
+                             "counseling.familyRelations3",
+                             "counseling.specialty",
+                             "counseling.friendship",
+                             "counseling.relationshipTeacher",
+                             "counseling.relationshipDad",
+                             "counseling.relationshipMother",
+                             "counseling.relationshipSiblings",
+                             "counseling.relationshipSister",
+                             "counseling.stressCauses",
                              "counseling.reasonInspection",
                              )
                     ->where('counseling.counselingPK', '=', $counselingPK)
@@ -154,12 +154,12 @@ class Counseling extends Model
 
         $clientInfo = [
             'memberPK' => $getCounselingDetail[0]['memberPK'],
-            'clientName' => Crypt::decryptString($getCounselingDetail[0]['counselorName']), // 상담 대상 이름
+            'clientName' => $getCounselingDetail[0]['counselorName'], // 상담 대상 이름
             'counselorBirthday' => Crypt::decryptString($getCounselingDetail[0]['counselorBirthday']), // 생년월일
             'counselorSchool' => $getCounselingDetail[0]['counselorSchool'], // 학교
             'counselorGender' => $getCounselingDetail[0]['counselorGender'],// 성별
-            'hobby' => $getCounselingDetail[0]['hobby'], // 취미 
-            'familyRelations1' => $getCounselingDetail[0]['familyRelations1'], // ex) x남 y녀 중 z째 
+            'hobby' => $getCounselingDetail[0]['hobby'], // 취미
+            'familyRelations1' => $getCounselingDetail[0]['familyRelations1'], // ex) x남 y녀 중 z째
             'familyRelations2' => $getCounselingDetail[0]['familyRelations2'],
             'familyRelations3' => $getCounselingDetail[0]['familyRelations3'],
             'specialty' => $getCounselingDetail[0]['specialty'], // 특기
@@ -170,11 +170,11 @@ class Counseling extends Model
             'relationshipSiblings' => $getCounselingDetail[0]['relationshipSiblings'], // 형제 관계
             'relationshipSister' => $getCounselingDetail[0]['relationshipSister'],// 자매 관계
             'stressCauses' => $getCounselingDetail[0]['stressCauses'], // 가족 내력, 스트레스 요인
-            'reasonInspection' => $getCounselingDetail[0]['reasonInspection'], // 심리 상담 사유    
+            'reasonInspection' => $getCounselingDetail[0]['reasonInspection'], // 심리 상담 사유
         ];
         return $clientInfo;
 
-        
+
     }
 
 }

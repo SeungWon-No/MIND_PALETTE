@@ -90,7 +90,7 @@
                                 <div class="item-info">
                                     <div class="item-icon"><div class="icon icon-page-user-{{$iconClass[$rowIndex]}}-bg"></div></div>
                                     <div class="item-data">
-                                        <div class="item-name">{{Crypt::decryptString($counseling->counselorName)}}</div>
+                                        <div class="item-name">{{$counseling->counselorName}}</div>
                                         <div class="item-date">{{$counseling->updateDate}}</div>
                                     </div>
                                     @if($counseling->type == "FREE" && isset($counselingStatus[$counseling->counselingStatus]))

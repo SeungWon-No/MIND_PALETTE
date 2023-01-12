@@ -104,7 +104,7 @@ class DepressionController extends Controller
         $colorClass = ["green","orange","orange","red"];
         $freeInfoData = [
             "title" => "우리 아이 우울 검사 결과",
-            "name" => Crypt::decryptString($counselingTemplate->counselorName),
+            "name" => $counselingTemplate->counselorName,
             "code" => $counselingTemplate->counselingTemplateCode,
             "createDate" => $counselingTemplate->createDate,
             "levelClass" => "", //three
