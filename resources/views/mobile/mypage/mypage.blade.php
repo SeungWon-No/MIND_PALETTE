@@ -28,7 +28,7 @@
                     <div class="icon icon-password-gray"></div>
                     <div class="txt">비밀번호 변경</div>
                 </a>
-                <a href="#" class="btn-mypage-menu">
+                <a href="/MyPage/changePhone" class="btn-mypage-menu">
                     <div class="icon icoh-phone-gray"></div>
                     <div class="txt">전화번호 변경</div>
                 </a>
