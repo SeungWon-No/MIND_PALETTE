@@ -28,7 +28,7 @@
                     <div class="icon icon-password-gray"></div>
                     <div class="txt">비밀번호 변경</div>
                 </a>
-                <a href="#" class="btn-mypage-menu">
+                <a href="/MyPage/changePhone" class="btn-mypage-menu">
                     <div class="icon icoh-phone-gray"></div>
                     <div class="txt">전화번호 변경</div>
                 </a>
@@ -90,7 +90,7 @@
                                 <div class="item-info">
                                     <div class="item-icon"><div class="icon icon-page-user-{{$iconClass[$rowIndex]}}-bg"></div></div>
                                     <div class="item-data">
-                                        <div class="item-name">{{Crypt::decryptString($counseling->counselorName)}}</div>
+                                        <div class="item-name">{{$counseling->counselorName}}</div>
                                         <div class="item-date">{{$counseling->updateDate}}</div>
                                     </div>
                                     @if($counseling->type == "FREE" && isset($counselingStatus[$counseling->counselingStatus]))

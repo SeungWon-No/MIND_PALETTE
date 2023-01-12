@@ -31,7 +31,7 @@
                                             placeholder="입력"
                                             maxlength="12"
                                             @if(isset($counseling->counselorName))
-                                            value="{{Crypt::decryptString($counseling->counselorName)}}"
+                                            value="{{$counseling->counselorName}}"
                                             @endif
                                             onFocus="inputChange(this);"
                                             onKeyUp="inputChange(this);"

@@ -38,7 +38,7 @@
                             <div class="item-icons"><div class="icon icon-page-user-orange-bg"></div></div>
                             <div class="item-info">
                                 <div class="item-name">
-                                    <strong>{{Crypt::decryptString($counseling->counselorName)}}</strong>
+                                    <strong>{{$counseling->counselorName}}</strong>
                                     <span>{{Crypt::decryptString($counseling->counselorBirthday)}}</span></div>
                                 <div class="item-date">상담 등록일: {{date_format(date_create($counseling->createDate),"Y.m.d H:i")}}</div>
                             </div>

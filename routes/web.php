@@ -34,6 +34,7 @@ use App\Http\Controllers\Mobile\Login\LoginController;
 use App\Http\Controllers\Mobile\Logout\LogoutController;
 use App\Http\Controllers\Mobile\MemberFind\IDFindController;
 use App\Http\Controllers\Mobile\Mypage\AppSettingController;
+use App\Http\Controllers\Mobile\Mypage\ChangePhoneController;
 use App\Http\Controllers\Mobile\Mypage\MyPageController;
 use App\Http\Controllers\Mobile\Mypage\PasswordChangeController;
 use App\Http\Controllers\Mobile\Mypage\PayListController;
@@ -106,6 +107,10 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/MyPage/AppSetting", AppSettingController::class);
     Route::get("/MyPage/withdrawal", WithdrawalController::class);
     Route::get("/MyPage/passwordChange", PasswordChangeController::class);
+    Route::get("/MyPage/changePhone", function () {
+        return view('/mobile/mypage/phoneChange'); // 상세 페이지
+    });
+    Route::post("/MyPage/changePhone", ChangePhoneController::class);
     Route::post("/MyPage/changeAgree", [AppSettingController::class,"changeAgree"]);
     Route::post("/MyPage/withdrawalPrc", [WithdrawalController::class,"withdrawalPrc"]);
     Route::post("/MyPage/passwordChangePrc", [PasswordChangeController::class,"passwordChangePrc"]);
