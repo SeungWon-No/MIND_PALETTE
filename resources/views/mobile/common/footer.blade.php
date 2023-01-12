@@ -4,7 +4,7 @@
         <div class="footer-menu">
             <a href="/terms" class="btn-footer-nav">이용약관</a>
             <a href="/privacyStatement" class="btn-footer-nav">개인정보 취급방침</a>
-            <a href="#" class="btn-footer-nav">고객센터</a>
+            <a href="/contact" class="btn-footer-nav">고객센터</a>
         </div>
     </div>
     <div class="footer-address">
