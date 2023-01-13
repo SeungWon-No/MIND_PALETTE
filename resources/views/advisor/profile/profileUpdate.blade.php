@@ -25,7 +25,7 @@ print_r($getAdvisorQualificationInfo);
               <!-- 사진있을때 추가되는 부분 -->
               <div class="upload-file__wrap">
                 <div class="upload-file__photo">
-                  <img src="../assets/images/user-profile-01.jpg" alt="" class="upload-file__img">
+                  <img src="/assets/images/user-profile-01.jpg" alt="" class="upload-file__img">
                 </div>
                 <div class="upload-file__text">
                   <div class="upload-file">
@@ -36,7 +36,8 @@ print_r($getAdvisorQualificationInfo);
               </div>
               <!--// 사진있을때 추가되는 부분 -->
               <label class="profile-upload__label">
-                <input type="file" class="form-file">
+                <input id="attachFile" type="file" class="form-file">
+                <input id="attachFilePath" type="hidden">
                 사진올리기
               </label>
             </div>
@@ -383,3 +384,44 @@ print_r($getAdvisorQualificationInfo);
     </div> <!-- container end-->
     @include('advisor/common/footer')
     @include('advisor/common/end')
+    <script>
+        $('input[name="filePath"]').change(function(){
+        if($("#attachFile").val() === ""){
+            // 파일 취소
+            cancel();
+        } else {
+            imageSave();
+        }
+    });
+
+    function imageSave() {
+        const imageInput = $("#attachFile")[0];
+        const formData = new FormData();
+        formData.append("file", imageInput.files[0]);
+        formData.append("oldFilePath", $("#attachFilePath").val());
+
+        $.ajax({
+            type:"POST",
+            url: "/imageUpload",
+            processData: false,
+            contentType: false,
+            data: formData,
+            async: false,
+            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+            success: function(json){
+                var data = JSON.parse(json);
+                if ( data.status === "success" ) {
+                    $("#attachFilePath").val(data.filePath);
+                    uploadCompleted(data.filePath);
+                } else {
+                    alert(data.message);
+                }
+            },
+            err: function(err){
+                console.log("err:", err)
+            }
+        });
+    }
+    function cancel() {
+    }
+    </script>
