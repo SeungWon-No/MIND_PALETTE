@@ -41,4 +41,10 @@ class Qualification extends Model
         return $advisorQualificationInfo;
     }
 
+    public static function findAdvisorQualificationInfo($advisorPK) {
+        return Qualification::where("advisorPK", $advisorPK)
+                ->where("isDelete","N")
+                ->orderBy("certificatePK","ASC")->get();
+    }
+
 }
