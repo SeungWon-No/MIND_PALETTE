@@ -271,7 +271,6 @@
                             <th style="width: 287px;">담당업무</th>
                             <th style="width: 110px;">증명서 사본</th>
                         </tr>
-                    </thead>
                     <input type="hidden" id="careerCount" name="careerCount" value="{{count($advisorCareerInfo)}}"/>
                       @php
                         $careerIndex = 1;
@@ -390,7 +389,9 @@
                                   <label class="table-file__label">
                                       <input id="education" type="file" class="table-file attachedFilePath" data-index="`+educationIndex+`">
                                         <span class="table-file__name" id="education-attachedDisplayName`+educationIndex+`">첨부하기</span>
-                                      <input id="education-attachedFilePath`+educationIndex+`" name="education-attachedFilePath`+educationIndex+`" type="hidden">
+                                      <input id="education-attachedFilePath`+educationIndex+`" 
+                                      name="education-attachedFilePath`+educationIndex+`" 
+                                      type="hidden">
 
                                     <input id="education-attachedFileName`+educationIndex+`"
                                        name="education-attachedFileName`+educationIndex+`"
@@ -474,8 +475,14 @@
                                     <td class="table-col">
                                         <label class="table-file__label">
                                         <input id="career" type="file" class="table-file attachedFilePath" data-index="`+careerIndex+`">
-                                        <span class="table-file__name" id="qualification-attachedDisplayName`+careerIndex+`">첨부하기</span>
-                                        <input id="career-attachedFilePath`+careerIndex+`" name="career-attachedFilePath`+careerIndex+`" type="hidden">
+                                        <span class="table-file__name" id="career-attachedDisplayName`+careerIndex+`">첨부하기</span>
+                                        <input id="career-attachedFilePath`+careerIndex+`" 
+                                        name="career-attachedFilePath`+careerIndex+`" 
+                                        type="hidden">
+
+                                        <input id="career-attachedFileName`+careerIndex+`"
+                                            name="career-attachedFileName`+careerIndex+`"
+                                            type="hidden">
                                         </label>
                                     </td>`;
             tableTr.innerHTML = table03Content;

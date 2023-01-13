@@ -34,6 +34,7 @@ class AdvisorProfileController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request);
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         
         $nowDateTime = date('Y-m-d H:i:s');
@@ -106,8 +107,8 @@ class AdvisorProfileController extends Controller
             $career->updateDate = $nowDateTime;
             $career->save();
 
-            return redirect('/advisor/profile/profileUpdate');
         }
+        return redirect('/advisor/profile/profileUpdate');
     }
     
 
