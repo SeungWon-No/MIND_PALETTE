@@ -34,6 +34,7 @@
               </a>
             </h1>
           </div>
+          @if(session()->has('advisorLogin'))
           <div class="header-top__right">
             <div class="user-info__cell">
               <div class="user-profile__photo">
@@ -43,6 +44,7 @@
             </div>
             <a href="/advisor/logout" class="account-logout__btn">로그아웃</a>
           </div>
+          @endif
         </div>
       </div>
       <div class="header-bottom">

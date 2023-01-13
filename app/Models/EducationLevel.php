@@ -60,8 +60,16 @@ class EducationLevel extends Model
                 'certificateFilePath' => $list['department'],
             ];
         }
-        
+
         return $advisorEducationLevel;
     }
-    
+
+    public static function findAdvisorEducationInfo($advisorPK) {
+        return EducationLevel::where("advisorPK",$advisorPK)
+                ->where("isDelete","N")
+                ->orderBy("educationPK","ASC")->get();
+
+    }
+
+
 }

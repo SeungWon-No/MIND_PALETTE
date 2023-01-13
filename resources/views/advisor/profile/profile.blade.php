@@ -7,7 +7,7 @@
               <div class="profile-row__photo">
                 <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="profile-row__img">
               </div>
-              <div class="profile-row__name">{{$getAdvisorProfile['advisorName']}} 상담사</div>
+              <div class="profile-row__name">{{$advisorProfile['advisorName']}} 상담사</div>
               <div class="profile-row__center">사랑마음 상담센터</div>
               <a href="/advisor/profile/profileUpdate" class="profile-row__link">프로필 수정하기 <span class="icon link-more-icon"></span></a>
             </div>
@@ -15,9 +15,9 @@
               <div class="profile-col">
                 <div class="profile-col__heading">자기소개</div>
                 <div class="profile-col__content">
-                  <p class="introduce-oneline">{{$getAdvisorProfile['briefIntroduction']}}</p>
+                  <p class="introduce-oneline">{{$advisorProfile['briefIntroduction']}}</p>
                   <p class="introduce__desc">
-                  {{$getAdvisorProfile['detailedDescription']}}
+                  {{$advisorProfile['detailedDescription']}}
                   </p>
                 </div>
               </div>
@@ -40,7 +40,7 @@
                     <p class="profile-col__data">∙ 서*대학교 의학 학사</p>
                     <p class="profile-col__data">∙ 서*대 대학원 의학 석사</p>
                     <p class="profile-col__data">∙ 現 사랑 마음 상담센터 전문의</p>
-                  </div>          
+                  </div>
                 </div>
               </div>
             </div>
@@ -110,7 +110,7 @@
                         </div>
                       </div>
                     </div>
-                    
+
                   </div>
                 </div>
               </div>

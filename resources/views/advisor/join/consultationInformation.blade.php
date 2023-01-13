@@ -92,6 +92,7 @@
                       <label id="table-file__label" class="table-file__label">
                         <input id="education" type="file" class="table-file attachedFilePath" data-index="1">
                         <input id="education-attachedFilePath1" name="education-attachedFilePath1" type="hidden">
+                        <input id="education-attachedFileName1" name="education-attachedFileName1" type="hidden">
                         첨부하기
                       </label>
                     </td>
@@ -126,6 +127,7 @@
                       <label id="" class="table-file__label">
                         <input id="qualification" type="file" class="table-file attachedFilePath" data-index="1">
                         <input id="qualification-attachedFilePath1" name="qualification-attachedFilePath1" type="hidden">
+                          <input id="qualification-attachedFileName1" name="qualification-attachedFileName1" type="hidden">
                         첨부하기
                       </label>
                     </td>
@@ -198,6 +200,7 @@
                       <label class="table-file__label">
                       <input id="career" type="file" class="table-file attachedFilePath" data-index="1">
                         <input id="career-attachedFilePath1" name="career-attachedFilePath1" type="hidden">
+                          <input id="career-attachedFileName1" name="career-attachedFileName1" type="hidden">
                         첨부하기
                       </label>
                     </td>
@@ -329,7 +332,7 @@
 
   $(".table-add__btn").on("click",function (e) {
     var type = this.id; // 추가하기 버튼의 id값
-    
+
       // 학력 사항
       if (type == 'addEducation') {
         var validEducation = window.validEducation();
@@ -416,7 +419,7 @@
         }else{
           return false;
         }
-        
+
       // 경력사항
       }else{
         var validCareer = window.validCareer();
@@ -487,7 +490,7 @@
         $("#employmentType"+index).val(value);
     }
 
-    
+
     // 파일 업로드
     $(document).on('change','.table-file',function(){
       var type = this.id;
@@ -522,7 +525,8 @@
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
                   $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
-                  
+                    $("#"+type+"-attachedFileName"+imageIndex).val(data.fileName);
+
                 } else {
                     console.log(data.message);
                 }
@@ -539,7 +543,7 @@
       var checkResult = $('[name=agreeCheckbox]').prop('checked');
       return checkResult;
     }
-    
+
     function submitForm() {
       var agreeCheckbox = window.agreeCheckbox();
       if (agreeCheckbox == true) {

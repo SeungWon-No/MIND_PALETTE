@@ -42,6 +42,24 @@ class Counseling extends Model
             ->get();
     }
 
+    public static function findMyCounseling($advisorPK) {
+        return Counseling::where('advisorPK','=',$advisorPK)
+            ->where("counselingStatus","280")
+            ->where("isDelete","N")
+            ->get()->count();
+    }
+    public static function findCounselingStatus($counselingPK) {
+        return Counseling::select("counselingStatus")
+            ->where('counselingPK','=',$counselingPK)
+            ->where("isDelete","N")
+            ->get()->first();
+    }
+
+    public static function updateCounselingStatus($counselingPK, $value) {
+        return Counseling::where('counselingPK','=',$counselingPK)
+            ->update($value);
+    }
+
     public static function getCounselingList(){ // 전체 상담 리스트
         $getResult = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
@@ -69,8 +87,8 @@ class Counseling extends Model
         $pagination = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
                     ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
-                    ->where('counseling.memberPK', '<>', '0')
-                    ->where('counseling.memberPK', '>=', '1')
+                    ->where('counseling.memberPK', '>', '0')
+                    ->whereIn("counseling.counselingStatus",[279,280,281,353])
                     ->orderBy("counselingPK", "DESC")
                     ->paginate(10);
 
@@ -129,6 +147,7 @@ class Counseling extends Model
                     ->join('code as codeSchool', 'counseling.counselorSchool', '=', 'codeSchool.codePK')
                     ->select("counseling.counselingPK",
                              "counseling.memberPK",
+                             "counseling.advisorPK",
                              "counseling.counselorName",
                              "counseling.counselorBirthday",
                              "codeSchool.codeName as counselorSchool",
@@ -146,6 +165,7 @@ class Counseling extends Model
                              "counseling.relationshipSister",
                              "counseling.stressCauses",
                              "counseling.reasonInspection",
+                             "counseling.counselingStatus",
                              "counseling.createDate",
                              )
                     ->where('counseling.counselingPK', '=', $counselingPK)
@@ -156,6 +176,7 @@ class Counseling extends Model
 
         $clientInfo = [
             'memberPK' => $getCounselingDetail[0]['memberPK'],
+            'advisorPK' => $getCounselingDetail[0]['advisorPK'],
             'clientName' => $getCounselingDetail[0]['counselorName'], // 상담 대상 이름
             'counselorBirthday' => Crypt::decryptString($getCounselingDetail[0]['counselorBirthday']), // 생년월일
             'counselorSchool' => $getCounselingDetail[0]['counselorSchool'], // 학교
@@ -172,8 +193,9 @@ class Counseling extends Model
             'relationshipSiblings' => $getCounselingDetail[0]['relationshipSiblings'], // 형제 관계
             'relationshipSister' => $getCounselingDetail[0]['relationshipSister'],// 자매 관계
             'stressCauses' => $getCounselingDetail[0]['stressCauses'], // 가족 내력, 스트레스 요인
+            'counselingStatus' => $getCounselingDetail[0]['counselingStatus'],
             'reasonInspection' => $getCounselingDetail[0]['reasonInspection'], // 심리 상담 사유
-            'createDate' => $getCounselingDetail[0]['createDate'], // 심리 상담 사유
+            'createDate' => $getCounselingDetail[0]['createDate'],
         ];
         return $clientInfo;
 

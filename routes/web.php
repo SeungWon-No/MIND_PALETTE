@@ -16,6 +16,7 @@ use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingDetailController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorSearchingDataContoroller;
 use App\Http\Controllers\Advisor\Profile\AdvisorProfileController;
 
+use App\Http\Controllers\Common\FileUpload;
 use App\Http\Controllers\Common\FileUploadController;
 use App\Http\Controllers\Common\PASSAuthController;
 use App\Http\Controllers\Mobile\Advice\AgreeController;
@@ -80,6 +81,7 @@ Route::middleware(['autoLogin'])->group(function () {
     });
 
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]);
+    Route::post('/editor/upload', FileUpload::class);
     Route::post("/imageUpload", [FileUploadController::class,"imageUpload"]);
 
     Route::get("/counselingCenter",CounselingCenterController::class);
@@ -180,7 +182,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
 
         Route::resource('/profile', AdvisorProfileController::class); // 상담사 프로필
-        
+
         Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
 
         Route::resource("/counselingList", AdvisorCounselingListController::class); // 상담리스트
@@ -188,6 +190,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::get("/myCounselingList", [AdvisorMyCounselingListController::class, "index"]); // my 상담리스트
 
         Route::resource("/counselingDetail", AdvisorCounselingDetailController::class); // 상담 내용
+        Route::post("/counselingStatus/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingStatus"]); // 상담 내용
 
         Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
 
@@ -197,7 +200,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
     Route::get('/loginFindId', function () { // 아이디, 패스워드 찾기 페이지
         return view('/advisor/login/loginFindEmailPassword');
     });
-    
+
     Route::get('/loginFindPassword', function () { // 패스워드 휴대폰 인증 페이지
         return view('/advisor/login/loginFindPassword');
     });

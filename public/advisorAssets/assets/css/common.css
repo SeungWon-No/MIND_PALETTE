@@ -18,7 +18,7 @@
   --gray-04-color: #eff2f5;
   --gray-05-color: #f8f8f8;
 }
-/* 
+/*
 ========================
 레이아웃
 ========================
@@ -40,20 +40,20 @@ html, body {
 #container.white {
   background: #fff;
 }
-/* 
+/*
 =========================
 @공통
 =========================
 */
 /* 아이콘 */
 .icon {
-  display:inline-block; 
-  position:relative; 
-  font-size:0; 
-  line-height:1; 
-  vertical-align:top; 
-  background-repeat:no-repeat; 
-  background-position:center center; 
+  display:inline-block;
+  position:relative;
+  font-size:0;
+  line-height:1;
+  vertical-align:top;
+  background-repeat:no-repeat;
+  background-position:center center;
   background-size:100%;
 }
 /* 아이콘 사이즈(정사각형) */
@@ -71,7 +71,7 @@ html, body {
   width: 22px;
   height: 23px;
   background-image: url(../images/icon/thumb-down-icon.png);
-} 
+}
 .pagin-perv-icon {
   width: 5px;
   height: 9px;
@@ -84,7 +84,7 @@ html, body {
 }
 .link-more-icon {
   width: 4px;
-  aspect-ratio: 1/2; 
+  aspect-ratio: 1/2;
   background-image: url(../images//icon/link-more-icon.png);
 }
 .notice-icon {
@@ -398,22 +398,22 @@ footer {
 }
 /*  팝업 */
 .layer-pop__wrap {
-  position:fixed; 
-  top:0; 
-  left:100%; 
-  width:100%; 
-  height:100%; 
-  background: rgba(0, 0, 0, 0.5); 
-  z-index: 99999; 
-  visibility:visible; 
-  opacity:0; 
-  overflow:hidden; 
+  position:fixed;
+  top:0;
+  left:100%;
+  width:100%;
+  height:100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99999;
+  visibility:visible;
+  opacity:0;
+  overflow:hidden;
   transition:left 0s 0.35s, visibility 0s 0.35s, opacity 0.35s 0s;
 }
 .layer-pop__wrap.active {
-  left:0; 
-  visibility:visible; 
-  opacity:1; 
+  left:0;
+  visibility:visible;
+  opacity:1;
   transition:left 0s 0s, visibility 0s 0s, opacity 0.35s 0s;
 }
 .layer-pop__parent {
@@ -644,7 +644,7 @@ footer {
 .layer-form__btns-wrap .pop-alert__btn {
   width: 130px;
 }
-/* 
+/*
 =========================
 @로그인
 =========================
@@ -752,7 +752,7 @@ footer {
   transform: translateY(-50%);
   background: var(--gray-01-color);
 }
-.login-btn__wrap { 
+.login-btn__wrap {
   height: 55px;
   border-radius: 5px;
   background: var(--point-blue-color);
@@ -833,7 +833,7 @@ footer {
   left: 0;
   bottom: -21px;
 }
-/* 
+/*
 =========================
 @메인
 =========================
@@ -1036,7 +1036,7 @@ footer {
 .counseling-user__year {
   position: relative;
 }
-.counseling-user__name::after, 
+.counseling-user__name::after,
 .counseling-user__year::after {
   content: '';
   position: absolute;
@@ -1046,7 +1046,7 @@ footer {
   right: -10px;
   transform: translateY(-50%);
   background: var(--gray-01-color);
-} 
+}
 .counseling-code__cell {
   display: flex;
   align-items: center;
@@ -1063,7 +1063,7 @@ footer {
 .counseling-link__cell {
   margin-top: 14px;
   width: 150px;
-  height: 42px; 
+  height: 42px;
 }
 .counseling-link {
   width: 100%;
@@ -1087,7 +1087,7 @@ footer {
   gap: 0 14px;
   margin-top: 21px;
 }
-.thumb-up__btn, 
+.thumb-up__btn,
 .thumb-down__btn {
   display: flex;
   gap: 3px;
@@ -1098,8 +1098,8 @@ footer {
 }
 .thumb-down__btn .icon {
   align-self: flex-end;
-} 
-.thumb-up__num, 
+}
+.thumb-up__num,
 .thumb-down__num {
   font-weight: 700;
   font-size: 15px;
@@ -1145,7 +1145,7 @@ footer {
   justify-content: center;
   border: 1px solid var(--gray-03-color);
   font-weight: 900;
-  font-size: 15px;  
+  font-size: 15px;
   color: var(--font-grray-color);
 }
 .paging-num.active {
@@ -1265,7 +1265,7 @@ footer {
 }
 .account-info__cell {
   display: flex;
-  gap: 0 15px; 
+  gap: 0 15px;
 }
 .account-profile__photo {
   width: 64px;
@@ -1433,7 +1433,7 @@ footer {
 .recent-history__year {
   position: relative;
 }
-.recent-history__name::after, 
+.recent-history__name::after,
 .recent-history__year::after {
   content: '';
   position: absolute;
@@ -1578,7 +1578,7 @@ footer {
   line-height: 14px;
   color: var(--font-blue-gray-color);
 }
-/* 
+/*
 =========================
 @상담사리스트, 상세
 =========================
@@ -1637,7 +1637,7 @@ footer {
 .counseling-search__left .select-option {
   height: 27px;
   color: var(--font-black-color);
-} 
+}
 .counseling-search__left .select-box__label {
   justify-content: space-between;
   color: #4c4c4c;
@@ -1919,7 +1919,7 @@ footer {
 .detail-item__slider .swiper-button-next {
   width: 15px;
   height: 29px;
-} 
+}
 .detail-item__slider .swiper-button-prev::after,
 .detail-item__slider .swiper-button-next::after {
   content: '';
@@ -2019,7 +2019,7 @@ footer {
   line-height: 21px;
   letter-spacing: -0.1px;
 }
-.content-cell.active { 
+.content-cell.active {
   display: block;
 }
 .kid-info__item-wrap {
@@ -2232,7 +2232,7 @@ footer {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-}  
+}
 .observe-info__item {
   display: flex;
   align-items: center;
@@ -2289,7 +2289,7 @@ footer {
   color: #000;
 }
 .result-info__label .high {
- color: var(--point-red-color); 
+ color: var(--point-red-color);
 }
 .result-info__label .mid {
   color: var(--primary-color)
@@ -2523,7 +2523,7 @@ footer {
 }
 .counselor-info__work {
   font-weight: 700;
-  color: #878F9A;  
+  color: #878F9A;
 }
 .counselor-info__progress {
   color: var(--point-blue-color);
@@ -2835,7 +2835,7 @@ footer {
   padding: 18px 20px 15px 18px;
 }
 .counselor-notice__area .icon {
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 .counselor-notice__text-g {
   display: flex;
@@ -2898,7 +2898,7 @@ footer {
 .note-check__cell {
   display: flex;
   align-items: center;
-  gap: 5px;  
+  gap: 5px;
 }
 .note-check-icon {
   width: 15px;
@@ -2995,7 +2995,7 @@ footer {
 .sb-counseling__year {
   position: relative;
 }
-.sb-counseling__user::after, 
+.sb-counseling__user::after,
 .sb-counseling__year::after {
   content: '';
   position: absolute;
@@ -3012,7 +3012,7 @@ footer {
   height: 40px;
   top: 50%;
   transform: translateY(-32px);
-} 
+}
 .sb-counseling__slider .swiper-button-prev::after,
 .sb-counseling__slider .swiper-button-next::after {
   content: '';
@@ -3045,7 +3045,7 @@ footer {
   background: var(--point-blue-color);
   border-radius: 50px;
 }
-/* 
+/*
 =========================
 @프로필
 =========================
@@ -3176,7 +3176,7 @@ footer {
 }
 .profile-col__content.flex {
   display: flex;
-} 
+}
 .profile-star__left {
   flex: 1;
 }
@@ -3525,7 +3525,7 @@ footer {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; 
+  height: 100%;
   cursor: pointer;
   z-index: 100;
   display: none;
@@ -3589,7 +3589,7 @@ footer {
 .form-group + .form-group {
   margin-top: 64px;
 }
-/* 
+/*
 =========================
 @회원가입
 =========================
@@ -3687,7 +3687,7 @@ footer {
   background: var(--font-grray-color);
   pointer-events: none;
 }
-/* 
+/*
 =========================
 @공지사항
 =========================
@@ -4081,7 +4081,7 @@ a.inquiry-btn:hover {
 .form-group.join .form-control {
   align-self: flex-end;
   margin-top: 16px;
-} 
+}
 .form-group.join .form-control__btn {
   height: 43px;
   font-size: 15px;
@@ -4270,4 +4270,4 @@ a.inquiry-btn:hover {
 }
 .form-group.join .form-control.mg-t-40 {
   margin-top: 40px;
-} 
+}

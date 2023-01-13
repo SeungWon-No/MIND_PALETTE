@@ -26,6 +26,10 @@
 
 @endphp
 @include('advisor/common/header')
+<link rel="stylesheet" type="text/css" href="/commonEditor/styles.css?version={{CSS_VERSION}}">
+<script src="/commonEditor/ckeditor.js"></script>
+<script src="/commonEditor/ck.upload.adapter.js"></script>
+    @csrf
     <div id="container">
       <div class="detail-top__cont">
         <div class="detail-top__inner">
@@ -543,7 +547,7 @@
           </div>
         </div>
       </div>
-      <div class="detail-md__cont">
+      <div id="statusForm" class="detail-md__cont" style="display: {{$cssStyle["status"]}}">
         <div class="detail-md__inner">
           <div class="counselor-before__cont">
             <div class="counselor-common__info">
@@ -554,12 +558,90 @@
             </div>
             <div class="counselor-before__btn-wrap">
               <!-- 상담중일때, counselor-before__btn에 클래스 disabled 추가-->
-              <a href="#" class="counselor-before__btn">상담하기</a>
+              <a href="javascript:startCounseling()" class="counselor-before__btn">{{$statusCode[$clientInfo["counselingStatus"]]}}</a>
               <span class="icon donw-arrow-icon"></span>
             </div>
           </div>
         </div>
       </div>
+    <div id="editorForm" class="detail-md__cont" style="display: {{$cssStyle["editor"]}}">
+        <form name="counselingWriteForm">
+            <div class="detail-md__inner">
+                <!-- 22.12.29 수정 -->
+                <div class="counselor-edit__cont">
+                    <div class="counselor-edit__top">
+                        <div class="counselor-common__info">
+                            <div class="common-info__photo">
+                                <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="common-info__img">
+                            </div>
+                            <div class="common-info__name">김아무 상담사</div>
+                        </div>
+                        <div class="counselor-edit__btns-wrap">
+                            <button onclick="saveWrite('temp')" type="button" class="counselor-edit__btn counselor-edit__btn--save">임시저장</button>
+                            <button onclick="saveWrite('write')" type="button" class="counselor-edit__btn">상담등록</button>
+                            <button onclick="cancel()"type="button" class="counselor-edit__btn counselor-edit__btn--cancel">상담취소</button>
+                        </div>
+                    </div>
+                    <div class="counselor-edit__body">
+                        <div class="counselor-editor__area">
+                            <div class="counselor-editor__btn-wrap">
+                                <button class="counselor-editor__btn guide">작성가이드</button>
+                                <button class="counselor-editor__btn reset">폼 리셋</button>
+                            </div>
+                            <div class="counselor-editor2">
+                                <textarea class="ckeditor" id="content" name="content"></textarea>
+                            </div>
+                        </div>
+                        <div class="counselor-check__area">
+                            <div class="counselor-time__area">
+                                <div class="counselor-time__desc">작성까지 남은 시간</div>
+                                <div class="counselor-time">24 : 00</div>
+                            </div>
+                            <div class="counselor-notice__area">
+                                <span class="icon caution-icon"></span>
+                                <div class="counselor-notice__text-g">
+                                    <h5>24시간 이내에 작성해주세요.</h5>
+                                    <p>시간 경과 시, 작성 중인 내용이 삭제되며 해당 검사지는 재상담이 불가합니다.</p>
+                                </div>
+                            </div>
+                            <div class="counselor-note__check">
+                                <div class="note-check__wrap">
+                                    <div class="note-check__head">특이사항</div>
+                                    <div class="note-check__body">
+                                        <div class="note-check__item">
+                                            <input type="radio" class="note-check" name="noteCheck" checked>
+                                            <div class="note-check__cell">
+                                                <span class="icon note-check-icon green"></span>
+                                                <div class="note-check__label">해당없음</div>
+                                            </div>
+                                            <div class="note-check__desc">환자에게 해당하는 정서적 특이사항이 없을 경우.</div>
+                                        </div>
+                                        <div class="note-check__item">
+                                            <input type="radio" class="note-check" name="noteCheck">
+                                            <div class="note-check__cell">
+                                                <span class="icon note-check-icon red"></span>
+                                                <div class="note-check__label">위험</div>
+                                            </div>
+                                            <div class="note-check__desc">정서적 위험, 조치가 긴급한 환자의 경우..</div>
+                                        </div>
+                                        <div class="note-check__item">
+                                            <input type="radio" class="note-check" name="noteCheck">
+                                            <div class="note-check__cell">
+                                                <span class="icon note-check-icon yellow"></span>
+                                                <div class="note-check__label">주의</div>
+                                            </div>
+                                            <div class="note-check__desc">주의가 필요한 환자의 경우.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// 22.12.29 수정 -->
+            </div>
+        </form>
+    </div>
       <div class="detail-bt__cont">
         <div class="detail-bt__inner">
           <h3 class="sb-counseling__tit">대기중인 그림상담</h3>
@@ -583,33 +665,101 @@
         </div>
       </div>
     </div>
+<article id="detailImagePop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+        <div class="layer-pop__children">
+            <div class="layer-pop__photo">
+                <div class="layer-photo__cell">
+                    <img src="" alt="" class="layer-img">
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+<script>
+
+    if("{{$cssStyle["editor"]}}" === "block") {
+        editorLoader();
+    }
+
+    function startCounseling() {
+        const status = "{{$clientInfo["counselingStatus"]}}";
+        if (status === "279") {
+            //counselingStatus
+            $.ajax({
+                type:'POST',
+                url:'/advisor/counselingStatus/{{$counselingPK}}',
+                data: {},
+                async: false,
+                headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+                success:function(json){
+                    var data = JSON.parse(json);
+                    if ( data.status === "success" ) {
+                        $("#editorForm").css('display','block');
+                        $("#statusForm").css('display','none');
+                        editorLoader()
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+    }
+
+    function editorLoader(){
+        ClassicEditor
+            .create( document.querySelector( '.ckeditor' ), {
+                extraPlugins: [MyCustomUploadAdapterPlugin],
+            } )
+            .then( editor => {
+                window.editor = editor;
+            } )
+            .catch( error => {
+            } );
+    }
+
+    function saveWrite(type) {
+        var queryString = $("form[name=counselingWriteForm]").serialize() ;
+        $.ajax({
+            type:'POST',
+            url:'/advisor/counselingDetail/{{$counselingPK}}',
+            data: queryString,
+            async: false,
+            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+            success:function(json){
+                var data = JSON.parse(json);
+                if ( data.status === "success" ) {
+
+                } else {
+                    // alert(data.message);
+                }
+            }
+        });
+    }
+
+    function cancel() {
+        $.ajax({
+            type:'POST',
+            url:'/advisor/counselingCancel/{{$counselingPK}}',
+            data: {},
+            async: false,
+            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+            success:function(json){
+                var data = JSON.parse(json);
+                if ( data.status === "success" ) {
+
+                } else {
+                    // alert(data.message);
+                }
+            }
+        });
+    }
+
+    function MyCustomUploadAdapterPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new UploadAdapter(loader)
+        }
+    }
+</script>
 @include('advisor/common/footer')
-  </div>
-
-  <!-- 팝업 -->
-  <!-- 이미지 레이어 팝업 -->
-  <article id="detailImagePop" class="layer-pop__wrap">
-    <div class="layer-pop__parent">
-      <div class="layer-pop__children">
-        <div class="layer-pop__photo">
-          <div class="layer-photo__cell">
-            <img src="" alt="" class="layer-img">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-  <!-- 비디오 팝업 -->
-  <article id="detailVideoPop" class="layer-pop__wrap">
-    <div class="layer-pop__parent">
-      <div class="layer-pop__children">
-        <div class="layer-pop__video">
-          <button type="button" class="pop-close__btn"><span class="icon close-white-icon"></span></button>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <script src="/advisorAssets/assets/js/common.js"></script>
-</body>
-</html>
+@include('advisor/common/end')

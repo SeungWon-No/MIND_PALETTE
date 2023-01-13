@@ -19,6 +19,7 @@ class FileUploadController extends Controller
         try {
             if($request->hasFile('file')) {
                 $path = public_path().'/file';
+                $fileOriginName = $request->file('file')->getClientOriginalName();
                 if(!Storage::exists($path)){
                     Storage::disk('local')->makeDirectory('/public/file');
                 }
@@ -33,6 +34,7 @@ class FileUploadController extends Controller
                 $data["status"] = "success";
                 $data["message"] = "성공";
                 $data["filePath"] = $filePath;
+                $data["fileName"] = $fileOriginName;
             } else {
                 $data["message"] = "첨부 파일을 찾을 수 없습니다.";
             }

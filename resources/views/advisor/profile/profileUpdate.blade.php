@@ -1,9 +1,9 @@
 @php
-print_r($getAdvisorProfile);
-print_r($getAdvisorEducationInfo);
+print_r($advisorProfile);
 print_r($getAdvisorQualificationInfo);
 @endphp
 @include('advisor/common/header')
+    @csrf
     <div id="container">
       <div class="member-cont">
         <div class="member-inner">
@@ -49,7 +49,7 @@ print_r($getAdvisorQualificationInfo);
                 <div class="form-group__label">이름</div>
                 <div class="form-group__item">
                   <div class="form-group__data">
-                    <input type="text" class="form-control confirm" placeholder="변경 불가하니 정확히 입력해주세요." value="{{$getAdvisorProfile ? $getAdvisorProfile['advisorName'] : ''}}">
+                    <input type="text" class="form-control confirm" placeholder="변경 불가하니 정확히 입력해주세요." value="{{$advisorProfile ? $advisorProfile['advisorName'] : ''}}">
                   </div>
                   <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                 </div>
@@ -58,7 +58,7 @@ print_r($getAdvisorQualificationInfo);
                 <div class="form-group__label">휴대폰번호</div>
                 <div class="form-group__item">
                   <div class="form-group__data">
-                    <input type="text" class="form-control confirm" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)" value="{{$getAdvisorProfile ? $getAdvisorProfile['phone'] : '' }}">
+                    <input type="text" class="form-control confirm" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)" value="{{$advisorProfile ? $advisorProfile['phone'] : '' }}">
                     <button class="form-control__btn wd-127">휴대폰번호 변경</button>
                   </div>
                   <p class="form-group-text">* 호칭을 선택해주세요.</p>
@@ -68,7 +68,7 @@ print_r($getAdvisorQualificationInfo);
                 <div class="form-group__label">이메일</div>
                 <div class="form-group__item">
                   <div class="form-group__data">
-                    <input type="email" class="form-control confirm" placeholder="입력" value="{{ $getAdvisorProfile ? $getAdvisorProfile['email'] : '' }}">
+                    <input type="email" class="form-control confirm" placeholder="입력" value="{{ $advisorProfile ? $advisorProfile['email'] : '' }}">
                   </div>
                   <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                 </div>
@@ -91,7 +91,7 @@ print_r($getAdvisorQualificationInfo);
                 <div class="form-group__label">한줄소개</div>
                 <div class="form-group__item">
                   <div class="form-group__data">
-                    <input type="text" class="form-control" placeholder="자신을 소개해주세요." value="{{ $getAdvisorProfile ? $getAdvisorProfile['briefIntroduction'] : '' }}">
+                    <input type="text" class="form-control" placeholder="자신을 소개해주세요." value="{{ $advisorProfile ? $advisorProfile['briefIntroduction'] : '' }}">
                   </div>
                   <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                 </div>
@@ -100,7 +100,7 @@ print_r($getAdvisorQualificationInfo);
                 <div class="form-group__label">상세소개</div>
                 <div class="form-group__item">
                   <div class="form-group__data">
-                    <textarea class="form-textarea" placeholder="자신을 소개해주세요">{{ $getAdvisorProfile ? $getAdvisorProfile['detailedDescription'] : '' }}</textarea>
+                    <textarea class="form-textarea" placeholder="자신을 소개해주세요">{{ $advisorProfile ? $advisorProfile['detailedDescription'] : '' }}</textarea>
                   </div>
                   <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                 </div>
@@ -123,96 +123,78 @@ print_r($getAdvisorQualificationInfo);
                       <th style="width: 114px;">증명성 사본</th>
                     </tr>
                 </thead>
+                <input type="hidden" id="educationCount" name="educationCount" value="{{count($advisorEducationInfos)}}"/>
+                  @php
+                    $educationIndex = 1;
+                  @endphp
                 <tbody class="member-table__body">
-                  <tr class="table-row">
-                    <td class="table-col no-padding">
-                      <div class="select-box">
-                        <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option">학사</li>
-                          <li class="select-option">석사</li>
-                          <li class="select-option">박사</li>
-                        </ul>                      
-                      </div>
-                    </td>
-                    <td class="table-col">  
-                      <input type="text" class="tabel-form__control" placeholder="학교명">
-                    </td>
-                    <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="학과명">
-                    </td>
-                    <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="전공">
-                    </td>
-                    <td class="table-col no-padding">
-                      <div class="select-box">
-                        <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option">졸업</li>
-                          <li class="select-option">재학</li>
-                          <li class="select-option">수료</li>
-                        </ul>                      
-                      </div>
-                    </td>
-                    <td class="table-col cursor">
-                      <label class="table-file__label">
-                        <input type="file" class="table-file">
-                        첨부하기
-                        <!-- 파일올렸을때 
-                          <span class="table-file__name">증명서.png</span> 
-                        //파일올렸을때 -->
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-row">
-                    <td class="table-col no-padding">
-                      <div class="select-box">
-                        <button class="select-box__label">석사 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option">학사</li>
-                          <li class="select-option">석사</li>
-                          <li class="select-option">박사</li>
-                        </ul>                      
-                      </div>
-                    </td>
-                    <td class="table-col">  
-                      <input type="text" class="tabel-form__control" placeholder="학교명">
-                    </td>
-                    <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="학과명">
-                    </td>
-                    <td class="table-col">
-                      <input type="text" class="tabel-form__control" placeholder="전공">
-                    </td>
-                    <td class="table-col no-padding">
-                      <div class="select-box ">
-                        <button class="select-box__label">선택 <span class="icon select-down-icon"></span></button>
-                        <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
-                        <ul class="select-option__list">
-                          <li class="select-option">선택</li>
-                          <li class="select-option">졸업</li>
-                          <li class="select-option">재학</li>
-                          <li class="select-option">수료</li>
-                        </ul>                      
-                      </div>
-                    </td>
-                    <td class="table-col cursor">
-                      <!-- 파일 올렸을때 -->
-                      <label class="table-file__label">
-                        <input type="file" class="table-file">
-                        <span class="table-file__name">증명서.png</span>
-                      </label>
-                    </td>
-                  </tr>
+                    @foreach($advisorEducationInfos as $advisorEducationInfo)
+                        <input type="hidden" id="educationPK{{$educationIndex}}" name="educationPK{{$educationIndex}}" value="{{$advisorEducationInfo->educationPK}}"/>
+                        <input type="hidden" id="degree{{$educationIndex}}" name="degree{{$educationIndex}}" value="{{$advisorEducationInfo->degree}}"/>
+                      <tr class="table-row">
+                        <td class="table-col no-padding">
+                          <div class="select-box">
+                            <button class="select-box__label">{{$codeTitle[$advisorEducationInfo->degree]}} <span class="icon select-down-icon"></span></button>
+                            <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
+                            <ul class="select-option__list">
+                              <li class="select-option" onclick="changeDegree('{{$educationIndex}}','-1')">선택</li>
+                              <li class="select-option" onclick="changeDegree('{{$educationIndex}}','325')">학사</li>
+                              <li class="select-option" onclick="changeDegree('{{$educationIndex}}','326')">석사</li>
+                              <li class="select-option" onclick="changeDegree('{{$educationIndex}}','327')">박사</li>
+                            </ul>
+                          </div>
+                        </td>
+                        <td class="table-col">
+                            <input id="schoolName{{$educationIndex}}" name="schoolName{{$educationIndex}}"
+                                   value="{{$advisorEducationInfo->school}}"
+                                   type="text" class="tabel-form__control" placeholder="학교명">
+                        </td>
+                        <td class="table-col">
+                            <input id="department{{$educationIndex}}" name="department{{$educationIndex}}"
+                                   value="{{$advisorEducationInfo->department}}"
+                                   type="text" class="tabel-form__control" placeholder="학과명">
+                        </td>
+                        <td class="table-col">
+                            <input id="major{{$educationIndex}}" name="major{{$educationIndex}}"
+                                   value="{{$advisorEducationInfo->major}}"
+                                   type="text" class="tabel-form__control" placeholder="전공">
+                        </td>
+                        <td class="table-col no-padding">
+                          <div class="select-box">
+                              <input type="hidden" id="graduation{{$educationIndex}}" name="graduation{{$educationIndex}}" value="{{$advisorEducationInfo->graduationStatus}}"/>
+                            <button class="select-box__label">{{$codeTitle[$advisorEducationInfo->graduationStatus]}} <span class="icon select-down-icon"></span></button>
+                            <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
+                            <ul class="select-option__list">
+                                <li class="select-option" onclick="changeGraduation('1','-1')">선택</li>
+                                <li class="select-option" onclick="changeGraduation('1','328')">졸업</li>
+                                <li class="select-option" onclick="changeGraduation('1','329')">재학</li>
+                                <li class="select-option" onclick="changeGraduation('1','330')">수료</li>
+                            </ul>
+                          </div>
+                        </td>
+                        <td class="table-col cursor">
+
+                            <label id="" class="table-file__label">
+                                <input id="qualification" type="file" class="table-file attachedFilePath" data-index="1">
+                                <span class="table-file__name" id="qualification-attachedDisplayName{{$educationIndex}}">{{$advisorEducationInfo->fileName}}</span>
+                                <input id="qualification-attachedFilePath{{$educationIndex}}"
+                                       value="{{$advisorEducationInfo->certificateFilePath}}"
+                                       name="qualification-attachedFilePath{{$educationIndex}}"
+                                       type="hidden">
+                                <input id="qualification-attachedFileName{{$educationIndex}}"
+                                       value="{{$advisorEducationInfo->fileName}}"
+                                       name="qualification-attachedFileName{{$educationIndex}}"
+                                       type="hidden">
+                            </label>
+                        </td>
+                      </tr>
+                        @php
+                            $educationIndex++;
+                        @endphp
+                    @endforeach
                 </tbody>
               </table>
-              <button type="button" class="table-add__btn">추가하기</button>
+              <button id="btnEducation" type="button" class="table-add__btn">추가하기</button>
             </div>
           </div>
           <div class="member-cell">
@@ -232,15 +214,15 @@ print_r($getAdvisorQualificationInfo);
                     <td class="table-col">
                       <input type="text" class="tabel-form__control" placeholder="발행처">
                     </td>
-                    <td class="table-col">  
+                    <td class="table-col">
                       <input type="text" class="tabel-form__control" placeholder="자격이름">
                     </td>
                     <td class="table-col">
                       <label class="table-file__label">
                         <input type="file" class="table-file">
                         첨부하기
-                        <!-- 파일올렸을때 
-                          <span class="table-file__name">증명서.png</span> 
+                        <!-- 파일올렸을때
+                          <span class="table-file__name">증명서.png</span>
                         //파일올렸을때 -->
                       </label>
                     </td>
@@ -249,7 +231,7 @@ print_r($getAdvisorQualificationInfo);
                     <td class="table-col">
                       <input type="text" class="tabel-form__control" placeholder="발행처">
                     </td>
-                    <td class="table-col">  
+                    <td class="table-col">
                       <input type="text" class="tabel-form__control" placeholder="자격이름">
                     </td>
                     <td class="table-col">
@@ -303,7 +285,7 @@ print_r($getAdvisorQualificationInfo);
                           <li class="select-option">선택</li>
                           <li class="select-option">현재 근무지</li>
                           <li class="select-option">이전 근무지</li>
-                        </ul>                      
+                        </ul>
                       </div>
                     </td>
                     <td class="table-col">
@@ -317,7 +299,7 @@ print_r($getAdvisorQualificationInfo);
                           <li class="select-option">근무형태</li>
                           <li class="select-option">풀타임</li>
                           <li class="select-option">파트타임</li>
-                        </ul>                      
+                        </ul>
                       </div>
                     </td>
                     <td class="table-col">
@@ -327,8 +309,8 @@ print_r($getAdvisorQualificationInfo);
                       <label class="table-file__label">
                         <input type="file" class="table-file">
                         첨부하기
-                        <!-- 파일올렸을때 
-                          <span class="table-file__name">증명서.png</span> 
+                        <!-- 파일올렸을때
+                          <span class="table-file__name">증명서.png</span>
                         //파일올렸을때 -->
                       </label>
                     </td>
@@ -342,7 +324,7 @@ print_r($getAdvisorQualificationInfo);
                           <li class="select-option">선택</li>
                           <li class="select-option">현재 근무지</li>
                           <li class="select-option">이전 근무지</li>
-                        </ul>                      
+                        </ul>
                       </div>
                     </td>
                     <td class="table-col">
@@ -356,7 +338,7 @@ print_r($getAdvisorQualificationInfo);
                           <li class="select-option">근무형태</li>
                           <li class="select-option">풀타임</li>
                           <li class="select-option">파트타임</li>
-                        </ul>                      
+                        </ul>
                       </div>
                     </td>
                     <td class="table-col">
@@ -366,7 +348,7 @@ print_r($getAdvisorQualificationInfo);
                       <label class="table-file__label">
                         <input type="file" class="table-file">
                         <!-- 파일올렸을때 -->
-                          <span class="table-file__name">증명서.png</span> 
+                          <span class="table-file__name">증명서.png</span>
                       </label>
                     </td>
                   </tr>
@@ -384,6 +366,112 @@ print_r($getAdvisorQualificationInfo);
     </div> <!-- container end-->
     @include('advisor/common/footer')
     @include('advisor/common/end')
+    <script>
+        let educationIndex = parseInt("{{count($advisorEducationInfos)}}");
+
+        $("#btnEducation").on('click',function () {
+            if (validEducation()) {
+                $("#educationCount").val(educationIndex);
+                const targetTable = this.previousElementSibling;
+                const targetTableTr = targetTable.querySelector('.member-table__body');
+                const tableTr = document.createElement('tr');
+                tableTr.classList.add('table-row');
+                const table01Content = `<td class="table-col no-padding">
+                                  <div class="select-box">
+                                      <input type="hidden" id="degree`+educationIndex+`" name="degree`+educationIndex+`" value="-1"/>
+                                      <button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
+                                      <ul class="select-option__list">
+                                        <li class="select-option" onclick="changeDegree('`+educationIndex+`','-1')">선택</li>
+                                        <li class="select-option" onclick="changeDegree('`+educationIndex+`','325')">학사</li>
+                                        <li class="select-option" onclick="changeDegree('`+educationIndex+`','326')">석사</li>
+                                        <li class="select-option" onclick="changeDegree('`+educationIndex+`','327')">박사</li>
+                                      </ul>
+                                  </div>
+                              </td>
+                              <td class="table-col">
+                                <input id="schoolName`+educationIndex+`" name="schoolName`+educationIndex+`" type="text" class="tabel-form__control" placeholder="학교명">
+                              </td>
+                              <td class="table-col">
+                                <input id="department`+educationIndex+`" name="department`+educationIndex+`" type="text" class="tabel-form__control" placeholder="학과명">
+                              </td>
+                              <td class="table-col">
+                                <input id="major`+educationIndex+`" name="major`+educationIndex+`" type="text" class="tabel-form__control" placeholder="전공">
+                              </td>
+                              <td class="table-col no-padding">
+                                  <div class="select-box">
+                                      <input type="hidden" id="graduation`+educationIndex+`" name="graduation`+educationIndex+`" value="-1"/>
+                                      <button class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
+                                      <ul class="select-option__list">
+                                        <li class="select-option" onclick="changeGraduation('`+educationIndex+`','-1')">선택</li>
+                                        <li class="select-option" onclick="changeGraduation('`+educationIndex+`','328')">졸업</li>
+                                        <li class="select-option" onclick="changeGraduation('`+educationIndex+`','329')">재학</li>
+                                        <li class="select-option" onclick="changeGraduation('`+educationIndex+`','330')">수료</li>
+                                      </ul>
+                                  </div>
+                              </td>
+                              <td class="table-col cursor">
+                                  <label class="table-file__label">
+                                      <input id="education" type="file" class="table-file attachedFilePath" data-index="`+educationIndex+`">
+                                      <input id="education-attachedFilePath`+educationIndex+`" name="education-attachedFilePath`+educationIndex+`" type="hidden">
+                                      첨부하기
+                                  </label>
+                              </td>`;
+                tableTr.innerHTML = table01Content;
+                targetTableTr.appendChild(tableTr);
+            }
+        });
+
+
+        function validEducation(){
+            if (educationIndex == 0) {
+                educationIndex++;
+                return true;
+            }
+            var degree = $("#degree"+educationIndex).val();
+            var schoolName = $("#schoolName"+educationIndex).val();
+            var department = $("#department"+educationIndex).val();
+            var major = $("#major"+educationIndex).val();
+            var graduation = $("#graduation"+educationIndex).val();
+            var educationAttachedFilePath = $("#education-attachedFilePath"+educationIndex).val();
+
+            if (degree == -1) {
+                $("#degree"+educationIndex).focus();
+                alert('학위를 선택해주세요.');
+                return false;
+            }else if(schoolName == ''){
+                $("#schoolName"+educationIndex).focus();
+                alert('학교를 작성해주세요.');
+                return false;
+            }else if(department == ''){
+                $("#department"+educationIndex).focus();
+                alert('학과를 작성해주세요.');
+                return false;
+            }else if(major == ''){
+                $("#major"+educationIndex).focus();
+                alert('전공을 작성해주세요.');
+                return false;
+            }else if(graduation == -1){
+                $("#graduation"+educationIndex).focus();
+                alert('졸업여부를 선택해주세요.');
+                return false;
+            }else if(educationAttachedFilePath == ''){
+                $("#graduation"+educationIndex).focus();
+                alert('증명서 사본을 첨부해주세요.');
+                return false;
+            }else{
+                educationIndex++;
+                return true;
+            }
+        }
+
+        function changeDegree(index,value) {
+            $("#degree"+index).val(value);
+        }
+        // 졸업여부 selectBox
+        function changeGraduation(index,value) {
+            $("#graduation"+index).val(value);
+        }
+    </script>
     <script>
         $('input[name="filePath"]').change(function(){
         if($("#attachFile").val() === ""){
@@ -422,6 +510,51 @@ print_r($getAdvisorQualificationInfo);
             }
         });
     }
+
+    $(document).on('change','.table-file',function(){
+        var type = this.id;
+        if($(this).val() === ""){
+            // 파일 취소
+            cancel();
+        } else {
+            save(this, type);
+        }
+    });
+
     function cancel() {
+        alert('파일 업로드 취소되었습니다.');
+    }
+
+    function save(imageObject, type) {
+        const imageIndex = $(imageObject).data("index");
+        const imageInput = $(imageObject)[0];
+        const formData = new FormData();
+        formData.append("file", imageInput.files[0]);
+        formData.append("oldFilePath", $("#"+type+"-attachedFilePath"+imageIndex).val());
+
+        $.ajax({
+            type:"POST",
+            url: "/fileUpload",
+            processData: false,
+            contentType: false,
+            data: formData,
+            async: false,
+            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+            success: function(json){
+                var data = JSON.parse(json);
+                if ( data.status === "success" ) {
+                    $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
+                    $("#"+type+"-attachedFileName"+imageIndex).val(data.fileName);
+                    $("#"+type+"-attachedDisplayName"+imageIndex).html(data.fileName);
+
+                } else {
+                    console.log(data.message);
+                }
+            },
+            err: function(err){
+                console.log("err:", err)
+            }
+        });
+        $(imageObject).val("");
     }
     </script>

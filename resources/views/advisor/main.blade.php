@@ -67,7 +67,7 @@
                     <div class="counseling-user__info">
                       <div class="counseling-user__name">{{$list['counselorName']}}</div>
                       <div class="counseling-user__year">{{$list['counselorBirthday']}}</div>
-                      <div class="counseling-user__gender">{{$list['counselorGender']}}</div> 
+                      <div class="counseling-user__gender">{{$list['counselorGender']}}</div>
                     </div>
                     <div class="counseling-code__cell">
                       <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingPK']}}</span></div>
@@ -80,7 +80,7 @@
               </ul>
               <div class="paging-box">
                 @foreach ($counselingList['links'] as $link)
-                  <a href="{{ $link['url'] }}" class="paging-num active">{{ $link['label'] }}</a>
+                  <a href="{{ $link['url'] }}" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
                 @endforeach
               </div>
             </div>
@@ -147,7 +147,7 @@
                 (총 <span class="my-history__totalnum">13</span>건)
               </div>
             </div>
-            <ul class="my-history__list">  
+            <ul class="my-history__list">
               <li class="my-history__item">
                 <!-- 작성 중인 상담이 1건 이상이면 class에  active추가 -->
                 <a href="#none" class="my-history__obj active">• 작성중
