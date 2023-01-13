@@ -9,7 +9,7 @@
               </div>
               <div class="profile-row__name">{{$getAdvisorProfile['advisorName']}} 상담사</div>
               <div class="profile-row__center">사랑마음 상담센터</div>
-              <a href="#" class="profile-row__link">프로필 수정하기 <span class="icon link-more-icon"></span></a>
+              <a href="/advisor/profile/profileUpdate" class="profile-row__link">프로필 수정하기 <span class="icon link-more-icon"></span></a>
             </div>
             <div class="porfile-row-2">
               <div class="profile-col">

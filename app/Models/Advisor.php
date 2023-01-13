@@ -60,6 +60,8 @@ class Advisor extends Model
         $getAdvisorProfile = DB::table('advisor')
             ->select(
                 'advisorPK',
+                'email',
+                'phone',
                 'advisorName',
                 'briefIntroduction',
                 'detailedDescription'
@@ -71,6 +73,8 @@ class Advisor extends Model
 
         $advisorProfile = [
             'advisorPK' => $advisorProfile[0]['advisorPK'],
+            'email' => $advisorProfile[0]['email'],
+            'phone' => Crypt::decryptString($advisorProfile[0]['phone']),
             'advisorName' => Crypt::decryptString($advisorProfile[0]['advisorName']),
             'briefIntroduction' => $advisorProfile[0]['briefIntroduction'],
             'detailedDescription' => $advisorProfile[0]['detailedDescription'],
