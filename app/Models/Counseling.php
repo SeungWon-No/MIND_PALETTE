@@ -146,6 +146,7 @@ class Counseling extends Model
                              "counseling.relationshipSister",
                              "counseling.stressCauses",
                              "counseling.reasonInspection",
+                             "counseling.createDate",
                              )
                     ->where('counseling.counselingPK', '=', $counselingPK)
                     ->orderBy("counselingPK", "DESC")
@@ -172,6 +173,7 @@ class Counseling extends Model
             'relationshipSister' => $getCounselingDetail[0]['relationshipSister'],// 자매 관계
             'stressCauses' => $getCounselingDetail[0]['stressCauses'], // 가족 내력, 스트레스 요인
             'reasonInspection' => $getCounselingDetail[0]['reasonInspection'], // 심리 상담 사유
+            'createDate' => $getCounselingDetail[0]['createDate'], // 심리 상담 사유
         ];
         return $clientInfo;
 

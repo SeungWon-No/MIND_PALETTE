@@ -3,7 +3,7 @@
   $counselingTemplate = new CounselingTemplate;
 
 
-  $level = 
+  $level =
   [
     "L" => [
         "color" => "green",
@@ -279,8 +279,8 @@
                     <div class="kid-info__item-wrap">
                       <div class="kid-info__item">
                         <div class="kid-info__label">가족관계</div>
-                        <div class="kid-info__content">{{$clientInfo['familyRelations1']}}남 
-                        {{$clientInfo['familyRelations2']}}녀중 
+                        <div class="kid-info__content">{{$clientInfo['familyRelations1']}}남
+                        {{$clientInfo['familyRelations2']}}녀중
                         {{$clientInfo['familyRelations3']}}째</div>
                       </div>
                       <div class="kid-info__item">
@@ -341,7 +341,7 @@
                     <div class="family-info__last">
                       <div class="family-info__label">가족내력 및 스트레스 요인</div>
                       <div class="family-info__desc">
-                      {{$clientInfo['stressCauses']}}
+                      {!! $clientInfo['stressCauses']!!}
                       </div>
                     </div>
                   </div>
@@ -349,7 +349,7 @@
                 <div class="content-cell">
                   <div class="reason-info">
                     <p class="reason-info__desc">
-                    {{$clientInfo['reasonInspection']}}
+                    {!! $clientInfo['reasonInspection'] !!}
                     </p>
                   </div>
                 </div>
@@ -395,7 +395,7 @@
                           </div>
                         </div>
                       </div>
-                      
+
                       <div class="result-info__item">
                         <div class="result-info__label">행동표현 지수는 <span class="{{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['action'])]['class']}}">
                           {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['action'])]['text']}} 수준</span>입니다.</div>
@@ -431,29 +431,29 @@
                         <div class="graph-content">
                           <div class="graph-data">
                             <div class="graph-bar__cell">
-                              <!-- 
+                              <!--
                                   bar에 클래스 red, yellow, green로 색구별
                                 -->
                               <div class="graph-bar">
-                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['emotion'])]['color']}}" 
+                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['emotion'])]['color']}}"
                                 style="height:{{$temperamentTest['emotion']}}%;"></div>
                               </div>
                               <div class="graph-bar">
-                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['action'])]['color']}}" 
+                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['action'])]['color']}}"
                                 style="height:{{$temperamentTest['action']}}%;"></div>
                               </div>
                               <div class="graph-bar">
-                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipAdaptation'])]['color']}}" 
+                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipAdaptation'])]['color']}}"
                                 style="height:{{$temperamentTest['relationshipAdaptation']}}%;"></div>
                               </div>
                               <div class="graph-bar ">
-                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipPursuit'])]['color']}}" 
+                                <div class="bar {{$level[$counselingTemplate->getTemperamentTestLevel($temperamentTest['relationshipPursuit'])]['color']}}"
                                 style="height:{{$temperamentTest['relationshipPursuit']}}%;"></div>
                               </div>
                             </div>
                           </div>
                           <div class="graph-grid">
-                            <!-- 
+                            <!--
                               1단계 green-line
                               2단계 yellow-line
                               3단계 red-line
@@ -536,7 +536,7 @@
                     <!-- //22.12.30 수정 -->
                   </div>
                 </div>
-                <div class="detail-tab__date">2022 . 11 . 28 . 작성</div>
+                <div class="detail-tab__date">{{date_format(date_create($clientInfo["createDate"]),"Y . m . d .")}} 작성</div>
               </div>
             </div>
             <!--// 22.12.29 수정 -->
@@ -609,7 +609,7 @@
       </div>
     </div>
   </article>
-  
+
   <script src="/advisorAssets/assets/js/common.js"></script>
 </body>
 </html>
