@@ -85,7 +85,7 @@ class Advisor extends Model
 
     public static function getAdvisorList(){
         $getAdvisorList = Advisor::select('advisorPK', 'advisorName', 'briefIntroduction')->get(); 
-        // 프로필사진, 이름, 별점, 상담 진행 횟수, 자기소개
+        
         $advisorList = json_decode(json_encode($getAdvisorList), true);
 
         foreach($advisorList as $pk => $list){
@@ -104,7 +104,6 @@ class Advisor extends Model
         ->select('advisorPK', 'advisorName', 'briefIntroduction')
         ->paginate(3);
 
-        // 프로필사진, 이름, 별점, 상담 진행 횟수, 자기소개
         $advisorList = json_decode(json_encode($pagination), true);
         
         foreach($advisorList['data'] as $key => $list){

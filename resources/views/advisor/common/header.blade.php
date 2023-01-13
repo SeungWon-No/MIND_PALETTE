@@ -39,7 +39,7 @@
               <div class="user-profile__photo">
                 <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="user-profile__img">
               </div>
-              <div class="user-info__username">김아무</div>
+              <div class="user-info__username">{{$advisorProfile['advisorName']}}</div>
             </div>
             <a href="/advisor/logout" class="account-logout__btn">로그아웃</a>
           </div>

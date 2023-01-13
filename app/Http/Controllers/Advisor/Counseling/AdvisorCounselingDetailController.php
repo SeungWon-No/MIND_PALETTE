@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Advisor\Counseling;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advisor;
 use App\Models\Answer;
 use App\Models\Counseling;
 use App\Models\Questions;
@@ -18,13 +19,23 @@ class AdvisorCounselingDetailController extends Controller
 
     public function show(Request $request)
     {
+        $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
+        
+        if ($isLogin) {
+            $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        }else{
+            return view("/advisor/login/login");
+        }
+        
         $sliceUrl = explode('/', $request->url());
         $counselingPK = $sliceUrl[5];
 
+        $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
         $getClientInfo = Counseling::getCounselingDetail($counselingPK);
         $images = Answer::findHTPImage($counselingPK);
         
         return view("/advisor/counseling/counselingDetail", [
+            "advisorProfile" => $advisorProfile,
             'clientInfo' => $getClientInfo,
             'images' => $images,
             "questions" => Questions::findAllQuestion(335),
