@@ -93,7 +93,7 @@ class Counseling extends Model
         $pagination = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
                     ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
-                    ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName" ,"answer")
+                    ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus", "counseling.counselorStatus", "code.codeName" ,"answer")
                     ->where('answer.questionsPK', '68')
                     ->where('counseling.memberPK', '>', '0')
                     ->whereIn("counseling.counselingStatus",[279,280,281,353])
@@ -110,6 +110,8 @@ class Counseling extends Model
                 'answer' => $list['answer'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
             ];
         }
         //dd($counselingList['data']);
@@ -152,9 +154,11 @@ class Counseling extends Model
 
         $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
-            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus", "counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
+            ->where('answer.questionsPK', '68')
             ->where("counseling.counselingStatus", "=", "279")
             ->orderBy("counselingPK", "DESC")
             ->paginate(10);
@@ -166,8 +170,11 @@ class Counseling extends Model
                 'counselingPK' => $list['counselingPK'],
                 'counselingCode' => $list['counselingCode'],
                 'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
             ];
         }
         return $warningList;
@@ -178,9 +185,11 @@ class Counseling extends Model
 
         $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
-            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
+            ->where('answer.questionsPK', '68')
             ->whereIn("counseling.counselorStatus",[355, 356])
             ->orderBy("counselingPK", "DESC")
             ->paginate(10);
@@ -192,21 +201,27 @@ class Counseling extends Model
                 'counselingPK' => $list['counselingPK'],
                 'counselingCode' => $list['counselingCode'],
                 'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
             ];
         }
         return $warningList;
     }
 
 
+    // 상담 완료 리스트
     public static function getCompleteCounselingList(){
 
         $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
-            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday","counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
+            ->where('answer.questionsPK', '68')
             ->where("counseling.counselingStatus", "=", "281")
             ->orderBy("counselingPK", "DESC")
             ->paginate(10);
@@ -218,20 +233,26 @@ class Counseling extends Model
                 'counselingPK' => $list['counselingPK'],
                 'counselingCode' => $list['counselingCode'],
                 'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
             ];
         }
         return $warningList;
     }
 
+    // 상담 불가 리스트
     public static function getImpossibleCounselingList(){
 
         $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
-            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
+            ->where('answer.questionsPK', '68')
             ->where("counseling.counselingStatus", "=", "353")
             ->orderBy("counselingPK", "DESC")
             ->paginate(10);
@@ -243,8 +264,11 @@ class Counseling extends Model
                 'counselingPK' => $list['counselingPK'],
                 'counselingCode' => $list['counselingCode'],
                 'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
             ];
         }
         return $warningList;

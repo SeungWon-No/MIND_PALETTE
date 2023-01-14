@@ -11,6 +11,16 @@ class AdvisorIndexController extends Controller
 {
     protected $counseling;
     protected $advisor;
+    protected $statusCode = [
+                "" => "",
+                "279" => "",
+                "280" => "ongoing",
+                "281" => "end",
+                "354" => "",
+                "353" => "disabled",
+                "355" => "end danger",
+                "356" => "end need-care",
+            ];
 
     public function __construct(Counseling $counseling, Advisor $advisor)
     {
@@ -47,6 +57,7 @@ class AdvisorIndexController extends Controller
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
             "advisorList" => $advisorList,
+            "statusCode"=>$this->statusCode,
         ]);
     }
 
@@ -77,6 +88,7 @@ class AdvisorIndexController extends Controller
             'cautionCount' => $cautionCount,
             'dangerCount' => $dangerCount,
             'impossibleCount' => $impossibleCount,
+            'statusCode'=>$this->statusCode,
         ]);
         
     }
@@ -107,6 +119,7 @@ class AdvisorIndexController extends Controller
             'cautionCount' => $cautionCount,
             'dangerCount' => $dangerCount,
             'impossibleCount' => $impossibleCount,
+            'statusCode'=>$this->statusCode,
         ]);
 
 
@@ -139,6 +152,7 @@ class AdvisorIndexController extends Controller
             'cautionCount' => $cautionCount,
             'dangerCount' => $dangerCount,
             'impossibleCount' => $impossibleCount,
+            'statusCode'=>$this->statusCode,
         ]);
     }
     public function impossibleCounseling(Request $request){
@@ -169,6 +183,7 @@ class AdvisorIndexController extends Controller
             'cautionCount' => $cautionCount,
             'dangerCount' => $dangerCount,
             'impossibleCount' => $impossibleCount,
+            'statusCode'=>$this->statusCode,
         ]);
 
     }
