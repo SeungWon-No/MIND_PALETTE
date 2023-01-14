@@ -69,8 +69,8 @@
                     <div class="form-group__label">소속기관</div>
                     <div class="form-group__item">
                       <div class="form-group__data">
-                        <input type="text" class="form-control" placeholder="기관검색">
-                        <button type="button" class="form-control__btn">검색</button>
+                        <input type="text" id="centerName" name="centerName" class="form-control" placeholder="기관검색" value="{{$advisorProfile->centerName}}">
+                        <button type="button" class="form-control__btn" style="display:none;">검색</button>
                       </div>
                       <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                     </div>

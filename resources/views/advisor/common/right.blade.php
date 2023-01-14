@@ -9,10 +9,10 @@
                 <div class="account-profile__cell">
                     <div class="account-profile__info">
                         <div class="account-profile__name">{{$advisorProfile['advisorName']}}</div>
-                        <div class="account-profile__center">사랑 마음 센터</div>
+                        <div class="account-profile__center">{{$advisorProfile->centerName}}</div>
                     </div>
                 </div>
-                <a href="#none" class="account-profile__link">프로필 바로가기 ></a>
+                <a href="/advisor/profile" class="account-profile__link">프로필 바로가기 ></a>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="my-prefer__star">
                 <span class="icon star-review-icon"></span>
-                <div class="star-review__score">4.0</div>
+                <div class="star-review__score">{{($advisorProfile->rating == 0)?"0.0":sprintf('%0.1f', ($advisorProfile->rating/$advisorProfile->ratingCount))}}</div>
                 <div class="star-review__unit">/ 5</div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                 <div class="today-qNa__unit">/</div>
                 <div class="today-answer__num">141,324</div>
             </div>
-            <div class="today-data">2022.11.21</div>
+            <div class="today-data">{{date("Y.m.d")}}</div>
         </div>
         <div class="today-qNa__cell today-qNa__cell--svg">
             <div class="aside__heading">

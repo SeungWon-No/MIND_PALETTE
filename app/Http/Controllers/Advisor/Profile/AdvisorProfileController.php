@@ -46,9 +46,16 @@ class AdvisorProfileController extends Controller
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
 
         $counselingCareer = $request->counselingCareer ?? '';
-        if ($counselingCareer != "") {
+        $centerName = $request->centerName ?? '';
+
+        if ($counselingCareer != "" || $centerName != "") {
             $advisor = Advisor::find($advisorPK);
-            $advisor->career = $counselingCareer;
+            if ($counselingCareer != "") {
+                $advisor->career = $counselingCareer;
+            }
+            if ($centerName != "") {
+                $advisor->centerName = $centerName;
+            }
             $advisor->save();
         }
 
