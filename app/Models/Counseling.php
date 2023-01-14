@@ -114,15 +114,62 @@ class Counseling extends Model
     }
 
 
-    // 상담 대기 중인 건 수 [counselingStatus : 279]
-    public static function getWaitingCounseling(){
+    // 상담 대기 중인 건수
+    public static function getWaitingCounselingCount(){
         return Counseling::where('counselingCode', '=', '279')->count();
     }
 
     // 상담 완료 건수
-    public static function getCompleteCounseling(){
+    public static function getCompleteCounselingCount(){
         return Counseling::where('counselingCode', '=', '281')->count();
     }
+
+    // 위험 수준 상담 건수 
+    public static function getDangerCounselingCount(){
+        return Counseling::where('isDelete', '=', 'N')
+        ->where('counselorStatus', '=', '355')
+        ->count();
+    }
+
+    // 주의 수준 상담 건수 
+    public static function getCautionCounselingCount(){
+        return Counseling::where('isDelete', '=', 'N')
+        ->where('counselorStatus', '=', '356')
+        ->count();
+    }
+
+    // 주의 수준 상담 리스트 
+    public static function getCautionCounselingList(){
+
+        $cautionList = DB::table('counseling')
+            ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->where('counseling.memberPK', '>', '0')
+            ->where('counseling.isDelete', '=', 'N')
+            ->where("counseling.counselingStatus", '=', '356')
+            ->orderBy("counselingPK", "DESC")
+            ->first()
+            ->paginate(10);
+
+        return $cautionList;
+    }
+
+    // 위험 수준 상담 리스트 
+    public static function getDangerCounselingList(){
+
+        $dangerList = DB::table('counseling')
+            ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->where('counseling.memberPK', '>', '0')
+            ->where('counseling.isDelete', '=', 'N')
+            ->where("counseling.counselingStatus", '=', '355')
+            ->orderBy("counselingPK", "DESC")
+            ->first()
+            ->paginate(10);
+
+        return $dangerList;
+    }
+
 
     public static function getMyCounselingList($advisorPK){ // my 상담 리스트
 
