@@ -197,7 +197,6 @@
                     <div class="table-body__cell col-5">115</div>
                   </div>
                 </div>
-                <a href="#none" class="notice-writing__btn">글쓰기</a>
               </div>
             </div>
             <div class="paging-box">
