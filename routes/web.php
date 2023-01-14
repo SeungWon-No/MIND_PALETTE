@@ -195,7 +195,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::get("/warningCounselingList", [AdvisorCounselingListController::class, "warningCounselingList"]); // 상담리스트
         Route::get("/impossibleCounselingList", [AdvisorCounselingListController::class, "impossibleCounselingList"]); // 상담리스트
 
-        Route::get("/myCounselingList", [AdvisorMyCounselingListController::class, "index"]); // my 상담리스트
+        Route::resource("/myCounselingList", AdvisorMyCounselingListController::class); // my 상담리스트
         Route::get("/myWaitingCounseling", [AdvisorMyCounselingListController::class, "myWaitingCounseling"]); // my 상담리스트
         Route::get("/myCompleteCounseling", [AdvisorMyCounselingListController::class, "myCompleteCounseling"]); // my 상담리스트
         Route::get("/myWarningCounseling", [AdvisorMyCounselingListController::class, "myWarningCounseling"]); // my 상담리스트
