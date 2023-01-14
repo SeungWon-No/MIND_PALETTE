@@ -134,16 +134,16 @@ class Counseling extends Model
         return Counseling::where('counselingStatus', '=', '353')->count();
     }
 
-    
 
-    // 위험 수준 상담 건수 
+
+    // 위험 수준 상담 건수
     public static function getDangerCounselingCount(){
         return Counseling::where('isDelete', '=', 'N')
         ->where('counselorStatus', '=', '355')
         ->count();
     }
 
-    // 주의 수준 상담 건수 
+    // 주의 수준 상담 건수
     public static function getCautionCounselingCount(){
         return Counseling::where('isDelete', '=', 'N')
         ->where('counselorStatus', '=', '356')
@@ -180,7 +180,7 @@ class Counseling extends Model
         return $warningList;
     }
 
-    // 주의/위험 수준 상담 리스트 
+    // 주의/위험 수준 상담 리스트
     public static function getWarningCounselingList(){
 
         $getWarningList = DB::table('counseling')
@@ -401,4 +401,10 @@ class Counseling extends Model
         return $counselingList;
     }
 
+    public static function findCounselingRating($advisorPK, $rating){
+        return Counseling::where("advisorPK",$advisorPK)
+                ->where("counselingStatus",281)
+                ->where("rating",$rating)
+                ->get()->count();
+    }
 }

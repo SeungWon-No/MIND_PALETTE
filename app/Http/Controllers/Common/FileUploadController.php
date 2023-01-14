@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advisor;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Image;
@@ -79,6 +81,54 @@ class FileUploadController extends Controller
                 })->save(storage_path("app/public/image/thumb/".$fileName), 65);
 
                 Image::make($file->getRealPath())->save(storage_path("app/public/image/origin/".$fileName), 100);
+
+                $data["status"] = "success";
+                $data["message"] = "성공";
+                $data["filePath"] = $fileName;
+            } else {
+                $data["message"] = "첨부 파일을 찾을 수 없습니다.";
+            }
+        } catch (\Exception $e) {
+            $data["message"] = "처리오류".$e;
+        }
+
+        return json_encode($data);
+    }
+
+    public function profileUpload(Request $request)
+    {
+        $data = array(
+            "status" => "fail",
+            "message" => "",
+            "filePath" => "",
+        );
+        try {
+            if($request->hasFile('file')) {
+                $pathProfile = public_path().'/image/profile';
+                if(!Storage::exists($pathProfile)){
+                    Storage::disk('local')->makeDirectory('/public/image/profile');
+                }
+
+                if ($request->oldFilePath !== "") {
+                    Storage::delete('public'."/image/profile/".$request->oldFilePath);
+                }
+
+                $file = $request->file('file');
+                $random = mt_rand(1, 100);
+
+                $fileFormat = explode(".",$file->getClientOriginalName());
+                $fileName = time().$random.".".$fileFormat[count($fileFormat)-1];
+
+                Image::make($file->getRealPath())->widen(500, function ($constraint) {
+                    $constraint->upsize();
+                })->save(storage_path("app/public/image/profile/".$fileName), 65);
+
+                if ($request->session()->has('advisorLogin')) {
+                    $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+                    $advisor = Advisor::find($advisorPK);
+                    $advisor->profilePath = $fileName;
+                    $advisor->save();
+                }
 
                 $data["status"] = "success";
                 $data["message"] = "성공";

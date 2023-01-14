@@ -525,7 +525,7 @@
           <div class="counselor-before__cont">
             <div class="counselor-common__info">
               <div class="common-info__photo">
-                <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="common-info__img">
+                <img src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="common-info__img">
               </div>
               <div class="common-info__name">{{$advisorProfile->advisorName}} 상담사</div>
             </div>
@@ -551,7 +551,7 @@
                                 </div>
                             </div>
                             <div class="counselor-info__photo">
-                                <img src="../assets/images/user-profile.jpg" alt="" class="counselor-info__img">
+                                <img src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="counselor-info__img">
                             </div>
                         </div>
                         <div class="counselor-info__carrier">
@@ -607,7 +607,7 @@
                     <div class="counselor-edit__top">
                         <div class="counselor-common__info">
                             <div class="common-info__photo">
-                                <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="common-info__img">
+                                <img src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="common-info__img">
                             </div>
                             <div class="common-info__name">김아무 상담사</div>
                         </div>
@@ -714,6 +714,7 @@
         </div>
       </div>
     </div>
+
 <article id="detailImagePop" class="layer-pop__wrap">
     <div class="layer-pop__parent">
         <div class="layer-pop__children">
