@@ -210,27 +210,27 @@
                             $qualificationIndex = 1;
                         @endphp
                         <tbody class="member-table__body">
-                        @foreach($advisorQualificationInfo as $info)
-                            <input type="hidden" id="qualificationPK{{$qualificationIndex}}" name="qualificationPK{{$qualificationIndex}}" value="{{$info->certificatePK}}"/>
+                        @foreach($advisorQualificationInfo as $qualificationInfo)
+                            <input type="hidden" id="qualificationPK{{$qualificationIndex}}" name="qualificationPK{{$qualificationIndex}}" value="{{$qualificationInfo->certificatePK}}"/>
                             <tr class="table-row">
                                 <td class="table-col">
-                                <input id="issuance{{$qualificationIndex}}" name="issuance{{$qualificationIndex}}" value="{{$info->issuingAgency}}" type="text" class="tabel-form__control" placeholder="발행처">
+                                <input id="issuance{{$qualificationIndex}}" name="issuance{{$qualificationIndex}}" value="{{$qualificationInfo->issuingAgency}}" type="text" class="tabel-form__control" placeholder="발행처">
                                 </td>
                                 <td class="table-col">
-                                <input id="licenseTitle{{$qualificationIndex}}" name="licenseTitle{{$qualificationIndex}}" value="{{$info->certificateName}}" type="text" class="tabel-form__control" placeholder="자격이름">
+                                <input id="licenseTitle{{$qualificationIndex}}" name="licenseTitle{{$qualificationIndex}}" value="{{$qualificationInfo->certificateName}}" type="text" class="tabel-form__control" placeholder="자격이름">
                                 </td>
                                 <td class="table-col cursor">
 
                                 <label id="" class="table-file__label">
                                     <input id="qualification" type="file" class="table-file attachedFilePath" data-index="{{$qualificationIndex}}">
-                                    <span class="table-file__name" id="qualification-attachedDisplayName{{$qualificationIndex}}">{{$info->fileName}}</span>
+                                    <span class="table-file__name" id="qualification-attachedDisplayName{{$qualificationIndex}}">{{$qualificationInfo->fileName}}</span>
                                     <input id="qualification-attachedFilePath{{$qualificationIndex}}"
-                                            value="{{$info->certificateFilePath}}"
+                                            value="{{$qualificationInfo->certificateFilePath}}"
                                             name="qualification-attachedFilePath{{$qualificationIndex}}" 
                                             type="hidden">
 
                                     <input id="qualification-attachedFileName{{$qualificationIndex}}"
-                                            value="{{$info->fileName}}"
+                                            value="{{$qualificationInfo->fileName}}"
                                             name="qualification-attachedFileName{{$qualificationIndex}}" 
                                             type="hidden">
                                 </label>
@@ -276,13 +276,13 @@
                         $careerIndex = 1;
                       @endphp
                     <tbody class="member-table__body">
-                    @foreach($advisorCareerInfo as $info)
-                        <input type="hidden" id="educationPK{{$careerIndex}}" name="educationPK{{$careerIndex}}" value="{{$info->careerPK}}"/>
-                        <tr class="table-row" data-index="1">
+                    @foreach($advisorCareerInfo as $careerInfo)
+                        <input type="hidden" id="careerPK{{$careerIndex}}" name="careerPK{{$careerIndex}}" value="{{$careerInfo->careerPK}}"/>
+                        <tr class="table-row" data-index="{{$careerIndex}}">
                         <td class="table-col no-padding">
                             <div class="select-box">
-                            <input type="hidden" id="careerType{{$careerIndex}}" name="careerType{{$careerIndex}}" value="{{$info->careerType}}"/>
-                            <button class="select-box__label" type="button">{{ $codeTitle[$info->careerType] }} <span class="icon select-down-icon"></span></button>
+                            <input type="hidden" id="careerType{{$careerIndex}}" name="careerType{{$careerIndex}}" value="{{$careerInfo->careerType}}"/>
+                            <button class="select-box__label" type="button">{{ $codeTitle[$careerInfo->careerType] }} <span class="icon select-down-icon"></span></button>
                             <ul class="select-option__list">
                                 <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','-1')">선택</li>
                                 <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','331')">현재 근무지</li>
@@ -291,12 +291,12 @@
                             </div>
                         </td>
                         <td class="table-col">
-                            <input id="companyName{{$careerIndex}}" name="companyName{{$careerIndex}}" value="{{$info->companyName}}" type="text" class="tabel-form__control" placeholder="기관검색">
+                            <input id="companyName{{$careerIndex}}" name="companyName{{$careerIndex}}" value="{{$careerInfo->companyName}}" type="text" class="tabel-form__control" placeholder="기관검색">
                         </td>
                         <td class="table-col no-padding">
                             <div class="select-box">
-                            <input type="hidden" id="employmentType{{$careerIndex}}" name="employmentType{{$careerIndex}}" value="{{$info->employmentType}}"/>
-                            <button class="select-box__label" type="button">{{ $codeTitle[$info->employmentType] }} <span class="icon select-down-icon"></span></button>
+                            <input type="hidden" id="employmentType{{$careerIndex}}" name="employmentType{{$careerIndex}}" value="{{$careerInfo->employmentType}}"/>
+                            <button class="select-box__label" type="button">{{ $codeTitle[$careerInfo->employmentType] }} <span class="icon select-down-icon"></span></button>
                             <ul class="select-option__list">
                                 <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','-1')">근무형태</li>
                                 <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','333')">풀타임</li>
@@ -305,12 +305,12 @@
                             </div>
                         </td>
                         <td class="table-col">
-                            <input id="assignedTask" name="assignedTask" value="{{$info->assignedTask}}" type="text" class="tabel-form__control" placeholder="담당업무">
+                            <input id="assignedTask" name="assignedTask" value="{{$careerInfo->assignedTask}}" type="text" class="tabel-form__control" placeholder="담당업무">
                         </td>
                         <td class="table-col">
                             <label class="table-file__label">
                                 <input id="career" type="file" class="table-file attachedFilePath" data-index="{{$careerIndex}}">
-                                <span class="table-file__name" id="career-attachedDisplayName{{$careerIndex}}">{{$info->fileName}}</span>
+                                <span class="table-file__name" id="career-attachedDisplayName{{$careerIndex}}">{{$careerInfo->fileName}}</span>
                                 <input id="career-attachedFilePath{{$careerIndex}}" 
                                 name="career-attachedFilePath{{$careerIndex}}" 
                                 type="hidden">

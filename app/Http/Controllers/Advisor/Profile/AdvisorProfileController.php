@@ -34,29 +34,30 @@ class AdvisorProfileController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request);
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         
         $nowDateTime = date('Y-m-d H:i:s');
 
         $educationCount = $request->educationCount ?? 0;
-        for ($index = 1; $index <= $educationCount; $index++) {
+        for ($index = 1; $index <= $educationCount ; $index++) {
+
+            $educationPK = $request['educationPK'. $index] ?? '';
             
-            $educationPK = $request['educationPK' . $index] ?? '';
             if ($educationPK == '') {
                 $educationLevel = new EducationLevel;
+
             } else {
                 $educationLevel = EducationLevel::find($educationPK);
             }
 
             $educationLevel->advisorPK = $advisorPK;
-            $educationLevel->degree = $request['degree' . $index];
-            $educationLevel->school = $request['schoolName' . $index];
-            $educationLevel->department = $request['department' . $index];
-            $educationLevel->major = $request['major' . $index];
-            $educationLevel->graduationStatus = $request['graduation' . $index];
-            $educationLevel->certificateFilePath = $request['education-attachedFilePath' . $index];
-            $educationLevel->fileName = $request['education-attachedFileName' . $index];
+            $educationLevel->degree = $request['degree'.$index];
+            $educationLevel->school = $request['schoolName'.$index];
+            $educationLevel->department = $request['department'.$index];
+            $educationLevel->major = $request['major'.$index];
+            $educationLevel->graduationStatus = $request['graduation'.$index];
+            $educationLevel->certificateFilePath = $request['education-attachedFilePath'.$index];
+            $educationLevel->fileName = $request['education-attachedFileName'.$index];
             $educationLevel->updateDate = $nowDateTime;
             $educationLevel->createDate = $nowDateTime;
             $educationLevel->save();
@@ -66,7 +67,7 @@ class AdvisorProfileController extends Controller
         $qualificationCount = $request->qualificationCount ?? 0;
         for ($index = 1; $index <= $qualificationCount; $index++) {
 
-            $qualificationPK = $request['qualificationPK' . $index] ?? '';
+            $qualificationPK = $request['qualificationPK'.$index] ?? '';
 
             if ($qualificationPK == '') {
                 $qualification = new Qualification;
@@ -87,7 +88,7 @@ class AdvisorProfileController extends Controller
             // 경력사항 INSERT
         $careerCount = $request->careerCount ?? 0;
         for ($index = 1; $index <= $careerCount; $index++) {
-            $careerPK = $request['careerPK' . $index] ?? '';
+            $careerPK = $request['careerPK'.$index] ?? '';
 
             if ($careerPK == '') {
                 $career = new Career;
@@ -122,8 +123,6 @@ class AdvisorProfileController extends Controller
             return view("/advisor/login/login");
         }
         $getAdvisorProfile = Advisor::getAdvisorProfile($advisorPK);
-//        $getAdvisorEducationInfo = EducationLevel::getAdvisorEducationInfo($advisorPK);
-        // $getAdvisorQualificationInfo = Qualification::getAdvisorQualificationInfo($advisorPK);
 
         $codeTitle = [
             "325" => "학사",
