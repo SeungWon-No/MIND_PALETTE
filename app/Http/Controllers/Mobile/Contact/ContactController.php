@@ -38,6 +38,7 @@ class ContactController extends Controller
                 $memberPK = $request->session()->get('login')[0]['memberPK'];
                 $contact->memberPK = $memberPK;
             }
+            $contact->contactType = 358;
             $contact->contactName = Crypt::encryptString($contactName);
             $contact->contactPhone = Crypt::encryptString($contactPhone);
             $contact->contactContent = $contactContent;

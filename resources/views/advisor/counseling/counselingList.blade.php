@@ -22,7 +22,7 @@
                   <ul class="select-option__list">
                     <li id="searchingName" name="searchingName" class="select-option" onclick="window.selectBoxCategory('counselorName')">아이이름</li>
                     <li id="searchingCode" name="searchingCode" class="select-option" onclick="window.selectBoxCategory('counselingCode')">상담코드</li>
-                  </ul>                      
+                  </ul>
                 </div>
                 <div class="counseling-search__group">
                   <input type="text" class="counseling-search__form" name="searchingText" onkeyup="window.searchingText()" placeholder="검색 입력">
@@ -30,12 +30,12 @@
               </div>
             </div>
             <div class="counseling-list__heading">
-              <!-- 탭에 따라 문구변경 
+              <!-- 탭에 따라 문구변경
                 전체-> 전체내역
                 상담대기-> 상담대기 내역
                 상담완료->상담완료 내역
                 주의/위험->주의/위험 내역
-                상담불가-> 상담불가 내역 
+                상담불가-> 상담불가 내역
               -->
               <h3 class="counseling-list__tit">전체내역</h3>
               <div class="counseling-sort__wrap">
@@ -68,12 +68,12 @@
                 @foreach ($counselingList['data'] as $list)
                   <li class="counseling">
                     <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
-                      <img src="/advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
+                      <img src="{{URL::asset('/storage/image/thumb/'.$list['answer'])}}" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
                       <div class="counseling-user__name">{{$list['counselorName']}}</div>
                       <div class="counseling-user__year">{{$list['counselorBirthday']}}</div>
-                      <div class="counseling-user__gender">{{$list['counselorGender']}}</div> 
+                      <div class="counseling-user__gender">{{$list['counselorGender']}}</div>
                     </div>
                     <div class="counseling-code__cell">
                       <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingCode']}}</span></div>
@@ -116,7 +116,7 @@
                 (총 <span class="my-history__totalnum">13</span>건)
               </div>
             </div>
-            <ul class="my-history__list">  
+            <ul class="my-history__list">
               <li class="my-history__item">
                 <!-- 작성 중인 상담이 1건 이상이면 class에  active추가 -->
                 <a href="#none" class="my-history__obj active">• 작성중
@@ -188,8 +188,8 @@
               <div class="service-eval__wrap">
                 <!-- 22.12.30 수정 -->
                 <svg class="service-eval__svg" width="180" height="320" xmlns="http://www.w3.org/2000/svg">
-                  <!-- 
-                    점수가 90%이면 
+                  <!--
+                    점수가 90%이면
                     <g class="arcCircle">의 offset-distance는 90%
                     <path class="arcGraphValue">의 stroke-dashoffset는 10%
                     점수가 10%이면
@@ -232,7 +232,7 @@
   <!-- datepicker-->
   <script src="../advisorAssets/assets/js/jquery-ui.min.js"></script>
   <script>
-    
+
     $.datepicker.regional['ko'] = {
         closeText: '닫기',
         prevText: '이전달',
@@ -284,7 +284,7 @@
         async: false,
         headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
         success:function(data){
-          
+
         }
       });
     }
@@ -299,7 +299,7 @@
       $('input[name=searchingText]').val();
     }
 
-    // 날짜 선택 
+    // 날짜 선택
     function formatStartDate(){
       var getStartDate = $( "#sdate" ).datepicker("getDate");
       var formatStartDate = $.datepicker.formatDate("yy-mm-dd", getStartDate);

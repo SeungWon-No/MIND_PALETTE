@@ -92,7 +92,9 @@ class Counseling extends Model
     {
         $pagination = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
-                    ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+                    ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+                    ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName" ,"answer")
+                    ->where('answer.questionsPK', '68')
                     ->where('counseling.memberPK', '>', '0')
                     ->whereIn("counseling.counselingStatus",[279,280,281,353])
                     ->orderBy("counselingPK", "DESC")
@@ -105,6 +107,7 @@ class Counseling extends Model
                 'counselingPK' => $list['counselingPK'],
                 'counselingCode' => $list['counselingCode'],
                 'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
             ];
