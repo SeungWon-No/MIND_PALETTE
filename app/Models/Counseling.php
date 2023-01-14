@@ -60,7 +60,7 @@ class Counseling extends Model
             ->update($value);
     }
 
-    public static function updateCounselingCancelStatus($counselingPK, $advisorPK, $value) {
+    public static function updateCounselingAdvisor($counselingPK, $advisorPK, $value) {
         return Counseling::where('counselingPK','=',$counselingPK)
             ->where('advisorPK','=',$advisorPK)
             ->update($value);
@@ -170,8 +170,11 @@ class Counseling extends Model
                              "counseling.relationshipSiblings",
                              "counseling.relationshipSister",
                              "counseling.stressCauses",
+                             "counseling.counselingResult",
                              "counseling.reasonInspection",
                              "counseling.counselingStatus",
+                             "counseling.counselorStatus",
+                             "counseling.startDate",
                              "counseling.createDate",
                              )
                     ->where('counseling.counselingPK', '=', $counselingPK)
@@ -198,9 +201,12 @@ class Counseling extends Model
             'relationshipMother' => $getCounselingDetail[0]['relationshipMother'],// 어머니와의 관계
             'relationshipSiblings' => $getCounselingDetail[0]['relationshipSiblings'], // 형제 관계
             'relationshipSister' => $getCounselingDetail[0]['relationshipSister'],// 자매 관계
+            'counselingResult' => $getCounselingDetail[0]['counselingResult'],
             'stressCauses' => $getCounselingDetail[0]['stressCauses'], // 가족 내력, 스트레스 요인
             'counselingStatus' => $getCounselingDetail[0]['counselingStatus'],
+            'counselorStatus' => $getCounselingDetail[0]['counselorStatus'],
             'reasonInspection' => $getCounselingDetail[0]['reasonInspection'], // 심리 상담 사유
+            'startDate' => $getCounselingDetail[0]['startDate'],
             'createDate' => $getCounselingDetail[0]['createDate'],
         ];
         return $clientInfo;
