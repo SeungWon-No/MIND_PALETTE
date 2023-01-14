@@ -3,6 +3,29 @@
     $recentList = Counseling::findRecentCounseling($advisorProfile->advisorPK);
     $todayCounseling = Counseling::findTodayCounseling();
     $todayCompleteCounseling = Counseling::findTodayCompleteCounseling();
+    $myCompleteCount = Counseling::findCompleteCounseling($advisorProfile->advisorPK);
+    $myWritingCounseling = Counseling::findWritingCounseling($advisorProfile->advisorPK);
+
+    $myWritingCounselingCount = 0;
+    if ($myWritingCounseling) {
+        $myWritingCounselingCount = 1;
+
+        $nowTime = date("Y-m-d H:i:s");
+        $startTime = $myWritingCounseling['startDate'];
+        $diffTime = strtotime($nowTime) - strtotime($startTime);
+        $diffHour = ceil($diffTime / (60*60));
+
+        $hour = "00";
+        $minute = "00";
+        if ($diffHour < 24) {
+            $addOneDay = date("Y-m-d H:i:s", strtotime($startTime."+1 days"));
+            $diffTime = strtotime($addOneDay) - strtotime($nowTime);
+            $hour = floor($diffTime / (60*60));
+            $minute = floor(($diffTime-($hour*60*60)) / 60);
+            $hour = ($hour < 10) ? "0".$hour :$hour;
+            $minute = ($minute < 10) ? "0".$minute :$minute;
+        }
+    }
 @endphp
 <div class="column-right">
     <div class="account">
@@ -32,14 +55,16 @@
             <li class="my-history__item">
                 <!-- 작성 중인 상담이 1건 이상이면 class에  active추가 -->
                 <a href="#none" class="my-history__obj active">• 작성중
-                    <span class="my-history__num">1</span><span class="my-history__unit">건</span>
+                    <span class="my-history__num">{{$myWritingCounselingCount}}</span><span class="my-history__unit">건</span>
                 </a>
                 <!-- 작성 중인 상담이 1건 이상이면 남은 시간 추가 -->
-                <div class="my-history__time-cell">남은 시간 <span class="my-history__time">11:30</span></div>
+                @if($myWritingCounselingCount > 0)
+                    <div class="my-history__time-cell">남은 시간 <span class="my-history__time">{{$hour}}:{{$minute}}</span></div>
+                @endif
             </li>
             <li class="my-history__item">
                 <a href="#none" class="my-history__obj">• 상담완료
-                    <span class="my-history__num">1</span><span class="my-history__unit">건</span>
+                    <span class="my-history__num">{{$myCompleteCount}}</span><span class="my-history__unit">건</span>
                 </a>
             </li>
         </ul>

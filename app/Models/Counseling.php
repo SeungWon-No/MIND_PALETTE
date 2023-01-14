@@ -420,6 +420,17 @@ class Counseling extends Model
             ->orderBy("counseling.updateDate", "DESC")
             ->limit(3)->get();
     }
+    public static function findCompleteCounseling($advisorPK){
+        return Counseling::where("advisorPK",$advisorPK)
+            ->where("counselingStatus",281)
+            ->get()->count();
+    }
+
+    public static function findWritingCounseling($advisorPK){
+        return Counseling::where("advisorPK",$advisorPK)
+            ->where("counselingStatus",280)
+            ->get()->first();
+    }
 
     public static function findTodayCounseling(){
         $day = date("Y-m-d");

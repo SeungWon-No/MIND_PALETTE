@@ -69,8 +69,8 @@ class AdvisorCounselingDetailController extends Controller
                 $addOneDay = date("Y-m-d H:i:s", strtotime($startTime."+1 days"));
                 $diffTime = strtotime($addOneDay) - strtotime($nowTime);
                 $timer["hour"] = floor($diffTime / (60*60));
-                $timer["hour"] = ($timer["hour"] < 10) ? "0".$timer["hour"] :$timer["hour"];
                 $timer["minute"] = floor(($diffTime-($timer["hour"]*60*60)) / 60);
+                $timer["hour"] = ($timer["hour"] < 10) ? "0".$timer["hour"] :$timer["hour"];
                 $timer["minute"] = ($timer["minute"] < 10) ? "0".$timer["minute"] :$timer["minute"];
             }
         }
