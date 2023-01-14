@@ -60,9 +60,9 @@
                 <!-- case 3-2. [end + need-care] counseling end need-care -->
 
                 @foreach ($counselingList['data'] as $list)
-                  <li class="counseling">
+                  <li class="counseling {{ $statusCode[$list['counselorStatus']] }}">
                     <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
-                      <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
+                      <img src="{{URL::asset('/storage/image/thumb/'.$list['answer'])}}" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
                       <div class="counseling-user__name">{{$list['counselorName']}}</div>
@@ -70,7 +70,7 @@
                       <div class="counseling-user__gender">{{$list['counselorGender']}}</div>
                     </div>
                     <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingPK']}}</span></div>
+                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingCode']}}</span></div>
                     </div>
                     <div class="counseling-link__cell">
                       <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-link">상담하기</a>
