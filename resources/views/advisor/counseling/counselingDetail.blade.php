@@ -609,7 +609,7 @@
                             <div class="common-info__photo">
                                 <img src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="common-info__img">
                             </div>
-                            <div class="common-info__name">김아무 상담사</div>
+                            <div class="common-info__name">{{$advisorProfile->advisorName}} 상담사</div>
                         </div>
                         <div class="counselor-edit__btns-wrap">
                             <button onclick="saveWrite('temp')" type="button" class="counselor-edit__btn counselor-edit__btn--save">임시저장</button>
@@ -696,7 +696,7 @@
             <div class="sb-counseling__wrapper swiper-wrapper">
                 @foreach($waiteCounseling as $waiteCounselingRow)
                     <div class="sb-counseling__slide swiper-slide">
-                        <a href="#" class="sb-counseling__photo">
+                        <a href="/advisor/counselingDetail/{{$waiteCounselingRow->counselingPK}}" class="sb-counseling__photo">
                             <img src="{{URL::asset('/storage/image/thumb/'.$waiteCounselingRow->answer)}}" alt="" class="sb-counseling__img">
                         </a>
                         <div class="sb-counseling__info">
@@ -754,7 +754,7 @@
             minute -= 1;
         }
 
-        var timeText = hour.toString().padStart(2,'0')+":"+minute.toString().padStart(2,'0');
+        var timeText = hour.toString().padStart(2,'0')+" : "+minute.toString().padStart(2,'0');
         $("#timerText").text(timeText);
     }
 </script>
@@ -800,6 +800,11 @@
                         $("#editorForm").css('display','block');
                         $("#statusForm").css('display','none');
                         editorLoader()
+
+                        hour = 23;
+                        minute = 59;
+                        $("#timerText").text("23 : 59");
+                        timerProc();
                     } else {
                         alert(data.message);
                     }

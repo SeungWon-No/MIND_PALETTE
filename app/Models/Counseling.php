@@ -407,4 +407,31 @@ class Counseling extends Model
                 ->where("rating",$rating)
                 ->get()->count();
     }
+
+
+    public static function findRecentCounseling($advisorPK){
+        return Counseling::join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName","answer")
+            ->where('answer.questionsPK', '68')
+            ->where('counseling.memberPK', '>', '0')
+            ->where('counseling.advisorPK', $advisorPK)
+            ->whereIn("counseling.counselingStatus",[280,281])
+            ->orderBy("counseling.updateDate", "DESC")
+            ->limit(3)->get();
+    }
+
+    public static function findTodayCounseling(){
+        $day = date("Y-m-d");
+        return Counseling::where("createDate",">=",$day." 00:00:00")
+                ->where("createDate","<=",$day." 23:59:59")
+                ->get()->count();
+    }
+    public static function findTodayCompleteCounseling(){
+        $day = date("Y-m-d");
+        return Counseling::where("updateDate",">=",$day." 00:00:00")
+            ->where("updateDate","<=",$day." 23:59:59")
+            ->where("counselingStatus",281)
+            ->get()->count();
+    }
 }

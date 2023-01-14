@@ -1,4 +1,9 @@
-
+@php
+    use App\Models\Counseling;
+    $recentList = Counseling::findRecentCounseling($advisorProfile->advisorPK);
+    $todayCounseling = Counseling::findTodayCounseling();
+    $todayCompleteCounseling = Counseling::findTodayCompleteCounseling();
+@endphp
 <div class="column-right">
     <div class="account">
         <div class="account-info__cell">
@@ -20,7 +25,7 @@
         <div class="my-history__heading">
             <div class="my-history__tit">나의 상담내역</div>
             <div class="my-history__total">
-                (총 <span class="my-history__totalnum">13</span>건)
+                (총 <span class="my-history__totalnum">{{number_format($advisorProfile->counselingCount)}}</span>건)
             </div>
         </div>
         <ul class="my-history__list">
@@ -46,21 +51,23 @@
         </div>
         <div class="recent-history__list">
             <!-- list items -->
-            <a href="#none" class="recent-history__item">
+            @foreach($recentList as $recent)
+            <a href="/advisor/counselingDetail/{{$recent->counselingPK}}" class="recent-history__item">
                 <div class="recent-history__photo">
-                    <img src="/advisorAssets/assets/images/couns-list-01.jpg" alt="" class="recent-history__img">
+                    <img src="{{URL::asset('/storage/image/thumb/'.$recent->answer)}}" alt="" class="recent-history__img">
                 </div>
                 <div class="recent-history__info-wrap">
                     <div class="recent-history__info">
-                        <div class="recent-history__name">홍길동</div>
-                        <div class="recent-history__year">191898</div>
-                        <div class="recent-history__gender">남아</div>
+                        <div class="recent-history__name">{{$recent->counselorName}}</div>
+                        <div class="recent-history__year">{{Crypt::decryptString($recent->counselorBirthday)}}</div>
+                        <div class="recent-history__gender">{{$recent->codeName}}</div>
                     </div>
                     <div class="counseling-code__cell">
-                        <div class="counseling-code__detail">상담코드:<span class="counseling-code">2143426</span></div>
+                        <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$recent->counselingCode}}</span></div>
                     </div>
                 </div>
             </a>
+            @endforeach
             <!-- list items -->
         </div>
     </div>
@@ -71,7 +78,8 @@
             </div>
             <div class="my-prefer__star">
                 <span class="icon star-review-icon"></span>
-                <div class="star-review__score">{{($advisorProfile->rating == 0)?"0.0":sprintf('%0.1f', ($advisorProfile->rating/$advisorProfile->ratingCount))}}</div>
+                <div
+                    class="star-review__score">{{($advisorProfile->rating == 0)?"0.0":sprintf('%0.1f', ($advisorProfile->rating/$advisorProfile->ratingCount))}}</div>
                 <div class="star-review__unit">/ 5</div>
             </div>
         </div>
@@ -82,9 +90,9 @@
                 <h4 class="aside__heading__tit">오늘의 상담신청 및 완료</h4>
             </div>
             <div class="today-qNa__wrap">
-                <div class="today-question__num">221,424</div>
+                <div class="today-question__num">{{number_format($todayCounseling)}}</div>
                 <div class="today-qNa__unit">/</div>
-                <div class="today-answer__num">141,324</div>
+                <div class="today-answer__num">{{number_format($todayCompleteCounseling)}}</div>
             </div>
             <div class="today-data">{{date("Y.m.d")}}</div>
         </div>
