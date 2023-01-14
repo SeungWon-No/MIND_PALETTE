@@ -17,4 +17,8 @@ class CounselingTemplateResult extends Model
             ->where('maxScore','>=',$resultScore)->get()->first();
     }
 
+    public static function findAdvisorWriteFormat() {
+        return CounselingTemplateResult::select("counselingResult")
+            ->where('templateType','=',"357")->get()->first();
+    }
 }

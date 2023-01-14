@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use App\Models\Answer;
 use App\Models\Counseling;
+use App\Models\CounselingTemplateResult;
 use App\Models\Questions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -29,6 +30,8 @@ class AdvisorCounselingDetailController extends Controller
             "status" => "block",
             "editor" => "none"
         ];
+
+
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
 
         if ($isLogin) {
@@ -44,18 +47,51 @@ class AdvisorCounselingDetailController extends Controller
         $getClientInfo = Counseling::getCounselingDetail($counselingPK);
         $images = Answer::findHTPImage($counselingPK);
 
+        $timer = [
+            "hour" => "24",
+            "minute" => "0"
+        ];
+
+        if ($getClientInfo['startDate'] != "") {
+            $nowTime = date("Y-m-d H:i:s");
+            $startTime = $getClientInfo['startDate'];
+            $diffTime = strtotime($nowTime) - strtotime($startTime);
+            $diffHour = ceil($diffTime / (60*60));
+
+            if ($diffHour >= 24) {
+                $timer["hour"] = "0";
+                $timer["minute"] = "0";
+            } else {
+                $addOneDay = date("Y-m-d H:i:s", strtotime($startTime."+1 days"));
+                $diffTime = strtotime($addOneDay) - strtotime($nowTime);
+                $timer["hour"] = floor($diffTime / (60*60));
+                $timer["minute"] = floor(($diffTime-($timer["hour"]*60*60)) / 60);
+            }
+        }
+
+
         if ($getClientInfo["counselingStatus"] == 280 && $getClientInfo["advisorPK"] == $advisorPK) {
             $cssStyle["status"] = "none";
             $cssStyle["editor"] = "block";
         }
-
         return view("/advisor/counseling/counselingDetail", [
             "counselingPK" =>$counselingPK,
             "advisorProfile" => $advisorProfile,
             'clientInfo' => $getClientInfo,
             'statusCode' => $statusCode,
             'cssStyle' => $cssStyle,
+            "timer" => $timer,
             'images' => $images,
+            "waiteCounseling" => Counseling::findWaitCounseling(),
+            "houseQuestions" => Questions::findAllQuestion(302),
+            "houseAnswer" => $this->getAllAnswer($request,$counselingPK,302, $getClientInfo['memberPK']),
+            "treeQuestions" => Questions::findAllQuestion(303),
+            "treeAnswer" => $this->getAllAnswer($request,$counselingPK,303, $getClientInfo['memberPK']),
+            "person1Questions" => Questions::findAllQuestion(304),
+            "person1Answer" => $this->getAllAnswer($request,$counselingPK,304, $getClientInfo['memberPK']),
+            "person2Questions" => Questions::findAllQuestion(305),
+            "person2Answer" => $this->getAllAnswer($request,$counselingPK,305, $getClientInfo['memberPK']),
+            "writeFormat" => CounselingTemplateResult::findAdvisorWriteFormat(),
             "questions" => Questions::findAllQuestion(335),
             "answer" => $this->getAllAnswer($request, $counselingPK, 335, $getClientInfo['memberPK']),
             "temperamentTest"=>Answer::findTemperamentTest($counselingPK),
@@ -105,11 +141,12 @@ class AdvisorCounselingDetailController extends Controller
             $nowDate = date("Y-m-d H:i:s");
             $updateValue = [
                 "advisorPK" => null,
+                "counselingResult" => '',
                 "counselingStatus" => 279,
                 "startDate" => null,
                 "updateDate" => $nowDate,
             ];
-            Counseling::updateCounselingCancelStatus($counselingPK, $advisorPK, $updateValue);
+            Counseling::updateCounselingAdvisor($counselingPK, $advisorPK, $updateValue);
 
             $result = [
                 "status" => "success",
@@ -125,16 +162,36 @@ class AdvisorCounselingDetailController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function update(Request $request, $counselingPK) {
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         try {
+            $content = $request->counselingResult ?? '';
+            $counselorStatus = $request->counselorStatus ?? '354';
+            $type = $request->submitType ?? '';
 
-        }catch (\Exception $e) {
-            $result = [
-                "status" => "fail",
-                "message" => "상담 저장에 실패하였습니다. 증상이 계속되면 고객센터로 문의해주세요."
+
+
+            $nowDate = date("Y-m-d H:i:s");
+            $updateValue = [
+                "counselingResult" => $content,
+                "counselorStatus" => $counselorStatus,
+                "updateDate" => $nowDate,
             ];
-            return json_encode($result);
+
+            if ($type == "write") {
+                $updateValue["counselingStatus"] = "281";
+            }
+
+            Counseling::updateCounselingAdvisor($counselingPK, $advisorPK, $updateValue);
+
+            if ($type == "temp") {
+                return redirect('/advisor/counselingDetail/'.$counselingPK)->with('error', '임시저장 되었습니다.');
+            } else {
+                return redirect('/advisor/counselingDetail/'.$counselingPK);
+            }
+
+        }catch (Exception $e) {
+            return redirect('/advisor/counselingDetail/'.$counselingPK)->with('error', '상담 저장에 실패하였습니다. 증상이 계속되면 고객센터로 문의해주세요.');
         }
     }
 

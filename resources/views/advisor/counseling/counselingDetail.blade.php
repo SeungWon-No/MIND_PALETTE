@@ -1,5 +1,6 @@
 @php
   use App\Http\Util\CounselingTemplate;
+    use Illuminate\Support\Facades\Crypt;
   $counselingTemplate = new CounselingTemplate;
 
 
@@ -84,7 +85,7 @@
                   <div class="detail-item__slide swiper-slide">
                     <div class="detail-item__cell">
                       <div class="detail-item__photo">
-                        <img src="/advisorAssets/assets/images/detail-item-01.png" alt="" class="detail-item__img">
+                        <img src="{{URL::asset('/storage/image/thumb/'.$images['house'])}}" alt="" class="detail-item__img">
                         <div class="detail-item__btn-wrap">
                           <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                           <button type="button" class="detail-item__btn doc active"><span class="icon document-icon"></span></button>
@@ -93,32 +94,27 @@
                       <div class="detail-item__label">집</div>
                     </div>
                     <div class="detail-item__qna">
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 집에는 누가 살고 있나요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">이 집에는 엄마랑 아빠, 저만 살고있어요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 집의 분위기는 어떤가요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">화목해요. 밖에는 울타리가 쳐져있어요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 집을 누구네 집이라고 생각하며 그렸나요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집이에요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이것은 무엇인가요? 어떤 이유로 그렸나요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">기타( 그 외 특이사항)</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
+                        @php
+                            $rowIndex = 0;
+                        @endphp
+                        @foreach($houseQuestions as $houseQuestionsRow)
+                            @php
+                                if($rowIndex == 0) {
+                                    $rowIndex++;
+                                    continue;
+                                }
+                            @endphp
+                            <div class="detail-item__text-g">
+                                <p class="detail-item__desc detail-item__desc--q">{!! $houseQuestionsRow->questions !!}</p>
+                                <p class="detail-item__desc detail-item__desc--a">{{($houseAnswer[$houseQuestionsRow->questionsPK] == "")?"ㅤ":$houseAnswer[$houseQuestionsRow->questionsPK]}}</p>
+                            </div>
+                        @endforeach
                     </div>
                   </div>
                   <div class="detail-item__slide swiper-slide">
                     <div class="detail-item__cell">
                       <div class="detail-item__photo">
-                        <img src="/assets/images/detail-item-02.png" alt="" class="detail-item__img">
+                        <img src="{{URL::asset('/storage/image/thumb/'.$images['tree'])}}" alt="" class="detail-item__img">
                         <div class="detail-item__btn-wrap">
                           <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                           <button type="button" class="detail-item__btn doc active"><span class="icon document-icon"></span></button>
@@ -127,32 +123,27 @@
                       <div class="detail-item__label">나무</div>
                     </div>
                     <div class="detail-item__qna">
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 나무는 몇 살 정도 되었나요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">이 집에는 엄마랑 아빠, 저만 살고있어요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 나무의 건강은 어떤가요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">화목해요. 밖에는 울타리가 쳐져있어요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">나무에게 소원이 있다면 무엇이 있을까요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집이에요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 나무의 주변에는 무엇이 있나요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">기타( 그 외 특이사항)</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
+                        @php
+                            $rowIndex = 0;
+                        @endphp
+                        @foreach($treeQuestions as $treeQuestionsRow)
+                            @php
+                                if($rowIndex == 0) {
+                                    $rowIndex++;
+                                    continue;
+                                }
+                            @endphp
+                            <div class="detail-item__text-g">
+                                <p class="detail-item__desc detail-item__desc--q">{!! $treeQuestionsRow->questions !!}</p>
+                                <p class="detail-item__desc detail-item__desc--a">{{($treeAnswer[$treeQuestionsRow->questionsPK] == "")?"ㅤ":$treeAnswer[$treeQuestionsRow->questionsPK]}}</p>
+                            </div>
+                        @endforeach
                     </div>
                   </div>
                   <div class="detail-item__slide swiper-slide">
                     <div class="detail-item__cell">
                       <div class="detail-item__photo">
-                        <img src="/advisorAssets/assets/images/detail-item-03.png" alt="" class="detail-item__img">
+                        <img src="{{URL::asset('/storage/image/thumb/'.$images['person1'])}}" alt="" class="detail-item__img">
                         <div class="detail-item__btn-wrap">
                           <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                           <button type="button" class="detail-item__btn doc active"><span class="icon document-icon"></span></button>
@@ -161,36 +152,27 @@
                       <div class="detail-item__label">사람1</div>
                     </div>
                     <div class="detail-item__qna">
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 사람은 무엇을 하고 있나요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">이 집에는 엄마랑 아빠, 저만 살고있어요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 사람은 지금 몇살인가요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">화목해요. 밖에는 울타리가 쳐져있어요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 사람은 지금 기분이 어떤가요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집이에요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">가장 힘들었던 일은 무엇일까요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">누군가 생각하며 그린 사람이 있을까요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">기타( 그 외 특이사항)</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
+                        @php
+                            $rowIndex = 0;
+                        @endphp
+                        @foreach($person1Questions as $person1QuestionRow)
+                            @php
+                                if($rowIndex == 0) {
+                                    $rowIndex++;
+                                    continue;
+                                }
+                            @endphp
+                            <div class="detail-item__text-g">
+                                <p class="detail-item__desc detail-item__desc--q">{!! $person1QuestionRow->questions !!}</p>
+                                <p class="detail-item__desc detail-item__desc--a">{{($person1Answer[$person1QuestionRow->questionsPK] == "")?"ㅤ":$person1Answer[$person1QuestionRow->questionsPK]}}</p>
+                            </div>
+                        @endforeach
                     </div>
                   </div>
                   <div class="detail-item__slide swiper-slide">
                     <div class="detail-item__cell">
                       <div class="detail-item__photo">
-                        <img src="/advisorAssets/assets/images/detail-item-04.png" alt="" class="detail-item__img">
+                        <img src="{{URL::asset('/storage/image/thumb/'.$images['person2'])}}" alt="" class="detail-item__img">
                         <div class="detail-item__btn-wrap">
                           <button type="button" class="detail-item__btn plus"><span class="icon plus-icon"></span></button>
                           <button type="button" class="detail-item__btn doc active"><span class="icon document-icon"></span></button>
@@ -199,30 +181,21 @@
                       <div class="detail-item__label">사람2</div>
                     </div>
                     <div class="detail-item__qna">
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 사람은 무엇을 하고 있나요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">이 집에는 엄마랑 아빠, 저만 살고있어요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 사람은 지금 몇살인가요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">화목해요. 밖에는 울타리가 쳐져있어요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">이 사람은 지금 기분이 어떤가요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집이에요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">가장 힘들었던 일은 무엇일까요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">누군가 생각하며 그린 사람이 있을까요?</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
-                      <div class="detail-item__text-g">
-                        <p class="detail-item__desc detail-item__desc--q">기타( 그 외 특이사항)</p>
-                        <p class="detail-item__desc detail-item__desc--a">저희집 멍멍이에요 멍멍이랑 밖에서 뛰놀고 싶은데 못놀아요. 엄마가 자꾸 화내요.</p>
-                      </div>
+                        @php
+                            $rowIndex = 0;
+                        @endphp
+                        @foreach($person2Questions as $person2QuestionRow)
+                            @php
+                                if($rowIndex == 0) {
+                                    $rowIndex++;
+                                    continue;
+                                }
+                            @endphp
+                            <div class="detail-item__text-g">
+                                <p class="detail-item__desc detail-item__desc--q">{!! $person2QuestionRow->questions !!}</p>
+                                <p class="detail-item__desc detail-item__desc--a">{{($person2Answer[$person2QuestionRow->questionsPK] == "")?"ㅤ":$person2Answer[$person2QuestionRow->questionsPK]}}</p>
+                            </div>
+                        @endforeach
                     </div>
                   </div>
                 </div>
@@ -564,8 +537,67 @@
           </div>
         </div>
       </div>
+        <div class="detail-md__cont">
+            <div class="detail-md__inner">
+                <div class="counselor-cont">
+                    <div class="counselor-date">2022 . 11 . 29. 답변</div>
+                    <div class="counselor-info">
+                        <div class="counselor-info__top">
+                            <div class="counselor-info__detail">
+                                <div class="counselor-info__name">김아무 상담사</div>
+                                <div class="counselor-info__more">
+                                    <div class="counselor-info__work">부평 아동 전문병원</div>
+                                    <div class="counselor-info__progress">팔레트 상담 <em>1353</em>진행</div>
+                                </div>
+                            </div>
+                            <div class="counselor-info__photo">
+                                <img src="../assets/images/user-profile.jpg" alt="" class="counselor-info__img">
+                            </div>
+                        </div>
+                        <div class="counselor-info__carrier">
+                            현)근로복지공단 전문상담사, 전)경기도 교육청 학생상담 자원봉사자, 전)용산구 건강가정지원센터 전문상담사
+                        </div>
+                    </div>
+
+                    <div class="counselor-answer">
+                        <div class="counselor-answer__text">
+                            <p class="counselor-answer__desc">
+                                사고의 양과 연상 활동은 부족한 편으로 보입니다. <br>정서상태 3단계로 사회적으로 통용되는 관습적 지각력은 매우 부족할 것으로 예상됩니다.<br><br>심리검사의 이해 소검사의 저조하 점수와 더불어 이와 같은 특성은 또래의 눈에 “특이한 아이”로 비춰질 수 있게 할 것이며, 이에 원만한 대인관계는 어려울 것으로 예측되며, 특히 모든 반응이 Bt또는 Ad, Cs반응으로 H반응은 결여되어있으므로, 실질적인 상호작용은 매우 적은 빈도로 일어날 것으로 판단됩니다.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 22.12.29 수정 -->
+                    <div class="counselor-vote">
+                        <div class="counselor-vote__desc">상담사 만족도에 대한 평가</div>
+                        <!-- 텍스트 있을때 counselor-vote__cell에 클래스 active 추가-->
+                        <div class="counselor-vote__cell active">
+                            <div class="counselor-vote__star">
+                                <span class="icon star-review-icon"></span>
+                                <div class="star-review__score">4.0</div>
+                                <div class="star-review__unit">/ 5</div>
+                            </div>
+                            <div class="counselor-vote__text">
+                                아이에 대해 진중한 상담이 좋았습니다. 평소 다른 상담을 하였을 때,자세한 결과를 알기 힘들었는데 전문적인 분석내용과 더불어 평가 해 주셔서 좋았습니다.
+                            </div>
+                        </div>
+                        <!-- 텍스트 없을때 -->
+                        <div class="counselor-vote__cell">
+                            <div class="counselor-vote__star">
+                                <span class="icon star-review-icon"></span>
+                                <div class="star-review__score">4.0</div>
+                                <div class="star-review__unit">/ 5</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //22.12.29 수정 -->
+                </div>
+            </div>
+        </div>
     <div id="editorForm" class="detail-md__cont" style="display: {{$cssStyle["editor"]}}">
-        <form name="counselingWriteForm">
+        <form name="counselingWriteForm" action="/advisor/counselingDetail/{{$counselingPK}}" method="POST">
+            @csrf
+            <input type="hidden" name="_method" value="PUT"/>
+            <input type="hidden" name="submitType" id="submitType"/>
             <div class="detail-md__inner">
                 <!-- 22.12.29 수정 -->
                 <div class="counselor-edit__cont">
@@ -579,23 +611,23 @@
                         <div class="counselor-edit__btns-wrap">
                             <button onclick="saveWrite('temp')" type="button" class="counselor-edit__btn counselor-edit__btn--save">임시저장</button>
                             <button onclick="saveWrite('write')" type="button" class="counselor-edit__btn">상담등록</button>
-                            <button onclick="cancel()"type="button" class="counselor-edit__btn counselor-edit__btn--cancel">상담취소</button>
+                            <button onclick="cancel()" type="button" class="counselor-edit__btn counselor-edit__btn--cancel">상담취소</button>
                         </div>
                     </div>
                     <div class="counselor-edit__body">
                         <div class="counselor-editor__area">
                             <div class="counselor-editor__btn-wrap">
                                 <button class="counselor-editor__btn guide">작성가이드</button>
-                                <button class="counselor-editor__btn reset">폼 리셋</button>
+                                <button onclick="clearForm()" type="button" class="counselor-editor__btn reset">폼 리셋</button>
                             </div>
                             <div class="counselor-editor2">
-                                <textarea class="ckeditor" id="content" name="content"></textarea>
+                                <textarea class="ckeditor" id="counselingResult" name="counselingResult">{{($clientInfo["counselingResult"] == "") ? $writeFormat["counselingResult"]:$clientInfo["counselingResult"]}}</textarea>
                             </div>
                         </div>
                         <div class="counselor-check__area">
                             <div class="counselor-time__area">
                                 <div class="counselor-time__desc">작성까지 남은 시간</div>
-                                <div class="counselor-time">24 : 00</div>
+                                <div class="counselor-time">{{$timer["hour"]}} : {{$timer["minute"]}}</div>
                             </div>
                             <div class="counselor-notice__area">
                                 <span class="icon caution-icon"></span>
@@ -609,7 +641,11 @@
                                     <div class="note-check__head">특이사항</div>
                                     <div class="note-check__body">
                                         <div class="note-check__item">
-                                            <input type="radio" class="note-check" name="noteCheck" checked>
+                                            <input type="radio"
+                                                   class="note-check"
+                                                   value="354"
+                                                   name="counselorStatus"
+                                                   @if($clientInfo["counselorStatus"] == ""||$clientInfo["counselorStatus"] == "354") checked @endif>
                                             <div class="note-check__cell">
                                                 <span class="icon note-check-icon green"></span>
                                                 <div class="note-check__label">해당없음</div>
@@ -617,7 +653,11 @@
                                             <div class="note-check__desc">환자에게 해당하는 정서적 특이사항이 없을 경우.</div>
                                         </div>
                                         <div class="note-check__item">
-                                            <input type="radio" class="note-check" name="noteCheck">
+                                            <input type="radio"
+                                                   class="note-check"
+                                                   value="355"
+                                                   name="counselorStatus"
+                                                   @if($clientInfo["counselorStatus"] == "355") checked @endif>
                                             <div class="note-check__cell">
                                                 <span class="icon note-check-icon red"></span>
                                                 <div class="note-check__label">위험</div>
@@ -625,7 +665,11 @@
                                             <div class="note-check__desc">정서적 위험, 조치가 긴급한 환자의 경우..</div>
                                         </div>
                                         <div class="note-check__item">
-                                            <input type="radio" class="note-check" name="noteCheck">
+                                            <input type="radio"
+                                                   class="note-check"
+                                                   value="356"
+                                                   name="counselorStatus"
+                                                   @if($clientInfo["counselorStatus"] == "356") checked @endif>
                                             <div class="note-check__cell">
                                                 <span class="icon note-check-icon yellow"></span>
                                                 <div class="note-check__label">주의</div>
@@ -647,16 +691,18 @@
           <h3 class="sb-counseling__tit">대기중인 그림상담</h3>
           <div class="sb-counseling__slider">
             <div class="sb-counseling__wrapper swiper-wrapper">
-              <div class="sb-counseling__slide swiper-slide">
-                <a href="#" class="sb-counseling__photo">
-                  <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="sb-counseling__img">
-                </a>
-                <div class="sb-counseling__info">
-                  <div class="sb-counseling__user">홍길동</div>
-                  <div class="sb-counseling__year">191898</div>
-                  <div class="sb-counseling__gender">남아</div>
-                </div>
-              </div>
+                @foreach($waiteCounseling as $waiteCounselingRow)
+                    <div class="sb-counseling__slide swiper-slide">
+                        <a href="#" class="sb-counseling__photo">
+                            <img src="{{URL::asset('/storage/image/thumb/'.$waiteCounselingRow->answer)}}" alt="" class="sb-counseling__img">
+                        </a>
+                        <div class="sb-counseling__info">
+                            <div class="sb-counseling__user">{{$waiteCounselingRow->counselorName}}</div>
+                            <div class="sb-counseling__year">{{Crypt::decryptString($waiteCounselingRow->counselorBirthday)}}</div>
+                            <div class="sb-counseling__gender">{{$waiteCounselingRow->codeName}}</div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -677,6 +723,10 @@
     </div>
 </article>
 <script>
+
+    let myEditor;
+    let hour = 24;
+    let minute = 0;
 
     if("{{$cssStyle["editor"]}}" === "block") {
         editorLoader();
@@ -712,31 +762,22 @@
                 extraPlugins: [MyCustomUploadAdapterPlugin],
             } )
             .then( editor => {
-                window.editor = editor;
+                myEditor = editor;
             } )
             .catch( error => {
             } );
     }
 
+    function clearForm() {
+        if (confirm("폼 리셋시 작성중인 내용이 초기화 됩니다.\n폼 리셋을 하시겠습니까?")) {
+            $("#counselingResult").html(`{{$writeFormat["counselingResult"]}}`);
+            myEditor.setData(`{!! $writeFormat["counselingResult"]!!}`);
+        }
+    }
+
     function saveWrite(type) {
-        var queryString = $("form[name=counselingWriteForm]").serialize() ;
-        $.ajax({
-            type:'POST',
-            url:'/advisor/counselingDetail/{{$counselingPK}}',
-            data: queryString,
-            async: false,
-            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
-            success:function(json){
-                var data = JSON.parse(json);
-                if ( data.status === "success" ) {
-                    if (type === "temp") {
-                        alert("임시 저장 되었습니다.");
-                    }
-                } else {
-                    // alert(data.message);
-                }
-            }
-        });
+        $("#submitType").val(type);
+        document.counselingWriteForm.submit();
     }
 
     function cancel() {

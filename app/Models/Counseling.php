@@ -60,7 +60,7 @@ class Counseling extends Model
             ->update($value);
     }
 
-    public static function updateCounselingCancelStatus($counselingPK, $advisorPK, $value) {
+    public static function updateCounselingAdvisor($counselingPK, $advisorPK, $value) {
         return Counseling::where('counselingPK','=',$counselingPK)
             ->where('advisorPK','=',$advisorPK)
             ->update($value);
@@ -92,7 +92,9 @@ class Counseling extends Model
     {
         $pagination = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
-                    ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+                    ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+                    ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName" ,"answer")
+                    ->where('answer.questionsPK', '68')
                     ->where('counseling.memberPK', '>', '0')
                     ->whereIn("counseling.counselingStatus",[279,280,281,353])
                     ->orderBy("counselingPK", "DESC")
@@ -105,6 +107,7 @@ class Counseling extends Model
                 'counselingPK' => $list['counselingPK'],
                 'counselingCode' => $list['counselingCode'],
                 'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
             ];
@@ -217,8 +220,11 @@ class Counseling extends Model
                              "counseling.relationshipSiblings",
                              "counseling.relationshipSister",
                              "counseling.stressCauses",
+                             "counseling.counselingResult",
                              "counseling.reasonInspection",
                              "counseling.counselingStatus",
+                             "counseling.counselorStatus",
+                             "counseling.startDate",
                              "counseling.createDate",
                              )
                     ->where('counseling.counselingPK', '=', $counselingPK)
@@ -245,15 +251,32 @@ class Counseling extends Model
             'relationshipMother' => $getCounselingDetail[0]['relationshipMother'],// 어머니와의 관계
             'relationshipSiblings' => $getCounselingDetail[0]['relationshipSiblings'], // 형제 관계
             'relationshipSister' => $getCounselingDetail[0]['relationshipSister'],// 자매 관계
+            'counselingResult' => $getCounselingDetail[0]['counselingResult'],
             'stressCauses' => $getCounselingDetail[0]['stressCauses'], // 가족 내력, 스트레스 요인
             'counselingStatus' => $getCounselingDetail[0]['counselingStatus'],
+            'counselorStatus' => $getCounselingDetail[0]['counselorStatus'],
             'reasonInspection' => $getCounselingDetail[0]['reasonInspection'], // 심리 상담 사유
+            'startDate' => $getCounselingDetail[0]['startDate'],
             'createDate' => $getCounselingDetail[0]['createDate'],
         ];
         return $clientInfo;
 
 
     }
+
+    public static function findWaitCounseling()
+    {
+        return Counseling::join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName","answer")
+            ->where('answer.questionsPK', '68')
+            ->where('counseling.memberPK', '>', '0')
+            ->where("counseling.counselingStatus",279)
+            ->orderBy("counselingPK", "DESC")
+            ->limit(10)->get();
+    }
+
+
 
     public static function searchingCounselorName($searchingText, $sdate, $edate)
     {

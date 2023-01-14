@@ -23,6 +23,14 @@
   <link rel="stylesheet" href="/advisorAssets/assets/css/style.css?v={{CSS_VERSION}}">
 </head>
 <body>
+@if (session('error'))
+    <script>
+        if(location.hash !== "#e"){
+            history.pushState(null, '', window.location.pathname+"?#e");
+            alert("{{session('error')}}");
+        }
+    </script>
+@endif
   <div id="wrapper">
     <header id="header">
       <div class="header-top">
