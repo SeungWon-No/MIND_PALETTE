@@ -33,7 +33,7 @@
                 </div>
               </div>
               <div class="profile-col">
-                <div class="profile-col__heading">기타사항</div>
+                <div class="profile-col__heading">경력사항</div>
                 <div class="profile-col__content">
                   <p class="profile-col__set">설정된 경력사항입니다.</p>
                   <div class="profile-col__data-cell">
