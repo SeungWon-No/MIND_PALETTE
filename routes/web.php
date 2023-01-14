@@ -208,6 +208,10 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
         Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
         Route::resource('/inquiry', AdvisorInquiryController::class); // 1:1 문의
+        Route::post('/writePost', [AdvisorInquiryController::class, "writePost"]);// 1:1 문의 글쓰기
+        Route::get('/inquiryWrite', [AdvisorInquiryController::class, "inquiryWrite"]);// 1:1 문의 글쓰기 저장
+        Route::post('/inquiryEdit', [AdvisorInquiryController::class, "inquiryEdit"]);// 1:1 문의 수정
+        
         Route::get('/privacy', PrivacyController::class);
         Route::get('/terms', TermsController::class);
 

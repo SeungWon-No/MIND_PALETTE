@@ -22,7 +22,7 @@
                 <div class="counseling-edit__cell">
                   <div class="counseling-edit__label">제목</div>
                   <div class="counseling-edit">
-                    <input type="text" class="counseling-edit__form" name="inquiryTitle" value="{{$getMyInquiryPost['contactTitle']}}" placeholder="제목을 입력해주세요.">
+                    <input type="text" class="counseling-edit__form" name="inquiryTitle" value="" placeholder="제목을 입력해주세요.">
                   </div>
                 </div>
               </div>
@@ -31,7 +31,7 @@
                   <div class="counseling-edit__label">상담내용</div>
                   <div class="counseling-edit__area">
                     <div class="counselor-editor2">
-                      <textarea class="ckeditor" id="content" name="content">{{$getMyInquiryPost['contactContent']}}</textarea>
+                      <textarea class="ckeditor" id="content" name="content"></textarea>
                     </div>
                   </div>
                 </div>

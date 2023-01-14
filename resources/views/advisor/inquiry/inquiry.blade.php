@@ -17,33 +17,25 @@
                   </div>
                 </div>
                 <div class="inquiry-table__body">
-                  <div class="inquiry-table__row">
-                    <!-- 상담완료 일때 inquiry-btn에 클래스 actived추가-->
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">상담관련 내용입니다.</a></div>
-                    <div class="table-body__cell col-3">2022.11.28</div>
-                    <div class="table-body__cell col-4">
-                      <a href="#none" class="inquiry-btn">상담대기</a>
+                  @foreach($getInquiryList['data'] as $list)
+                    <div class="inquiry-table__row">
+                      <!-- 상담완료 일때 inquiry-btn에 클래스 actived추가-->
+                      <div class="table-body__cell col-1">{{$list['contactPK']}}</div>
+                      <div class="table-body__cell col-2"><a href="/advisor/inquiry/{{$list['contactPK']}}">{{$list['contactTitle']}}</a></div>
+                      <div class="table-body__cell col-3">{{$list['createDate']}}</div>
+                      <div class="table-body__cell col-4">
+                        <a href="#" class="inquiry-btn">상담대기</a>
+                      </div>
                     </div>
-                  </div>
-                  <div class="inquiry-table__row">
-                    <!-- 상담완료 일때 inquiry-btn에 클래스 actived추가-->
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">상담관련 내용입니다.</a></div>
-                    <div class="table-body__cell col-3">2022.11.28</div>
-                    <div class="table-body__cell col-4">
-                      <a href="#none" class="inquiry-btn actived">상담완료</a>
-                    </div>
-                  </div>
+                  @endforeach
                 </div>
-                <a href="/advisor/inquiry/edit" class="inquiry-writing__btn">글쓰기</a>
+                <a href="/advisor/inquiryWrite" class="inquiry-writing__btn">글쓰기</a>
               </div>
             </div>
             <div class="paging-box">
-              <a href="#none" class="paging-prev"><span class="icon pagin-perv-icon"></span></a>
-              <a href="#none" class="paging-num active">1</a>
-              <a href="#none" class="paging-num">2</a>
-              <a href="#none" class="paging-next"><span class="icon pagin-next-icon"></span></a>
+              @foreach ($getInquiryList['links'] as $link)
+                <a href="{{ $link['url'] }}" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
+              @endforeach
             </div>
           </div>
         </div> <!--column-left end-->
