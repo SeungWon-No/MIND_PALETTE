@@ -226,12 +226,12 @@
                                     <span class="table-file__name" id="qualification-attachedDisplayName{{$qualificationIndex}}">{{$info->fileName}}</span>
                                     <input id="qualification-attachedFilePath{{$qualificationIndex}}"
                                             value="{{$info->certificateFilePath}}"
-                                            name="qualification-attachedFilePath{{$qualificationIndex}}" 
+                                            name="qualification-attachedFilePath{{$qualificationIndex}}"
                                             type="hidden">
 
                                     <input id="qualification-attachedFileName{{$qualificationIndex}}"
                                             value="{{$info->fileName}}"
-                                            name="qualification-attachedFileName{{$qualificationIndex}}" 
+                                            name="qualification-attachedFileName{{$qualificationIndex}}"
                                             type="hidden">
                                 </label>
                                 </td>
@@ -277,7 +277,7 @@
                       @endphp
                     <tbody class="member-table__body">
                     @foreach($advisorCareerInfo as $info)
-                        <input type="hidden" id="educationPK{{$careerIndex}}" name="educationPK{{$careerIndex}}" value="{{$info->careerPK}}"/>
+                        <input type="hidden" id="careerPK{{$careerIndex}}" name="careerPK{{$careerIndex}}" value="{{$info->careerPK}}"/>
                         <tr class="table-row" data-index="1">
                         <td class="table-col no-padding">
                             <div class="select-box">
@@ -311,11 +311,11 @@
                             <label class="table-file__label">
                                 <input id="career" type="file" class="table-file attachedFilePath" data-index="{{$careerIndex}}">
                                 <span class="table-file__name" id="career-attachedDisplayName{{$careerIndex}}">{{$info->fileName}}</span>
-                                <input id="career-attachedFilePath{{$careerIndex}}" 
-                                name="career-attachedFilePath{{$careerIndex}}" 
+                                <input id="career-attachedFilePath{{$careerIndex}}"
+                                name="career-attachedFilePath{{$careerIndex}}"
                                 type="hidden">
-                                <input id="career-attachedFileName{{$careerIndex}}" 
-                                name="career-attachedFileName{{$careerIndex}}" 
+                                <input id="career-attachedFileName{{$careerIndex}}"
+                                name="career-attachedFileName{{$careerIndex}}"
                                 type="hidden">
                             </label>
                         </td>
@@ -389,8 +389,8 @@
                                   <label class="table-file__label">
                                       <input id="education" type="file" class="table-file attachedFilePath" data-index="`+educationIndex+`">
                                         <span class="table-file__name" id="education-attachedDisplayName`+educationIndex+`">첨부하기</span>
-                                      <input id="education-attachedFilePath`+educationIndex+`" 
-                                      name="education-attachedFilePath`+educationIndex+`" 
+                                      <input id="education-attachedFilePath`+educationIndex+`"
+                                      name="education-attachedFilePath`+educationIndex+`"
                                       type="hidden">
 
                                     <input id="education-attachedFileName`+educationIndex+`"
@@ -422,10 +422,10 @@
                                         <label class="table-file__label">
                                             <input id="qualification" type="file" class="table-file attachedFilePath" data-index="`+qualificationIndex+`">
                                             <span class="table-file__name" id="qualification-attachedDisplayName`+qualificationIndex+`">첨부하기</span>
-                                            <input id="qualification-attachedFilePath`+qualificationIndex+`" 
-                                            name="qualification-attachedFilePath`+qualificationIndex+`" 
+                                            <input id="qualification-attachedFilePath`+qualificationIndex+`"
+                                            name="qualification-attachedFilePath`+qualificationIndex+`"
                                             type="hidden">
-                                            
+
                                             <input id="qualification-attachedFileName`+qualificationIndex+`"
                                             name="qualification-attachedFileName`+qualificationIndex+`"
                                             type="hidden">
@@ -476,8 +476,8 @@
                                         <label class="table-file__label">
                                         <input id="career" type="file" class="table-file attachedFilePath" data-index="`+careerIndex+`">
                                         <span class="table-file__name" id="career-attachedDisplayName`+careerIndex+`">첨부하기</span>
-                                        <input id="career-attachedFilePath`+careerIndex+`" 
-                                        name="career-attachedFilePath`+careerIndex+`" 
+                                        <input id="career-attachedFilePath`+careerIndex+`"
+                                        name="career-attachedFilePath`+careerIndex+`"
                                         type="hidden">
 
                                         <input id="career-attachedFileName`+careerIndex+`"
@@ -487,7 +487,7 @@
                                     </td>`;
             tableTr.innerHTML = table03Content;
             targetTableTr.appendChild(tableTr);
-                
+
         }
 
     });

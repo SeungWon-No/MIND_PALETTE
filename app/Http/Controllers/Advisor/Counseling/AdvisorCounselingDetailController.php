@@ -99,8 +99,43 @@ class AdvisorCounselingDetailController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function counselingCancel(Request $request, $counselingPK) {
+        $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        try {
+            $nowDate = date("Y-m-d H:i:s");
+            $updateValue = [
+                "advisorPK" => null,
+                "counselingStatus" => 279,
+                "startDate" => null,
+                "updateDate" => $nowDate,
+            ];
+            Counseling::updateCounselingCancelStatus($counselingPK, $advisorPK, $updateValue);
 
+            $result = [
+                "status" => "success",
+                "message" => "상담 취소되었습니다.",
+            ];
+            return json_encode($result);
+        }catch (\Exception $e) {
+            $result = [
+                "status" => "fail",
+                "message" => "상담시작에 실패하였습니다. 증상이 계속되면 고객센터로 문의해주세요."
+            ];
+            return json_encode($result);
+        }
+    }
+
+    public function store(Request $request){
+        $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        try {
+
+        }catch (\Exception $e) {
+            $result = [
+                "status" => "fail",
+                "message" => "상담 저장에 실패하였습니다. 증상이 계속되면 고객센터로 문의해주세요."
+            ];
+            return json_encode($result);
+        }
     }
 
     private function getAllAnswer($request, $counselingPK, $questionsType, $memberPK) {
