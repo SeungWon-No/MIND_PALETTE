@@ -84,6 +84,7 @@ Route::middleware(['autoLogin'])->group(function () {
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]);
     Route::post('/editor/upload', FileUpload::class);
     Route::post("/imageUpload", [FileUploadController::class,"imageUpload"]);
+    Route::post("/profileUpload", [FileUploadController::class,"profileUpload"]);
 
     Route::get("/counselingCenter",CounselingCenterController::class);
     Route::get('/contact', ContactController::class);
@@ -187,7 +188,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::post("/counselingCancel/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingCancel"]); // 상담 내용
         Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
         Route::resource('/inquiry', AdvisorInquiryController::class); // 1:1 문의
-        
+
     });
 
 

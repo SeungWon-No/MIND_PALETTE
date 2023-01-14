@@ -62,6 +62,7 @@ class Advisor extends Model
                 'email',
                 'phone',
                 'advisorName',
+                'profilePath',
                 'briefIntroduction',
                 'counselingCount',
                 'centerName',

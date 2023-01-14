@@ -9,20 +9,12 @@
                 <div class="member-heading__note"><em>*</em>은 필수사항입니다.</div>
               </div>
               <div class="member-cell">
-                <!-- 사진없을때
                 <div class="member-group">
                   <div class="member-label">프로필사진<em>*</em></div>
-                  <label class="profile-upload__label">
-                    <input type="file" class="form-file">
-                    사진올리기
-                  </label>
-                </div> -->
-                <div class="member-group">
-                  <div class="member-label">프로필사진<em>*</em></div>
-                  <!-- 사진있을때 추가되는 부분 -->
+                    @if($advisorProfile->profilePath != "")
                   <div class="upload-file__wrap">
                     <div class="upload-file__photo">
-                      <img src="/assets/images/user-profile-01.jpg" alt="" class="upload-file__img">
+                      <img src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
                     </div>
                     <div class="upload-file__text">
                       <div class="upload-file">
@@ -31,6 +23,7 @@
                       <p class="member-s__text">권장 사이즈와 사진 사이즈 다를 경우, 사진이 일부 잘리거나 변형 될 수 있습니다.</p>
                     </div>
                   </div>
+                    @endif
                   <!--// 사진있을때 추가되는 부분 -->
                   <label class="profile-upload__label">
                     <input id="attachFile" type="file" class="form-file">
@@ -226,12 +219,12 @@
                                     <span class="table-file__name" id="qualification-attachedDisplayName{{$qualificationIndex}}">{{$info->fileName}}</span>
                                     <input id="qualification-attachedFilePath{{$qualificationIndex}}"
                                             value="{{$info->certificateFilePath}}"
-                                            name="qualification-attachedFilePath{{$qualificationIndex}}" 
+                                            name="qualification-attachedFilePath{{$qualificationIndex}}"
                                             type="hidden">
 
                                     <input id="qualification-attachedFileName{{$qualificationIndex}}"
                                             value="{{$info->fileName}}"
-                                            name="qualification-attachedFileName{{$qualificationIndex}}" 
+                                            name="qualification-attachedFileName{{$qualificationIndex}}"
                                             type="hidden">
                                 </label>
                                 </td>
@@ -311,8 +304,8 @@
                             <label class="table-file__label">
                                 <input id="career" type="file" class="table-file attachedFilePath" data-index="{{$careerIndex}}">
                                 <span class="table-file__name" id="career-attachedDisplayName{{$careerIndex}}">{{$info->fileName}}</span>
-                                <input id="career-attachedFilePath{{$careerIndex}}" 
-                                name="career-attachedFilePath{{$careerIndex}}" 
+                                <input id="career-attachedFilePath{{$careerIndex}}"
+                                name="career-attachedFilePath{{$careerIndex}}"
                                 value="{{$info->certificateFilePath}}"
                                 type="hidden">
                                 <input id="career-attachedFileName{{$careerIndex}}"
@@ -615,6 +608,7 @@
     }
 </script>
 <script>
+
     $('input[name="filePath"]').change(function(){
         if($("#attachFile").val() === ""){
             // 파일 취소
@@ -632,7 +626,7 @@
 
         $.ajax({
             type:"POST",
-            url: "/imageUpload",
+            url: "/profileUpload",
             processData: false,
             contentType: false,
             data: formData,
