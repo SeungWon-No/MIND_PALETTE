@@ -10,8 +10,8 @@
         <div class="footer__right">
           <div class="footer-link__cell">
             <a href="#none" class="footer-link">서비스 안내</a>
-            <a href="#none" class="footer-link">이용약관</a>
-            <a href="#none" class="footer-link">개인정보 취급방침</a>
+            <a href="/advisor/terms" class="footer-link">이용약관</a>
+            <a href="/advisor/privacy" class="footer-link">개인정보 취급방침</a>
             <a href="#none" class="footer-link">공지사항</a>
           </div>
           <address class="footer-info">
