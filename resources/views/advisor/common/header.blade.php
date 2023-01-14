@@ -77,7 +77,19 @@
           if (urlSection1 == 'advisor' && urlSection2 == '') {
             $("#main").attr("class", "nav-menu active");
 
-          }else{
+          }else if(urlSection1 == 'advisor' && urlSection2 == 'waitingCounseling'){
+            $("#main").attr("class", "nav-menu active");
+
+          }else if(urlSection1 == 'advisor' && urlSection2 == 'completeCounseling'){
+            $("#main").attr("class", "nav-menu active");
+
+          }else if(urlSection1 == 'advisor' && urlSection2 == 'warningCounseling'){
+            $("#main").attr("class", "nav-menu active");
+
+          }else if(urlSection1 == 'advisor' && urlSection2 == 'impossibleCounseling'){
+            $("#main").attr("class", "nav-menu active");
+
+          }else {
             $("#"+urlSection2).attr("class", "nav-menu active");
           }
       </script>

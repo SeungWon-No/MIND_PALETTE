@@ -5,11 +5,11 @@
           <div class="counseling-cont">
             <div class="counseling-tab__wrap">
               <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
-              <a href="#" class="counseling-tab__btn active">전체</a>
-              <a href="#" class="counseling-tab__btn">상담대기</a>
-              <a href="#" class="counseling-tab__btn">상담완료</a>
-              <a href="#" class="counseling-tab__btn">주의/위험</a>
-              <a href="#" class="counseling-tab__btn">상담불가</a>
+              <a href="/advisor/counselingList" class="counseling-tab__btn active">전체</a>
+              <a href="/advisor/waitingCounselingList" class="counseling-tab__btn">상담대기</a>
+              <a href="/advisor/completeCounselingList" class="counseling-tab__btn">상담완료</a>
+              <a href="/advisor/warningCounselingList" class="counseling-tab__btn">주의/위험</a>
+              <a href="/advisor/impossibleCounselingList" class="counseling-tab__btn">상담불가</a>
             </div>
             <form id="searchForm" name="searchForm" action="/advisor/searchingData" method="POST">
               @csrf
@@ -66,7 +66,7 @@
                 <!-- case 3-2. [end + need-care] counseling end need-care -->
 
                 @foreach ($counselingList['data'] as $list)
-                  <li class="counseling">
+                  <li class="counseling {{ $statusCode[$list['counselorStatus']] }}">
                     <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
                       <img src="{{URL::asset('/storage/image/thumb/'.$list['answer'])}}" alt="" class="counseling-thumb__img">
                     </a>
@@ -86,7 +86,7 @@
               </ul>
               <div class="paging-box">
                 @foreach ($counselingList['links'] as $link)
-                  <a href="{{ $link['url'] }}" class="paging-num active">{{ $link['label'] }}</a>
+                  <a href="{{ $link['url'] }}" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
                 @endforeach
               </div>
             </div>
