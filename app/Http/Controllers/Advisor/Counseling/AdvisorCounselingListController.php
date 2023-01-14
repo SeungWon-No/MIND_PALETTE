@@ -62,42 +62,35 @@ class AdvisorCounselingListController extends Controller
     public function store(Request $request)
     {
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
             return view("/advisor/login/login");
         }
-        
+
         $previousUrl = url()->previous();
         $sliceUrl = explode('/', $previousUrl);
         $previousPage = $sliceUrl[4];
-        
+
         $selectBoxCategory = $request['selectBoxCategory'];
         $searchingText = $request['searchingText'];
         $sdate = $request['sdate'];
         $edate = $request['edate'];
 
-        
-        if($sdate == null && $edate == null && $selectBoxCategory == 'counselorName'){ // 이름 전체 기간 검색
-            $counselingList = $this->counseling->searchingCounselorNameWithoutPeriod($searchingText);
+        $searchData = [
+            "sdate" => $sdate,
+            "edate" => $edate,
+            "selectBoxCategory" => $selectBoxCategory,
+            "searchingText" => $searchingText
+        ];
 
-        }else if($sdate == null && $edate == null && $selectBoxCategory == 'counselingCode'){ // 코드 전체 기간 검색
-            $counselingList = $this->counseling->searchingCounselorCodeWithoutPeriod($searchingText);
-
-        }else if ($sdate != null && $edate != null && $selectBoxCategory == 'counselorName') { // 이름 검색
-            $counselingList = $this->counseling->searchingCounselorName($searchingText, $sdate, $edate);
-
-        }else if($sdate != null && $edate != null && $selectBoxCategory == 'counselingCode'){  // 상담코드 검색
-            $counselingList = $this->counseling->searchingCounselorCode($searchingText, $sdate, $edate);
-
-        }else{
-            return view("/advisor/counseling/counselingList");
-        }
+        $counselingList = Counseling::searchingCounselor($searchData);
 
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
         return view("/advisor/counseling/".$previousPage, [
             'isLogin' => $isLogin,
+            'searchData' => $searchData,
             'counselingList' => $counselingList,
             'advisorProfile' => $advisorProfile,
             'searchMonth' => $this->code->searchMonth(),

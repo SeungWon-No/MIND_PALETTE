@@ -542,6 +542,52 @@ class Counseling extends Model
     }
 
 
+    public static function searchingCounselor($searchData)
+    {
+        $pagination= Counseling::join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
+            ->where('answer.questionsPK', '68')
+            ->where('counseling.memberPK', '>', '0')
+            ->whereIn("counseling.counselingStatus",[279,280,281,353]);
+
+        if ( $searchData["sdate"] != "" ) {
+            $pagination = $pagination->where('counseling.createDate', '>=', $searchData["sdate"]);
+        }
+
+        if ( $searchData["edate"] != "" ) {
+            $pagination = $pagination->where('counseling.createDate', '<=', $searchData["edate"]);
+        }
+
+        if ($searchData["selectBoxCategory"] == "counselorName") { //searchingText
+            $pagination = $pagination->where('counseling.counselorName', 'like', '%'. $searchData["searchingText"].'%');
+        }
+
+        if ($searchData["selectBoxCategory"] == "counselingCode") { //searchingText
+            $pagination = $pagination->where('counseling.counselingCode', 'like', '%'. $searchData["searchingText"].'%');
+        }
+
+        $pagination = $pagination->orderBy("counselingPK", "DESC")
+            ->paginate(10);
+
+        $counselingList = json_decode(json_encode($pagination), true);
+
+        foreach($counselingList['data'] as $key => $list){
+            $counselingList['data'][$key] = [
+                'counselingPK' => $list['counselingPK'],
+                'counselingCode' => $list['counselingCode'],
+                'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
+                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
+                'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
+            ];
+        }
+        return $counselingList;
+    }
+
+
     public static function searchingCounselorName($searchingText, $sdate, $edate)
     {
         $pagination= DB::table('counseling')

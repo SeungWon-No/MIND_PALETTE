@@ -68,29 +68,37 @@
         </div>
       </div>
       <script>
-          var currentUrl = $(location).attr("href"); // 현재 페이지 url
-          var splitUrl = currentUrl.split("/");
-          // http://dev-m.maeumpalette.com:8080/[urlSection1]/[urlSection2]
-          var urlSection1 = splitUrl[3];
-          var urlSection2 = splitUrl[4];
+          var pathname = $(location).attr('pathname');
+          const homeSub = ["/advisor/waitingCounseling","/advisor/completeCounseling",
+              "/advisor/warningCounseling","/advisor/impossibleCounseling"];
+          const counselingSub = ["/advisor/waitingCounselingList","/advisor/completeCounselingList",
+              "/advisor/warningCounselingList","/advisor/impossibleCounselingList"];
+          const myCounselingSub = ["/advisor/myWaitingCounseling","/advisor/myCompleteCounseling",
+              "/advisor/myWarningCounseling","/advisor/myImpossibleCounseling"];
 
-          if (urlSection1 == 'advisor' && urlSection2 == '') {
-            $("#main").attr("class", "nav-menu active");
 
-          }else if(urlSection1 == 'advisor' && urlSection2 == 'waitingCounseling'){
-            $("#main").attr("class", "nav-menu active");
+          $(".nav a").each(function(){
+              var hrefLink = $(this).attr('href');
+              var id = $(this).attr('id');
+              if (pathname === hrefLink) {
+                  $(this).addClass("active");
+              }
 
-          }else if(urlSection1 == 'advisor' && urlSection2 == 'completeCounseling'){
-            $("#main").attr("class", "nav-menu active");
+              if ((id === "profile" || id === "notice" || id === "inquiry" ) && pathname.includes(hrefLink)) {
+                  $(this).addClass("active");
+              }
+          });
 
-          }else if(urlSection1 == 'advisor' && urlSection2 == 'warningCounseling'){
-            $("#main").attr("class", "nav-menu active");
+          if (homeSub.includes(pathname)) {
+              $("#main").addClass("active");
+          }
 
-          }else if(urlSection1 == 'advisor' && urlSection2 == 'impossibleCounseling'){
-            $("#main").attr("class", "nav-menu active");
+          if (counselingSub.includes(pathname)) {
+              $("#counselingList").addClass("active");
+          }
 
-          }else {
-            $("#"+urlSection2).attr("class", "nav-menu active");
+          if (myCounselingSub.includes(pathname)) {
+              $("#myCounselingList").addClass("active");
           }
       </script>
     </header>

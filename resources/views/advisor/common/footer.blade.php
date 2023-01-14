@@ -2,17 +2,17 @@
       <div class="footer__inner">
         <div class="footer__left">
           <div class="footer-logo">
-            <a href="#none" class="footer-logo__link">
+            <a href="http://5dalant.net/" target="_blank" class="footer-logo__link">
               <img src="/advisorAssets/assets/images/footer-logo.png" alt="다섯달란트 로고" class="footer-logo__img">
             </a>
           </div>
         </div>
         <div class="footer__right">
           <div class="footer-link__cell">
-            <a href="#none" class="footer-link">서비스 안내</a>
-            <a href="#none" class="footer-link">이용약관</a>
-            <a href="#none" class="footer-link">개인정보 취급방침</a>
-            <a href="#none" class="footer-link">공지사항</a>
+            <!--<a href="#" class="footer-link">서비스 안내</a>-->
+            <a href="/advisor/terms" class="footer-link">이용약관</a>
+            <a href="/advisor/privacy" class="footer-link">개인정보 취급방침</a>
+            <a href="/advisor/notice" class="footer-link">공지사항</a>
           </div>
           <address class="footer-info">
             <div class="footer-info__cell">

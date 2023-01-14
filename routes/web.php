@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Advisor\AdvisorIndexController;
+use App\Http\Controllers\Advisor\Etc\PrivacyController;
+use App\Http\Controllers\Advisor\Etc\TermsController;
 use App\Http\Controllers\Advisor\Join\AdvisorEducationController;
 use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
 use App\Http\Controllers\Advisor\Join\VerifyEmailDuplicationController;
@@ -202,14 +204,15 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::resource("/counselingDetail", AdvisorCounselingDetailController::class); // 상담 내용
         Route::post("/counselingStatus/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingStatus"]); // 상담 내용
         Route::post("/counselingCancel/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingCancel"]); // 상담 내용
-        
+
         //Route::post('/searchingData', AdvisorSearchingDataContoroller::class); // 상담 내역 검색
-        
         Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
         Route::resource('/inquiry', AdvisorInquiryController::class); // 1:1 문의
+        Route::get('/privacy', PrivacyController::class);
+        Route::get('/terms', TermsController::class);
 
     });
-    
+
 
     Route::get('/loginFindId', function () { // 아이디, 패스워드 찾기 페이지
         return view('/advisor/login/loginFindEmailPassword');

@@ -1,5 +1,5 @@
 @include('advisor/common/header')
-<link rel="stylesheet" type="text/css" href="/commonEditor/styles.css?version={{CSS_VERSION}}">
+<link rel="stylesheet" type="text/css" href="/commonEditor/stylesWrite.css?version={{CSS_VERSION}}">
 <script src="/commonEditor/ckeditor.js"></script>
 <script src="/commonEditor/ck.upload.adapter.js"></script>
 <style>
@@ -31,7 +31,7 @@
                   <div class="counseling-edit__label">상담내용</div>
                   <div class="counseling-edit__area">
                     <div class="counselor-editor2">
-                        <textarea class="ckeditor" id="content" name="content"></textarea>
+                        <textarea class="ckeditor" id="content" name="content" ></textarea>
                     </div>
                   </div>
                 </div>

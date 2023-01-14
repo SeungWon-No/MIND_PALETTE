@@ -1,10 +1,18 @@
 @php
     use App\Models\Counseling;
+    use App\Models\ServiceRating;
     $recentList = Counseling::findRecentCounseling($advisorProfile->advisorPK);
     $todayCounseling = Counseling::findTodayCounseling();
     $todayCompleteCounseling = Counseling::findTodayCompleteCounseling();
     $myCompleteCount = Counseling::findCompleteCounseling($advisorProfile->advisorPK);
     $myWritingCounseling = Counseling::findWritingCounseling($advisorProfile->advisorPK);
+
+    $serviceRating = ServiceRating::avg('rating');
+
+    $serviceRatingPercent = 0;
+    if ($serviceRating) {
+        $serviceRatingPercent = $serviceRating->rating/5*100;
+    }
 
     $myWritingCounselingCount = 0;
     if ($myWritingCounseling) {
@@ -72,7 +80,7 @@
     <div class="recent-history">
         <div class="aside__heading">
             <h4 class="aside__heading__tit">최근 상담 내역</h4>
-            <a href="#none" class="aside__heading__link">더보기<span class="icon link-more-icon"></span></a>
+            <a href="/advisor/myCounselingList" class="aside__heading__link">더보기<span class="icon link-more-icon"></span></a>
         </div>
         <div class="recent-history__list">
             <!-- list items -->
@@ -136,16 +144,16 @@
                       <g class="arcCircle">의 offset-distance는 10%
                       <path class="arcGraphValue">의 stroke-dashoffset는 90%
                     -->
-                    <path class="arcGraph" stroke-linecap="round" d="M 10,90 A 1 1, 0, 0 1, 170 90"></path>
-                    <path class="arcGraphValue" stroke-linecap="round" d="M 10,90 A 1 1, 0, 0 1, 170 90"></path>
-                    <g class="arcCircle">
+                    <path class="arcGraph" stroke-linecap="round"  d="M 10,90 A 1 1, 0, 0 1, 170 90"></path>
+                    <path class="arcGraphValue" style="stroke-dashoffset:{{100-$serviceRatingPercent}}% !important;" stroke-linecap="round" d="M 10,90 A 1 1, 0, 0 1, 170 90"></path>
+                    <g class="arcCircle" style="offset-distance:{{$serviceRatingPercent}}%;">
                         <circle class="shap-1" r="10"></circle>
                         <circle class="shap-2" r="8"></circle>
                     </g>
                 </svg>
                 <div class="service-eval__content">
                     <div class="service-eval">
-                        <span class="service-eval__score">4.0</span>
+                        <span class="service-eval__score">{{$serviceRatingPercent}}</span>
                         <span class="service-eval__unit">점</span>
                     </div>
                     <div class="service-eval__desc">5점 만점 기준</div>
