@@ -16,8 +16,28 @@
             <div class="counseling-search__wrap">
               <div class="counseling-search__left">
                 <div class="select-box">
-                  <input type="hidden" id="selectBoxCategory" name="selectBoxCategory" value="-1"/>
-                  <button id="select-box__label" class="select-box__label" type="button">선택 <span class="icon select-down-icon"></span></button>
+                    <input type="hidden" id="page" name="page" value="1"/>
+                  <input type="hidden" id="selectBoxCategory" name="selectBoxCategory"
+
+                      @if(isset($searchData))
+                             value="{{($searchData["selectBoxCategory"] == "") ? "-1":$searchData["selectBoxCategory"]}}"
+                      @else
+                             value="-1"
+                      @endif
+                  />
+                  <button id="select-box__label" class="select-box__label" type="button">
+                      @if(isset($searchData))
+                          @if($searchData["selectBoxCategory"] == "counselorName")
+                              아이이름
+                          @elseif($searchData["selectBoxCategory"] == "counselingCode")
+                              상담코드
+                          @else
+                              선택
+                          @endif
+                      @else
+                          선택
+                      @endif
+                      <span class="icon select-down-icon"></span></button>
                   <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                   <ul class="select-option__list">
                     <li id="searchingName" name="searchingName" class="select-option" onclick="window.selectBoxCategory('counselorName')">아이이름</li>
@@ -25,7 +45,13 @@
                   </ul>
                 </div>
                 <div class="counseling-search__group">
-                  <input type="text" class="counseling-search__form" name="searchingText" onkeyup="window.searchingText()" placeholder="검색 입력">
+                  <input type="text" class="counseling-search__form" id="searchingText"
+                         @if(isset($searchData))
+                             value="{{$searchData["searchingText"]}}"
+                         @else
+                             value=""
+                         @endif
+                         name="searchingText" onkeyup="window.searchingText()" placeholder="검색 입력">
                 </div>
               </div>
             </div>
@@ -47,9 +73,21 @@
                     @endforeach
                 </div>
                 <div class="counseling-sort__datepicker">
-                  <input type="text" id="sdate" name="sdate" autocomplete="off" value="" onclick="window.formatStartDate()">
+                  <input type="text" id="sdate" name="sdate" autocomplete="off"
+                         @if(isset($searchData))
+                             value="{{$searchData["sdate"]}}"
+                         @else
+                             value=""
+                         @endif
+                         onclick="window.formatStartDate()">
                   <span class="datepicker-unit">~</span>
-                  <input type="text" id="edate" name="edate" autocomplete="off" value="" onclick="window.formatEndDate()">
+                  <input type="text" id="edate" name="edate" autocomplete="off"
+                         @if(isset($searchData))
+                             value="{{$searchData["edate"]}}"
+                         @else
+                             value=""
+                         @endif
+                         onclick="window.formatEndDate()">
 
                   <button type="button" class="datepicker-apply__btn" onclick="searchingData()">조회<span class="icon search-apply-icon"></span></button>
                 </div>
@@ -87,7 +125,8 @@
               @endif
               <div class="paging-box">
                 @foreach ($counselingList['links'] as $link)
-                  <a href="{{ $link['url'] }}" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
+
+                  <a href="javascript:nextPage('{{ $link['label'] }}')" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
                 @endforeach
               </div>
             </div>
@@ -174,6 +213,11 @@
       $('input[name=searchingText]').val();
     }
 
+    function nextPage(page) {
+        $("#page").val(page);
+        $('#searchForm').submit();
+    }
+
     // 날짜 선택
     function formatStartDate(){
       var getStartDate = $( "#sdate" ).datepicker("getDate");
@@ -188,7 +232,7 @@
     }
 
     function searchingData(){
-      if ($('input[name="selectBoxCategory"]').val() == -1) {
+      if ($("#searchingText").val() !== "" && $('input[name="selectBoxCategory"]').val() == -1) {
         alert('검색 카테고리를 선택해주세요.');
         return false;
       }
