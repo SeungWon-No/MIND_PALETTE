@@ -2,6 +2,8 @@
 <link rel="stylesheet" type="text/css" href="/commonEditor/styles.css?version={{CSS_VERSION}}">
 <script src="/commonEditor/ckeditor.js"></script>
 <script src="/commonEditor/ck.upload.adapter.js"></script>
+<style>
+</style>
     @csrf
     <div id="container">
         <div class="column-wrapper">
