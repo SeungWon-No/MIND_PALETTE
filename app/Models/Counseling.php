@@ -119,13 +119,20 @@ class Counseling extends Model
 
     // 상담 대기 중인 건수
     public static function getWaitingCounselingCount(){
-        return Counseling::where('counselingCode', '=', '279')->count();
+        return Counseling::where('counselingStatus', '=', '279')->count();
     }
 
     // 상담 완료 건수
     public static function getCompleteCounselingCount(){
-        return Counseling::where('counselingCode', '=', '281')->count();
+        return Counseling::where('counselingStatus', '=', '281')->count();
     }
+
+    // 상담 불가 건수
+    public static function getImpossibleCounselingCount(){
+        return Counseling::where('counselingStatus', '=', '353')->count();
+    }
+
+    
 
     // 위험 수준 상담 건수 
     public static function getDangerCounselingCount(){
@@ -141,36 +148,106 @@ class Counseling extends Model
         ->count();
     }
 
-    // 주의 수준 상담 리스트 
-    public static function getCautionCounselingList(){
+    public static function getWaitingCounselingList(){
 
-        $cautionList = DB::table('counseling')
+        $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
-            ->where("counseling.counselingStatus", '=', '356')
+            ->where("counseling.counselingStatus", "=", "279")
             ->orderBy("counselingPK", "DESC")
-            ->first()
             ->paginate(10);
 
-        return $cautionList;
+        $warningList = json_decode(json_encode($getWarningList), true);
+
+        foreach($warningList['data'] as $key => $list){
+            $warningList['data'][$key] = [
+                'counselingPK' => $list['counselingPK'],
+                'counselingCode' => $list['counselingCode'],
+                'counselorName' => $list['counselorName'],
+                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
+                'counselorGender' => $list['codeName'],
+            ];
+        }
+        return $warningList;
     }
 
-    // 위험 수준 상담 리스트 
-    public static function getDangerCounselingList(){
+    // 주의/위험 수준 상담 리스트 
+    public static function getWarningCounselingList(){
 
-        $dangerList = DB::table('counseling')
+        $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
-            ->where("counseling.counselingStatus", '=', '355')
+            ->whereIn("counseling.counselorStatus",[355, 356])
             ->orderBy("counselingPK", "DESC")
-            ->first()
             ->paginate(10);
 
-        return $dangerList;
+        $warningList = json_decode(json_encode($getWarningList), true);
+
+        foreach($warningList['data'] as $key => $list){
+            $warningList['data'][$key] = [
+                'counselingPK' => $list['counselingPK'],
+                'counselingCode' => $list['counselingCode'],
+                'counselorName' => $list['counselorName'],
+                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
+                'counselorGender' => $list['codeName'],
+            ];
+        }
+        return $warningList;
+    }
+
+
+    public static function getCompleteCounselingList(){
+
+        $getWarningList = DB::table('counseling')
+            ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->where('counseling.memberPK', '>', '0')
+            ->where('counseling.isDelete', '=', 'N')
+            ->where("counseling.counselingStatus", "=", "281")
+            ->orderBy("counselingPK", "DESC")
+            ->paginate(10);
+
+        $warningList = json_decode(json_encode($getWarningList), true);
+
+        foreach($warningList['data'] as $key => $list){
+            $warningList['data'][$key] = [
+                'counselingPK' => $list['counselingPK'],
+                'counselingCode' => $list['counselingCode'],
+                'counselorName' => $list['counselorName'],
+                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
+                'counselorGender' => $list['codeName'],
+            ];
+        }
+        return $warningList;
+    }
+
+    public static function getImpossibleCounselingList(){
+
+        $getWarningList = DB::table('counseling')
+            ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->where('counseling.memberPK', '>', '0')
+            ->where('counseling.isDelete', '=', 'N')
+            ->where("counseling.counselingStatus", "=", "353")
+            ->orderBy("counselingPK", "DESC")
+            ->paginate(10);
+
+        $warningList = json_decode(json_encode($getWarningList), true);
+
+        foreach($warningList['data'] as $key => $list){
+            $warningList['data'][$key] = [
+                'counselingPK' => $list['counselingPK'],
+                'counselingCode' => $list['counselingCode'],
+                'counselorName' => $list['counselorName'],
+                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
+                'counselorGender' => $list['codeName'],
+            ];
+        }
+        return $warningList;
     }
 
 

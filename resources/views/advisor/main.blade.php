@@ -12,31 +12,31 @@
                   <span class="counseling-status__unit">%</span>
                 </div>
               </button>
-              <button type="button" class="counseling-filter__btn active" style="background:var(--point-blue-color)">
+              <button onclick="location.href='/advisor/waitingCounseling'" type="button" class="counseling-filter__btn active" style="background:var(--point-blue-color)">
                 <div class="filter__btn-tit">상담대기</div>
                 <div class="counseling-status">
                   <span class="counseling-status__num">{{$waitingCount}}</span>
                   <span class="counseling-status__unit">건</span>
                 </div>
               </button>
-              <button type="button" class="counseling-filter__btn active" style="background:var(--primary-color)">
+              <button onclick="location.href='/advisor/completeCounseling'" type="button" class="counseling-filter__btn active" style="background:var(--primary-color)">
                 <div class="filter__btn-tit">상담완료</div>
                 <div class="counseling-status">
                   <span class="counseling-status__num">{{$completeCount}}</span>
                   <span class="counseling-status__unit">건</span>
                 </div>
               </button>
-              <button type="button" class="counseling-filter__btn active" style="background:var(--point-red-color)">
+              <button onclick="location.href='/advisor/warningCounseling'" type="button" class="counseling-filter__btn active" style="background:var(--point-red-color)">
                 <div class="filter__btn-tit">주의 / 위험</div>
                 <div class="counseling-status">
-                  <span class="counseling-status__num">2</span>
+                  <span class="counseling-status__num">{{$cautionCount + $dangerCount}}</span>
                   <span class="counseling-status__unit">건</span>
                 </div>
               </button>
-              <button type="button" class="counseling-filter__btn active" style="background:var(--font-grray-color)">
+              <button onclick="location.href='/advisor/impossibleCounseling'" type="button" class="counseling-filter__btn active" style="background:var(--font-grray-color)">
                 <div class="filter__btn-tit">상담불가</div>
                 <div class="counseling-status">
-                  <span class="counseling-status__num">1</span>
+                  <span class="counseling-status__num">{{$impossibleCount}}</span>
                   <span class="counseling-status__unit">건</span>
                 </div>
               </button>

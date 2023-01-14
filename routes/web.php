@@ -174,6 +174,10 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
     Route::middleware(['advisorAutoLogin'])->group(function () { // 로그인 미들웨어
 
         Route::get('/', AdvisorIndexController::class); // 메인화면
+        Route::get('/waitingCounseling', [AdvisorIndexController::class, "waitingCounseling"]); // 상담대기
+        Route::get('/completeCounseling', [AdvisorIndexController::class, "completeCounseling"]); // 상담완료
+        Route::get('/warningCounseling', [AdvisorIndexController::class, "warningCounseling"]); // 주의/위험
+        Route::get('/impossibleCounseling', [AdvisorIndexController::class, "impossibleCounseling"]); // 상담불가
 
         Route::resource("/login",AdvisorLoginController::class)->only(['index', 'store']); // 로그인
         Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
