@@ -15,6 +15,7 @@ use App\Http\Controllers\Advisor\Counseling\AdvisorMyCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingDetailController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorSearchingDataContoroller;
 use App\Http\Controllers\Advisor\Profile\AdvisorProfileController;
+use App\Http\Controllers\Advisor\Inquiry\AdvisorInquiryController;
 
 use App\Http\Controllers\Common\FileUpload;
 use App\Http\Controllers\Common\FileUploadController;
@@ -174,27 +175,19 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::get('/', AdvisorIndexController::class); // 메인화면
 
         Route::resource("/login",AdvisorLoginController::class)->only(['index', 'store']); // 로그인
-
-        Route::resource('/join', AdvisorJoinController::class)->only(['index', 'store', 'show']); // 상담사 회원가입
-
-        Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]);
-
-        Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
-
-        Route::resource('/profile', AdvisorProfileController::class); // 상담사 프로필
-
         Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
-
+        Route::resource('/join', AdvisorJoinController::class)->only(['index', 'store', 'show']); // 상담사 회원가입
+        Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]); // 회원가입 step2
+        Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
+        Route::resource('/profile', AdvisorProfileController::class); // 상담사 프로필
         Route::resource("/counselingList", AdvisorCounselingListController::class); // 상담리스트
-
         Route::get("/myCounselingList", [AdvisorMyCounselingListController::class, "index"]); // my 상담리스트
-
         Route::resource("/counselingDetail", AdvisorCounselingDetailController::class); // 상담 내용
         Route::post("/counselingStatus/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingStatus"]); // 상담 내용
         Route::post("/counselingCancel/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingCancel"]); // 상담 내용
-
         Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
-
+        Route::resource('/inquiry', AdvisorInquiryController::class); // 1:1 문의
+        
     });
 
 

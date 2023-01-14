@@ -333,7 +333,7 @@
                 </div>
               <div class="member-bt__btns-wrap">
                 <button onclick="validForm()" type="button" class="member-bt__btn">저장</button>
-                <button type="button" class="member-bt__btn cancel">취소</button>
+                <button onclick="location.href='/advisor/profile';" type="button" class="member-bt__btn cancel">취소</button>
               </div>
             </div>
           </div>
