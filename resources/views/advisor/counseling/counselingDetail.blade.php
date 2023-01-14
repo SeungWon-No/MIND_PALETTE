@@ -214,7 +214,7 @@
               <div class="detail-info__avater"></div>
               <div class="detail-info__cell">
                 <div class="detail-info__label">이름</div>
-                <div class="detail-info__name">{{$clientInfo['clientName']}}</div>
+                <div class="detail-info__name">{{$clientInfo['counselorName']}}</div>
               </div>
             </div>
             <!-- 22.12.29 수정 -->
@@ -236,7 +236,7 @@
                     <div class="kid-info__item-wrap">
                       <div class="kid-info__item">
                         <div class="kid-info__label">생년월일</div>
-                        <div class="kid-info__content">{{$clientInfo['counselorBirthday']}}</div>
+                        <div class="kid-info__content">{{Crypt::decryptString($clientInfo['counselorBirthday'])}}</div>
                       </div>
                       <div class="kid-info__item">
                         <div class="kid-info__label">학교</div>
@@ -527,7 +527,7 @@
               <div class="common-info__photo">
                 <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="common-info__img">
               </div>
-              <div class="common-info__name">김아무 상담사</div>
+              <div class="common-info__name">{{$advisorProfile->advisorName}} 상담사</div>
             </div>
             <div class="counselor-before__btn-wrap">
               <!-- 상담중일때, counselor-before__btn에 클래스 disabled 추가-->
@@ -537,17 +537,17 @@
           </div>
         </div>
       </div>
-        <div class="detail-md__cont">
+        <div class="detail-md__cont" style="display: {{$cssStyle["result"]}}">
             <div class="detail-md__inner">
                 <div class="counselor-cont">
-                    <div class="counselor-date">2022 . 11 . 29. 답변</div>
+                    <div class="counselor-date">{{date_format(date_create($clientInfo["updateDate"]),"Y . m . d .")}} 답변</div>
                     <div class="counselor-info">
                         <div class="counselor-info__top">
                             <div class="counselor-info__detail">
-                                <div class="counselor-info__name">김아무 상담사</div>
+                                <div class="counselor-info__name">{{$advisorProfile->advisorName}} 상담사</div>
                                 <div class="counselor-info__more">
-                                    <div class="counselor-info__work">부평 아동 전문병원</div>
-                                    <div class="counselor-info__progress">팔레트 상담 <em>1353</em>진행</div>
+                                    <div class="counselor-info__work">{{$advisorProfile->centerName}}</div>
+                                    <div class="counselor-info__progress">팔레트 상담 <em>{{number_format($advisorProfile->counselingCount)}}</em>진행</div>
                                 </div>
                             </div>
                             <div class="counselor-info__photo">
@@ -555,14 +555,23 @@
                             </div>
                         </div>
                         <div class="counselor-info__carrier">
-                            현)근로복지공단 전문상담사, 전)경기도 교육청 학생상담 자원봉사자, 전)용산구 건강가정지원센터 전문상담사
+                            @php
+                                $x = 1;
+                                $length = count($advisorProfile["career"]);
+                            @endphp
+                            @foreach($advisorProfile["career"] as $index => $career)
+                                {{($career->careerType == "331")?"현":"전"}}){{$career->companyName}}{{($x === $length)?"":","}}
+                                @php
+                                    $x++;
+                                @endphp
+                            @endforeach
                         </div>
                     </div>
 
                     <div class="counselor-answer">
                         <div class="counselor-answer__text">
                             <p class="counselor-answer__desc">
-                                사고의 양과 연상 활동은 부족한 편으로 보입니다. <br>정서상태 3단계로 사회적으로 통용되는 관습적 지각력은 매우 부족할 것으로 예상됩니다.<br><br>심리검사의 이해 소검사의 저조하 점수와 더불어 이와 같은 특성은 또래의 눈에 “특이한 아이”로 비춰질 수 있게 할 것이며, 이에 원만한 대인관계는 어려울 것으로 예측되며, 특히 모든 반응이 Bt또는 Ad, Cs반응으로 H반응은 결여되어있으므로, 실질적인 상호작용은 매우 적은 빈도로 일어날 것으로 판단됩니다.
+                                <textarea class="displayCounselingResult" id="view-edit" name="content">{{$clientInfo->counselingResult}}</textarea>
                             </p>
                         </div>
                     </div>
@@ -570,23 +579,17 @@
                     <div class="counselor-vote">
                         <div class="counselor-vote__desc">상담사 만족도에 대한 평가</div>
                         <!-- 텍스트 있을때 counselor-vote__cell에 클래스 active 추가-->
-                        <div class="counselor-vote__cell active">
+                        <div class="counselor-vote__cell @if($clientInfo->review != "") active @endif">
                             <div class="counselor-vote__star">
                                 <span class="icon star-review-icon"></span>
-                                <div class="star-review__score">4.0</div>
+                                <div class="star-review__score">{{$clientInfo->rating}}.0</div>
                                 <div class="star-review__unit">/ 5</div>
                             </div>
-                            <div class="counselor-vote__text">
-                                아이에 대해 진중한 상담이 좋았습니다. 평소 다른 상담을 하였을 때,자세한 결과를 알기 힘들었는데 전문적인 분석내용과 더불어 평가 해 주셔서 좋았습니다.
-                            </div>
-                        </div>
-                        <!-- 텍스트 없을때 -->
-                        <div class="counselor-vote__cell">
-                            <div class="counselor-vote__star">
-                                <span class="icon star-review-icon"></span>
-                                <div class="star-review__score">4.0</div>
-                                <div class="star-review__unit">/ 5</div>
-                            </div>
+                            @if($clientInfo->review != "")
+                                <div class="counselor-vote__text">
+                                    {!! $clientInfo->review !!}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <!-- //22.12.29 수정 -->
@@ -627,7 +630,7 @@
                         <div class="counselor-check__area">
                             <div class="counselor-time__area">
                                 <div class="counselor-time__desc">작성까지 남은 시간</div>
-                                <div class="counselor-time">{{$timer["hour"]}} : {{$timer["minute"]}}</div>
+                                <div id="timerText" class="counselor-time">{{$timer["hour"]}} : {{$timer["minute"]}}</div>
                             </div>
                             <div class="counselor-notice__area">
                                 <span class="icon caution-icon"></span>
@@ -723,13 +726,61 @@
     </div>
 </article>
 <script>
+    let timerInterval = null;
+    function timerProc() {
+        if ( timerInterval == null ) {
+            timerInterval = setInterval(function (){
+                setTimeText();
+            },60000);
+        } else {
+            alert('결과지 작성시간이 지났습니다. 더 이상 작성하실 수 없습니다.')
+            clearInterval(timerInterval);
+            timerInterval = null;
+            cancel();
+        }
+    }
 
+    function setTimeText() {
+        if (minute === 0 && hour === 0) {
+            timerProc();
+            return;
+        }
+
+        if (minute === 0) {
+            minute = 59;
+            hour -= 1;
+        } else {
+            minute -= 1;
+        }
+
+        var timeText = hour.toString().padStart(2,'0')+":"+minute.toString().padStart(2,'0');
+        $("#timerText").text(timeText);
+    }
+</script>
+<script>
     let myEditor;
-    let hour = 24;
-    let minute = 0;
+    let hour = parseInt("{{$timer["hour"]}}");
+    let minute = parseInt("{{$timer["minute"]}}");
 
     if("{{$cssStyle["editor"]}}" === "block") {
         editorLoader();
+        timerProc();
+    }
+
+    if ("{{$cssStyle["result"]}}" === "block") {
+
+        ClassicEditor
+            .create( document.querySelector( '.displayCounselingResult' ), {
+            } )
+            .then( editor => {
+                editor.enableReadOnlyMode( 'view-edit' );
+
+                const toolbarElement = editor.ui.view.toolbar.element;
+                toolbarElement.style.display = 'none';
+            } )
+            .catch( error => {
+                console.log(error);
+            } );
     }
 
     function startCounseling() {
@@ -801,5 +852,6 @@
         }
     }
 </script>
+
 @include('advisor/common/footer')
 @include('advisor/common/end')

@@ -57,32 +57,23 @@ class Advisor extends Model
     }
 
     public static function getAdvisorProfile($advisorPK){
-        $getAdvisorProfile = DB::table('advisor')
-            ->select(
+         $result = Advisor::select(
                 'advisorPK',
                 'email',
                 'phone',
                 'advisorName',
                 'briefIntroduction',
+                'counselingCount',
+                'centerName',
                 'career',
                 'detailedDescription'
             )
             ->where('advisorPK', '=', $advisorPK)
-            ->get();
+            ->get()->first();
+        $result->advisorName = Crypt::decryptString($result->advisorName);
+        $result->phone = Crypt::decryptString($result->phone);
+        return $result;
 
-        $advisorProfile = json_decode(json_encode($getAdvisorProfile), true);
-
-        $advisorProfile = [
-            'advisorPK' => $advisorProfile[0]['advisorPK'],
-            'email' => $advisorProfile[0]['email'],
-            'phone' => Crypt::decryptString($advisorProfile[0]['phone']),
-            'advisorName' => Crypt::decryptString($advisorProfile[0]['advisorName']),
-            'briefIntroduction' => $advisorProfile[0]['briefIntroduction'],
-            'career' => $advisorProfile[0]['career'],
-            'detailedDescription' => $advisorProfile[0]['detailedDescription'],
-        ];
-
-        return $advisorProfile;
     }
 
     public static function getAdvisorList(){
