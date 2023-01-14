@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use App\Models\Career;
 use App\Models\EducationLevel;
+use App\Models\Member;
 use App\Models\Qualification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class AdvisorProfileController extends Controller
 {
@@ -152,6 +154,39 @@ class AdvisorProfileController extends Controller
             'codeTitle' => $codeTitle,
         ]);
 
+    }
+
+    public function changePhone(Request $request){
+
+        try {
+            $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+
+            $userName = $request->userName ?? '';
+            $userPhone = $request->userPhone ?? '';
+            $DI = $request->DI ?? '';
+            $CI = $request->CI ?? '';
+
+            Crypt::decryptString($userName);
+            $phoneNumber = Crypt::decryptString($userPhone);
+            Crypt::decryptString($DI);
+            Crypt::decryptString($CI);
+
+            $advisor = Advisor::find($advisorPK);
+            $advisor->phone = $userPhone;
+            $advisor->save();
+
+            $result = [
+                "status" => "success",
+                "message" => $phoneNumber
+            ];
+        }catch (\Exception $e) {
+            $result = [
+                "status" => "fail",
+                "message" => "전화번호 변경에 실패하였습니다."
+            ];
+        }
+
+        return json_encode($result);
     }
 
 }

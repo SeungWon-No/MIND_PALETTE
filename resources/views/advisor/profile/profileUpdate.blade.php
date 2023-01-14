@@ -11,10 +11,9 @@
               <div class="member-cell">
                 <div class="member-group">
                   <div class="member-label">프로필사진<em>*</em></div>
-                    @if($advisorProfile->profilePath != "")
-                  <div class="upload-file__wrap">
+                  <div id="profileDiv" class="upload-file__wrap" style="display:@if($advisorProfile->profilePath == "") none @else block @endif;">
                     <div class="upload-file__photo">
-                      <img src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
+                      <img id="userProfileImage" src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
                     </div>
                     <div class="upload-file__text">
                       <div class="upload-file">
@@ -23,11 +22,10 @@
                       <p class="member-s__text">권장 사이즈와 사진 사이즈 다를 경우, 사진이 일부 잘리거나 변형 될 수 있습니다.</p>
                     </div>
                   </div>
-                    @endif
                   <!--// 사진있을때 추가되는 부분 -->
                   <label class="profile-upload__label">
-                    <input id="attachFile" type="file" class="form-file">
-                    <input id="attachFilePath" type="hidden">
+                    <input id="profileFile" type="file" class="form-file">
+                    <input id="profileFilePath" type="hidden">
                     사진올리기
                   </label>
                 </div>
@@ -48,8 +46,8 @@
                     <div class="form-group__label">휴대폰번호</div>
                     <div class="form-group__item">
                       <div class="form-group__data">
-                        <input type="text" class="form-control confirm" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)" value="{{$advisorProfile ? $advisorProfile['phone'] : '' }}">
-                        <button class="form-control__btn wd-127">휴대폰번호 변경</button>
+                        <input id="userPhone" type="text" class="form-control confirm" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)" value="{{$advisorProfile ? $advisorProfile['phone'] : '' }}">
+                        <button onclick="phoneAuthSubmit()" type="button" class="form-control__btn wd-127">휴대폰번호 변경</button>
                       </div>
                       <p class="form-group-text">* 호칭을 선택해주세요.</p>
                     </div>
@@ -332,6 +330,41 @@
           </div>
         </div> <!-- container end-->
     </form>
+<form name="phoneAuth" action="/auth" method="post">
+    @csrf
+    <input type="hidden" name="CP_CD" maxlength="12" size="16" value="">
+    <input type="hidden" name="SITE_NAME" maxlength="20" size="24" value="마음팔레트">
+</form>
+<form name="joinForm" method="post" action="#">
+    @csrf
+    <input type="hidden" name="userName" value="">
+    <input type="hidden" name="userPhone" value="">
+    <input type="hidden" name="DI" value="">
+    <input type="hidden" name="CI" value="">
+</form>
+<script>
+    function phoneAuthSubmit() {
+        window.open("/auth", "auth_popup", "width=430,height=640,scrollbars=yes");
+        var form1 = document.phoneAuth;
+        form1.target = "auth_popup";
+        form1.submit();
+    }
+
+    function authSuccess() {
+        var queryString = $("form[name=joinForm]").serialize() ;
+        $.ajax({
+            type:'POST',
+            url:'/profile/changePhone',
+            data: queryString,
+            async: false,
+            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+            success:function(json){
+                var data = JSON.parse(json);
+                $("#userPhone").val(json.message);
+            }
+        });
+    }
+</script>
 <script>
     function validForm() {
         document.profileUpdate.submit();
@@ -609,20 +642,17 @@
 </script>
 <script>
 
-    $('input[name="filePath"]').change(function(){
-        if($("#attachFile").val() === ""){
-            // 파일 취소
-            cancel();
-        } else {
+    $("#profileFile").on('change',function () {
+        if($("#profileFile").val() !== ""){
             imageSave();
         }
     });
 
     function imageSave() {
-        const imageInput = $("#attachFile")[0];
+        const imageInput = $("#profileFile")[0];
         const formData = new FormData();
         formData.append("file", imageInput.files[0]);
-        formData.append("oldFilePath", $("#attachFilePath").val());
+        formData.append("oldFilePath", $("#profileFilePath").val());
 
         $.ajax({
             type:"POST",
@@ -635,8 +665,9 @@
             success: function(json){
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
-                    $("#attachFilePath").val(data.filePath);
-                    uploadCompleted(data.filePath);
+                    $("#profileFilePath").val(data.filePath);
+                    $("#profileDiv").css("display","block");
+                    $("#userProfileImage").attr('src','/storage/image/profile/'+data.filePath);
                 } else {
                     alert(data.message);
                 }
