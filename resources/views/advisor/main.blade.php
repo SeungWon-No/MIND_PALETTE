@@ -4,7 +4,7 @@
         <div class="column-left">
           <div class="counseling-wrap">
             <div class="counseling-fillter__tab">
-              <button type="button" class="counseling-filter__btn active" style="background:var(--point-green-color)">
+              <button id="defalut" onclick="location.href='/advisor/'" type="button" class="counseling-filter__btn active" style="background:var(--point-green-color)">
                 <span class="sun-icon"></span>
                 <div class="filter__btn-tit">인천시 아동<br> 마음정신건강 지수 </div>
                 <div class="counseling-status">
@@ -12,28 +12,28 @@
                   <span class="counseling-status__unit">%</span>
                 </div>
               </button>
-              <button onclick="location.href='/advisor/waitingCounseling'" type="button" class="counseling-filter__btn active" style="background:var(--point-blue-color)">
+              <button id="waitingCounseling" onclick="location.href='/advisor/waitingCounseling'" type="button" class="counseling-filter__btn" style="background:var(--point-blue-color)">
                 <div class="filter__btn-tit">상담대기</div>
                 <div class="counseling-status">
                   <span class="counseling-status__num">{{$waitingCount}}</span>
                   <span class="counseling-status__unit">건</span>
                 </div>
               </button>
-              <button onclick="location.href='/advisor/completeCounseling'" type="button" class="counseling-filter__btn active" style="background:var(--primary-color)">
+              <button id="completeCounseling" onclick="location.href='/advisor/completeCounseling'" type="button" class="counseling-filter__btn" style="background:var(--primary-color)">
                 <div class="filter__btn-tit">상담완료</div>
                 <div class="counseling-status">
                   <span class="counseling-status__num">{{$completeCount}}</span>
                   <span class="counseling-status__unit">건</span>
                 </div>
               </button>
-              <button onclick="location.href='/advisor/warningCounseling'" type="button" class="counseling-filter__btn active" style="background:var(--point-red-color)">
+              <button id="warningCounseling" onclick="location.href='/advisor/warningCounseling'" type="button" class="counseling-filter__btn" style="background:var(--point-red-color)">
                 <div class="filter__btn-tit">주의 / 위험</div>
                 <div class="counseling-status">
                   <span class="counseling-status__num">{{$cautionCount + $dangerCount}}</span>
                   <span class="counseling-status__unit">건</span>
                 </div>
               </button>
-              <button onclick="location.href='/advisor/impossibleCounseling'" type="button" class="counseling-filter__btn active" style="background:var(--font-grray-color)">
+              <button id="impossibleCounseling" onclick="location.href='/advisor/impossibleCounseling'" type="button" class="counseling-filter__btn" style="background:var(--font-grray-color)">
                 <div class="filter__btn-tit">상담불가</div>
                 <div class="counseling-status">
                   <span class="counseling-status__num">{{$impossibleCount}}</span>
@@ -123,6 +123,20 @@
             </p>
           </div>
         </div>
+        <script>
+          var currentUrl = $(location).attr("href"); // 현재 페이지 url
+          var splitUrl = currentUrl.split("/");
+          var urlSection1 = splitUrl[3];
+          var urlSection2 = splitUrl[4];
+
+          if (urlSection1 == 'advisor' && urlSection2 == '') {
+            $("#defalut").attr("class", "counseling-filter__btn active");
+
+          }else{
+            $("#defalut").attr("class", "counseling-filter__btn");
+            $("#"+urlSection2).attr("class", "counseling-filter__btn active");
+          }
+        </script>
 
         @include('advisor/common/right')
       </div>
