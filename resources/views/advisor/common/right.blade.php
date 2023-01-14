@@ -80,7 +80,7 @@
     <div class="recent-history">
         <div class="aside__heading">
             <h4 class="aside__heading__tit">최근 상담 내역</h4>
-            <a href="#none" class="aside__heading__link">더보기<span class="icon link-more-icon"></span></a>
+            <a href="/advisor/myCounselingList" class="aside__heading__link">더보기<span class="icon link-more-icon"></span></a>
         </div>
         <div class="recent-history__list">
             <!-- list items -->
