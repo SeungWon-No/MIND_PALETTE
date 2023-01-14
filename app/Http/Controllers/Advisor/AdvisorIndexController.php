@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class AdvisorIndexController extends Controller
 {
+    protected $counseling;
+    protected $advisor;
+
+    public function __construct(Counseling $counseling, Advisor $advisor)
+    {
+        $this->counseling = $counseling;
+        $this->advisor = $advisor;
+    }
+
     public function __invoke(Request $request)
     {
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
@@ -19,39 +28,148 @@ class AdvisorIndexController extends Controller
             return view("/advisor/login/login");
         }
         
-        //$waitingCount = Counseling::getWaitingCounseling(); // 상담 대기 건수
-        //$completeCount = Counseling::getCompleteCounseling();// 상담 완료 건수
-        
-        $waitingCount = 999; // 임의 값 지정
-        $completeCount = 777;
-        $counselingList = Counseling::pagination(); // 전체 상담 리스트
-        $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
-        $advisorList = Advisor::pagination(); // 상담사 리스트
+        $waitingCount = $this->counseling->getWaitingCounselingCount();
+        $completeCount = $this->counseling->getCompleteCounselingCount();
+        $cautionCount = $this->counseling->getCautionCounselingCount();
+        $dangerCount = $this->counseling->getDangerCounselingCount();
+        $impossibleCount = $this->counseling->getImpossibleCounselingCount();
+        $counselingList = $this->counseling->pagination(); // 전체 상담 리스트
+        $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
+        $advisorList = $this->advisor->pagination(); // 상담사 리스트
 
         return view("/advisor/main",[   // 상담사 메인 페이지 
             "isLogin" => $isLogin,
             "waitingCount" => $waitingCount,
             "completeCount" => $completeCount,
+            "cautionCount" => $cautionCount,
+            "dangerCount" => $dangerCount,
+            "impossibleCount" => $impossibleCount,
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
             "advisorList" => $advisorList,
         ]);
     }
 
+    public function waitingCounseling(Request $request){
+        $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
+        
+        if ($isLogin) {
+            $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        }else{
+            return view("/advisor/login/login");
+        }
 
-    // 마음 건강 지수 
-    public function getMentalHealthScore(){
-        // Todo : 계산식 모름
+        $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
+        $waitingCount = $this->counseling->getWaitingCounselingCount();
+        $completeCount = $this->counseling->getCompleteCounselingCount();
+        $cautionCount = $this->counseling->getCautionCounselingCount();
+        $dangerCount = $this->counseling->getDangerCounselingCount();
+        $impossibleCount = $this->counseling->getImpossibleCounselingCount();
+        $advisorList = $this->advisor->pagination();
+        $waitingCounselingList = $this->counseling->getWaitingCounselingList();
+
+        return view("/advisor/main",[
+            'advisorList' => $advisorList,
+            'advisorProfile' => $advisorProfile,
+            'counselingList' => $waitingCounselingList,
+            'waitingCount' => $waitingCount,
+            'completeCount' => $completeCount,
+            'cautionCount' => $cautionCount,
+            'dangerCount' => $dangerCount,
+            'impossibleCount' => $impossibleCount,
+        ]);
+        
     }
+    public function completeCounseling(Request $request){
+        $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
+        
+        if ($isLogin) {
+            $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        }else{
+            return view("/advisor/login/login");
+        }
 
-    
-    // 주의 / 위험 상태
-    public function getWarningState(){
+        $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
+        $waitingCount = $this->counseling->getWaitingCounselingCount();
+        $completeCount = $this->counseling->getCompleteCounselingCount();
+        $cautionCount = $this->counseling->getCautionCounselingCount();
+        $dangerCount = $this->counseling->getDangerCounselingCount();
+        $impossibleCount = $this->counseling->getImpossibleCounselingCount();
+        $advisorList = $this->advisor->pagination();
+        $completeCounselingList = $this->counseling->getCompleteCounselingList();
+
+        return view("/advisor/main",[
+            'advisorList' => $advisorList,
+            'advisorProfile' => $advisorProfile,
+            'counselingList' => $completeCounselingList,
+            'waitingCount' => $waitingCount,
+            'completeCount' => $completeCount,
+            'cautionCount' => $cautionCount,
+            'dangerCount' => $dangerCount,
+            'impossibleCount' => $impossibleCount,
+        ]);
+
 
     }
+    public function warningCounseling(Request $request){
 
-    // Todo: 상담 불가 상태 추가 
-    public function getImpossibleCounseling(){
+        $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
+        
+        if ($isLogin) {
+            $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        }else{
+            return view("/advisor/login/login");
+        }
+
+        $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
+        $waitingCount = $this->counseling->getWaitingCounselingCount();
+        $completeCount = $this->counseling->getCompleteCounselingCount();
+        $cautionCount = $this->counseling->getCautionCounselingCount();
+        $dangerCount = $this->counseling->getDangerCounselingCount();
+        $impossibleCount = $this->counseling->getImpossibleCounselingCount();
+        $warningList = $this->counseling->getWarningCounselingList();
+        $advisorList = $this->advisor->pagination(); // 상담사 리스트
+
+        return view("/advisor/main",[
+            'advisorList' => $advisorList,
+            'advisorProfile' => $advisorProfile,
+            'counselingList' => $warningList,
+            'waitingCount' => $waitingCount,
+            'completeCount' => $completeCount,
+            'cautionCount' => $cautionCount,
+            'dangerCount' => $dangerCount,
+            'impossibleCount' => $impossibleCount,
+        ]);
+    }
+    public function impossibleCounseling(Request $request){
+
+        $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
+        
+        if ($isLogin) {
+            $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        }else{
+            return view("/advisor/login/login");
+        }
+        
+        $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
+        $waitingCount = $this->counseling->getWaitingCounselingCount();
+        $completeCount = $this->counseling->getCompleteCounselingCount();
+        $cautionCount = $this->counseling->getCautionCounselingCount();
+        $dangerCount = $this->counseling->getDangerCounselingCount();
+        $impossibleCount = $this->counseling->getImpossibleCounselingCount();
+        $advisorList = $this->advisor->pagination();
+        $impossibleList = $this->counseling->getImpossibleCounselingList();
+
+        return view("/advisor/main",[
+            'advisorList' => $advisorList,
+            'advisorProfile' => $advisorProfile,
+            'counselingList' => $impossibleList,
+            'waitingCount' => $waitingCount,
+            'completeCount' => $completeCount,
+            'cautionCount' => $cautionCount,
+            'dangerCount' => $dangerCount,
+            'impossibleCount' => $impossibleCount,
+        ]);
 
     }
 
