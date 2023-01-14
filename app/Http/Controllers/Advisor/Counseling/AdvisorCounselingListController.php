@@ -31,8 +31,31 @@ class AdvisorCounselingListController extends Controller
 
     public function index(Request $request)
     {
+        $nowMonth = date("Y-m")."-01";
+        $pre1 = date("Y-m", strtotime($nowMonth."-1 month"));
+        $pre1Format = date("m월", strtotime($nowMonth."-1 month"));
+        $pre2 = date("Y-m", strtotime($nowMonth."-2 month"));
+        $pre2Format = date("m월", strtotime($nowMonth."-2 month"));
+        $pre3 = date("Y-m", strtotime($nowMonth."-3 month"));
+        $pre3Format = date("m월", strtotime($nowMonth."-3 month"));
+
+        $searchMonth = [
+            $pre1Format => [
+                "start" => $pre1."-01",
+                "end" => $pre1."-".date('t', strtotime($pre1."-01"))
+            ],
+            $pre2Format => [
+                "start" => $pre2."-01",
+                "end" => $pre2."-".date('t', strtotime($pre2."-01"))
+            ],
+            $pre3Format => [
+                "start" => $pre3."-01",
+                "end" => $pre3."-".date('t', strtotime($pre3."-01"))
+            ],
+        ];
+
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
@@ -42,9 +65,10 @@ class AdvisorCounselingListController extends Controller
         //$counselingList = Counseling::getCounselingList(); // 전체 상담 리스트
         $counselingList = Counseling::pagination(); // 전체 상담 리스트
         $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
-       
-        return view("/advisor/counseling/counselingList",[   // 상담사 메인 페이지 
+
+        return view("/advisor/counseling/counselingList",[   // 상담사 메인 페이지
             "isLogin" => $isLogin,
+            "searchMonth" =>$searchMonth,
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
             "statusCode" => $this->statusCode,
@@ -53,12 +77,12 @@ class AdvisorCounselingListController extends Controller
 
     public function store(Request $request)
     {
-        
+
     }
 
     public function waitingCounselingList(Request $request){
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
@@ -74,11 +98,11 @@ class AdvisorCounselingListController extends Controller
             'counselingList' => $waitingCounselingList,
             'statusCode'=>$this->statusCode,
         ]);
-        
+
     }
     public function completeCounselingList(Request $request){
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
@@ -99,7 +123,7 @@ class AdvisorCounselingListController extends Controller
     public function warningCounselingList(Request $request){
 
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
@@ -118,13 +142,13 @@ class AdvisorCounselingListController extends Controller
     public function impossibleCounselingList(Request $request){
 
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
             return view("/advisor/login/login");
         }
-        
+
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
         $impossibleList = $this->counseling->getImpossibleCounselingList();
 
