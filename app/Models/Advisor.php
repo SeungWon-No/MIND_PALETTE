@@ -65,6 +65,8 @@ class Advisor extends Model
                 'profilePath',
                 'briefIntroduction',
                 'counselingCount',
+                'rating',
+                'ratingCount',
                 'centerName',
                 'career',
                 'detailedDescription'

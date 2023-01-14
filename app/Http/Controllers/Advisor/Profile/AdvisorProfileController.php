@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Advisor\Profile;
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use App\Models\Career;
+use App\Models\Counseling;
 use App\Models\EducationLevel;
 use App\Models\Member;
 use App\Models\Qualification;
@@ -30,6 +31,12 @@ class AdvisorProfileController extends Controller
             'advisorProfile' => $getAdvisorProfile,
             'getAdvisorEducationInfo' => $getAdvisorEducationInfo,
             'getAdvisorQualificationInfo' => $getAdvisorQualificationInfo,
+            'advisorCareerInfo' => Career::findAdvisorCareerInfo($advisorPK),
+            'rating5' => Counseling::findCounselingRating($advisorPK,5),
+            'rating4' => Counseling::findCounselingRating($advisorPK,4),
+            'rating3' => Counseling::findCounselingRating($advisorPK,3),
+            'rating2' => Counseling::findCounselingRating($advisorPK,2),
+            'rating1' => Counseling::findCounselingRating($advisorPK,1),
         ]);
 
     }

@@ -8,7 +8,7 @@
                 <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="profile-row__img">
               </div>
               <div class="profile-row__name">{{$advisorProfile['advisorName']}} 상담사</div>
-              <div class="profile-row__center">사랑마음 상담센터</div>
+              <div class="profile-row__center">{{$advisorProfile->centerName}}</div>
               <a href="/advisor/profile/profileUpdate" class="profile-row__link">프로필 수정하기 <span class="icon link-more-icon"></span></a>
             </div>
             <div class="porfile-row-2">
@@ -35,11 +35,12 @@
               <div class="profile-col">
                 <div class="profile-col__heading">기타사항</div>
                 <div class="profile-col__content">
-                  <p class="profile-col__set">설정된 기타사항입니다.</p>
+                  <p class="profile-col__set">설정된 경력사항입니다.</p>
                   <div class="profile-col__data-cell">
-                    <p class="profile-col__data">∙ 서*대학교 의학 학사</p>
-                    <p class="profile-col__data">∙ 서*대 대학원 의학 석사</p>
-                    <p class="profile-col__data">∙ 現 사랑 마음 상담센터 전문의</p>
+                      @foreach($advisorCareerInfo as $advisorCareerInfoRow)
+                    <p class="profile-col__data">∙ {{$advisorCareerInfoRow->companyName}}</p>
+                      @endforeach
+
                   </div>
                 </div>
               </div>
@@ -53,11 +54,11 @@
                     <div class="profile-star__wrap">
                       <div class="profile-star__icon">
                         <div class="star-icon__cell">
-                            <span class="star-icon__value" style="width: 90%;"></span>
+                            <span class="star-icon__value" style="width: {{($advisorProfile->rating == 0)?0:sprintf('%0.1f',($advisorProfile->rating/$advisorProfile->ratingCount)/5*100)}}%;"></span>
                         </div>
                       </div>
                       <div class="profile-star__value">
-                        <div class="profile-star__num">4.5</div>
+                        <div class="profile-star__num">{{($advisorProfile->rating == 0)?0:sprintf('%0.1f', ($advisorProfile->rating/$advisorProfile->ratingCount))}}</div>
                         <span>평균점수</span>
                       </div>
                     </div>
@@ -70,7 +71,7 @@
                         </div>
                         <div class="star-group__value">
                           <div class="star-group__unit">5점</div>
-                          <div class="star-group__num">(64)</div>
+                          <div class="star-group__num">({{number_format($rating5)}})</div>
                         </div>
                       </div>
                       <div class="star-group__item">
@@ -79,7 +80,7 @@
                         </div>
                         <div class="star-group__value">
                           <div class="star-group__unit">4점</div>
-                          <div class="star-group__num">(30)</div>
+                          <div class="star-group__num">({{number_format($rating4)}})</div>
                         </div>
                       </div>
                       <div class="star-group__item">
@@ -88,7 +89,7 @@
                         </div>
                         <div class="star-group__value">
                           <div class="star-group__unit">3점</div>
-                          <div class="star-group__num">(10)</div>
+                          <div class="star-group__num">({{number_format($rating3)}})</div>
                         </div>
                       </div>
                       <div class="star-group__item">
@@ -97,7 +98,7 @@
                         </div>
                         <div class="star-group__value">
                           <div class="star-group__unit">2점</div>
-                          <div class="star-group__num">(8)</div>
+                          <div class="star-group__num">({{number_format($rating2)}})</div>
                         </div>
                       </div>
                       <div class="star-group__item" >
@@ -106,7 +107,7 @@
                         </div>
                         <div class="star-group__value">
                           <div class="star-group__unit">1점</div>
-                          <div class="star-group__num">(3)</div>
+                          <div class="star-group__num">({{number_format($rating1)}})</div>
                         </div>
                       </div>
                     </div>

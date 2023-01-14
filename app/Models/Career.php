@@ -22,4 +22,5 @@ class Career extends Model
             ->orderBy("careerPK","ASC")
             ->limit($limit)->get();
     }
+
 }
