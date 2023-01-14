@@ -4,11 +4,12 @@
         <div class="column-left">
           <div class="counseling-cont">
             <div class="counseling-tab__wrap">
-              <a href="#" class="counseling-tab__btn active">전체</a>
-              <a href="#" class="counseling-tab__btn">상담대기</a>
-              <a href="#" class="counseling-tab__btn">상담완료</a>
-              <a href="#" class="counseling-tab__btn">주의/위험</a>
-              <a href="#" class="counseling-tab__btn">상담불가</a>
+              <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
+              <a href="/advisor/myCounselingList" class="counseling-tab__btn active">전체</a>
+              <a href="/advisor/myWaitingCounseling" class="counseling-tab__btn">상담대기</a>
+              <a href="/advisor/myCompleteCounseling" class="counseling-tab__btn">상담완료</a>
+              <a href="/advisor/myWarningCounseling" class="counseling-tab__btn">주의/위험</a>
+              <a href="/advisor/myImpossibleCounseling" class="counseling-tab__btn">상담불가</a>
             </div>
             <form id="searchForm" name="searchForm" action="/advisor/searchingData" method="POST">
               @csrf
@@ -65,9 +66,9 @@
                 <!-- case 3-2. [end + need-care] counseling end need-care -->
 
                 @foreach ($counselingList['data'] as $list)
-                  <li class="counseling">
+                  <li class="counseling {{ $statusCode[$list['counselorStatus']] }}">
                     <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
-                      <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="counseling-thumb__img">
+                      <img src="{{URL::asset('/storage/image/thumb/'.$list['answer'])}}" alt="" class="counseling-thumb__img">
                     </a>
                     <div class="counseling-user__info">
                       <div class="counseling-user__name">{{$list['counselorName']}}</div>
@@ -75,7 +76,7 @@
                       <div class="counseling-user__gender">{{$list['counselorGender']}}</div>
                     </div>
                     <div class="counseling-code__cell">
-                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingPK']}}</span></div>
+                      <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingCode']}}</span></div>
                     </div>
                     <div class="counseling-link__cell">
                       <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-link">상담하기</a>
@@ -85,7 +86,7 @@
               </ul>
               <div class="paging-box">
                 @foreach ($counselingList['links'] as $link)
-                  <a href="{{ $link['url'] }}" class="paging-num active">{{ $link['label'] }}</a>
+                  <a href="{{ $link['url'] }}" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
                 @endforeach
               </div>
             </div>
