@@ -28,182 +28,20 @@
                   </div>
                 </div>
                 <div class="notice-table__body">
+                    @foreach($noticeList as $notice)
                   <div class="notice-table__row">
                     <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="/advisor/notice/1">[상담 공지] 11월 상담권 예약 안내</a></div>
+                    <div class="table-body__cell col-2"><a href="/advisor/notice/1">{{$notice->title}}</a></div>
                     <div class="table-body__cell col-3">마음팔레트</div>
                     <div class="table-body__cell col-4">2022.11.28</div>
                     <div class="table-body__cell col-5">115</div>
                   </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
-                  <div class="notice-table__row">
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">[상담 공지] 11월 상담권 예약 안내</a></div>
-                    <div class="table-body__cell col-3">마음팔레트</div>
-                    <div class="table-body__cell col-4">2022.11.28</div>
-                    <div class="table-body__cell col-5">115</div>
-                  </div>
+                    @endforeach
                 </div>
               </div>
             </div>
             <div class="paging-box">
-              <a href="#none" class="paging-prev"><span class="icon pagin-perv-icon"></span></a>
-              <a href="#none" class="paging-num active">1</a>
-              <a href="#none" class="paging-num">2</a>
-              <a href="#none" class="paging-next"><span class="icon pagin-next-icon"></span></a>
+                {{ $noticeList->links() }}
             </div>
           </div>
         </div> <!--column-left end-->

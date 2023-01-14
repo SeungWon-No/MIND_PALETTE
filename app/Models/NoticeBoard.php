@@ -9,4 +9,9 @@ class NoticeBoard extends Model
     protected $primaryKey = 'noticePK';
     public $timestamps = false;
 
+    public static function findNotice() {
+        return NoticeBoard::where("isDelete","N")
+            ->orderBy("noticePK", "DESC")
+            ->paginate(10);
+    }
 }
