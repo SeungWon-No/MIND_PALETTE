@@ -11,7 +11,7 @@
               <a href="/advisor/warningCounselingList" class="counseling-tab__btn">주의/위험</a>
               <a href="/advisor/impossibleCounselingList" class="counseling-tab__btn">상담불가</a>
             </div>
-            <form id="searchForm" name="searchForm" action="/advisor/searchingData" method="POST">
+            <form id="searchForm" name="searchForm" action="/advisor/counselingList" method="POST">
               @csrf
             <div class="counseling-search__wrap">
               <div class="counseling-search__left">
@@ -41,9 +41,9 @@
               <div class="counseling-sort__wrap">
                 <div class="counseling-sort__btns">
                   <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
-                  <a href="#" class="counseling-sort active">전체</a>
+                  <a href="javascript:selectMonth('','')" class="counseling-sort active">전체</a>
                     @foreach($searchMonth as $key => $searchMonthRow)
-                  <a href="javascript:selectMonth('{{$searchMonthRow['start']}}','{{$searchMonthRow['end']}}')" class="counseling-sort">{{$key}}</a>
+                      <a href="javascript:selectMonth('{{$searchMonthRow['start']}}','{{$searchMonthRow['end']}}')" class="counseling-sort">{{$key}}</a>
                     @endforeach
                 </div>
                 <div class="counseling-sort__datepicker">
@@ -57,14 +57,8 @@
             </div>
             </form>
             <div class="counseling-list__wrap">
+              @if (!empty($counselingList['data']))
               <ul class="counseling-list">
-                <!-- case에 맞게 class명에 추가 -->
-                <!-- case 1. [default] counseling -->
-                <!-- case 2. [ing] counseling ongoing -->
-                <!-- case 3. [end] counseling end -->
-                <!-- case 3-1. [end + danger] counseling end danger -->
-                <!-- case 3-2. [end + need-care] counseling end need-care -->
-
                 @foreach ($counselingList['data'] as $list)
                   <li class="counseling {{ $statusCode[$list['counselorStatus']] }}">
                     <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
@@ -84,6 +78,13 @@
                   </li>
                 @endforeach
               </ul>
+              @else
+              <div class="counseling-list__no-data">
+                <p class="list-no-data__desc">
+                  등록된 그림상담이 없습니다.
+                </p>
+              </div>
+              @endif
               <div class="paging-box">
                 @foreach ($counselingList['links'] as $link)
                   <a href="{{ $link['url'] }}" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
@@ -187,6 +188,10 @@
     }
 
     function searchingData(){
+      if ($('input[name="selectBoxCategory"]').val() == -1) {
+        alert('검색 카테고리를 선택해주세요.');
+        return false;
+      }
       $('#searchForm').submit();
     }
   </script>

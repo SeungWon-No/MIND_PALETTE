@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Advisor\Counseling;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
+use App\Models\Code;
 use App\Models\Counseling;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,7 @@ class AdvisorMyCounselingListController extends Controller
 {
     protected $counseling;
     protected $advisor;
+    protected $code;
     protected $statusCode = [
         "" => "",
         "279" => "",
@@ -22,10 +24,11 @@ class AdvisorMyCounselingListController extends Controller
         "356" => "end need-care",
     ];
 
-    public function __construct(Counseling $counseling, Advisor $advisor)
+    public function __construct(Counseling $counseling, Advisor $advisor, Code $code)
     {
         $this->counseling = $counseling;
         $this->advisor = $advisor;
+        $this->code = $code;
     }
 
     public function index(Request $request)
@@ -46,6 +49,7 @@ class AdvisorMyCounselingListController extends Controller
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
             "statusCode" => $this->statusCode,
+            "searchMonth" => $this->code->searchMonth(),
         ]);
     }
 
@@ -71,6 +75,7 @@ class AdvisorMyCounselingListController extends Controller
             'advisorProfile' => $advisorProfile,
             'counselingList' => $waitingCounselingList,
             'statusCode'=>$this->statusCode,
+            "searchMonth" => $this->code->searchMonth(),
         ]);
         
     }
@@ -90,6 +95,7 @@ class AdvisorMyCounselingListController extends Controller
             'advisorProfile' => $advisorProfile,
             'counselingList' => $completeCounselingList,
             'statusCode'=>$this->statusCode,
+            "searchMonth" => $this->code->searchMonth(),
         ]);
 
 
@@ -111,6 +117,7 @@ class AdvisorMyCounselingListController extends Controller
             'advisorProfile' => $advisorProfile,
             'counselingList' => $warningList,
             'statusCode'=>$this->statusCode,
+            "searchMonth" => $this->code->searchMonth(),
         ]);
     }
     public function myImpossibleCounseling(Request $request){
@@ -130,6 +137,7 @@ class AdvisorMyCounselingListController extends Controller
             'advisorProfile' => $advisorProfile,
             'counselingList' => $impossibleList,
             'statusCode'=>$this->statusCode,
+            "searchMonth" => $this->code->searchMonth(),
         ]);
 
     }
