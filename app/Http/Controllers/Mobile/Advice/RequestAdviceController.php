@@ -50,6 +50,7 @@ class RequestAdviceController extends Controller
         $counseling->city = $city;
         $counseling->region = $region;
         $counseling->counselingStatus = 282; //adviceInfoStep01
+        $counseling->counselorStatus = 354;
         $counseling->updateDate = $nowDate;
         $counseling->createDate = $nowDate;
         $counseling->save();
