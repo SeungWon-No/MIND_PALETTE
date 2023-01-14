@@ -129,6 +129,11 @@ class AdvisorCounselingDetailController extends Controller
                 DB::beginTransaction();
 
                 $nowDate = date("Y-m-d H:i:s");
+
+                $advisor = Advisor::find($advisorPK);
+                $advisor->counselingCount = $advisor->counselingCount+1;
+                $advisor->save();
+
                 $counselingLog = new CounselingLog;
                 $counselingLog->advisorPK = $advisorPK;
                 $counselingLog->counselingPK = $counselingPK;
@@ -165,6 +170,10 @@ class AdvisorCounselingDetailController extends Controller
         try {
             DB::beginTransaction();
             $nowDate = date("Y-m-d H:i:s");
+
+            $advisor = Advisor::find($advisorPK);
+            $advisor->counselingCount = $advisor->counselingCount-1;
+            $advisor->save();
 
             $counselingLog = new CounselingLog;
             $counselingLog->advisorPK = $advisorPK;
