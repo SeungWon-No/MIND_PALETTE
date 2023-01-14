@@ -151,8 +151,7 @@ class Counseling extends Model
 
     public static function getCounselingDetail($counselingPK){
 
-        $getResult = DB::table('counseling')
-                    ->join('code as codeGender', 'counseling.counselorGender', '=', 'codeGender.codePK')
+        return Counseling::join('code as codeGender', 'counseling.counselorGender', '=', 'codeGender.codePK')
                     ->join('code as codeSchool', 'counseling.counselorSchool', '=', 'codeSchool.codePK')
                     ->select("counseling.counselingPK",
                              "counseling.memberPK",
@@ -177,43 +176,14 @@ class Counseling extends Model
                              "counseling.reasonInspection",
                              "counseling.counselingStatus",
                              "counseling.counselorStatus",
+                             "counseling.rating",
+                             "counseling.review",
                              "counseling.startDate",
                              "counseling.createDate",
                              )
                     ->where('counseling.counselingPK', '=', $counselingPK)
                     ->orderBy("counselingPK", "DESC")
-                    ->get();
-
-        $getCounselingDetail = json_decode(json_encode($getResult), true);
-
-        $clientInfo = [
-            'memberPK' => $getCounselingDetail[0]['memberPK'],
-            'advisorPK' => $getCounselingDetail[0]['advisorPK'],
-            'clientName' => $getCounselingDetail[0]['counselorName'], // 상담 대상 이름
-            'counselorBirthday' => Crypt::decryptString($getCounselingDetail[0]['counselorBirthday']), // 생년월일
-            'counselorSchool' => $getCounselingDetail[0]['counselorSchool'], // 학교
-            'counselorGender' => $getCounselingDetail[0]['counselorGender'],// 성별
-            'hobby' => $getCounselingDetail[0]['hobby'], // 취미
-            'familyRelations1' => $getCounselingDetail[0]['familyRelations1'], // ex) x남 y녀 중 z째
-            'familyRelations2' => $getCounselingDetail[0]['familyRelations2'],
-            'familyRelations3' => $getCounselingDetail[0]['familyRelations3'],
-            'specialty' => $getCounselingDetail[0]['specialty'], // 특기
-            'friendship' => $getCounselingDetail[0]['friendship'], // 친구들과의 관계
-            'relationshipTeacher' => $getCounselingDetail[0]['relationshipTeacher'], // 선생님과의 관계
-            'relationshipDad' => $getCounselingDetail[0]['relationshipDad'], // 아버지와의 관계
-            'relationshipMother' => $getCounselingDetail[0]['relationshipMother'],// 어머니와의 관계
-            'relationshipSiblings' => $getCounselingDetail[0]['relationshipSiblings'], // 형제 관계
-            'relationshipSister' => $getCounselingDetail[0]['relationshipSister'],// 자매 관계
-            'counselingResult' => $getCounselingDetail[0]['counselingResult'],
-            'stressCauses' => $getCounselingDetail[0]['stressCauses'], // 가족 내력, 스트레스 요인
-            'counselingStatus' => $getCounselingDetail[0]['counselingStatus'],
-            'counselorStatus' => $getCounselingDetail[0]['counselorStatus'],
-            'reasonInspection' => $getCounselingDetail[0]['reasonInspection'], // 심리 상담 사유
-            'startDate' => $getCounselingDetail[0]['startDate'],
-            'createDate' => $getCounselingDetail[0]['createDate'],
-        ];
-        return $clientInfo;
-
+                    ->get()->first();
 
     }
 

@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Advisor\Counseling;
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use App\Models\Answer;
+use App\Models\Career;
 use App\Models\Counseling;
+use App\Models\CounselingLog;
 use App\Models\CounselingTemplateResult;
 use App\Models\Questions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 class AdvisorCounselingDetailController extends Controller
 {
@@ -28,7 +31,8 @@ class AdvisorCounselingDetailController extends Controller
         ];
         $cssStyle = [
             "status" => "block",
-            "editor" => "none"
+            "editor" => "none",
+            "result" => "none"
         ];
 
 
@@ -65,15 +69,25 @@ class AdvisorCounselingDetailController extends Controller
                 $addOneDay = date("Y-m-d H:i:s", strtotime($startTime."+1 days"));
                 $diffTime = strtotime($addOneDay) - strtotime($nowTime);
                 $timer["hour"] = floor($diffTime / (60*60));
+                $timer["hour"] = ($timer["hour"] < 10) ? "0".$timer["hour"] :$timer["hour"];
                 $timer["minute"] = floor(($diffTime-($timer["hour"]*60*60)) / 60);
+                $timer["minute"] = ($timer["minute"] < 10) ? "0".$timer["minute"] :$timer["minute"];
             }
         }
-
 
         if ($getClientInfo["counselingStatus"] == 280 && $getClientInfo["advisorPK"] == $advisorPK) {
             $cssStyle["status"] = "none";
             $cssStyle["editor"] = "block";
+            $cssStyle["result"] = "none";
         }
+
+        if ($getClientInfo["counselingStatus"] == 281) {
+            $cssStyle["status"] = "none";
+            $cssStyle["editor"] = "none";
+            $cssStyle["result"] = "block";
+        }
+
+        $advisorProfile["career"] = Career::findCareerLimit($advisorPK,3);
         return view("/advisor/counseling/counselingDetail", [
             "counselingPK" =>$counselingPK,
             "advisorProfile" => $advisorProfile,
@@ -112,7 +126,16 @@ class AdvisorCounselingDetailController extends Controller
         $counselingStatus = Counseling::findCounselingStatus($counselingPK);
         if ($counselingStatus->counselingStatus == 279) {
             try {
+                DB::beginTransaction();
+
                 $nowDate = date("Y-m-d H:i:s");
+                $counselingLog = new CounselingLog;
+                $counselingLog->advisorPK = $advisorPK;
+                $counselingLog->counselingPK = $counselingPK;
+                $counselingLog->counselingStatus = 280;
+                $counselingLog->createDate = $nowDate;
+                $counselingLog->save();
+
                 $updateValue = [
                     "advisorPK" => $advisorPK,
                     "counselingStatus" => 280,
@@ -124,8 +147,10 @@ class AdvisorCounselingDetailController extends Controller
                 $result = [
                     "status" => "success",
                 ];
+                DB::commit();
                 return json_encode($result);
             }catch (\Exception $e) {
+                DB::rollBack();
                 $result = [
                     "status" => "fail",
                     "message" => "상담시작에 실패하였습니다. 증상이 계속되면 고객센터로 문의해주세요."
@@ -138,7 +163,16 @@ class AdvisorCounselingDetailController extends Controller
     public function counselingCancel(Request $request, $counselingPK) {
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         try {
+            DB::beginTransaction();
             $nowDate = date("Y-m-d H:i:s");
+
+            $counselingLog = new CounselingLog;
+            $counselingLog->advisorPK = $advisorPK;
+            $counselingLog->counselingPK = $counselingPK;
+            $counselingLog->counselingStatus = 279;
+            $counselingLog->createDate = $nowDate;
+            $counselingLog->save();
+
             $updateValue = [
                 "advisorPK" => null,
                 "counselingResult" => '',
@@ -152,8 +186,10 @@ class AdvisorCounselingDetailController extends Controller
                 "status" => "success",
                 "message" => "상담 취소되었습니다.",
             ];
+            DB::commit();
             return json_encode($result);
         }catch (\Exception $e) {
+            DB::rollBack();
             $result = [
                 "status" => "fail",
                 "message" => "상담시작에 실패하였습니다. 증상이 계속되면 고객센터로 문의해주세요."
@@ -165,11 +201,10 @@ class AdvisorCounselingDetailController extends Controller
     public function update(Request $request, $counselingPK) {
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         try {
+            DB::beginTransaction();
             $content = $request->counselingResult ?? '';
             $counselorStatus = $request->counselorStatus ?? '354';
             $type = $request->submitType ?? '';
-
-
 
             $nowDate = date("Y-m-d H:i:s");
             $updateValue = [
@@ -180,17 +215,26 @@ class AdvisorCounselingDetailController extends Controller
 
             if ($type == "write") {
                 $updateValue["counselingStatus"] = "281";
+
+                $counselingLog = new CounselingLog;
+                $counselingLog->advisorPK = $advisorPK;
+                $counselingLog->counselingPK = $counselingPK;
+                $counselingLog->counselingStatus = 281;
+                $counselingLog->createDate = $nowDate;
+                $counselingLog->save();
             }
 
             Counseling::updateCounselingAdvisor($counselingPK, $advisorPK, $updateValue);
 
+            DB::commit();
             if ($type == "temp") {
                 return redirect('/advisor/counselingDetail/'.$counselingPK)->with('error', '임시저장 되었습니다.');
             } else {
                 return redirect('/advisor/counselingDetail/'.$counselingPK);
             }
 
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
+            DB::rollBack();
             return redirect('/advisor/counselingDetail/'.$counselingPK)->with('error', '상담 저장에 실패하였습니다. 증상이 계속되면 고객센터로 문의해주세요.');
         }
     }

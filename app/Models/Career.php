@@ -15,5 +15,11 @@ class Career extends Model
                 ->where("isDelete","N")
                 ->orderBy("careerPK","ASC")->get();
     }
-    
+
+    public static function findCareerLimit($advisorPK, $limit) {
+        return Career::where("advisorPK", $advisorPK)
+            ->where("isDelete","N")
+            ->orderBy("careerPK","ASC")
+            ->limit($limit)->get();
+    }
 }
