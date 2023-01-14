@@ -57,16 +57,10 @@
             </div>
             </form>
             <div class="counseling-list__wrap">
+              @if (!empty($counselingList['data']))
               <ul class="counseling-list">
-                <!-- case에 맞게 class명에 추가 -->
-                <!-- case 1. [default] counseling -->
-                <!-- case 2. [ing] counseling ongoing -->
-                <!-- case 3. [end] counseling end -->
-                <!-- case 3-1. [end + danger] counseling end danger -->
-                <!-- case 3-2. [end + need-care] counseling end need-care -->
-
                 @foreach ($counselingList['data'] as $list)
-                  <li class="counseling {{ $statusCode[$list['counselorStatus']] }}">
+                  <li class="counseling {{ $counselingStatus[$list['counselingStatus']] }} {{ $counselorStatus[$list['counselorStatus']] }}">
                     <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
                       <img src="{{URL::asset('/storage/image/thumb/'.$list['answer'])}}" alt="" class="counseling-thumb__img">
                     </a>
@@ -78,12 +72,31 @@
                     <div class="counseling-code__cell">
                       <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingCode']}}</span></div>
                     </div>
+                    @if($list['counselingStatus'] == 279 || $list['counselingStatus'] == 354)
                     <div class="counseling-link__cell">
                       <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-link">상담하기</a>
                     </div>
+                    @elseif($list['counselingStatus'] == 280)
+                    <div class="counseling-link__cell">
+                      <a class="counseling-link" style="cursor: default;">상담중</a>
+                    </div>
+                    @elseif($list['counselingStatus'] == 353 || $list['counselingStatus'] == 356 )
+                    <div class="counseling-link__cell">
+                      <a class="counseling-link" style="cursor: default;">상담불가</a>
+                    </div>
+                    @else
+                    
+                    @endif
                   </li>
                 @endforeach
               </ul>
+              @else
+              <div class="counseling-list__no-data">
+                <p class="list-no-data__desc">
+                  등록된 그림상담이 없습니다.
+                </p>
+              </div>
+              @endif
               <div class="paging-box">
                 @foreach ($counselingList['links'] as $link)
                   <a href="{{ $link['url'] }}" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>

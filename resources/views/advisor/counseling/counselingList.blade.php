@@ -60,7 +60,7 @@
               @if (!empty($counselingList['data']))
               <ul class="counseling-list">
                 @foreach ($counselingList['data'] as $list)
-                  <li class="counseling {{ $statusCode[$list['counselorStatus']] }}">
+                  <li class="counseling {{ $counselingStatus[$list['counselingStatus']] }} {{ $counselorStatus[$list['counselorStatus']] }}">
                     <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-thumb">
                       <img src="{{URL::asset('/storage/image/thumb/'.$list['answer'])}}" alt="" class="counseling-thumb__img">
                     </a>
@@ -72,9 +72,21 @@
                     <div class="counseling-code__cell">
                       <div class="counseling-code__detail">상담코드:<span class="counseling-code">{{$list['counselingCode']}}</span></div>
                     </div>
+                    @if($list['counselingStatus'] == 279 || $list['counselingStatus'] == 354)
                     <div class="counseling-link__cell">
                       <a href="/advisor/counselingDetail/{{$list['counselingPK']}}" class="counseling-link">상담하기</a>
                     </div>
+                    @elseif($list['counselingStatus'] == 280)
+                    <div class="counseling-link__cell">
+                      <a class="counseling-link" style="cursor: default;">상담중</a>
+                    </div>
+                    @elseif($list['counselingStatus'] == 353 || $list['counselingStatus'] == 356 )
+                    <div class="counseling-link__cell">
+                      <a class="counseling-link" style="cursor: default;">상담불가</a>
+                    </div>
+                    @else
+                    
+                    @endif
                   </li>
                 @endforeach
               </ul>

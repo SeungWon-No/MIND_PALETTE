@@ -13,15 +13,19 @@ class AdvisorMyCounselingListController extends Controller
     protected $counseling;
     protected $advisor;
     protected $code;
-    protected $statusCode = [
-        "" => "",
-        "279" => "",
-        "280" => "ongoing",
-        "281" => "end",
-        "354" => "",
-        "353" => "disabled",
-        "355" => "end danger",
-        "356" => "end need-care",
+    protected $counselingStatus = [
+        ''=>'',
+        "279" => '',
+        "280" => 'ongoing',
+        "281" => 'end',
+        "353" => 'disabled',
+    ];
+
+    protected $counselorStatus = [
+        ''=>'',
+        "354" => 'default',
+        "355" => 'danger',
+        "356" => 'need-care',
     ];
 
     public function __construct(Counseling $counseling, Advisor $advisor, Code $code)
@@ -41,14 +45,14 @@ class AdvisorMyCounselingListController extends Controller
         }else{
             return view("/advisor/login/login");
         }
-        //$counselingList = Counseling::getMyCounselingList($advisorPK); // 나의 상담 리스트
-        $counselingList = Counseling::pagination(); // 전체 상담 리스트
+        $counselingList = Counseling::getMyCounselingList($advisorPK); // 나의 상담 리스트
         $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
         return view("/advisor/counseling/myCounselingList",[   // 상담사 메인 페이지 
             "isLogin" => $isLogin,
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
-            "statusCode" => $this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
             "searchMonth" => $this->code->searchMonth(),
         ]);
     }
@@ -68,13 +72,14 @@ class AdvisorMyCounselingListController extends Controller
         }
 
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
-        $waitingCounselingList = $this->counseling->getWaitingCounselingList();
+        $waitingCounselingList = $this->counseling->getMyWaitingCounselingList($advisorPK);
 
         return view("/advisor/counseling/myCounselingList",[
             "isLogin" => $isLogin,
             'advisorProfile' => $advisorProfile,
             'counselingList' => $waitingCounselingList,
-            'statusCode'=>$this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
             "searchMonth" => $this->code->searchMonth(),
         ]);
         
@@ -89,12 +94,13 @@ class AdvisorMyCounselingListController extends Controller
         }
 
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
-        $completeCounselingList = $this->counseling->getCompleteCounselingList();
+        $completeCounselingList = $this->counseling->getMyCompleteCounselingList($advisorPK);
 
         return view("/advisor/counseling/myCounselingList",[
             'advisorProfile' => $advisorProfile,
             'counselingList' => $completeCounselingList,
-            'statusCode'=>$this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
             "searchMonth" => $this->code->searchMonth(),
         ]);
 
@@ -111,12 +117,13 @@ class AdvisorMyCounselingListController extends Controller
         }
 
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
-        $warningList = $this->counseling->getWarningCounselingList();
+        $warningList = $this->counseling->getMyWarningCounselingList($advisorPK);
 
         return view("/advisor/counseling/myCounselingList",[
             'advisorProfile' => $advisorProfile,
             'counselingList' => $warningList,
-            'statusCode'=>$this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
             "searchMonth" => $this->code->searchMonth(),
         ]);
     }
@@ -131,12 +138,13 @@ class AdvisorMyCounselingListController extends Controller
         }
         
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
-        $impossibleList = $this->counseling->getImpossibleCounselingList();
+        $impossibleList = $this->counseling->getMyImpossibleCounselingList($advisorPK);
 
         return view("/advisor/counseling/myCounselingList",[
             'advisorProfile' => $advisorProfile,
             'counselingList' => $impossibleList,
-            'statusCode'=>$this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
             "searchMonth" => $this->code->searchMonth(),
         ]);
 

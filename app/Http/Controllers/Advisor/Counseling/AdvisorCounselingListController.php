@@ -14,15 +14,19 @@ class AdvisorCounselingListController extends Controller
     protected $counseling;
     protected $advisor;
     protected $code;
-    protected $statusCode = [
-        "" => "",
-        "279" => "",
-        "280" => "ongoing",
-        "281" => "end",
-        "354" => "",
-        "353" => "disabled",
-        "355" => "end danger",
-        "356" => "end need-care",
+    protected $counselingStatus = [
+        ''=>'',
+        "279" => '',
+        "280" => 'ongoing',
+        "281" => 'end',
+        "353" => 'disabled',
+    ];
+
+    protected $counselorStatus = [
+        ''=>'',
+        "354" => 'default',
+        "355" => 'danger',
+        "356" => 'need-care',
     ];
 
     public function __construct(Counseling $counseling, Advisor $advisor, Code $code)
@@ -50,7 +54,8 @@ class AdvisorCounselingListController extends Controller
             "searchMonth" => $this->code->searchMonth(),
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
-            "statusCode" => $this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
         ]);
     }
 
@@ -96,7 +101,8 @@ class AdvisorCounselingListController extends Controller
             'counselingList' => $counselingList,
             'advisorProfile' => $advisorProfile,
             'searchMonth' => $this->code->searchMonth(),
-            'statusCode' => $this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
         ]);
     }
 
@@ -116,7 +122,8 @@ class AdvisorCounselingListController extends Controller
             "isLogin" => $isLogin,
             'advisorProfile' => $advisorProfile,
             'counselingList' => $waitingCounselingList,
-            'statusCode'=>$this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
             'searchMonth' => $this->code->searchMonth(),
         ]);
 
@@ -136,7 +143,8 @@ class AdvisorCounselingListController extends Controller
         return view("/advisor/counseling/counselingList",[
             'advisorProfile' => $advisorProfile,
             'counselingList' => $completeCounselingList,
-            'statusCode'=>$this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
             'searchMonth' => $this->code->searchMonth(),
         ]);
 
@@ -158,7 +166,8 @@ class AdvisorCounselingListController extends Controller
         return view("/advisor/counseling/counselingList",[
             'advisorProfile' => $advisorProfile,
             'counselingList' => $warningList,
-            'statusCode'=>$this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
             'searchMonth' => $this->code->searchMonth(),
         ]);
     }
@@ -178,7 +187,8 @@ class AdvisorCounselingListController extends Controller
         return view("/advisor/counseling/counselingList",[
             'advisorProfile' => $advisorProfile,
             'counselingList' => $impossibleList,
-            'statusCode'=>$this->statusCode,
+            "counselingStatus" => $this->counselingStatus,
+            "counselorStatus" => $this->counselorStatus,
             'searchMonth' => $this->code->searchMonth(),
         ]);
 
