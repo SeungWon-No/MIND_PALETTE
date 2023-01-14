@@ -191,6 +191,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
         Route::resource("/counselingDetail", AdvisorCounselingDetailController::class); // 상담 내용
         Route::post("/counselingStatus/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingStatus"]); // 상담 내용
+        Route::post("/counselingCancel/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingCancel"]); // 상담 내용
 
         Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
 

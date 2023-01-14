@@ -55,7 +55,7 @@ class Advisor extends Model
     public static function findAdvisorInfo($advisorPK) {
         return Advisor::where('advisorPK','=',$advisorPK)->first();
     }
-    
+
     public static function getAdvisorProfile($advisorPK){
         $getAdvisorProfile = DB::table('advisor')
             ->select(
@@ -64,6 +64,7 @@ class Advisor extends Model
                 'phone',
                 'advisorName',
                 'briefIntroduction',
+                'career',
                 'detailedDescription'
             )
             ->where('advisorPK', '=', $advisorPK)
@@ -77,6 +78,7 @@ class Advisor extends Model
             'phone' => Crypt::decryptString($advisorProfile[0]['phone']),
             'advisorName' => Crypt::decryptString($advisorProfile[0]['advisorName']),
             'briefIntroduction' => $advisorProfile[0]['briefIntroduction'],
+            'career' => $advisorProfile[0]['career'],
             'detailedDescription' => $advisorProfile[0]['detailedDescription'],
         ];
 
@@ -84,8 +86,8 @@ class Advisor extends Model
     }
 
     public static function getAdvisorList(){
-        $getAdvisorList = Advisor::select('advisorPK', 'advisorName', 'briefIntroduction')->get(); 
-        
+        $getAdvisorList = Advisor::select('advisorPK', 'advisorName', 'briefIntroduction')->get();
+
         $advisorList = json_decode(json_encode($getAdvisorList), true);
 
         foreach($advisorList as $pk => $list){
@@ -93,7 +95,7 @@ class Advisor extends Model
                 'advisorPK' => $list['advisorPK'],
                 'advisorName' => Crypt::decryptString($list['advisorName']),
                 'briefIntroduction' => $list['briefIntroduction'],
-            ];            
+            ];
         }
         return $advisorList;
 
@@ -105,13 +107,13 @@ class Advisor extends Model
         ->paginate(3);
 
         $advisorList = json_decode(json_encode($pagination), true);
-        
+
         foreach($advisorList['data'] as $key => $list){
             $advisorList['data'][$key] = [
                 'advisorPK' => $list['advisorPK'],
                 'advisorName' => Crypt::decryptString($list['advisorName']),
                 'briefIntroduction' => $list['briefIntroduction'],
-            ];            
+            ];
         }
         return $advisorList;
 

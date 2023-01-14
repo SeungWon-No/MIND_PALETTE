@@ -729,7 +729,9 @@
             success:function(json){
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
-
+                    if (type === "temp") {
+                        alert("임시 저장 되었습니다.");
+                    }
                 } else {
                     // alert(data.message);
                 }
@@ -746,11 +748,8 @@
             headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
             success:function(json){
                 var data = JSON.parse(json);
-                if ( data.status === "success" ) {
-
-                } else {
-                    // alert(data.message);
-                }
+                alert(data.message);
+                location.reload();
             }
         });
     }

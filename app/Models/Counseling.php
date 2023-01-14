@@ -60,6 +60,12 @@ class Counseling extends Model
             ->update($value);
     }
 
+    public static function updateCounselingCancelStatus($counselingPK, $advisorPK, $value) {
+        return Counseling::where('counselingPK','=',$counselingPK)
+            ->where('advisorPK','=',$advisorPK)
+            ->update($value);
+    }
+
     public static function getCounselingList(){ // 전체 상담 리스트
         $getResult = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
