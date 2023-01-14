@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Advisor\Counseling;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
+use App\Models\Code;
 use App\Models\Counseling;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,7 @@ class AdvisorCounselingListController extends Controller
 {
     protected $counseling;
     protected $advisor;
+    protected $code;
     protected $statusCode = [
         "" => "",
         "279" => "",
@@ -23,37 +25,15 @@ class AdvisorCounselingListController extends Controller
         "356" => "end need-care",
     ];
 
-    public function __construct(Counseling $counseling, Advisor $advisor)
+    public function __construct(Counseling $counseling, Advisor $advisor, Code $code)
     {
         $this->counseling = $counseling;
         $this->advisor = $advisor;
+        $this->code = $code;
     }
 
     public function index(Request $request)
     {
-        $nowMonth = date("Y-m")."-01";
-        $pre1 = date("Y-m", strtotime($nowMonth."-1 month"));
-        $pre1Format = date("m월", strtotime($nowMonth."-1 month"));
-        $pre2 = date("Y-m", strtotime($nowMonth."-2 month"));
-        $pre2Format = date("m월", strtotime($nowMonth."-2 month"));
-        $pre3 = date("Y-m", strtotime($nowMonth."-3 month"));
-        $pre3Format = date("m월", strtotime($nowMonth."-3 month"));
-
-        $searchMonth = [
-            $pre1Format => [
-                "start" => $pre1."-01",
-                "end" => $pre1."-".date('t', strtotime($pre1."-01"))
-            ],
-            $pre2Format => [
-                "start" => $pre2."-01",
-                "end" => $pre2."-".date('t', strtotime($pre2."-01"))
-            ],
-            $pre3Format => [
-                "start" => $pre3."-01",
-                "end" => $pre3."-".date('t', strtotime($pre3."-01"))
-            ],
-        ];
-
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
 
         if ($isLogin) {
@@ -62,13 +42,12 @@ class AdvisorCounselingListController extends Controller
             return view("/advisor/login/login");
         }
 
-        //$counselingList = Counseling::getCounselingList(); // 전체 상담 리스트
-        $counselingList = Counseling::pagination(); // 전체 상담 리스트
-        $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
+        $counselingList = $this->counseling->pagination(); // 전체 상담 리스트
+        $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
 
         return view("/advisor/counseling/counselingList",[   // 상담사 메인 페이지
             "isLogin" => $isLogin,
-            "searchMonth" =>$searchMonth,
+            "searchMonth" => $this->code->searchMonth(),
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
             "statusCode" => $this->statusCode,
@@ -77,7 +56,48 @@ class AdvisorCounselingListController extends Controller
 
     public function store(Request $request)
     {
+        $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
+        
+        if ($isLogin) {
+            $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        }else{
+            return view("/advisor/login/login");
+        }
+        
+        $previousUrl = url()->previous();
+        $sliceUrl = explode('/', $previousUrl);
+        $previousPage = $sliceUrl[4];
+        
+        $selectBoxCategory = $request['selectBoxCategory'];
+        $searchingText = $request['searchingText'];
+        $sdate = $request['sdate'];
+        $edate = $request['edate'];
 
+        
+        if($sdate == null && $edate == null && $selectBoxCategory == 'counselorName'){ // 이름 전체 기간 검색
+            $counselingList = $this->counseling->searchingCounselorNameWithoutPeriod($searchingText);
+
+        }else if($sdate == null && $edate == null && $selectBoxCategory == 'counselingCode'){ // 코드 전체 기간 검색
+            $counselingList = $this->counseling->searchingCounselorCodeWithoutPeriod($searchingText);
+
+        }else if ($sdate != null && $edate != null && $selectBoxCategory == 'counselorName') { // 이름 검색
+            $counselingList = $this->counseling->searchingCounselorName($searchingText, $sdate, $edate);
+
+        }else if($sdate != null && $edate != null && $selectBoxCategory == 'counselingCode'){  // 상담코드 검색
+            $counselingList = $this->counseling->searchingCounselorCode($searchingText, $sdate, $edate);
+
+        }else{
+            return view("/advisor/counseling/counselingList");
+        }
+
+        $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
+        return view("/advisor/counseling/".$previousPage, [
+            'isLogin' => $isLogin,
+            'counselingList' => $counselingList,
+            'advisorProfile' => $advisorProfile,
+            'searchMonth' => $this->code->searchMonth(),
+            'statusCode' => $this->statusCode,
+        ]);
     }
 
     public function waitingCounselingList(Request $request){
@@ -97,6 +117,7 @@ class AdvisorCounselingListController extends Controller
             'advisorProfile' => $advisorProfile,
             'counselingList' => $waitingCounselingList,
             'statusCode'=>$this->statusCode,
+            'searchMonth' => $this->code->searchMonth(),
         ]);
 
     }
@@ -116,6 +137,7 @@ class AdvisorCounselingListController extends Controller
             'advisorProfile' => $advisorProfile,
             'counselingList' => $completeCounselingList,
             'statusCode'=>$this->statusCode,
+            'searchMonth' => $this->code->searchMonth(),
         ]);
 
 
@@ -137,6 +159,7 @@ class AdvisorCounselingListController extends Controller
             'advisorProfile' => $advisorProfile,
             'counselingList' => $warningList,
             'statusCode'=>$this->statusCode,
+            'searchMonth' => $this->code->searchMonth(),
         ]);
     }
     public function impossibleCounselingList(Request $request){
@@ -156,6 +179,7 @@ class AdvisorCounselingListController extends Controller
             'advisorProfile' => $advisorProfile,
             'counselingList' => $impossibleList,
             'statusCode'=>$this->statusCode,
+            'searchMonth' => $this->code->searchMonth(),
         ]);
 
     }

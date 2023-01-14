@@ -39,4 +39,30 @@ class Code extends Model
         }
         return $value;
     }
+
+    public static function searchMonth(){
+        $nowMonth = date("Y-m")."-01";
+        $pre1 = date("Y-m", strtotime($nowMonth."-1 month"));
+        $pre1Format = date("m월", strtotime($nowMonth."-1 month"));
+        $pre2 = date("Y-m", strtotime($nowMonth."-2 month"));
+        $pre2Format = date("m월", strtotime($nowMonth."-2 month"));
+        $pre3 = date("Y-m", strtotime($nowMonth."-3 month"));
+        $pre3Format = date("m월", strtotime($nowMonth."-3 month"));
+
+        $searchMonth = [
+            $pre1Format => [
+                "start" => $pre1."-01",
+                "end" => $pre1."-".date('t', strtotime($pre1."-01"))
+            ],
+            $pre2Format => [
+                "start" => $pre2."-01",
+                "end" => $pre2."-".date('t', strtotime($pre2."-01"))
+            ],
+            $pre3Format => [
+                "start" => $pre3."-01",
+                "end" => $pre3."-".date('t', strtotime($pre3."-01"))
+            ],
+        ];
+        return $searchMonth;
+    }
 }

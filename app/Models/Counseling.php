@@ -347,14 +347,73 @@ class Counseling extends Model
             ->limit(10)->get();
     }
 
+    public static function searchingCounselorNameWithoutPeriod($searchingText)
+    {
+        $pagination= DB::table('counseling')
+            ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
+            ->where('counseling.memberPK', '>', '0')
+            ->whereIn("counseling.counselingStatus",[279,280,281,353])
+            ->where('counseling.counselorName', 'like', '%'. $searchingText .'%')
+            ->orderBy("counselingPK", "DESC")
+            ->paginate(10);
+
+        $counselingList = json_decode(json_encode($pagination), true);
+
+        foreach($counselingList['data'] as $key => $list){
+            $counselingList['data'][$key] = [
+                'counselingPK' => $list['counselingPK'],
+                'counselingCode' => $list['counselingCode'],
+                'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
+                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
+                'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
+            ];
+        }
+        return $counselingList;
+    }
+
+    public static function searchingCounselorCodeWithoutPeriod($searchingText)
+    {
+        $pagination= DB::table('counseling')
+            ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
+            ->where('counseling.memberPK', '>', '0')
+            ->whereIn("counseling.counselingStatus",[279,280,281,353])
+            ->where('counseling.counselingCode', 'like', '%'. $searchingText .'%')
+            ->orderBy("counselingPK", "DESC")
+            ->paginate(10);
+
+        $counselingList = json_decode(json_encode($pagination), true);
+
+        foreach($counselingList['data'] as $key => $list){
+            $counselingList['data'][$key] = [
+                'counselingPK' => $list['counselingPK'],
+                'counselingCode' => $list['counselingCode'],
+                'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
+                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
+                'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
+            ];
+        }
+        return $counselingList;
+    }
 
 
     public static function searchingCounselorName($searchingText, $sdate, $edate)
     {
         $pagination= DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
-            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
+            ->whereIn("counseling.counselingStatus",[279,280,281,353])
             ->where('counseling.createDate', '>=', $sdate)
             ->where('counseling.createDate', '<=', $edate)
             ->where('counseling.counselorName', 'like', '%'. $searchingText .'%')
@@ -368,8 +427,11 @@ class Counseling extends Model
                 'counselingPK' => $list['counselingPK'],
                 'counselingCode' => $list['counselingCode'],
                 'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
             ];
         }
         return $counselingList;
@@ -379,8 +441,10 @@ class Counseling extends Model
     {
         $pagination= DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
-            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName")
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
+            ->whereIn("counseling.counselingStatus",[279,280,281,353])
             ->where('counseling.createDate', '>=', $sdate)
             ->where('counseling.createDate', '<=', $edate)
             ->where('counseling.counselingCode', '=', '"%'.$searchingText.'%"')
@@ -394,8 +458,11 @@ class Counseling extends Model
                 'counselingPK' => $list['counselingPK'],
                 'counselingCode' => $list['counselingCode'],
                 'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
                 'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
                 'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
             ];
         }
         return $counselingList;

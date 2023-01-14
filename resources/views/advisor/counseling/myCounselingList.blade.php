@@ -42,9 +42,9 @@
                 <div class="counseling-sort__btns">
                   <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
                   <a href="#" class="counseling-sort active">전체</a>
-                  <a href="#" class="counseling-sort">12월</a>
-                  <a href="#" class="counseling-sort">11월</a>
-                  <a href="#" class="counseling-sort">10월</a>
+                  @foreach($searchMonth as $key => $searchMonthRow)
+                    <a href="javascript:selectMonth('{{$searchMonthRow['start']}}','{{$searchMonthRow['end']}}')" class="counseling-sort">{{$key}}</a>
+                  @endforeach
                 </div>
                 <div class="counseling-sort__datepicker">
                   <input type="text" id="sdate" name="sdate" autocomplete="off" val="" onclick="window.formatStartDate()">

@@ -203,7 +203,10 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
         Route::resource("/counselingDetail", AdvisorCounselingDetailController::class); // 상담 내용
         Route::post("/counselingStatus/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingStatus"]); // 상담 내용
-        Route::post("/counselingCancel/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingCancel"]); // 상담
+        Route::post("/counselingCancel/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingCancel"]); // 상담 내용
+
+        Route::post('/searchingData', AdvisorSearchingDataContoroller::class); // 상담 내역 검색
+
         Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
         Route::resource('/inquiry', AdvisorInquiryController::class); // 1:1 문의
         Route::get('/privacy', PrivacyController::class);
@@ -235,5 +238,4 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         return view('/advisor/login/loginFail');
     });
 
-    Route::post('/searchingData', AdvisorSearchingDataContoroller::class); // 상담내역 검색
 });
