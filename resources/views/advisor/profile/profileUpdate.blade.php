@@ -354,7 +354,7 @@
         var queryString = $("form[name=joinForm]").serialize() ;
         $.ajax({
             type:'POST',
-            url:'/profile/changePhone',
+            url:'/advisor/profile/changePhone',
             data: queryString,
             async: false,
             headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
