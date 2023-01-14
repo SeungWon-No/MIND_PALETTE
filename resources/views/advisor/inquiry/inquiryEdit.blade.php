@@ -1,52 +1,43 @@
 @include('advisor/common/header')
+<link rel="stylesheet" type="text/css" href="/commonEditor/styles.css?version={{CSS_VERSION}}">
+<script src="/commonEditor/ckeditor.js"></script>
+<script src="/commonEditor/ck.upload.adapter.js"></script>
+    @csrf
     <div id="container">
-      <div class="column-wrapper">
+        <div class="column-wrapper">
+        <form id="inquiryForm" name="inquiryForm" method="POST">
         <div class="column-left">
           <div class="inquiry-cont">
             <div class="counseling-notice__heading">
-              <h3 class="counseling-notice__tit">1:1 상담</h3>
-            </div>
-            <div class="inquiry-table">
-              <div class="inquiry-table__inner">
-                <div class="inquiry-table__header">
-                  <div class="inquiry-table__row">
-                    <div class="table-header__cell col-1">번호</div>
-                    <div class="table-header__cell col-2">제목</div>
-                    <div class="table-header__cell col-3">날짜</div>
-                    <div class="table-header__cell col-4">분류</div>
-                  </div>
-                </div>
-                <div class="inquiry-table__body">
-                  <div class="inquiry-table__row">
-                    <!-- 상담완료 일때 inquiry-btn에 클래스 actived추가-->
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">상담관련 내용입니다.</a></div>
-                    <div class="table-body__cell col-3">2022.11.28</div>
-                    <div class="table-body__cell col-4">
-                      <a href="#none" class="inquiry-btn">상담대기</a>
-                    </div>
-                  </div>
-                  <div class="inquiry-table__row">
-                    <!-- 상담완료 일때 inquiry-btn에 클래스 actived추가-->
-                    <div class="table-body__cell col-1">60</div>
-                    <div class="table-body__cell col-2"><a href="#none">상담관련 내용입니다.</a></div>
-                    <div class="table-body__cell col-3">2022.11.28</div>
-                    <div class="table-body__cell col-4">
-                      <a href="#none" class="inquiry-btn actived">상담완료</a>
-                    </div>
-                  </div>
-                </div>
-                <a href="/advisor/inquiry/edit" class="inquiry-writing__btn">글쓰기</a>
+              <h3 class="counseling-notice__tit">1:1 상담등록</h3>
+              <div class="post-btn__wrap">
+                <a href="/advisor/inquiry" class="counseling-post__btn counseling-post__btn--cancel">취소</a>
+                <a href="#none" class="counseling-post__btn">등록하기</a>
               </div>
             </div>
-            <div class="paging-box">
-              <a href="#none" class="paging-prev"><span class="icon pagin-perv-icon"></span></a>
-              <a href="#none" class="paging-num active">1</a>
-              <a href="#none" class="paging-num">2</a>
-              <a href="#none" class="paging-next"><span class="icon pagin-next-icon"></span></a>
+            <div class="counseling-eidt__wrap">
+              <div class="counseling-edit__top">
+                <div class="counseling-edit__cell">
+                  <div class="counseling-edit__label">제목</div>
+                  <div class="counseling-edit">
+                    <input type="text" class="counseling-edit__form" placeholder="제목을 입력해주세요.">
+                  </div>
+                </div>
+              </div>
+              <div class="counseling-edit__body">
+                <div class="counseling-edit__cell">
+                  <div class="counseling-edit__label">상담내용</div>
+                  <div class="counseling-edit__area">
+                    <div class="counselor-editor2">
+                        <textarea class="ckeditor" id="content" name="content"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div> <!--column-left end-->
+        </form>
         <div class="column-right">
           <div class="account">
             <div class="account-info__cell">
@@ -169,6 +160,23 @@
           </div>
         </div>
       </div>
-    </div> <!-- container end-->  
+    </div> <!-- container end-->
+    <script>
+
+        ClassicEditor.create( document.querySelector( '.ckeditor' ), {
+            extraPlugins: [MyCustomUploadAdapterPlugin],
+        } )
+        .then( editor => {
+            window.editor = editor;
+        } )
+        .catch( error => {
+        } );
+
+        function MyCustomUploadAdapterPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new UploadAdapter(loader)
+        }
+    }
+    </script>
 @include('advisor/common/footer')
 @include('advisor/common/end')

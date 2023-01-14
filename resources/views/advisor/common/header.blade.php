@@ -63,7 +63,7 @@
             <a id="myCounselingList" href="/advisor/myCounselingList" class="nav-menu">나의 상담 리스트</a>
             <a id="profile" href="/advisor/profile" class="nav-menu">프로필</a>
             <a id="notice" href="/advisor/notice" class="nav-menu">공지사항</a>
-            <a id="personalCounseling" href="/advisor/personalCounseling" class="nav-menu">1:1 상담</a>
+            <a id="inquiry" href="/advisor/inquiry" class="nav-menu">1:1 상담</a>
           </nav>
         </div>
       </div>

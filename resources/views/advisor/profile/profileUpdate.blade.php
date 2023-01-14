@@ -226,12 +226,12 @@
                                     <span class="table-file__name" id="qualification-attachedDisplayName{{$qualificationIndex}}">{{$info->fileName}}</span>
                                     <input id="qualification-attachedFilePath{{$qualificationIndex}}"
                                             value="{{$info->certificateFilePath}}"
-                                            name="qualification-attachedFilePath{{$qualificationIndex}}"
+                                            name="qualification-attachedFilePath{{$qualificationIndex}}" 
                                             type="hidden">
 
                                     <input id="qualification-attachedFileName{{$qualificationIndex}}"
                                             value="{{$info->fileName}}"
-                                            name="qualification-attachedFileName{{$qualificationIndex}}"
+                                            name="qualification-attachedFileName{{$qualificationIndex}}" 
                                             type="hidden">
                                 </label>
                                 </td>
@@ -257,7 +257,7 @@
                 <div class="form-group__label">상담경력</div>
                 <div class="form-group__item">
                     <div class="form-group__data">
-                        <input id="counselingCareer" name="counselingCareer" type="career" class="form-control" placeholder="예) 3년이상, 6개월 이상" value="{{$advisorProfile["career"]}}">
+                        <input id="counselingCareer" name="counselingCareer" type="career" class="form-control" placeholder="예) 3년이상, 6개월 이상" value="{{$advisorProfile['career']}}">
                     </div>
                     <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                 </div>
@@ -311,8 +311,8 @@
                             <label class="table-file__label">
                                 <input id="career" type="file" class="table-file attachedFilePath" data-index="{{$careerIndex}}">
                                 <span class="table-file__name" id="career-attachedDisplayName{{$careerIndex}}">{{$info->fileName}}</span>
-                                <input id="career-attachedFilePath{{$careerIndex}}"
-                                name="career-attachedFilePath{{$careerIndex}}"
+                                <input id="career-attachedFilePath{{$careerIndex}}" 
+                                name="career-attachedFilePath{{$careerIndex}}" 
                                 value="{{$info->certificateFilePath}}"
                                 type="hidden">
                                 <input id="career-attachedFileName{{$careerIndex}}"
@@ -333,7 +333,7 @@
                 </div>
               <div class="member-bt__btns-wrap">
                 <button onclick="validForm()" type="button" class="member-bt__btn">저장</button>
-                <button type="button" class="member-bt__btn cancel">취소</button>
+                <button onclick="location.href='/advisor/profile';" type="button" class="member-bt__btn cancel">취소</button>
               </div>
             </div>
           </div>

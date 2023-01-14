@@ -34,7 +34,6 @@ class AdvisorProfileController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request);
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
 
         $counselingCareer = $request->counselingCareer ?? '';
