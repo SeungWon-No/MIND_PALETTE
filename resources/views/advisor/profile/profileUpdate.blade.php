@@ -46,7 +46,7 @@
                     <div class="form-group__label">휴대폰번호</div>
                     <div class="form-group__item">
                       <div class="form-group__data">
-                        <input id="userPhone" type="text" class="form-control confirm" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)" value="{{$advisorProfile ? $advisorProfile['phone'] : '' }}">
+                        <input id="userPhoneNumber" type="text" class="form-control confirm" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)" value="{{$advisorProfile ? $advisorProfile['phone'] : '' }}">
                         <button onclick="phoneAuthSubmit()" type="button" class="form-control__btn wd-127">휴대폰번호 변경</button>
                       </div>
                       <p class="form-group-text">* 호칭을 선택해주세요.</p>
@@ -360,7 +360,7 @@
             headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
             success:function(json){
                 var data = JSON.parse(json);
-                $("#userPhone").val(json.message);
+                $("#userPhoneNumber").val(data.message);
             }
         });
     }
