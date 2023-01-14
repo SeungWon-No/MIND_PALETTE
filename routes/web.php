@@ -3,6 +3,7 @@
 use App\Http\Controllers\Advisor\AdvisorIndexController;
 use App\Http\Controllers\Advisor\Etc\PrivacyController;
 use App\Http\Controllers\Advisor\Etc\TermsController;
+use App\Http\Controllers\Advisor\Etc\orderByAdvisorListController;
 use App\Http\Controllers\Advisor\Join\AdvisorEducationController;
 use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
 use App\Http\Controllers\Advisor\Join\VerifyEmailDuplicationController;
@@ -15,7 +16,6 @@ use App\Http\Controllers\Advisor\Notice\AdvisorNoticeController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorMyCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingDetailController;
-use App\Http\Controllers\Advisor\Counseling\AdvisorSearchingDataContoroller;
 use App\Http\Controllers\Advisor\Profile\AdvisorProfileController;
 use App\Http\Controllers\Advisor\Inquiry\AdvisorInquiryController;
 
@@ -180,6 +180,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::get('/completeCounseling', [AdvisorIndexController::class, "completeCounseling"]); // 상담완료
         Route::get('/warningCounseling', [AdvisorIndexController::class, "warningCounseling"]); // 주의/위험
         Route::get('/impossibleCounseling', [AdvisorIndexController::class, "impossibleCounseling"]); // 상담불가
+        Route::get('/advisorList', [AdvisorIndexController::class, "advisorList"]); // 상담불가
 
         Route::resource("/login",AdvisorLoginController::class)->only(['index', 'store']); // 로그인
         Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
@@ -205,11 +206,14 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::post("/counselingStatus/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingStatus"]); // 상담 내용
         Route::post("/counselingCancel/{counselingPK}", [AdvisorCounselingDetailController::class,"counselingCancel"]); // 상담 내용
 
-        //Route::post('/searchingData', AdvisorSearchingDataContoroller::class); // 상담 내역 검색
         Route::resource('/notice', AdvisorNoticeController::class); // 공지사항
         Route::resource('/inquiry', AdvisorInquiryController::class); // 1:1 문의
         Route::get('/privacy', PrivacyController::class);
         Route::get('/terms', TermsController::class);
+
+        Route::get('/orderByAdvisorList', orderByAdvisorListController::class); // 상담사 리스트 정렬
+
+
 
     });
 

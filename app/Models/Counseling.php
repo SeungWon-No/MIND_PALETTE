@@ -129,6 +129,13 @@ class Counseling extends Model
         return Counseling::where('counselingStatus', '=', '281')->count();
     }
 
+    // 상담 완료 건수
+    public static function getMyCompleteCounselingCount($advisorPK){
+        return Counseling::where('counselingStatus', '=', '281')
+        ->where('advisorPK','=', $advisorPK)
+        ->count();
+    }
+
     // 상담 불가 건수
     public static function getImpossibleCounselingCount(){
         return Counseling::where('counselingStatus', '=', '353')->count();

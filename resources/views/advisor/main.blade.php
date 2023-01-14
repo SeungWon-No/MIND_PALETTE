@@ -101,7 +101,7 @@
           <div class="expert-cont">
             <div class="cont-heading">
               <h3 class="cont-heading__tit">상담사 리스트</h3>
-              <a href="#none" class="cont-heading__link">상담사 더보기 <span class="icon link-more-icon"></span></a>
+              <a href="/advisor/advisorList" class="cont-heading__link">상담사 더보기 <span class="icon link-more-icon"></span></a>
             </div>
             <div class="expert-list">
             @foreach ($advisorList['data'] as $list)
@@ -114,11 +114,11 @@
                     <div class="expert-name">{{$list['advisorName']}}</div>
                     <div class="expert-star__review">
                       <span class="icon star-review-icon"></span>
-                      <div class="star-review__score">4.0</div>
+                      <div class="star-review__score">{{($advisorProfile->rating == 0)?"0.0":sprintf('%0.1f', ($advisorProfile->rating/$advisorProfile->ratingCount))}}</div>
                       <div class="star-review__unit">/ 5</div>
                     </div>
                     <div class="expert-exp">
-                      팔레트 상담 <span class="expert-exp__num">1242</span>회 진행
+                      팔레트 상담 <span class="expert-exp__num">{{$myCompleteCount}}</span>회 진행
                     </div>
                   </div>
                 </div>

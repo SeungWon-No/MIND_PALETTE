@@ -47,9 +47,10 @@ class AdvisorIndexController extends Controller
         $cautionCount = $this->counseling->getCautionCounselingCount();
         $dangerCount = $this->counseling->getDangerCounselingCount();
         $impossibleCount = $this->counseling->getImpossibleCounselingCount();
+        $myCompleteCount = $this->counseling->getMyCompleteCounselingCount($advisorPK);
         $counselingList = $this->counseling->pagination(); // 전체 상담 리스트
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
-        $advisorList = $this->advisor->pagination(); // 상담사 리스트
+        $advisorList = $this->advisor->pagination(3); // 상담사 리스트
 
         return view("/advisor/main",[   // 상담사 메인 페이지 
             "isLogin" => $isLogin,
@@ -58,6 +59,7 @@ class AdvisorIndexController extends Controller
             "cautionCount" => $cautionCount,
             "dangerCount" => $dangerCount,
             "impossibleCount" => $impossibleCount,
+            "myCompleteCount" => $myCompleteCount,
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
             "advisorList" => $advisorList,
@@ -81,7 +83,7 @@ class AdvisorIndexController extends Controller
         $cautionCount = $this->counseling->getCautionCounselingCount();
         $dangerCount = $this->counseling->getDangerCounselingCount();
         $impossibleCount = $this->counseling->getImpossibleCounselingCount();
-        $advisorList = $this->advisor->pagination();
+        $advisorList = $this->advisor->pagination(3);
         $waitingCounselingList = $this->counseling->getWaitingCounselingList();
 
         return view("/advisor/main",[
@@ -113,7 +115,7 @@ class AdvisorIndexController extends Controller
         $cautionCount = $this->counseling->getCautionCounselingCount();
         $dangerCount = $this->counseling->getDangerCounselingCount();
         $impossibleCount = $this->counseling->getImpossibleCounselingCount();
-        $advisorList = $this->advisor->pagination();
+        $advisorList = $this->advisor->pagination(3);
         $completeCounselingList = $this->counseling->getCompleteCounselingList();
 
         return view("/advisor/main",[
@@ -148,7 +150,7 @@ class AdvisorIndexController extends Controller
         $dangerCount = $this->counseling->getDangerCounselingCount();
         $impossibleCount = $this->counseling->getImpossibleCounselingCount();
         $warningList = $this->counseling->getWarningCounselingList();
-        $advisorList = $this->advisor->pagination(); // 상담사 리스트
+        $advisorList = $this->advisor->pagination(3); // 상담사 리스트
 
         return view("/advisor/main",[
             'advisorList' => $advisorList,
@@ -179,7 +181,7 @@ class AdvisorIndexController extends Controller
         $cautionCount = $this->counseling->getCautionCounselingCount();
         $dangerCount = $this->counseling->getDangerCounselingCount();
         $impossibleCount = $this->counseling->getImpossibleCounselingCount();
-        $advisorList = $this->advisor->pagination();
+        $advisorList = $this->advisor->pagination(3);
         $impossibleList = $this->counseling->getImpossibleCounselingList();
 
         return view("/advisor/main",[
@@ -193,6 +195,27 @@ class AdvisorIndexController extends Controller
             'impossibleCount' => $impossibleCount,
             "counselingStatus" => $this->counselingStatus,
             "counselorStatus" => $this->counselorStatus,
+        ]);
+
+    }
+
+    public function advisorList(Request $request)
+    {
+        $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
+        
+        if ($isLogin) {
+            $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        }else{
+            return view("/advisor/login/login");
+        }
+        $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
+        $advisorList = $this->advisor->pagination(9);
+        $myCompleteCount = $this->counseling->getMyCompleteCounselingCount($advisorPK);
+
+        return view("/advisor/advisorList", [
+            'advisorList' => $advisorList,
+            'advisorProfile' => $advisorProfile,
+            'myCompleteCount' => $myCompleteCount,
         ]);
 
     }

@@ -2,17 +2,35 @@
 namespace App\Http\Controllers\Advisor\Join;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advisor;
 use App\Models\EducationLevel;
 use App\Models\Qualification;
 use App\Models\Career;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AdvisorEducationController extends Controller{ //TODO: Education이 아니라 해당 페이지 관련 CONTROLLER로 사용
+class AdvisorEducationController extends Controller{
 
     public function store(Request $request)
     {
         try {
+
+            $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+
+            $counselingCareer = $request->counselingCareer ?? '';
+            $centerName = $request->centerName ?? '';
+
+            if ($counselingCareer != "" || $centerName != "") {
+                $advisor = Advisor::find($advisorPK);
+                if ($counselingCareer != "") {
+                    $advisor->career = $counselingCareer;
+                }
+                if ($centerName != "") {
+                    $advisor->centerName = $centerName;
+                }
+                $advisor->save();
+            }
+            
             $nowDateTime = date('Y-m-d H:i:s');
 
             $educationCount = $request->educationCount ?? 0;
