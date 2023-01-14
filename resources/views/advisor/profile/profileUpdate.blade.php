@@ -257,7 +257,7 @@
                 <div class="form-group__label">상담경력</div>
                 <div class="form-group__item">
                     <div class="form-group__data">
-                    <input id="counselingCareer" name="counselingCareer" type="career" class="form-control" placeholder="예) 3년이상, 6개월 이상" value="">
+                        <input id="counselingCareer" name="counselingCareer" type="career" class="form-control" placeholder="예) 3년이상, 6개월 이상" value="{{$advisorProfile["career"]}}">
                     </div>
                     <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                 </div>
@@ -305,7 +305,7 @@
                             </div>
                         </td>
                         <td class="table-col">
-                            <input id="assignedTask" name="assignedTask" value="{{$info->assignedTask}}" type="text" class="tabel-form__control" placeholder="담당업무">
+                            <input id="assignedTask{{$careerIndex}}" name="assignedTask{{$careerIndex}}" value="{{$info->assignedTask}}" type="text" class="tabel-form__control" placeholder="담당업무">
                         </td>
                         <td class="table-col">
                             <label class="table-file__label">
@@ -313,9 +313,11 @@
                                 <span class="table-file__name" id="career-attachedDisplayName{{$careerIndex}}">{{$info->fileName}}</span>
                                 <input id="career-attachedFilePath{{$careerIndex}}"
                                 name="career-attachedFilePath{{$careerIndex}}"
+                                value="{{$info->certificateFilePath}}"
                                 type="hidden">
                                 <input id="career-attachedFileName{{$careerIndex}}"
                                 name="career-attachedFileName{{$careerIndex}}"
+                                value="{{$info->fileName}}"
                                 type="hidden">
                             </label>
                         </td>
@@ -605,6 +607,12 @@
       return true;
     }
   }
+    function changeCareerType(index,value) {
+        $("#careerType"+index).val(value);
+    }
+    function changeEmploymentType(index,value) {
+        $("#employmentType"+index).val(value);
+    }
 </script>
 <script>
     $('input[name="filePath"]').change(function(){

@@ -36,12 +36,19 @@ class AdvisorProfileController extends Controller
     {
         //dd($request);
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
-        
+
+        $counselingCareer = $request->counselingCareer ?? '';
+        if ($counselingCareer != "") {
+            $advisor = Advisor::find($advisorPK);
+            $advisor->career = $counselingCareer;
+            $advisor->save();
+        }
+
         $nowDateTime = date('Y-m-d H:i:s');
 
         $educationCount = $request->educationCount ?? 0;
         for ($index = 1; $index <= $educationCount; $index++) {
-            
+
             $educationPK = $request['educationPK' . $index] ?? '';
             if ($educationPK == '') {
                 $educationLevel = new EducationLevel;
@@ -110,7 +117,7 @@ class AdvisorProfileController extends Controller
         }
         return redirect('/advisor/profile/profileUpdate');
     }
-    
+
 
     public function show(Request $request)
     {
