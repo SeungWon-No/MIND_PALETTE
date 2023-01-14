@@ -1,5 +1,6 @@
 @php
   use App\Http\Util\CounselingTemplate;
+    use Illuminate\Support\Facades\Crypt;
   $counselingTemplate = new CounselingTemplate;
 
 
@@ -634,16 +635,18 @@
           <h3 class="sb-counseling__tit">대기중인 그림상담</h3>
           <div class="sb-counseling__slider">
             <div class="sb-counseling__wrapper swiper-wrapper">
-              <div class="sb-counseling__slide swiper-slide">
-                <a href="#" class="sb-counseling__photo">
-                  <img src="../advisorAssets/assets/images/couns-list-01.jpg" alt="" class="sb-counseling__img">
-                </a>
-                <div class="sb-counseling__info">
-                  <div class="sb-counseling__user">홍길동</div>
-                  <div class="sb-counseling__year">191898</div>
-                  <div class="sb-counseling__gender">남아</div>
-                </div>
-              </div>
+                @foreach($waiteCounseling as $waiteCounselingRow)
+                    <div class="sb-counseling__slide swiper-slide">
+                        <a href="#" class="sb-counseling__photo">
+                            <img src="{{URL::asset('/storage/image/thumb/'.$waiteCounselingRow->answer)}}" alt="" class="sb-counseling__img">
+                        </a>
+                        <div class="sb-counseling__info">
+                            <div class="sb-counseling__user">{{$waiteCounselingRow->counselorName}}</div>
+                            <div class="sb-counseling__year">{{Crypt::decryptString($waiteCounselingRow->counselorBirthday)}}</div>
+                            <div class="sb-counseling__gender">{{$waiteCounselingRow->codeName}}</div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>

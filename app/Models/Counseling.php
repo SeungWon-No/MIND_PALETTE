@@ -214,6 +214,20 @@ class Counseling extends Model
 
     }
 
+    public static function findWaitCounseling()
+    {
+        return Counseling::join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "code.codeName","answer")
+            ->where('answer.questionsPK', '68')
+            ->where('counseling.memberPK', '>', '0')
+            ->where("counseling.counselingStatus",279)
+            ->orderBy("counselingPK", "DESC")
+            ->limit(10)->get();
+    }
+
+
+
     public static function searchingCounselorName($searchingText, $sdate, $edate)
     {
         $pagination= DB::table('counseling')

@@ -65,7 +65,7 @@ class AdvisorCounselingDetailController extends Controller
                 $addOneDay = date("Y-m-d H:i:s", strtotime($startTime."+1 days"));
                 $diffTime = strtotime($addOneDay) - strtotime($nowTime);
                 $timer["hour"] = floor($diffTime / (60*60));
-                $timer["minute"] = ceil(($diffTime-($timer["hour"]*60*60)) / 60);
+                $timer["minute"] = floor(($diffTime-($timer["hour"]*60*60)) / 60);
             }
         }
 
@@ -74,7 +74,6 @@ class AdvisorCounselingDetailController extends Controller
             $cssStyle["status"] = "none";
             $cssStyle["editor"] = "block";
         }
-
         return view("/advisor/counseling/counselingDetail", [
             "counselingPK" =>$counselingPK,
             "advisorProfile" => $advisorProfile,
@@ -83,6 +82,7 @@ class AdvisorCounselingDetailController extends Controller
             'cssStyle' => $cssStyle,
             "timer" => $timer,
             'images' => $images,
+            "waiteCounseling" => Counseling::findWaitCounseling(),
             "houseQuestions" => Questions::findAllQuestion(302),
             "houseAnswer" => $this->getAllAnswer($request,$counselingPK,302, $getClientInfo['memberPK']),
             "treeQuestions" => Questions::findAllQuestion(303),
