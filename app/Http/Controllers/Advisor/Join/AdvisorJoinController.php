@@ -70,7 +70,7 @@ class AdvisorJoinController extends Controller{
             return AdvisorLoginController::login($request,Advisor::find($advisor->advisorPK));
 
         } catch (\Exception $e) {
-
+            return redirect("/advisor/login")->with("error","필수 입력값 누락입니다.");
         }
     }
 
