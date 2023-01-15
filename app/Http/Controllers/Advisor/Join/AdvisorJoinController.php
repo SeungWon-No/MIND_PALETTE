@@ -24,7 +24,7 @@ class AdvisorJoinController extends Controller{
             DB::beginTransaction();
 
             $nowDate = date("Y-m-d H:i:s");
-            
+
             // 필수 약관 동의
             $memberAgree = new MemberAgree;
             $memberAgree->agree1 = "Y";
@@ -61,7 +61,7 @@ class AdvisorJoinController extends Controller{
 
             return AdvisorLoginController::login($request,Advisor::find($advisor->advisorPK));
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
         }
 
