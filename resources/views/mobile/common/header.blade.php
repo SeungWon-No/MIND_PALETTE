@@ -8,9 +8,11 @@
     $isShowProgress = $isShowProgress ?? false;
     $isShowCloseButton = $isShowCloseButton ?? false;
     $progressValue = $progressValue ?? 0;
+
+    $backColor = (isset($isAdviceResult)) ? "white":"gray";
 @endphp
 @if($isShowBackButton || $isShowCloseButton)
-    <header id="header" class="basic-header">
+    <header id="header" class="basic-header @if(isset($isAdviceResult)) orange @endif">
         @if($isShowBackButton)
             <div class="header-left">
                 <a
@@ -20,7 +22,7 @@
                         href="javascript:history.back()"
                     @endif
                     class="btn-page-ui btn-page-prev">
-                    <div class="icon icon-page-prev-gray">페이지 뒤로가기</div>
+                    <div class="icon icon-page-prev-{{$backColor}}">페이지 뒤로가기</div>
                 </a>
             </div>
         @endif
@@ -34,6 +36,11 @@
         @endif
         @if($isShowProgress)
             <div class="page-progress"><div class="bar" style="width:{{$progressValue}}%;"></div></div>
+        @endif
+        @if(isset($isAdviceResult))
+            <div class="header-right">
+                <a href="/HTPResultPC/{{$counseling->counselingPK}}" class="btn btn-outline-white btn-small-size">웹으로 보기</a>
+            </div>
         @endif
     </header>
 @else

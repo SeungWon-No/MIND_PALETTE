@@ -109,6 +109,7 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::get("/adviceAgree", AgreeController::class);
     Route::get("/HTPRequestComplete/", [ProcessInformationController::class, "HTPRequestComplete"]);
     Route::get("/HTPResult/{counselingPK}", HTPResultController::class);
+    Route::get("/HTPResultPC/{counselingPK}", [HTPResultController::class,"pcResult"]);
     Route::resource("/requestAdvice", RequestAdviceController::class)->only([
         'index', 'store'
     ]);

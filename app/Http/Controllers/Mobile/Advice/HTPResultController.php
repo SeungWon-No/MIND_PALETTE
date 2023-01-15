@@ -52,6 +52,35 @@ class HTPResultController extends Controller
         ]);
     }
 
+    public function pcResult(Request $request, $counselingPK) {
+
+        $counselingPK = $request->counselingPK ?? '';
+        $memberPK = $request->session()->get('login')[0]['memberPK'];
+        if ($counselingPK == "") {
+            return redirect('/')->with('error', '권한이 없습니다.');
+        }
+
+        $counseling = Counseling::find($counselingPK);
+
+        if (!$counseling) {
+            return redirect('/')->with('error', '권한이 없습니다.');
+        }
+        $advisor = Advisor::find($counseling->advisorPK);
+
+        return view("/mobile/advice/pcAdviceResult",[
+            "counseling" => $counseling,
+            "advisorImage" => $advisor->profilePath,
+            "advisorName" => Crypt::decryptString($advisor->advisorName),
+            "advisorCenter" => $advisor->centerName,
+            "advisorEducationLevel" => EducationLevel::findAdvisorEducationInfoLimit($counseling->advisorPK,3),
+            "educationCode" => Code::findCodeType("degree"),
+            "images" => Answer::findHTPImage($counselingPK),
+            "temperamentTest"=>Answer::findTemperamentTest($counselingPK),
+            "serviceRating" => ServiceRating::findMemberLog($memberPK),
+            "center" => CounselingCenter::findRandomCenter()
+        ]);
+    }
+
     public function serviceRating(Request $request) {
         $nowDate = date("Y-m-d H:i:s");
         $memberPK = $request->session()->get('login')[0]['memberPK'];
