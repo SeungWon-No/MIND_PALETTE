@@ -91,6 +91,7 @@
                     <td class="table-col cursor">
                       <label id="table-file__label" class="table-file__label">
                         <input id="education" type="file" class="table-file attachedFilePath" data-index="1">
+                        <span class="table-file__name" id="education-attachedDisplayName1"></span>
                         <input id="education-attachedFilePath1" name="education-attachedFilePath1" type="hidden">
                         <input id="education-attachedFileName1" name="education-attachedFileName1" type="hidden">
                         첨부하기
@@ -126,6 +127,7 @@
                     <td class="table-col cursor">
                       <label id="" class="table-file__label">
                         <input id="qualification" type="file" class="table-file attachedFilePath" data-index="1">
+                        <span class="table-file__name" id="qualification-attachedDisplayName1"></span>
                         <input id="qualification-attachedFilePath1" name="qualification-attachedFilePath1" type="hidden">
                           <input id="qualification-attachedFileName1" name="qualification-attachedFileName1" type="hidden">
                         첨부하기
@@ -199,6 +201,7 @@
                     <td class="table-col">
                       <label class="table-file__label">
                       <input id="career" type="file" class="table-file attachedFilePath" data-index="1">
+                      <span class="table-file__name" id="career-attachedDisplayName1"></span>
                         <input id="career-attachedFilePath1" name="career-attachedFilePath1" type="hidden">
                           <input id="career-attachedFileName1" name="career-attachedFileName1" type="hidden">
                         첨부하기
@@ -380,6 +383,7 @@
                                   <td class="table-col cursor">
                                       <label class="table-file__label">
                                           <input id="education" type="file" class="table-file attachedFilePath" data-index="`+educationIndex+`">
+                                          <span class="table-file__name" id="education-attachedDisplayName`+educationIndex+`"></span>
                                           <input id="education-attachedFilePath`+educationIndex+`" name="education-attachedFilePath`+educationIndex+`" type="hidden">
                                           첨부하기
                                       </label>
@@ -410,6 +414,7 @@
                                     <td class="table-col cursor">
                                       <label class="table-file__label">
                                         <input id="qualification" type="file" class="table-file attachedFilePath" data-index="`+qualificationIndex+`">
+                                        <span class="table-file__name" id="qualification-attachedDisplayName`+qualificationIndex+`"></span>
                                         <input id="qualification-attachedFilePath`+qualificationIndex+`" name="qualification-attachedFilePath`+qualificationIndex+`" type="hidden">
                                         첨부하기
                                       </label>
@@ -461,6 +466,7 @@
                                   <td class="table-col">
                                     <label class="table-file__label">
                                     <input id="career" type="file" class="table-file attachedFilePath" data-index="`+careerIndex+`">
+                                    <span class="table-file__name" id="career-attachedDisplayName`+careerIndex+`"></span>
                                       <input id="career-attachedFilePath`+careerIndex+`" name="career-attachedFilePath`+careerIndex+`" type="hidden">
                                       첨부하기
                                     </label>
