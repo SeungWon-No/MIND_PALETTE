@@ -82,7 +82,9 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                <img src="/storage/image/thumb/{{$HTPImageRow[$counseling->PK]}}" alt=""/>
+                                                @if(isset($HTPImageRow[$counseling->PK]))
+                                                    <img src="/storage/image/thumb/{{$HTPImageRow[$counseling->PK]}}" alt=""/>
+                                                @endif
                                             @endif
                                         @endif
                                     </div>

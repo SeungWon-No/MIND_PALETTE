@@ -123,6 +123,7 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::post("/MyPage/changeAgree", [AppSettingController::class,"changeAgree"]);
     Route::post("/MyPage/withdrawalPrc", [WithdrawalController::class,"withdrawalPrc"]);
     Route::post("/MyPage/passwordChangePrc", [PasswordChangeController::class,"passwordChangePrc"]);
+    Route::post("/serviceRating", [HTPResultController::class,"serviceRating"]);
     Route::resource("/mypage", MyPageController::class);
     Route::get("/logout", LogoutController::class);
 
@@ -211,7 +212,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::post('/writePost', [AdvisorInquiryController::class, "writePost"]);// 1:1 문의 글쓰기
         Route::get('/inquiryWrite', [AdvisorInquiryController::class, "inquiryWrite"]);// 1:1 문의 글쓰기 저장
         Route::post('/inquiryEdit', [AdvisorInquiryController::class, "inquiryEdit"]);// 1:1 문의 수정
-        
+
         Route::get('/privacy', PrivacyController::class);
         Route::get('/terms', TermsController::class);
 

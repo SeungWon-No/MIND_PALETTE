@@ -23,6 +23,8 @@
       ],
     ];
 @endphp
+<link rel="stylesheet" type="text/css" href="/commonEditor/stylesMobile.css?version={{CSS_VERSION}}">
+<script src="/commonEditor/ckeditor.js"></script>
 <section id="container" class="page-body">
     <div class="page-contents">
         <div class="advice-view">
@@ -84,13 +86,13 @@
                 <div class="result-tab-group">
                     <div class="result-tab-nav">
                         <!-- actived클래스 추가시 활성화 -->
-                        <button type="button" class="btn-result-tab-nav actived">기질검사</button>
-                        <button type="button" class="btn-result-tab-nav">HTP검사</button>
+                        <button id="resultTemperament" onclick="changeTab('resultTemperament','temperamentTab')" type="button" class="btn-result-tab-nav actived">기질검사</button>
+                        <button id="resultHTP" onclick="changeTab('resultHTP','HTPTab')" type="button" class="btn-result-tab-nav">HTP검사</button>
                     </div>
                     <div class="result-tab-data">
                         <!-- 기질검사 -->
                         <!-- actived 클래스 추가시 활성화 -->
-                        <div class="tab-data actived">
+                        <div id="temperamentTab" class="tab-data actived">
                             <div class="result-card">
                                 <div class="result-test-graph">
                                     <!-- 23.01.04 수정-->
@@ -126,22 +128,22 @@
                                                         // orange-line :  2단계
                                                         // red-line :  3단계
                                                         -->
-                                                        <div class="graph-x-line"></div>
-                                                        <div class="graph-x-line"></div>
-                                                        <div class="graph-x-line"></div>
                                                         <div class="graph-x-line green-line point-line"></div>
                                                         <div class="graph-x-line"></div>
                                                         <div class="graph-x-line"></div>
                                                         <div class="graph-x-line yellow-line point-line"></div>
-                                                        <div class="graph-x-line "></div>
                                                         <div class="graph-x-line"></div>
                                                         <div class="graph-x-line"></div>
                                                         <div class="graph-x-line red-line point-line"></div>
+                                                        <div class="graph-x-line "></div>
+                                                        <div class="graph-x-line"></div>
+                                                        <div class="graph-x-line"></div>
+                                                        <div class="graph-x-line"></div>
                                                     </div>
                                                 </div>
                                                 <div class="graph-x-labels">
                                                     <!-- hide클래스 추가시 숨김 -->
-                                                    <div class="graph-x-label hide"><div class="label-value">0</div></div>
+                                                    <div class="graph-x-label "><div class="label-value">0</div></div>
                                                     <div class="graph-x-label hide"><div class="label-value">10</div></div>
                                                     <div class="graph-x-label hide"><div class="label-value">20</div></div>
                                                     <div class="graph-x-label"><div class="label-value">32</div></div>
@@ -151,7 +153,7 @@
                                                     <div class="graph-x-label hide"><div class="label-value">70</div></div>
                                                     <div class="graph-x-label hide"><div class="label-value">80</div></div>
                                                     <div class="graph-x-label hide"><div class="label-value">90</div></div>
-                                                    <div class="graph-x-label "><div class="label-value">100</div></div>
+                                                    <div class="graph-x-label hide"><div class="label-value">100</div></div>
                                                 </div>
                                                 <div class="graph-y-labels">
                                                     <div class="graph-y-label"><div class="label-name">정서표현</div><div class="label-value">{{$temperamentTest["emotion"]}}점</div></div>
@@ -440,14 +442,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="page-bottom-ui small"><a href="javascript:changeTab('resultHTP','HTPTab')" class="btn btn-orange btn-large-size btn-page-action">HTP검사 결과 보기</a></div>
                         </div>
                         <!-- //기질검사 -->
                         <!-- HTP검사 -->
                         <!-- actived 클래스 추가시 활성화 -->
-                        <div class="tab-data actived">
+                        <div id="HTPTab" class="tab-data">
                             <!-- btn클래스에 disabled클래스 추가시 비활성화 표현 -->
-                            <div class="page-bottom-ui small"><a href="#" class="btn btn-orange btn-large-size btn-page-action">기질검사 결과 보기</a></div>
-                            <div class="basic-data-group">
+
+                            <div class="displayCounselingResult" id="view-edit">
+                                {!! $counseling->counselingResult !!}
+                            </div>
+
+                            <div class="page-bottom-ui small"><a href="javascript:changeTab('resultTemperament','temperamentTab')" class="btn btn-orange btn-large-size btn-page-action">기질검사 결과 보기</a></div>
+                            <div id="advisorRating" class="basic-data-group">
                                 <div class="result-card">
                                     <div class="result-card-master">
                                         <h3 class="con-title">상담은 만족스러우셨나요?</h3>
@@ -455,13 +463,13 @@
                                             <div class="item-thumb"><div class="thumb"><img src="../assets/images/user_thumb.png" alt=""/></div></div>
                                             <!-- 23.01.04 수정 -->
                                             <div class="item-info">
-                                                <div class="item-name"><strong>김아무</strong> 상담사</div>
+                                                <div class="item-name"><strong>{{$advisorName}}</strong> 상담사</div>
                                                 <div class="item-history">
                                                     <!-- 現 한자고정 -->
-                                                    <div class="txt blue"><strong class="font-color-blue">現 사랑 마음 상담 센터</strong></div>
-                                                    <div class="txt">서*대학교 의학 학사</div>
-                                                    <div class="txt">서*대 대학원 의학 석사</div>
-                                                    <div class="txt">사랑 마음 상담센터 전문의</div>
+                                                    <div class="txt blue"><strong class="font-color-blue">現 {{$advisorCenter}}</strong></div>
+                                                    @foreach($advisorEducationLevel as $advisorEducationLevelRow)
+                                                        <div class="txt">{{$advisorEducationLevelRow->school}}</div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                             <!--// 23.01.04 수정 -->
@@ -483,26 +491,28 @@
                                             </div>
                                             <!-- btn클래스에 disabled클래스 추가시 비활성화 표현 -->
                                             <div class="item-btns">
-                                                <div class="page-bottom-ui"><a href="#" class="btn btn-orange btn-large-size btn-page-action disabled">상담사 후기 등록</a></div>
-                                                <div class="page-bottom-ui"><a href="#" class="btn btn-orange btn-large-size btn-page-action">상담사 후기 등록</a></div>
+                                                <div class="page-bottom-ui">
+                                                    <a id="btnReview" href="#"
+                                                       class="btn btn-orange btn-large-size btn-page-action disabled">상담사 후기 등록</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="basic-data-group small">
+                            <div id="centerInfo" class="basic-data-group small" >
                                 <div class="card-item card-store">
                                     <div class="item-info">
-                                        <div class="item-name">사랑 마음 상담센터</div>
-                                        <div class="item-address">인천 부평구 부평대로 337 1239호</div>
+                                        <div class="item-name">{{$center->title}}</div>
+                                        <div class="item-address">{{$center->addr1}} {{$center->addr2}}</div>
                                         <div class="item-btns">
-                                            <a href="#" class="btn-ui">전화하기</a>
-                                            <a href="#" class="btn-ui">사이트 방문하기</a>
+                                            <a href="tel:{{$center->tel}}" class="btn-ui">전화하기</a>
+                                            <a href="{{$center->siteUrl}}" target="_blank" class="btn-ui">사이트 방문하기</a>
                                         </div>
                                     </div>
                                     <div class="item-thumb">
                                         <div class="thumb-wrap">
-                                            <div class="thumb"><img src="../assets/images/user_thumb.png" alt=""></div>
+                                            <div class="thumb"><img src="{{URL::asset('/storage/image/thumb/'.$center->thumImage)}}" alt=""></div>
                                         </div>
                                     </div>
                                 </div>
@@ -512,23 +522,72 @@
                     </div>
                 </div>
             </div>
-            <div class="basic-data-group middle">
-                <div class="service-review-wrap">
-                    <div class="item-desc"><strong>마음팔레트 서비스</strong>는 어떠셨나요?<br>별점을 남겨주시면 서비스 개선에 도움이 됩니다.</div>
-                    <div class="item-check">
-                        <div class="review-check-group">
-                            <!-- actived클래스 추가시 활성화 -->
-                            <button type="button" class="btn-review-nav actived">1점</button>
-                            <button type="button" class="btn-review-nav">2점</button>
-                            <button type="button" class="btn-review-nav">3점</button>
-                            <button type="button" class="btn-review-nav">4점</button>
-                            <button type="button" class="btn-review-nav">5점</button>
+            @if(!$serviceRating)
+                <div class="basic-data-group middle" id="serviceInfo">
+                    @csrf
+                    <div class="service-review-wrap">
+                        <div class="item-desc"><strong>마음팔레트 서비스</strong>는 어떠셨나요?<br>별점을 남겨주시면 서비스 개선에 도움이 됩니다.</div>
+                        <div class="item-check">
+                            <div class="review-check-group">
+                                <!-- actived클래스 추가시 활성화 -->
+                                <button type="button" class="btn-review-nav" onclick="serviceRating('1')">1점</button>
+                                <button type="button" class="btn-review-nav" onclick="serviceRating('2')">2점</button>
+                                <button type="button" class="btn-review-nav" onclick="serviceRating('3')">3점</button>
+                                <button type="button" class="btn-review-nav" onclick="serviceRating('4')">4점</button>
+                                <button type="button" class="btn-review-nav" onclick="serviceRating('5')">5점</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 </section>
+<div id="commonToast" class="toast-pop-wrap">
+    <div class="toast-pop-data" id="commonToastMessage">비밀번호가 성공적으로 변경되었습니다.</div>
+</div>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '.displayCounselingResult' ), {
+        } )
+        .then( editor => {
+            editor.enableReadOnlyMode( 'view-edit' );
+
+            const toolbarElement = editor.ui.view.toolbar.element;
+            toolbarElement.style.display = 'none';
+        } )
+        .catch( error => {
+            console.log(error);
+        } );
+
+    function serviceRating(rating) {
+        $.ajax({
+            type:'POST',
+            url:'/serviceRating',
+            data: {
+                "rating" : rating
+            },
+            async: false,
+            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+            success:function(json){
+                var data = JSON.parse(json);
+                $("#serviceInfo").css("display","none");
+                $("#commonToastMessage").html(data.message);
+                common.toastPopOpen('commonToast');
+            }
+        });
+    }
+
+    function changeTab(id, tab) {
+        $("#resultTemperament").removeClass("actived");
+        $("#resultHTP").removeClass("actived");
+
+        $("#temperamentTab").removeClass("actived");
+        $("#HTPTab").removeClass("actived");
+
+        $("#"+id).addClass("actived");
+        $("#"+tab).addClass("actived");
+    }
+</script>
 @include('/mobile/common/end')
 

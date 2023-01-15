@@ -11,7 +11,8 @@
 
     $serviceRatingPercent = 0;
     if ($serviceRating) {
-        $serviceRatingPercent = $serviceRating->rating/5*100;
+//        dd($serviceRating);
+        $serviceRatingPercent = $serviceRating/5*100;
     }
 
     $myWritingCounselingCount = 0;

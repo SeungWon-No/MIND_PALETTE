@@ -68,7 +68,13 @@ class EducationLevel extends Model
         return EducationLevel::where("advisorPK",$advisorPK)
                 ->where("isDelete","N")
                 ->orderBy("educationPK","ASC")->get();
+    }
 
+
+    public static function findAdvisorEducationInfoLimit($advisorPK, $limit) {
+        return EducationLevel::where("advisorPK",$advisorPK)
+            ->where("isDelete","N")
+            ->orderBy("educationPK","ASC")->limit($limit)->get();
     }
 
 

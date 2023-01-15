@@ -15,4 +15,11 @@ class CounselingCenter extends Model
             ->orderBy("title", "ASC")
             ->get();
     }
+
+    public static function findRandomCenter() {
+        return CounselingCenter::where("isDelete","N")
+            ->inRandomOrder()
+            ->limit(1)
+            ->get()->first();
+    }
 }
