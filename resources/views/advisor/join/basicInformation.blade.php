@@ -326,8 +326,6 @@
               var data = JSON.parse(json);
               if ( data.status === "fail" ) {
                   alert("이미 가입하신 이메일 계정이 존재합니다.\n"+data.email);
-              } else {
-                  alert(data.message);
               }
           }
       });

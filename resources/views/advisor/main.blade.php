@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="counseling-cont">
-              @if($notice)
+              @if(isset($notice))
             <div class="counseling-notice">
               <a href="/advisor/notice/{{$notice->noticePK}}" class="counseling-notice__link"><span class="icon notice-alarm-icon"></span>[공지사항] {{$notice->title}}</a>
             </div>

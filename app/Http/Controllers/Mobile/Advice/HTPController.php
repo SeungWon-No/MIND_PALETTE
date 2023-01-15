@@ -549,7 +549,7 @@ class HTPController extends Controller
         try {
             DB::beginTransaction();
 
-            $counselingStatus = ($isClose == "true") ? $pageStatus["nowPageCode"] : $pageStatus["nextPageCode"];
+            $counselingStatus = ($isClose == "true") ? $pageStatus["nowPageCode"] : $pageStatus["nextPageCode"]+1;
             if ($isClose == "true") {
                 $nextStep = "/";
             } else {
