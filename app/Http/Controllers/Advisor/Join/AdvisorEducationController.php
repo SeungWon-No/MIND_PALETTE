@@ -32,7 +32,6 @@ class AdvisorEducationController extends Controller{
                     
                     if($request['submitExtraValue'] == 'save'){ // 임시 저장
                         $advisor->advisorStatus = 360;
-                    
                     } else {    // 승인 요청
                         $advisor->advisorStatus = 361;
                     }
@@ -134,7 +133,6 @@ class AdvisorEducationController extends Controller{
                 $career->save();
 
             }
-
             DB::commit();
             return redirect('/advisor/consultationInformation');
 
