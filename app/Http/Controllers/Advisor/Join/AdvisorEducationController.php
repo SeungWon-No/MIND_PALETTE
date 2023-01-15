@@ -14,7 +14,6 @@ class AdvisorEducationController extends Controller{
     public function store(Request $request)
     {
         try {
-            dd($request);
 
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
 
@@ -137,9 +136,9 @@ class AdvisorEducationController extends Controller{
 
             DB::commit();
 
-            if ($advisor->advisorStatus = 361){ // 임시 저장
+            if ($advisor->advisorStatus = 361){ 
                 return redirect('/advisor/examine');
-            }else{  // 승인 요청
+            }else{ 
                 return redirect('/advisor/consultationInformation');
             }
 
