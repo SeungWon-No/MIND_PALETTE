@@ -216,6 +216,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
         Route::get('/orderByAdvisorList', orderByAdvisorListController::class); // 상담사 리스트 정렬
     });
+
     Route::middleware(['advisorAutoLogin'])->group(function () {
 
         Route::resource('/join', AdvisorJoinController::class)->only(['index', 'store', 'show']); // 상담사 회원가입
@@ -230,6 +231,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
     Route::get('/loginFindId', function () { // 아이디, 패스워드 찾기 페이지
         return view('/advisor/login/loginFindEmailPassword');
     });
+    
     Route::get('/loginFindPassword', function () { // 패스워드 휴대폰 인증 페이지
         return view('/advisor/login/loginFindPassword');
     });

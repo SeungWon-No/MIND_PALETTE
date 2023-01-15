@@ -18,8 +18,8 @@ class AdvisorLoginValid
         if ($advisorLoginData["advisorStatus"] == 360 ) { //361
             return redirect('/advisor/consultationInformation')->with('error', '관리자 승인 이후 사용 가능한 메뉴입니다.');
         }
-        if ($advisorLoginData["advisorStatus"] == 361 || $advisorLoginData["advisorStatus"] == 362 ) { //3번째 승인 기다리는 화면
-            return redirect('/advisor/consultationInformation')->with('error', '관리자 승인을 기다려주세요.');
+        if ($advisorLoginData["advisorStatus"] == 361 || $advisorLoginData["advisorStatus"] == 362 ) {
+            return redirect('/advisor/examine')->with('error', '관리자 승인을 기다려주세요.');
         }
 
         return $next($request);
