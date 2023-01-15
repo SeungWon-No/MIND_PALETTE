@@ -119,6 +119,7 @@ class AdvisorEducationController extends Controller{
                     'createDate' => $nowDateTime,
                     'updateDate' => $nowDateTime,
                 ];
+
                 $career = new Career;
                 $career->advisorPK = $advisorCareer[$index]['advisorPK'];
                 $career->counselingCareer = $advisorCareer[$index]['counselingCareer'];
@@ -135,14 +136,7 @@ class AdvisorEducationController extends Controller{
             }
 
             DB::commit();
-
-            dd($advisor->advisorStatus);
-
-            if($request['submitExtraValue'] == 'save'){ // 임시 저장
-                return redirect('/advisor/consultationInformation');
-            }else{ // 승인 요청
-                return redirect('/advisor/examine');
-            }
+            return redirect('/advisor/consultationInformation');
 
         }catch(\Exception $e){
 
