@@ -16,6 +16,7 @@ class AdvisorEducationEditController extends Controller
 {
     public function index(Request $request)
     {
+        dd(1);
         return view("/advisor/join/consultationInformationEdit");
     }
 
