@@ -1,6 +1,3 @@
-@php
-print_r($getAdvisorStatus['advisorStatus']);
-@endphp
 @include('advisor/common/header')
     <div id="container">
       <div class="member-cont">
