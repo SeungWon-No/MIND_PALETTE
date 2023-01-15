@@ -13,9 +13,10 @@
                   <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                       <ul class="select-option__list">
                         <input type="hidden" id="orderByValue" name="orderByValue" value=""/>
+                      <input type="hidden" id="page" name="page" value="1"/>
                         <li id="orderByRecent" class="select-option" onclick="orderByList('orderByRecent')">최신순</li>
                         <li id="orderByPast" class="select-option" onclick="orderByList('orderByPast')">과거순</li>
-                      </ul>                      
+                      </ul>
                   </form>
                 </div>
               </div>
@@ -50,7 +51,7 @@
             </div>
             <div class="paging-box">
                 @foreach ($advisorList['links'] as $link)
-                  <a href="{{ $link['url'] }}" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
+                  <a href="javascript:changePage('{{ $link['label'] }}')" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
                 @endforeach
               </div>
           </div>
@@ -60,6 +61,10 @@
             function orderByList($orderOption){
                 var orderOption = $orderOption;
                 $('#orderByValue').val(orderOption);
+                $('#orderByForm').submit();
+            }
+            function changePage(page){
+                $("#page").val(page);
                 $('#orderByForm').submit();
             }
         </script>
