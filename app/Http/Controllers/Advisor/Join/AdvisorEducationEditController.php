@@ -60,7 +60,8 @@ class AdvisorEducationEditController extends Controller
                     if($request['submitExtraValue'] == 'save'){ // 임시 저장
                         $advisor->advisorStatus = 360;
                     } else {    // 승인 요청
-                        $advisor->advisorStatus = 361;
+                        //$advisor->advisorStatus = 361;
+                        $advisor->advisorStatus = 2; // todo : 테스트를 위해 승인요청시 상태값을 '2'로 변경하도록함
                     }
                 }
                 $advisor->save();
