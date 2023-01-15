@@ -65,7 +65,6 @@ class AdvisorEducationEditController extends Controller
                 }
                 $advisor->save();
             }
-        dd($advisor);
 
         $nowDateTime = date('Y-m-d H:i:s');
 
@@ -91,6 +90,7 @@ class AdvisorEducationEditController extends Controller
             $educationLevel->createDate = $nowDateTime;
             $educationLevel->save();
         }
+        
 
         // 자격사항 INSERT
         $qualificationCount = $request->qualificationCount ?? 0;
@@ -136,19 +136,17 @@ class AdvisorEducationEditController extends Controller
             $career->createDate = $nowDateTime;
             $career->updateDate = $nowDateTime;
             $career->save();
+  
+        }
+        $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
+        
+        if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
+            return redirect('/advisor/examine');
 
-            $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
-            
-            if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
-                return redirect('/advisor/examine');
-
-            }else{  // 임시저장
-                return redirect('/advisor/consultationInformationEdit');
-
-            }
+        }else{  // 임시저장
+            return redirect('/advisor/consultationInformationEdit');
 
         }
-        return redirect('/advisor/consultationInformationEdit');
     }
 
 
