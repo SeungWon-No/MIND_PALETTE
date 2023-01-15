@@ -177,7 +177,7 @@ Route::middleware(['autoLogin','freeAdviceVerify'])->group(function () {
 // Advisor
 Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/advisor/
 
-    Route::middleware(['advisorAutoLogin'])->group(function () { // 로그인 미들웨어
+    Route::middleware(['advisorAutoLogin','advisorLoginValid'])->group(function () { // 로그인 미들웨어
 
         Route::get('/', AdvisorIndexController::class); // 메인화면
         Route::get('/waitingCounseling', [AdvisorIndexController::class, "waitingCounseling"]); // 상담대기
@@ -186,11 +186,6 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::get('/impossibleCounseling', [AdvisorIndexController::class, "impossibleCounseling"]); // 상담불가
         Route::get('/advisorList', [AdvisorIndexController::class, "advisorList"]); // 상담불가
 
-        Route::resource("/login",AdvisorLoginController::class)->only(['index', 'store']); // 로그인
-        Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
-        Route::resource('/join', AdvisorJoinController::class)->only(['index', 'store', 'show']); // 상담사 회원가입
-        Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]); // 회원가입 step2
-        Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
         Route::resource('/profile', AdvisorProfileController::class); // 상담사 프로필
         Route::post('/profile/changePhone', [AdvisorProfileController::class,"changePhone"]); // 상담사 프로필
 
@@ -220,31 +215,28 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::get('/terms', TermsController::class);
 
         Route::get('/orderByAdvisorList', orderByAdvisorListController::class); // 상담사 리스트 정렬
-
-
-
     });
+    Route::middleware(['advisorAutoLogin'])->group(function () {
 
+        Route::resource('/join', AdvisorJoinController::class)->only(['index', 'store', 'show']); // 상담사 회원가입
+        Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
+
+        Route::resource("/login",AdvisorLoginController::class)->only(['index', 'store']); // 로그인
+        Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
+        Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]); // 회원가입 step2z
+        Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 추가 정보입력
+    });
 
     Route::get('/loginFindId', function () { // 아이디, 패스워드 찾기 페이지
         return view('/advisor/login/loginFindEmailPassword');
     });
-
     Route::get('/loginFindPassword', function () { // 패스워드 휴대폰 인증 페이지
         return view('/advisor/login/loginFindPassword');
     });
-
     Route::post('/loginFindEmail', AdvisorFindEmailController::class); // 이메일 찾기
-
     Route::post('/loginPasswordAuth', AdvisorFindPasswordController::class); // 비밀번호 찾기
-
     Route::post('/newPasswordSetting', AdvisorNewPasswordSettingController::class); // 새 비밀번호 설정
-
-    Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 추가 정보입력
-
     Route::post("/fileUpload", [FileUploadController::class,"fileUpload"]); // 파일 업로드
-
-
     Route::get('/loginFail', function () { // 로그인 실패시 화면
         return view('/advisor/login/loginFail');
     });

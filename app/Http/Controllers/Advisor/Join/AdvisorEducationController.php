@@ -28,9 +28,13 @@ class AdvisorEducationController extends Controller{
                 if ($centerName != "") {
                     $advisor->centerName = $centerName;
                 }
+                if (true) { //임시 저장이 아니고, 승인 요청이라면
+                    $advisor->advisorStatus = 361;
+                    //승인 요청 이라면 해당 화면을 만들어서 거기로 보내야 합니다.
+                }
                 $advisor->save();
             }
-            
+
             $nowDateTime = date('Y-m-d H:i:s');
 
             $educationCount = $request->educationCount ?? 0;

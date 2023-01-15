@@ -54,6 +54,7 @@ class AdvisorLoginController extends Controller
             "advisorPK" => $advisor->advisorPK,
             "advisorEmail" => $advisor->email,
             "advisorName" => Crypt::decryptString($advisor->advisorName),
+            "advisorStatus" => $advisor->advisorStatus
         ];
         $request->session()->push('advisorLogin', $loginData);
         return redirect($redirectUrl);

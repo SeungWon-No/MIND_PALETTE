@@ -42,7 +42,7 @@ class AdvisorJoinController extends Controller{
             $ci = Crypt::decryptString($request['CI']) ?? '';
             $advisor->mbAgreePK = $memberAgree->mbAgreePK;
             //$advisor->auth = 'Y';
-            $advisor->advisorStatus = '1';
+            $advisor->advisorStatus = 360;
             $advisor->lastLoginDate = $nowDate;
             $advisor->updateDate = $nowDate;
             $advisor->createDate = $nowDate;
@@ -55,7 +55,6 @@ class AdvisorJoinController extends Controller{
             $advisorAuth->createDate = $nowDate;
             $advisorAuth->save();
 
-
             $request->redirectUrl = "/advisor/consultationInformation";
             DB::commit();
 
@@ -64,8 +63,6 @@ class AdvisorJoinController extends Controller{
         } catch (\Exception $e) {
 
         }
-
-
     }
 
     public function show(Request $request)
