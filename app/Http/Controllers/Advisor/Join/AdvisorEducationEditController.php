@@ -43,7 +43,6 @@ class AdvisorEducationEditController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
 
             $counselingCareer = $request->counselingCareer ?? '';
@@ -66,6 +65,7 @@ class AdvisorEducationEditController extends Controller
                 }
                 $advisor->save();
             }
+        dd($advisor);
 
         $nowDateTime = date('Y-m-d H:i:s');
 
