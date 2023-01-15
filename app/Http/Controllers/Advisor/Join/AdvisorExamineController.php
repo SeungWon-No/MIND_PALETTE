@@ -12,9 +12,10 @@ class AdvisorExamineController extends Controller
     public function __invoke(Request $request)
     {
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"]; // 132
-        $getAdvisorInfo = Advisor::getAdvisorProfile($advisorPK);
-        dd($getAdvisorInfo);
+        $getAdvisorInfo = Advisor::getAdvisorProfile($advisorPK); // 상담사 정보 
 
-        return view('/advisor/join/examine');
+        return view('/advisor/join/examine', [
+            'getAdvisorInfo' => $getAdvisorInfo
+        ]);
     }
 }

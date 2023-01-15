@@ -1,3 +1,6 @@
+@php
+print_r($getAdvisorInfo);
+@endphp
 @include('advisor/common/header')
     <div id="container">
       <div class="member-cont">
