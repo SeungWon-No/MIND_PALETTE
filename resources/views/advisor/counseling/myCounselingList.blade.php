@@ -5,11 +5,11 @@
           <div class="counseling-cont">
             <div class="counseling-tab__wrap">
               <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
-              <a href="/advisor/myCounselingList" class="counseling-tab__btn active">전체</a>
-              <a href="/advisor/myWaitingCounseling" class="counseling-tab__btn">상담대기</a>
-              <a href="/advisor/myCompleteCounseling" class="counseling-tab__btn">상담완료</a>
-              <a href="/advisor/myWarningCounseling" class="counseling-tab__btn">주의/위험</a>
-              <a href="/advisor/myImpossibleCounseling" class="counseling-tab__btn">상담불가</a>
+              <a href="/advisor/counselingList" id="defaultList" class="counseling-tab__btn active">전체</a>
+              <a href="/advisor/waitingCounselingList" id="waitingCounselingList" class="counseling-tab__btn">상담대기</a>
+              <a href="/advisor/completeCounselingList" id="completeCounselingList" class="counseling-tab__btn">상담완료</a>
+              <a href="/advisor/warningCounselingList" id="warningCounselingList" class="counseling-tab__btn">주의/위험</a>
+              <a href="/advisor/impossibleCounselingList" id="impossibleCounselingList" class="counseling-tab__btn">상담불가</a>
             </div>
             <form id="searchForm" name="searchForm" action="/advisor/myCounselingList" method="POST">
               @csrf
@@ -65,11 +65,11 @@
               -->
               <h3 class="counseling-list__tit">전체내역</h3>
               <div class="counseling-sort__wrap">
-                <div class="counseling-sort__btns">
+              <div class="counseling-sort__btns">
                   <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
-                  <a href="javascript:selectMonth('','')" class="counseling-sort active">전체</a>
+                  <a href="javascript:selectMonth('','')" id="allTab" class="counseling-sort active" onclick="javascript:tabEvent()">전체</a>
                     @foreach($searchMonth as $key => $searchMonthRow)
-                      <a href="javascript:selectMonth('{{$searchMonthRow['start']}}','{{$searchMonthRow['end']}}')" class="counseling-sort">{{$key}}</a>
+                      <a href="javascript:selectMonth('{{$searchMonthRow['start']}}','{{$searchMonthRow['end']}}')" id="{{$key}}" class="counseling-sort" onclick="javascript:tabEvent('{{$key}}')">{{$key}}</a>
                     @endforeach
                 </div>
                 <div class="counseling-sort__datepicker">
@@ -153,6 +153,34 @@
   <!-- datepicker-->
   <script src="../advisorAssets/assets/js/jquery-ui.min.js"></script>
   <script>
+
+  function tabEvent($tab){
+    if(!$tab){
+      $('#allTab').toggleClass('active');
+        $('a').not('#allTab').each(function(){
+        $(this).removeClass('active');
+      });
+      return;
+    }
+    $('#'+$tab).toggleClass('active');
+    $('a').not('#'+$tab).each(function(){
+      $(this).removeClass('active');
+
+    });
+  }
+
+      var currentUrl = $(location).attr("href"); // 현재 페이지 url
+      var splitUrl = currentUrl.split("/");
+      var urlSection1 = splitUrl[3];
+      var urlSection2 = splitUrl[4];
+
+      if (urlSection1 == 'advisor' && urlSection2 == 'myCounselingList') {
+        $("#defaultList").attr("class", "counseling-tab__btn active");
+
+      }else{
+        $("#defaultList").attr("class", "counseling-tab__btn");
+        $("#"+urlSection2).attr("class", "counseling-tab__btn active");
+      }
 
     function selectMonth(startDate, endDate) {
           $("#sdate").val(startDate);
