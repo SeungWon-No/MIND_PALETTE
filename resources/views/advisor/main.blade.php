@@ -132,7 +132,7 @@
             @endforeach
             </div>
             <p class="notice-data">
-              <span class="icon notice-icon"></span>22년 11월 28일 14시 22분 기준 정보입니다.
+              <span class="icon notice-icon"></span>{{date("y년 m월 d일 H시 i분")}} 기준 정보입니다.
             </p>
           </div>
         </div>
