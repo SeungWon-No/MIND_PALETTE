@@ -7,6 +7,7 @@ use App\Http\Controllers\Advisor\Etc\orderByAdvisorListController;
 use App\Http\Controllers\Advisor\Join\AdvisorEducationController;
 use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
 use App\Http\Controllers\Advisor\Join\VerifyEmailDuplicationController;
+use App\Http\Controllers\Advisor\Join\AdvisorExamineController;
 use App\Http\Controllers\Advisor\Login\AdvisorLoginController;
 use App\Http\Controllers\Advisor\Login\AdvisorFindEmailController;
 use App\Http\Controllers\Advisor\Login\AdvisorFindPasswordController;
@@ -220,7 +221,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
     Route::middleware(['advisorAutoLogin'])->group(function () {
 
         Route::resource('/join', AdvisorJoinController::class)->only(['index', 'store', 'show']); // 상담사 회원가입
-        Route::get("/examine", AdvisorLogoutController::class); // 로그아웃
+        Route::get("/examine", AdvisorExamineController::class); // 로그아웃
         Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
 
         Route::resource("/login",AdvisorLoginController::class)->only(['index', 'store']); // 로그인
