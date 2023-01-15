@@ -15,7 +15,7 @@
         <div class="mypage-main">
             <div class="mypage-main-info">
                 <div class="item-icon">
-                    <div class="icon icon-page-user-orange"></div>
+                    <div class="icon {{(Cookie::has('AD_ICO'))?Cookie::get('AD_ICO'):"icon-page-user-green"}}"></div>
                 </div>
                 <div class="item-info">
                     <div class="item-name">{{$userName}}님, 반가워요!</div>

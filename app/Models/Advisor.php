@@ -137,5 +137,11 @@ class Advisor extends Model
         Advisor::where('advisorPK', $advisorPK)->update(['password'=> $cryptNewPassword]);
     }
 
+    public static function findRandomAdvisorLimit($limit) {
+        return Advisor::whereNull('withdrawal')
+            ->inRandomOrder()
+            ->limit($limit)
+            ->get();
+    }
 
 }

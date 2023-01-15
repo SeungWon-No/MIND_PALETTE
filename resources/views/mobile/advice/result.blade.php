@@ -53,26 +53,43 @@
                         <div class="grid-layout">
                             <div class="grid-layout-inner">
                                 <div class="grid-layout-cell">
-                                    <button type="button" class="btn-user-picture">
-                                        <span class="thumb"><img src="{{URL::asset("/storage/image/thumb/".$images["house"])}}" alt=""/></span>
+                                    <button type="button" class="btn-user-picture"
+                                            @if(isset($images["house"]))
+                                            onclick="detailImage('{{URL::asset("/storage/image/origin/".$images["house"])}}')"
+                                            @endif
+                                    >
+
+                                        <span class="thumb"><img src="{{(isset($images["house"]))?URL::asset("/storage/image/thumb/".$images["house"]):""}}" alt=""/></span>
                                         <span class="name">집</span>
                                     </button>
                                 </div>
                                 <div class="grid-layout-cell">
-                                    <button type="button" class="btn-user-picture">
-                                        <span class="thumb"><img src="{{URL::asset("/storage/image/thumb/".$images["tree"])}}" alt=""/></span>
+                                        <button type="button" class="btn-user-picture"
+                                                @if(isset($images["tree"]))
+                                                    onclick="detailImage('{{URL::asset("/storage/image/origin/".$images["tree"])}}')"
+                                            @endif
+                                        >
+                                            <span class="thumb"><img src="{{(isset($images["tree"]))?URL::asset("/storage/image/thumb/".$images["tree"]):""}}" alt=""/></span>
                                         <span class="name">나무</span>
                                     </button>
                                 </div>
                                 <div class="grid-layout-cell">
-                                    <button type="button" class="btn-user-picture">
-                                        <span class="thumb"><img src="{{URL::asset("/storage/image/thumb/".$images["person1"])}}" alt=""/></span>
+                                        <button type="button" class="btn-user-picture"
+                                                @if(isset($images["person1"]))
+                                                    onclick="detailImage('{{URL::asset("/storage/image/origin/".$images["person1"])}}')"
+                                            @endif
+                                        >
+                                            <span class="thumb"><img src="{{(isset($images["person1"]))?URL::asset("/storage/image/thumb/".$images["person1"]):""}}" alt=""/></span>
                                         <span class="name">사람1</span>
                                     </button>
                                 </div>
                                 <div class="grid-layout-cell">
-                                    <button type="button" class="btn-user-picture">
-                                        <span class="thumb"><img src="{{URL::asset("/storage/image/thumb/".$images["person2"])}}" alt=""/></span>
+                                        <button type="button" class="btn-user-picture"
+                                                @if(isset($images["person2"]))
+                                                    onclick="detailImage('{{URL::asset("/storage/image/origin/".$images["person2"])}}')"
+                                            @endif
+                                        >
+                                            <span class="thumb"><img src="{{(isset($images["person2"]))?URL::asset("/storage/image/thumb/".$images["person2"]):""}}" alt=""/></span>
                                         <span class="name">사람2</span>
                                     </button>
                                 </div>
@@ -460,7 +477,7 @@
                                     <div class="result-card-master">
                                         <h3 class="con-title">상담은 만족스러우셨나요?</h3>
                                         <div class="master-info-wrap">
-                                            <div class="item-thumb"><div class="thumb"><img src="../assets/images/user_thumb.png" alt=""/></div></div>
+                                            <div class="item-thumb"><div class="thumb"><img src="{{URL::asset('/storage/image/profile/'.$advisorImage)}}" alt=""/></div></div>
                                             <!-- 23.01.04 수정 -->
                                             <div class="item-info">
                                                 <div class="item-name"><strong>{{$advisorName}}</strong> 상담사</div>
@@ -468,34 +485,40 @@
                                                     <!-- 現 한자고정 -->
                                                     <div class="txt blue"><strong class="font-color-blue">現 {{$advisorCenter}}</strong></div>
                                                     @foreach($advisorEducationLevel as $advisorEducationLevelRow)
-                                                        <div class="txt">{{$advisorEducationLevelRow->school}}</div>
+                                                        <div class="txt">{{$advisorEducationLevelRow->school}} {{$educationCode[$advisorEducationLevelRow->degree]}}</div>
                                                     @endforeach
                                                 </div>
                                             </div>
                                             <!--// 23.01.04 수정 -->
                                         </div>
                                         <div class="master-review-wrap">
-                                            <div class="item-select">
-                                                <select>
-                                                    <option value="">별점 선택</option>
-                                                    <option value="">매우 불만족 : ★☆☆☆☆</option>
-                                                    <option value="">불만족 : ★★☆☆☆</option>
-                                                    <option value="">보통 : ★★★☆☆</option>
-                                                    <option value="">만족 : ★★★★☆</option>
-                                                    <option value="">매우 만족 : ★★★★★</option>
-                                                </select>
-                                            </div>
-                                            <!-- 기본 display:none으로 처리요망 -->
-                                            <div class="item-inputs" style="display:block;">
-                                                <textarea placeholder="자세한 후기를 입력해주세요. 상담사에게 큰 도움이 됩니다."></textarea>
-                                            </div>
-                                            <!-- btn클래스에 disabled클래스 추가시 비활성화 표현 -->
-                                            <div class="item-btns">
-                                                <div class="page-bottom-ui">
-                                                    <a id="btnReview" href="#"
-                                                       class="btn btn-orange btn-large-size btn-page-action disabled">상담사 후기 등록</a>
+                                            <form name="reviewForm">
+                                                @csrf
+                                                <div class="item-select">
+                                                    <select id="advisorRating" name="rating" onchange="changeAdvisorRating()">
+                                                        <option value="-1">별점 선택</option>
+                                                        <option value="1" @if($counseling->rating == "1") selected @endif>매우 불만족 : ★☆☆☆☆</option>
+                                                        <option value="2" @if($counseling->rating == "2") selected @endif>불만족 : ★★☆☆☆</option>
+                                                        <option value="3" @if($counseling->rating == "3") selected @endif>보통 : ★★★☆☆</option>
+                                                        <option value="4" @if($counseling->rating == "4") selected @endif>만족 : ★★★★☆</option>
+                                                        <option value="5" @if($counseling->rating == "5") selected @endif>매우 만족 : ★★★★★</option>
+                                                    </select>
                                                 </div>
-                                            </div>
+                                                <!-- 기본 display:none으로 처리요망 -->
+                                                <div class="item-inputs" style="display:block;">
+                                                    <textarea
+                                                        id="reviewContent"
+                                                        name="reviewContent"
+                                                        placeholder="자세한 후기를 입력해주세요. 상담사에게 큰 도움이 됩니다.">{{str_replace("<br/>","\n",$counseling->review)}}</textarea>
+                                                </div>
+                                                <!-- btn클래스에 disabled클래스 추가시 비활성화 표현 -->
+                                                <div class="item-btns">
+                                                    <div class="page-bottom-ui">
+                                                        <a id="btnReview" href="javascript:review()"
+                                                           class="btn btn-orange btn-large-size btn-page-action @if($counseling->rating <= 0) disabled @endif">상담사 후기 등록</a>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -543,10 +566,25 @@
         </div>
     </div>
 </section>
+
+<article id="pictureDetailPop" class="layer-pop-wrap">
+    <div class="layer-pop-parent">
+        <div class="layer-pop-children picture">
+            <div class="pop-data">
+                <img id="detailImage" src="" alt=""/>
+            </div>
+            <button type="button" class="btn-pop-close basic" onclick="pop.close();">닫기</button>
+        </div>
+    </div>
+</article>
 <div id="commonToast" class="toast-pop-wrap">
     <div class="toast-pop-data" id="commonToastMessage">비밀번호가 성공적으로 변경되었습니다.</div>
 </div>
 <script>
+    function detailImage(src) {
+        $("#detailImage").attr('src',src);
+        pop.open('pictureDetailPop');
+    }
     ClassicEditor
         .create( document.querySelector( '.displayCounselingResult' ), {
         } )
@@ -587,6 +625,39 @@
 
         $("#"+id).addClass("actived");
         $("#"+tab).addClass("actived");
+    }
+
+    function changeAdvisorRating() {
+        var advisorRating = $("#advisorRating option:selected").val();
+        $("#btnReview").removeClass("disabled")
+        if (advisorRating === "-1") {
+            $("#btnReview").addClass("disabled")
+        }
+    }
+
+    function review() {
+        var advisorRating = $("#advisorRating option:selected").val();
+        if (advisorRating === "-1") {
+            $("#commonToastMessage").html("별점을 선택해주세요");
+            common.toastPopOpen('commonToast');
+            return false
+        }
+
+        var queryString = $("form[name=reviewForm]").serialize() ;
+
+        $.ajax({
+            type:'POST',
+            url:'/reviewRating/{{$counseling->counselingPK}}',
+            data: queryString,
+            async: false,
+            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+            success:function(json){
+                var data = JSON.parse(json);
+                $("#serviceInfo").css("display","none");
+                $("#commonToastMessage").html(data.message);
+                common.toastPopOpen('commonToast');
+            }
+        });
     }
 </script>
 @include('/mobile/common/end')

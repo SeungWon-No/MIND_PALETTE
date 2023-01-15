@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Util\CounselingStatus;
+use App\Models\Advisor;
+use App\Models\Answer;
 use App\Models\Counseling;
 use Illuminate\Http\Request;
 
@@ -13,17 +16,23 @@ class IndexController extends Controller
         $isLogin = $request->session()->has('login');
         $counselingCount = 0;
         $counselingRow = null;
+        $HTPImageRow = null;
 
         if ($isLogin) {
             $memberPK = $request->session()->get('login')[0]["memberPK"];
             $counselingRow = Counseling::findAllCounseling($memberPK);
             $counselingCount = $counselingRow->count();
+            $HTPImageRow = Answer::findHTPImageRow($memberPK);
         }
 
         return view("/mobile/index",[
             "isLogin" => $isLogin,
-            "counselingCount" => $counselingCount,
             "counselingRow" => $counselingRow,
+            "counselingCount" => $counselingCount,
+            "HTPImageRow" => $HTPImageRow,
+            "payCounselingWritingCode" => CounselingStatus::$payCounselingWritingCode,
+            "payCounselingStatus" => CounselingStatus::$payCounselingStatus,
+            "advisor" => Advisor::findRandomAdvisorLimit(3)
         ]);
     }
 }

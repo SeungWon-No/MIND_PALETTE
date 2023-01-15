@@ -15,8 +15,8 @@ class LoginController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->session()->has('advisorLogin')) {
-            return redirect('/advisor/main')->with('error', '로그인 상태입니다.');
+        if ($request->session()->has('login')) {
+            return redirect('/')->with('error', '로그인 상태입니다.');
         }
         return view("/mobile/login/login");
     }
@@ -56,6 +56,14 @@ class LoginController extends Controller
             // dd($request->autoLogin);
             Cookie::queue(Cookie::forever('AD_AKTV', $member->memberPK));
         }
+
+        $random = [
+            "icon-page-user-red",
+            "icon-page-user-orange",
+            "icon-page-user-green",
+            "icon-page-user-blue",
+        ];
+        Cookie::queue(Cookie::forever('AD_ICO', $random[rand(0,3)]));
 
         $loginData = [
             "memberPK" => $member->memberPK,

@@ -112,6 +112,9 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::resource("/requestAdvice", RequestAdviceController::class)->only([
         'index', 'store'
     ]);
+    Route::post("/serviceRating", [HTPResultController::class,"serviceRating"]);
+    Route::post("/reviewRating/{counselingPK}", [HTPResultController::class,"reviewRating"]);
+
     Route::get("/MyPage/payList", PayListController::class);
     Route::get("/MyPage/AppSetting", AppSettingController::class);
     Route::get("/MyPage/withdrawal", WithdrawalController::class);
@@ -123,10 +126,9 @@ Route::middleware(['autoLogin','loginValid'])->group(function () {
     Route::post("/MyPage/changeAgree", [AppSettingController::class,"changeAgree"]);
     Route::post("/MyPage/withdrawalPrc", [WithdrawalController::class,"withdrawalPrc"]);
     Route::post("/MyPage/passwordChangePrc", [PasswordChangeController::class,"passwordChangePrc"]);
-    Route::post("/serviceRating", [HTPResultController::class,"serviceRating"]);
+
     Route::resource("/mypage", MyPageController::class);
     Route::get("/logout", LogoutController::class);
-
 });
 Route::middleware(['autoLogin','loginValid','adviceVerify'])->group(function () {
 

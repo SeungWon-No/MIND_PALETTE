@@ -42,13 +42,11 @@
                     <div class="icon icon-page-alarm-white off"></div>
                 </a>
                 <a href="/mypage" class="btn-page-ui btn-page-user">
-                    <div class="icon icon-page-user-orange on"></div>
-                    <div class="icon icon-page-user-white off"></div>
+                    <div class="icon {{(Cookie::has('AD_ICO'))?Cookie::get('AD_ICO'):"icon-page-user-green"}} off"></div>
                 </a>
             @else
                 <a href="/login" class="btn-page-ui btn-page-login">로그인</a>
-                <a href="#" class="btn-page-ui btn-page-user">
-                    <div class="icon icon-page-user-gray on"></div>
+                <a href="/login" class="btn-page-ui btn-page-user">
                     <div class="icon icon-page-user-lightorange off"></div>
                 </a>
             @endif

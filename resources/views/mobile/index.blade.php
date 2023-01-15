@@ -1,5 +1,11 @@
 @include('/mobile/common/start')
 @include('/mobile/common/header',["isShowBackButton" => false,"isShowCloseButton"=>false])
+@php
+use Illuminate\Support\Facades\Crypt;
+
+    $iconClass = ["orange","blue","red","green"];
+    $rowIndex = 0;
+@endphp
 <section id="container" class="page-body">
     <div class="page-contents">
         <div class="main-wrap">
@@ -20,57 +26,84 @@
                         <div class="main-advice-list">
                             <div class="gallery-list-wrap">
                                 <div class="gallery-list-top">
-                                    <div class="gallery-list-title">우리 아이 상담 내역<em>3</em></div>
-                                    <a href="#" class="btn-more-ui">더보기</a>
+                                    <div class="gallery-list-title">우리 아이 상담 내역<em>{{number_format($counselingCount)}}</em></div>
+                                    <a href="/mypage" class="btn-more-ui">더보기</a>
                                 </div>
                                 <div class="gallery-list-body">
                                     <div class="horizontal-swiper-scoller">
                                         <div class="scoller-inner">
                                             <div class="scoller-list">
-                                                <a href="#" class="gallery-list-item">
-                                                    <div class="item-thumb"><div class="thumb"><img src="../mobile/assets/images/@picture.png" alt=""/></div></div>
-                                                    <div class="item-info">
-                                                        <div class="item-icon"><div class="icon icon-kids-small"></div></div>
-                                                        <div class="item-data">
-                                                            <div class="item-name">홍길동</div>
-                                                            <div class="item-date">2022.11.15 13:20</div>
+
+                                                @foreach($counselingRow as $counseling)
+                                                    @php
+                                                        $link = "#";
+                                                        $payStatus = "matching";
+                                                        if ($counseling->type == "PAY") {
+                                                            if (in_array($counseling->counselingStatus, $payCounselingWritingCode)) {
+                                                                $payStatus = "write";
+                                                                $link = "/".$statusCode[$counseling->counselingStatus]."/".$counseling->PK;
+                                                            } else if ($counseling->counselingStatus == "281") {
+                                                                $payStatus = "complete";
+                                                                $link = "/HTPResult/".$counseling->PK;
+                                                            }
+                                                        } else {
+                                                            $link = $counselingStatus[$counseling->counselingStatus]["link"].$counseling->PK;
+                                                        }
+                                                    @endphp
+                                                    <a href="{{$link}}" class="gallery-list-item">
+                                                        <div class="item-thumb">
+                                                            @if($counseling->type == "FREE")
+                                                                <div class="advice-free">
+                                                                    <em></em><strong>마음팔레트 무료 상담
+                                                                        @if(isset($counselingStatus[$counseling->counselingStatus]))
+                                                                            {{$counselingStatus[$counseling->counselingStatus]["title"]}}
+                                                                        @endif
+                                                                    </strong>
+                                                                </div>
+                                                            @else
+                                                                @if($payStatus == "write")
+                                                                    <div class="thumb">
+                                                                        <div class="advice-ing">
+                                                                            <em></em><strong>상담 신청을 완료해주세요.</strong>
+                                                                        </div>
+                                                                    </div>
+                                                                @else
+                                                                    @if(isset($HTPImageRow[$counseling->PK]))
+                                                                        <img src="/storage/image/thumb/{{$HTPImageRow[$counseling->PK]}}" alt=""/>
+                                                                    @endif
+                                                                @endif
+                                                            @endif
                                                         </div>
-                                                        <div class="item-state"><div class="label label-red">상담사 매칭중</div></div>
-                                                    </div>
-                                                </a>
-                                                <a href="#" class="gallery-list-item">
-                                                    <div class="item-thumb"><div class="thumb"><div class="advice-ing"><em></em><strong>상담 신청을 완료해주세요.</strong></div></div></div>
-                                                    <div class="item-info">
-                                                        <div class="item-icon"><div class="icon icon-kids-small"></div></div>
-                                                        <div class="item-data">
-                                                            <div class="item-name">홍길동</div>
-                                                            <div class="item-date">2022.11.15 13:20</div>
+
+                                                        <div class="item-info">
+                                                            <div class="item-icon"><div class="icon icon-page-user-{{$iconClass[$rowIndex]}}-bg"></div></div>
+                                                            <div class="item-data">
+                                                                <div class="item-name">{{$counseling->counselorName}}</div>
+                                                                <div class="item-date">{{$counseling->updateDate}}</div>
+                                                            </div>
+                                                            @if($counseling->type == "FREE" && isset($counselingStatus[$counseling->counselingStatus]))
+                                                                <div class="item-state">
+                                                                    <div class="label label-{{$counselingStatus[$counseling->counselingStatus]["class"]}}">
+                                                                        {{$counselingStatus[$counseling->counselingStatus]["status"]}}
+                                                                    </div>
+                                                                </div>
+                                                            @elseif($counseling->type == "PAY")
+                                                                <div class="item-state">
+                                                                    <div class="label label-{{$payCounselingStatus[$payStatus]["class"]}}">
+                                                                        {{$payCounselingStatus[$payStatus]["status"]}}
+                                                                    </div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                        <div class="item-state"><div class="label label-silver">상담완료</div></div>
-                                                    </div>
-                                                </a>
-                                                <a href="#" class="gallery-list-item">
-                                                    <div class="item-thumb"><div class="thumb"><div class="advice-free"><em></em><strong>마음팔레트 무료 상담</strong></div></div></div>
-                                                    <div class="item-info">
-                                                        <div class="item-icon"><div class="icon icon-kids-small"></div></div>
-                                                        <div class="item-data">
-                                                            <div class="item-name">홍길동</div>
-                                                            <div class="item-date">2022.11.15 13:20</div>
-                                                        </div>
-                                                        <div class="item-state"><div class="label label-gray">작성중</div></div>
-                                                    </div>
-                                                </a>
-                                                <a href="#" class="gallery-list-item">
-                                                    <div class="item-thumb"><div class="thumb"><img src="../mobile/assets/images/@picture.png" alt=""/></div></div>
-                                                    <div class="item-info">
-                                                        <div class="item-icon"><div class="icon icon-kids-small"></div></div>
-                                                        <div class="item-data">
-                                                            <div class="item-name">홍길동</div>
-                                                            <div class="item-date">2022.11.15 13:20</div>
-                                                        </div>
-                                                        <div class="item-state"><div class="label label-silver">상담완료</div></div>
-                                                    </div>
-                                                </a>
+                                                    </a>
+                                                    @php
+                                                        if($rowIndex == 3) {
+                                                            $rowIndex = 0;
+                                                        } else {
+                                                            $rowIndex++;
+                                                        }
+                                                    @endphp
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -116,62 +149,22 @@
                             <div class="horizontal-swiper-scoller">
                                 <div class="scoller-inner">
                                     <div class="scoller-list">
+                                        @foreach($advisor as $advisorRow)
                                         <div class="card-item card-user">
                                             <div class="thumb-wrap">
-                                                <div class="thumb"><img src="../mobile/assets/images/user_thumb.png" alt=""></div>
+                                                <div class="thumb"><img src="{{URL::asset('/storage/image/profile/'.$advisorRow->profilePath)}}" alt=""></div>
                                             </div>
                                             <div class="item-info">
                                                 <div class="item-info-inner">
-                                                    <div class="item-name"><strong>홍길동</strong> 전문의</div>
-                                                    <div class="item-store">사랑 마음 상담센터</div>
+                                                    <div class="item-name"><strong>{{Crypt::decryptString($advisorRow->advisorName)}}</strong> 전문의</div>
+                                                    <div class="item-store">{{$advisorRow->centerName}}</div>
                                                     <div class="item-stats">
-                                                        <div class="icon-like"><em>365</em></div>
+                                                        <div class="icon-like"><em>{{number_format($advisorRow->rating)}}</em></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-item card-user">
-                                            <div class="thumb-wrap">
-                                                <div class="thumb"><img src="../mobile/assets/images/user_thumb.png" alt=""></div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="item-info-inner">
-                                                    <div class="item-name"><strong>홍길동</strong> 전문의</div>
-                                                    <div class="item-store">사랑 마음 상담센터</div>
-                                                    <div class="item-stats">
-                                                        <div class="icon-like"><em>365</em></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-item card-user">
-                                            <div class="thumb-wrap">
-                                                <div class="thumb"><img src="../mobile/assets/images/user_thumb.png" alt=""></div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="item-info-inner">
-                                                    <div class="item-name"><strong>홍길동</strong> 전문의</div>
-                                                    <div class="item-store">사랑 마음 상담센터</div>
-                                                    <div class="item-stats">
-                                                        <div class="icon-like"><em>365</em></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-item card-user">
-                                            <div class="thumb-wrap">
-                                                <div class="thumb"><img src="../mobile/assets/images/user_thumb.png" alt=""></div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="item-info-inner">
-                                                    <div class="item-name"><strong>홍길동</strong> 전문의</div>
-                                                    <div class="item-store">사랑 마음 상담센터</div>
-                                                    <div class="item-stats">
-                                                        <div class="icon-like"><em>365</em></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
