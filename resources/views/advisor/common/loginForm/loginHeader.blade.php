@@ -22,3 +22,11 @@
   <script src="../advisorAssets/assets/js/swiper.min.js?v={{JS_VERSION}}"></script>
   <link rel="stylesheet" href="../advisorAssets/assets/css/style.css?v={{CSS_VERSION}}">
 </head>
+@if (session('error'))
+    <script>
+        if(location.hash !== "#e"){
+            history.pushState(null, '', window.location.pathname+"?#e");
+            alert("{{session('error')}}");
+        }
+    </script>
+@endif
