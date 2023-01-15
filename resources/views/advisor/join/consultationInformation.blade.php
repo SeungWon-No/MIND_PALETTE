@@ -194,7 +194,7 @@
                       </div>
                     </td>
                     <td class="table-col">
-                      <input id="assignedTask" name="assignedTask" type="text" class="tabel-form__control" placeholder="담당업무">
+                      <input id="assignedTask1" name="assignedTask1" type="text" class="tabel-form__control" placeholder="담당업무">
                     </td>
                     <td class="table-col">
                       <label class="table-file__label">
@@ -525,8 +525,9 @@
             success: function(json){
                 var data = JSON.parse(json);
                 if ( data.status === "success" ) {
-                  $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
+                    $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
                     $("#"+type+"-attachedFileName"+imageIndex).val(data.fileName);
+                    $("#"+type+"-attachedDisplayName"+imageIndex).html(data.fileName);
 
                 } else {
                     console.log(data.message);
