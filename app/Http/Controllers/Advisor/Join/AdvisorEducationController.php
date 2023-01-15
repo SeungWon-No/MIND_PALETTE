@@ -136,7 +136,12 @@ class AdvisorEducationController extends Controller{
             }
 
             DB::commit();
-            return redirect('/advisor/consultationInformation');
+
+            if ($advisor->advisorStatus = 361){ // 임시 저장
+                return redirect('/advisor/examine');
+            }else{  // 승인 요청
+                return redirect('/advisor/consultationInformation');
+            }
 
         }catch(\Exception $e){
 
