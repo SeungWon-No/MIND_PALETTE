@@ -6,8 +6,9 @@
 </style>
 <div id="container">
   <div class="column-wrapper">
-    <form id="inquiryForm" name="inquiryForm" action="/advisor/writePost" method="POST">
+    <form id="inquiryForm" name="inquiryForm" action="/advisor/inquiry/{{$myInquiryPost->contactPK}}" method="POST">
       @csrf
+        <input type="hidden" name="_method" value="PUT"/>
         <div class="column-left">
           <div class="inquiry-cont">
             <div class="counseling-notice__heading">
@@ -22,7 +23,7 @@
                 <div class="counseling-edit__cell">
                   <div class="counseling-edit__label">제목</div>
                   <div class="counseling-edit">
-                    <input type="text" class="counseling-edit__form" name="inquiryTitle" value="{{$getMyInquiryPost['contactTitle']}}" placeholder="제목을 입력해주세요.">
+                    <input type="text" class="counseling-edit__form" name="inquiryTitle" value="{{$myInquiryPost['contactTitle']}}" placeholder="제목을 입력해주세요.">
                   </div>
                 </div>
               </div>
@@ -31,7 +32,7 @@
                   <div class="counseling-edit__label">상담내용</div>
                   <div class="counseling-edit__area">
                     <div class="counselor-editor2">
-                      <textarea class="ckeditor" id="content" name="content">{{$getMyInquiryPost['contactContent']}}</textarea>
+                      <textarea class="ckeditor" id="content" name="content">{{$myInquiryPost['contactContent']}}</textarea>
                     </div>
                   </div>
                 </div>
@@ -43,6 +44,7 @@
         @include('advisor/common/right')
       </div>
     </div> <!-- container end-->
+
     <script>
 
       ClassicEditor.create( document.querySelector( '.ckeditor' ), {

@@ -22,9 +22,13 @@
                       <!-- 상담완료 일때 inquiry-btn에 클래스 actived추가-->
                       <div class="table-body__cell col-1">{{$list['contactPK']}}</div>
                       <div class="table-body__cell col-2"><a href="/advisor/inquiry/{{$list['contactPK']}}">{{$list['contactTitle']}}</a></div>
-                      <div class="table-body__cell col-3">{{$list['createDate']}}</div>
+                      <div class="table-body__cell col-3">{{date_format(date_create($list['createDate']),"Y.m.d")}}</div>
                       <div class="table-body__cell col-4">
+                          @if($list['contactStatus'] == 352)
                         <a href="#" class="inquiry-btn">상담대기</a>
+                          @else
+                        <a href="#" class="inquiry-btn actived">상담완료</a>
+                          @endif
                       </div>
                     </div>
                   @endforeach

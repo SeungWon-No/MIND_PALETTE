@@ -1,10 +1,7 @@
-@php
-print_r($getMyInquiryPost);
-@endphp
 @include('advisor/common/header')
 <form id="inquiryEditForm" name="inquiryEditForm" action="/advisor/inquiryEdit" method="POST">
     @csrf
-    <input type="hidden" id="contactPK" name="contactPK" value="{{$getMyInquiryPost['contactPK']}}">
+    <input type="hidden" id="contactPK" name="contactPK" value="{{$myInquiryPost->contactPK}}">
     <div id="container">
       <div class="column-wrapper">
         <div class="column-left">
@@ -16,51 +13,57 @@ print_r($getMyInquiryPost);
               <div class="inquiry-post__question">
                 <div class="post-question__top">
                   <!-- 답변 완료시  inquiry-post__status에 클래스 actived추가-->
-                  <div class="post-status {{$getMyInquiryPost['contactType']}}">
+                  <div class="post-status ">
                     내 문의 현황
                   </div>
                   <div class="post-tit__wrap">
-                    <div class="post-tit">{{$getMyInquiryPost['contactTitle']}}</div>
-                    <div class="post-date">{{$getMyInquiryPost['updateDate']}}</div>
+                    <div class="post-tit">{{$myInquiryPost->contactTitle}}</div>
+                    <div class="post-date">{{date_format(date_create($myInquiryPost->createDate),"Y.m.d")}}</div>
                   </div>
                 </div>
                 <div class="post-question__body">
                   <div class="post-question__content">
-                    {!! $getMyInquiryPost['contactContent'] !!}
+                    {!! $myInquiryPost->contactContent !!}
                   </div>
                 </div>
                 <div class="post-question__bottom">
                   <div class="post-btn__wrap">
                     <a onclick="javascript:submitForm()" class="post-btn">수정하기</a>
-                    <a href="#none" class="post-btn">삭제</a>
+                    <a href="javascript:deleteForm()" class="post-btn">삭제</a>
                   </div>
                 </div>
               </div>
             </form>
+            @if($myInquiryPost->contactStatus == 364)
               <div class="inquiry-post__answer">
                 <div class="post-answer__top">
                   <div class="post-tit__wrap">
-                    <div class="post-tit">답변입니다.</div>
-                    <div class="post-date">2023.01.02</div>
+                    <div class="post-tit">{{$myInquiryPost->replyTitle}}</div>
+                    <div class="post-date">{{date_format(date_create($myInquiryPost->replyDate),"Y.m.d")}}</div>
                   </div>
-                </div>                
+                </div>
                 <div class="post-answer__body">
                   <div class="post-answer__content">
-                    <!-- 답변위치 -->
-                    안녕하세요 마음팔레트 입니다.<br>
-                    <br>
-                    해당사항을 확인하였습니다.<br>
-                    선택적인 항목들 중 필수로 진행되어야 한다고 판단되는 질문들을<br>
-                    정리하여 전달해주시면 재요청 드리겠습니다. 감사합니다!<br>
-                    <br><br>
+                      {!! $myInquiryPost->replyContent !!}
                   </div>
                 </div>
               </div>
+              @endif
             </div>
           </div>
+
+          <form name="inquiryDeleteForm" action="/advisor/inquiry/{{$myInquiryPost->contactPK}}" method="POST">
+              @csrf
+              @method('DELETE')
+          </form>
         </div> <!--column-left end-->
         @include('advisor/common/right')
         <script>
+            function deleteForm() {
+                if (confirm("문의 글을 삭제하시겠습니까?")) {
+                    document.inquiryDeleteForm.submit();
+                }
+            }
             function submitForm(){
                 $('#inquiryEditForm').submit();
             }

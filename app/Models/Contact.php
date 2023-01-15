@@ -11,10 +11,12 @@ class Contact extends Model
     protected $primaryKey = 'contactPK';
     public $timestamps = false;
 
-    public static function getInquiryList($items)
+    public static function getInquiryList($items, $advisorPK)
     {
         $getInquiryList = Contact::where('isDelete', '=', 'N')
-        ->paginate($items);
+            ->where('advisorPK',$advisorPK)
+            ->orderBy('contactPK',"DESC")
+            ->paginate($items);
 
         $inquiryList = json_decode(json_encode($getInquiryList), true);
 
@@ -36,25 +38,9 @@ class Contact extends Model
 
     public static function getMyInquiryPost($contactPK)
     {
-        $getMyInquiryPost = Contact::where('isDelete', '=', 'N')
+        return Contact::where('isDelete', '=', 'N')
             ->where('contactPK', '=', $contactPK)
-            ->get();
-
-        $getMyInquiryPost = json_decode(json_encode($getMyInquiryPost[0]), true);
-
-        $myInquiryPost = [
-            'contactPK' => $getMyInquiryPost['contactPK'],
-            'memberPK' => $getMyInquiryPost['memberPK'],
-            'contactType' => $getMyInquiryPost['contactType'],
-            'contactName' => Crypt::decryptString($getMyInquiryPost['contactName']),
-            'contactPhone' => Crypt::decryptString($getMyInquiryPost['contactPhone']),
-            'contactTitle' => $getMyInquiryPost['contactTitle'],
-            'contactContent' => $getMyInquiryPost['contactContent'],
-            'contactStatus' => $getMyInquiryPost['contactStatus'],
-            'updateDate' => date('Y.m.d', strtotime($getMyInquiryPost['updateDate'])),
-            'createDate' => date('Y.m.d', strtotime($getMyInquiryPost['createDate'])),
-        ];
-        return $myInquiryPost;
+            ->get()->first();
     }
 
 }
