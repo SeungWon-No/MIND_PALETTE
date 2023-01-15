@@ -1,5 +1,5 @@
 @include('advisor/common/header')
-<form id="nextStepForm" name="nextStepForm" action="/advisor/consultationInformationEdit" method="post" autocomplete="off">
+<form id="nextStepEditForm" name="nextStepEditForm" action="/advisor/consultationInformationEdit" method="post" autocomplete="off">
 @csrf
 <div id="container">
       <div class="member-cont">
@@ -647,7 +647,7 @@
       var extraValue = $('#submitExtraValue').val(extraParam);
       var agreeCheckbox = window.agreeCheckbox();
       if (agreeCheckbox == true) {
-        $("#nextStepForm").submit();
+        $("#nextStepEditForm").submit();
       }else{
         alert('필수 사항에 동의해주세요.');
       }
