@@ -1,5 +1,5 @@
 @php
-print_r($getAdvisorInfo);
+print_r($getAdvisorInfo['advisorName']);
 @endphp
 @include('advisor/common/header')
     <div id="container">
