@@ -134,10 +134,12 @@ class AdvisorEducationController extends Controller{
             }
             DB::commit();
             $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
-            dd($getAdvisorStatus);
+            
             if($getAdvisorStatus == 361){ // 승인요청
+                dd(1);
                 return redirect('/advisor/examine');
             }else{  // 임시저장
+                dd(2);
                 return redirect('/advisor/consultationInformation');
 
             }
