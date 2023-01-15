@@ -10,6 +10,6 @@ class AdvisorExamineController extends Controller
 {
     public function __invoke(Request $request)
     {
-        return redirect('/advisor/join/examine');
+        return view('/advisor/join/examine');
     }
 }
