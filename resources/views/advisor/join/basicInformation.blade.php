@@ -313,7 +313,7 @@
     }
 
   function authSuccess() {
-    alert('1');
+    alert('휴대폰 인증이 완료되었습니다.');
   }
 
 </script>
