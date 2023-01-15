@@ -9,11 +9,7 @@
               <div class="counselor-select__wrap">
                 <form id="orderByForm" name="orderByForm" action="/advisor/orderByAdvisorList" method="GET">
                 <div class="select-box">
-                    @if($returnText['data'])
-                    <button id="orderBySelectBox" type="button" class="select-box__label">{{$returnText['data']}}<span class="icon select-down-icon"></span></button>
-                    @else
-                    <button id="orderBySelectBox" type="button" class="select-box__label">전체보기<span class="icon select-down-icon"></span></button>
-                    @endif
+                  <button id="orderBySelectBox" type="button" class="select-box__label">전체보기<span class="icon select-down-icon"></span></button>
                   <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                       <ul class="select-option__list">
                         <input type="hidden" id="orderByValue" name="orderByValue" value=""/>
