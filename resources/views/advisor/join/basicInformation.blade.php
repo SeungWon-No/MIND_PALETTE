@@ -354,6 +354,7 @@
               }
           }
       });
+      pop.open('authPhoneSuccess');
   }
 
   function submitJoinForm(){
@@ -446,6 +447,19 @@
         <div class="layer-pop__alert">
           <p class="pop-alert__desc">
             휴대폰 인증이 필요합니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 휴대폰 인증 성공-->
+  <article id="authPhoneSuccess" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            휴대폰 인증이 완료되었습니다.
           </p>
           <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
         </div>
