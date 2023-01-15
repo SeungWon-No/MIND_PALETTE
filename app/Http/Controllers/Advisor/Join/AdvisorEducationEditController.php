@@ -16,8 +16,29 @@ class AdvisorEducationEditController extends Controller
 {
     public function index(Request $request)
     {
-        dd(1);
-        return view("/advisor/join/consultationInformationEdit");
+        $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        $getAdvisorProfile = Advisor::getAdvisorProfile($advisorPK);
+
+        $codeTitle = [
+            "325" => "학사",
+            "326" => "석사",
+            "327" => "박사",
+            "328" => "졸업",
+            "329" => "재학",
+            "330" => "수료",
+            "331" => "현재 근무지",
+            "332" => "이전 근무지",
+            "333" => "풀타임",
+            "334" => "파트타임",
+        ];
+
+        return view("/advisor/join/consultationInformationEdit", [
+            'advisorProfile' => $getAdvisorProfile,
+            'advisorEducationInfos' => EducationLevel::findAdvisorEducationInfo($advisorPK),
+            'advisorQualificationInfo' => Qualification::findAdvisorQualificationInfo($advisorPK),
+            'advisorCareerInfo' => Career::findAdvisorCareerInfo($advisorPK),
+            'codeTitle' => $codeTitle,
+        ]);
     }
 
     public function store(Request $request)
@@ -115,30 +136,7 @@ class AdvisorEducationEditController extends Controller
 
     public function show(Request $request)
     {
-        $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
-        $getAdvisorProfile = Advisor::getAdvisorProfile($advisorPK);
-
-        $codeTitle = [
-            "325" => "학사",
-            "326" => "석사",
-            "327" => "박사",
-            "328" => "졸업",
-            "329" => "재학",
-            "330" => "수료",
-            "331" => "현재 근무지",
-            "332" => "이전 근무지",
-            "333" => "풀타임",
-            "334" => "파트타임",
-        ];
-
-        return view("/advisor/join/consultationInformationEdit", [
-            'advisorProfile' => $getAdvisorProfile,
-            'advisorEducationInfos' => EducationLevel::findAdvisorEducationInfo($advisorPK),
-            'advisorQualificationInfo' => Qualification::findAdvisorQualificationInfo($advisorPK),
-            'advisorCareerInfo' => Career::findAdvisorCareerInfo($advisorPK),
-            'codeTitle' => $codeTitle,
-        ]);
-
+        
     }
 
 }
