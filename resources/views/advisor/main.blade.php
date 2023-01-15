@@ -142,7 +142,8 @@
           var urlSection1 = splitUrl[3];
           var urlSection2 = splitUrl[4];
 
-          if (urlSection1 == 'advisor' && urlSection2 == '') {
+
+          if (urlSection1 == 'advisor' && (urlSection2 == '' || urlSection2 === undefined)) {
             $("#defalut").attr("class", "counseling-filter__btn active");
 
           }else{

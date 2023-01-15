@@ -86,7 +86,7 @@ class AdvisorInquiryController extends Controller
         $inquiryPost->createDate = $nowDateTime;
         $inquiryPost->save();
 
-        return redirect('advisor/inquiry');
+        return redirect('/advisor/inquiry');
     }
 
     public function inquiryWrite(Request $request)
@@ -116,7 +116,7 @@ class AdvisorInquiryController extends Controller
 
             $nowDateTime = date('Y-m-d H:i:s');
             $contact->contactTitle = $request->inquiryTitle;
-            $contact->contactContent = $request->content;
+            $contact->contactContent = $request["content"];
             $contact->updateDate = $nowDateTime;
             $contact->save();
 

@@ -21,7 +21,7 @@ class AdvisorLoginController extends Controller
         return view("/advisor/login/login");
     }
 
-    public function store(Request $request): string
+    public function store(Request $request)
     {
         $email = $request["userEmail"] ?? "";
         $password = $request["userPassword"] ?? "";
@@ -40,7 +40,7 @@ class AdvisorLoginController extends Controller
         return redirect("/advisor/loginFail");
     }
 
-    public static function login($request, $advisor): RedirectResponse
+    public static function login($request, $advisor)
     {
         Advisor::updateLoginDate($advisor->advisorPK);
 

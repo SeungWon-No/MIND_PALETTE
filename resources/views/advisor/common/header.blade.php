@@ -69,7 +69,7 @@
       </div>
       <script>
           var pathname = $(location).attr('pathname');
-          const homeSub = ["/advisor/waitingCounseling","/advisor/completeCounseling",
+          const homeSub = ["/advisor","/advisor/waitingCounseling","/advisor/completeCounseling",
               "/advisor/warningCounseling","/advisor/impossibleCounseling"];
           const counselingSub = ["/advisor/waitingCounselingList","/advisor/completeCounselingList",
               "/advisor/warningCounselingList","/advisor/impossibleCounselingList"];
