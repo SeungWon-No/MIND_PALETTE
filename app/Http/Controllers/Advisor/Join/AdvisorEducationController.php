@@ -131,10 +131,10 @@ class AdvisorEducationController extends Controller{
                 $career->createDate = $advisorCareer[$index]['createDate'];
                 $career->updateDate = $advisorCareer[$index]['updateDate'];
                 $career->save();
-
             }
             DB::commit();
             $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
+            dd($getAdvisorStatus);
             if($getAdvisorStatus == 361){ // 승인요청
                 return redirect('/advisor/examine');
             }else{  // 임시저장
