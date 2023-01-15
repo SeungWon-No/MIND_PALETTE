@@ -1,5 +1,5 @@
 @php
-print_r($getAdvisorStatus['getAdvisorStatus']);
+print_r($getAdvisorStatus['advisorStatus']);
 @endphp
 @include('advisor/common/header')
     <div id="container">
@@ -7,17 +7,17 @@ print_r($getAdvisorStatus['getAdvisorStatus']);
         <div class="member-inner">
           <!-- 예정 -->
           <div class="join-progress__wrap">
-            @if($getAdvisorStatus['getAdvisorStatus'] == 361) 
+            @if($getAdvisorStatus['advisorStatus'] == 361) 
             <h3 class="member-heading__tit">자격심사 검토 예정</h3>
-            @elseif($getAdvisorStatus['getAdvisorStatus'] == 362)
+            @elseif($getAdvisorStatus['advisorStatus'] == 362)
             <h3 class="member-heading__tit">자격심사 검토 중</h3>
             @else
             <h3 class="member-heading__tit">자격심사 미승인</h3>
             @endif
             <p class="join-progress__text">
-              @if($getAdvisorStatus['getAdvisorStatus'] == 361) 
+              @if($getAdvisorStatus['advisorStatus'] == 361) 
                 <strong>{{$getAdvisorInfo['advisorName']}}({{$getAdvisorInfo['email']}})님</strong>자격 심사가 진행 예정입니다.<br>심사 검토 이전에는 정보 수정이 가능합니다.
-              @elseif($getAdvisorStatus['getAdvisorStatus'] == 362)
+              @elseif($getAdvisorStatus['advisorStatus'] == 362)
                 <strong>{{$getAdvisorInfo['advisorName']}}({{$getAdvisorInfo['email']}})님</strong>자격 심사가 진행중입니다.<br>심사 진행 중에는 정보 수정이 불가능합니다.
               @else
                 <strong>{{$getAdvisorInfo['advisorName']}}({{$getAdvisorInfo['email']}})님</strong>상담사 가입에 실패하였습니다.<br>다음 기회에 시도 부탁드립니다.
