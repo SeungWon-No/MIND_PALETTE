@@ -32,7 +32,7 @@ class AdvisorJoinController extends Controller{
 
             $advisor = Advisor::findAuthAdvisor($ci);
             if ($advisor) {
-                return redirect("/advisor/")->with("error","이미 가입된 회원입니다.");
+                return redirect("/advisor/login")->with("error","이미 가입된 회원입니다.");
             }
 
             // 필수 약관 동의
