@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Advisor;
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use App\Models\Counseling;
+use App\Models\NoticeBoard;
 use Illuminate\Http\Request;
 
 class AdvisorIndexController extends Controller
@@ -35,13 +36,13 @@ class AdvisorIndexController extends Controller
     public function __invoke(Request $request)
     {
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
             return view("/advisor/login/login");
         }
-        
+
         $waitingCount = $this->counseling->getWaitingCounselingCount();
         $completeCount = $this->counseling->getCompleteCounselingCount();
         $cautionCount = $this->counseling->getCautionCounselingCount();
@@ -52,7 +53,7 @@ class AdvisorIndexController extends Controller
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
         $advisorList = $this->advisor->pagination(3); // 상담사 리스트
 
-        return view("/advisor/main",[   // 상담사 메인 페이지 
+        return view("/advisor/main",[   // 상담사 메인 페이지
             "isLogin" => $isLogin,
             "waitingCount" => $waitingCount,
             "completeCount" => $completeCount,
@@ -65,12 +66,13 @@ class AdvisorIndexController extends Controller
             "advisorList" => $advisorList,
             "counselingStatus" => $this->counselingStatus,
             "counselorStatus" => $this->counselorStatus,
+            "notice" => NoticeBoard::findMainNotice(),
         ]);
     }
 
     public function waitingCounseling(Request $request){
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
@@ -98,11 +100,11 @@ class AdvisorIndexController extends Controller
             "counselingStatus" => $this->counselingStatus,
             "counselorStatus" => $this->counselorStatus,
         ]);
-        
+
     }
     public function completeCounseling(Request $request){
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
@@ -136,7 +138,7 @@ class AdvisorIndexController extends Controller
     public function warningCounseling(Request $request){
 
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
@@ -168,13 +170,13 @@ class AdvisorIndexController extends Controller
     public function impossibleCounseling(Request $request){
 
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{
             return view("/advisor/login/login");
         }
-        
+
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
         $waitingCount = $this->counseling->getWaitingCounselingCount();
         $completeCount = $this->counseling->getCompleteCounselingCount();
@@ -202,7 +204,7 @@ class AdvisorIndexController extends Controller
     public function advisorList(Request $request)
     {
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
-        
+
         if ($isLogin) {
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
         }else{

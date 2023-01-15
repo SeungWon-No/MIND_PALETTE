@@ -43,10 +43,11 @@
             </div>
           </div>
           <div class="counseling-cont">
-            <!-- notice on / off -->
+              @if($notice)
             <div class="counseling-notice">
-              <a href="#none" class="counseling-notice__link"><span class="icon notice-alarm-icon"></span>[공지사항] 상담중 처리에 대한 안내문 공지.</a>
+              <a href="/advisor/notice/{{$notice->noticePK}}" class="counseling-notice__link"><span class="icon notice-alarm-icon"></span>[공지사항] {{$notice->title}}</a>
             </div>
+              @endif
             <div class="cont-heading">
               <h3 class="cont-heading__tit">대기중인 그림상담</h3>
             </div>
