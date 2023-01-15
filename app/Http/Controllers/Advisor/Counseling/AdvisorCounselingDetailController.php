@@ -118,7 +118,7 @@ class AdvisorCounselingDetailController extends Controller
         if (Counseling::findMyCounseling($advisorPK) > 0) {
             $result = [
                 "status" => "fail",
-                "message" => "이미 상담중인 상담건이 존재합니다."
+                "message" => "이 상담은 상담이 불가합니다."
             ];
             return json_encode($result);
         }

@@ -613,7 +613,7 @@
                         </div>
                         <div class="counselor-edit__btns-wrap">
                             <button onclick="saveWrite('temp')" type="button" class="counselor-edit__btn counselor-edit__btn--save">임시저장</button>
-                            <button onclick="saveWrite('write')" type="button" class="counselor-edit__btn">상담등록</button>
+                            <button onclick="pop.open('applyCounselingPop')" type="button" class="counselor-edit__btn">상담등록</button>
                             <button onclick="cancel()" type="button" class="counselor-edit__btn counselor-edit__btn--cancel">상담취소</button>
                         </div>
                     </div>
@@ -714,7 +714,6 @@
         </div>
       </div>
     </div>
-
 <article id="detailImagePop" class="layer-pop__wrap">
     <div class="layer-pop__parent">
         <div class="layer-pop__children">
@@ -722,6 +721,52 @@
                 <div class="layer-photo__cell">
                     <img src="" alt="" class="layer-img">
                 </div>
+            </div>
+        </div>
+    </div>
+</article>
+<article id="counselingTimeOverPop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+        <div class="layer-pop__children">
+            <div class="layer-pop__alert">
+                <p class="pop-alert__desc">
+                    상담작성 가능 시간이 경과했습니다.
+                </p>
+                <p class="pop-alert__desc pop-alert__desc--small">
+                    *시간 경과 시, 작성 중인 내용이 삭제되며<br>해당 검사지는 재상담이 불가합니다.
+                </p>
+                <div class="pop-alert__btns-wrap">
+                    <button type="button" class="pop-alert__btn pop-alert__btn--confirm wd-165" onclick="pop.close();">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+<article id="applyCounselingPop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+        <div class="layer-pop__children">
+            <div class="layer-pop__alert">
+                <p class="pop-alert__desc">
+                    확인 시 최종발행 될 예정입니다.<br>
+                    등록하시겠습니까?
+                </p>
+                <div class="pop-alert__btns-wrap">
+                    <button onclick="saveWrite('write')" type="button" class="pop-alert__btn pop-alert__btn--confirm">확인</button>
+                    <button type="button" class="pop-alert__btn pop-alert__btn--cancel" onclick="pop.close()">취소</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</article>
+<article id="commonAlertPop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+        <div class="layer-pop__children">
+            <div class="layer-pop__alert">
+                <p class="pop-alert__desc" id="commonAlertPopText">
+
+                </p>
+                <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
             </div>
         </div>
     </div>
@@ -734,7 +779,7 @@
                 setTimeText();
             },60000);
         } else {
-            alert('결과지 작성시간이 지났습니다. 더 이상 작성하실 수 없습니다.')
+            pop.open('counselingTimeOverPop');
             clearInterval(timerInterval);
             timerInterval = null;
             cancel();
@@ -806,7 +851,8 @@
                         $("#timerText").text("23 : 59");
                         timerProc();
                     } else {
-                        alert(data.message);
+                        $("#commonAlertPopText").html(data.message);
+                        pop.open('commonAlertPop');
                     }
                 }
             });
