@@ -94,7 +94,7 @@
                         <span class="table-file__name" id="education-attachedDisplayName1"></span>
                         <input id="education-attachedFilePath1" name="education-attachedFilePath1" type="hidden">
                         <input id="education-attachedFileName1" name="education-attachedFileName1" type="hidden">
-                        첨부하기
+                        <div id="education-attachedText">첨부하기</div>
                       </label>
                     </td>
                   </tr>
@@ -130,7 +130,7 @@
                         <span class="table-file__name" id="qualification-attachedDisplayName1"></span>
                         <input id="qualification-attachedFilePath1" name="qualification-attachedFilePath1" type="hidden">
                           <input id="qualification-attachedFileName1" name="qualification-attachedFileName1" type="hidden">
-                        첨부하기
+                          <div id="qualification-attachedText">첨부하기</div>
                       </label>
                     </td>
                   </tr>
@@ -204,7 +204,7 @@
                       <span class="table-file__name" id="career-attachedDisplayName1"></span>
                         <input id="career-attachedFilePath1" name="career-attachedFilePath1" type="hidden">
                           <input id="career-attachedFileName1" name="career-attachedFileName1" type="hidden">
-                        첨부하기
+                          <div id="career-attachedText">첨부하기</div>
                       </label>
                     </td>
                   </tr>
@@ -533,6 +533,7 @@
                 if ( data.status === "success" ) {
                     $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
                     $("#"+type+"-attachedFileName"+imageIndex).val(data.fileName);
+                    $("#"+type+"-attachedText").html('');
                     $("#"+type+"-attachedDisplayName"+imageIndex).html(data.fileName);
 
                 } else {
