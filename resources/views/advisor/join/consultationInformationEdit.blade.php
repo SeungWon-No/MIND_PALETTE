@@ -635,6 +635,12 @@
         });
         $(imageObject).val("");
     }
+    
+    // 필수 약관 동의 확인
+    function agreeCheckbox(){
+      var checkResult = $('[name=agreeCheckbox]').prop('checked');
+      return checkResult;
+    }
 
     function submitForm($param) {
       var extraParam = $param
