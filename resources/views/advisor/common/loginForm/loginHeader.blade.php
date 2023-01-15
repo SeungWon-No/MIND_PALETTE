@@ -18,9 +18,9 @@
   <meta name="twitter:description" content="">
   <meta name="twitter:image" content="">
   <link rel="canonical" href="">
-  <script src="../advisorAssets/assets/js/jquery.js?v={{JS_VERSION}}"></script>
-  <script src="../advisorAssets/assets/js/swiper.min.js?v={{JS_VERSION}}"></script>
-  <link rel="stylesheet" href="../advisorAssets/assets/css/style.css?v={{CSS_VERSION}}">
+  <script src="/advisorAssets/assets/js/jquery.js?v={{JS_VERSION}}"></script>
+  <script src="/advisorAssets/assets/js/swiper.min.js?v={{JS_VERSION}}"></script>
+  <link rel="stylesheet" href="/advisorAssets/assets/css/style.css?v={{CSS_VERSION}}">
 </head>
 @if (session('error'))
     <script>
