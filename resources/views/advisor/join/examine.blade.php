@@ -1,3 +1,8 @@
+@php
+print_r($getAdvisorStatus);
+echo '<br>';
+echo '360 승인신청 전 / 361 심사대기 / 362 반려 ';
+@endphp
 @include('advisor/common/header')
     <div id="container">
       <div class="member-cont">

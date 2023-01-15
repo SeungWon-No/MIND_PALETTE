@@ -226,7 +226,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
         Route::resource("/login",AdvisorLoginController::class)->only(['index', 'store']); // 로그인
         Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
-        Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]); // 회원가입 step2z
+        Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]); // 회원가입 step2
         Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 추가 정보입력
     });
 

@@ -144,4 +144,8 @@ class Advisor extends Model
             ->get();
     }
 
+    public static function getAdvisorStatus($advisorPK){
+        return Advisor::where('advisorPK', '=', $advisorPK)->select('advisorStatus')->first();
+    }
+
 }
