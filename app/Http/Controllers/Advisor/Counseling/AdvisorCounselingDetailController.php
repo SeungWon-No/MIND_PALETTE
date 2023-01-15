@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use App\Models\Answer;
 use App\Models\Career;
+use App\Models\Code;
 use App\Models\Counseling;
 use App\Models\CounselingCancelLog;
 use App\Models\CounselingLog;
@@ -57,7 +58,7 @@ class AdvisorCounselingDetailController extends Controller
             "minute" => "0"
         ];
 
-        if (isset($getClientInfo['startDate']) && $getClientInfo['startDate'] != "") {
+        if ($getClientInfo['startDate'] != "") {
             $nowTime = date("Y-m-d H:i:s");
             $startTime = $getClientInfo['startDate'];
             $diffTime = strtotime($nowTime) - strtotime($startTime);
@@ -95,6 +96,7 @@ class AdvisorCounselingDetailController extends Controller
             'clientInfo' => $getClientInfo,
             'statusCode' => $statusCode,
             'cssStyle' => $cssStyle,
+            "schoolCode" => Code::findCodeType("school"),
             "timer" => $timer,
             'images' => $images,
             "waiteCounseling" => Counseling::findWaitCounseling(),

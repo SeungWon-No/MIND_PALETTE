@@ -187,7 +187,7 @@ class Counseling extends Model
         return $warningList;
     }
 
-    
+
 
     // 주의/위험 수준 상담 리스트
     public static function getWarningCounselingList(){
@@ -252,7 +252,7 @@ class Counseling extends Model
         return $warningList;
     }
 
-    
+
 
     // 상담 불가 리스트
     public static function getImpossibleCounselingList(){
@@ -443,13 +443,11 @@ class Counseling extends Model
     public static function getCounselingDetail($counselingPK){
 
         return Counseling::join('code as codeGender', 'counseling.counselorGender', '=', 'codeGender.codePK')
-                    ->join('code as codeSchool', 'counseling.counselorSchool', '=', 'codeSchool.codePK')
                     ->select("counseling.counselingPK",
                              "counseling.memberPK",
                              "counseling.advisorPK",
                              "counseling.counselorName",
                              "counseling.counselorBirthday",
-                             "codeSchool.codeName as counselorSchool",
                              "codeGender.codeName as counselorGender",
                              "counseling.hobby",
                              "counseling.familyRelations1",
@@ -639,7 +637,7 @@ class Counseling extends Model
         }
         return $counselingList;
     }
-    
+
     public static function searchingCounselorName($searchingText, $sdate, $edate)
     {
         $pagination= DB::table('counseling')
