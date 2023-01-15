@@ -313,7 +313,7 @@
     }
 
   function authSuccess() {
-    
+    alert('1');
   }
 
 </script>

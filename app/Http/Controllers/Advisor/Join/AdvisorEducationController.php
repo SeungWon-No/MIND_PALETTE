@@ -29,7 +29,6 @@ class AdvisorEducationController extends Controller{
                     $advisor->centerName = $centerName;
                 }
                 if (true) {
-                    
                     if($request['submitExtraValue'] == 'save'){ // 임시 저장
                         $advisor->advisorStatus = 360;
                     } else {    // 승인 요청
@@ -139,7 +138,7 @@ class AdvisorEducationController extends Controller{
                 return redirect('/advisor/examine');
 
             }else{  // 임시저장
-                return redirect('/advisor/consultationInformation');
+                return redirect('/advisor/consultationInformationEdit');
 
             }
 
