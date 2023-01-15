@@ -7,6 +7,7 @@ use App\Models\Advisor;
 use App\Models\Answer;
 use App\Models\Career;
 use App\Models\Counseling;
+use App\Models\CounselingCancelLog;
 use App\Models\CounselingLog;
 use App\Models\CounselingTemplateResult;
 use App\Models\Questions;
@@ -170,6 +171,24 @@ class AdvisorCounselingDetailController extends Controller
         try {
             DB::beginTransaction();
             $nowDate = date("Y-m-d H:i:s");
+
+            $cancelReason = $request->cancelReason ?? '';
+            $timeout = $request->timeout ?? '';
+            $etcCancelReason = $request->etcCancelReason ?? '';
+            if ($timeout == "true") {
+                $cancelReason = "timeout";
+            } else {
+                if ($cancelReason == "etc") {
+                    $cancelReason = str_replace("\n","<br/>",htmlspecialchars(urldecode($etcCancelReason)));
+                }
+            }
+
+            $cancelLog = new CounselingCancelLog;
+            $cancelLog->advisorPK = $advisorPK;
+            $cancelLog->reason = $cancelReason;
+            $cancelLog->counselingPK = $counselingPK;
+            $cancelLog->createDate = $nowDate;
+            $cancelLog->save();
 
             $advisor = Advisor::find($advisorPK);
             $advisor->counselingCount = $advisor->counselingCount-1;

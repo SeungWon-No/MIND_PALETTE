@@ -614,7 +614,7 @@
                         <div class="counselor-edit__btns-wrap">
                             <button onclick="saveWrite('temp')" type="button" class="counselor-edit__btn counselor-edit__btn--save">임시저장</button>
                             <button onclick="pop.open('applyCounselingPop')" type="button" class="counselor-edit__btn">상담등록</button>
-                            <button onclick="cancel()" type="button" class="counselor-edit__btn counselor-edit__btn--cancel">상담취소</button>
+                            <button onclick="cancelPop();" type="button" class="counselor-edit__btn counselor-edit__btn--cancel">상담취소</button>
                         </div>
                     </div>
                     <div class="counselor-edit__body">
@@ -771,6 +771,53 @@
         </div>
     </div>
 </article>
+<article id="counselingCancelReason" class="layer-pop__wrap">
+    <form name="cancelForm">
+        <div class="layer-pop__parent">
+            <div class="layer-pop__children no-padding">
+                <div class="layer-pop__form-cell">
+                    <div class="layer-pop__form">
+                        <div class="layer-form__top">
+                            <h5>
+                                상담취소 사유
+                            </h5>
+                        </div>
+                        <div class="layer-form__body">
+                            <div class="layer-form__data">
+                                <div class="layer-form__label">
+                                    <input type="radio" value="작성된 문항이 너무 적다." name="cancelReason" class="layer-form__check" checked>
+                                    <span class="icon layer-form__icon"></span>
+                                    작성된 문항이 너무 적다.
+                                </div>
+                                <div class="layer-form__label">
+                                    <input type="radio" value="해석에 대한 시간이 부족하다." name="cancelReason" class="layer-form__check">
+                                    <span class="icon layer-form__icon"></span>
+                                    해석에 대한 시간이 부족하다.
+                                </div>
+                                <div class="layer-form__label">
+                                    <input type="radio" value="아이의 특성을 분석하기 어렵다." name="cancelReason" class="layer-form__check">
+                                    <span class="icon layer-form__icon"></span>
+                                    아이의 특성을 분석하기 어렵다.
+                                </div>
+                                <div class="layer-form__label">
+                                    <input type="radio" value="etc" name="cancelReason" class="layer-form__check">
+                                    <span class="icon layer-form__icon"></span>
+                                    기타(직접 작성)
+                                </div>
+                                <input type="hidden" name="timeout" id="timeout" />
+                                <textarea name="etcCancelReason"class="layer-form__textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layer-form__btns-wrap">
+                            <button onclick="cancel()" type="button" class="pop-alert__btn pop-alert__btn--confirm">제출</button>
+                            <button type="button" class="pop-alert__btn pop-alert__btn--cancel" onclick="pop.close()">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</article>
 <script>
     let timerInterval = null;
     function timerProc() {
@@ -782,6 +829,7 @@
             pop.open('counselingTimeOverPop');
             clearInterval(timerInterval);
             timerInterval = null;
+            $("#timeout").val("true");
             cancel();
         }
     }
@@ -883,11 +931,18 @@
         document.counselingWriteForm.submit();
     }
 
+    function cancelPop(){
+        $("#timeout").val("false");
+        pop.open('counselingCancelReason');
+    }
+
     function cancel() {
+        var queryString = $("form[name=cancelForm]").serialize();
+
         $.ajax({
             type:'POST',
             url:'/advisor/counselingCancel/{{$counselingPK}}',
-            data: {},
+            data: queryString,
             async: false,
             headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
             success:function(json){
