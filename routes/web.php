@@ -8,6 +8,7 @@ use App\Http\Controllers\Advisor\Join\AdvisorEducationController;
 use App\Http\Controllers\Advisor\Join\AdvisorJoinController;
 use App\Http\Controllers\Advisor\Join\VerifyEmailDuplicationController;
 use App\Http\Controllers\Advisor\Join\AdvisorExamineController;
+use App\Http\Controllers\Advisor\Join\AdvisorEducationEditController;
 use App\Http\Controllers\Advisor\Login\AdvisorLoginController;
 use App\Http\Controllers\Advisor\Login\AdvisorFindEmailController;
 use App\Http\Controllers\Advisor\Login\AdvisorFindPasswordController;
@@ -228,6 +229,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::get("/logout", AdvisorLogoutController::class); // 로그아웃
         Route::post('/education',[AdvisorEducationController::class,"store"]); // 상담사 추가 정보입력
         Route::get('/consultationInformation', [AdvisorJoinController::class,"consultationInformation"]); // 회원가입 step2
+        Route::post('/consultationInformationEdit', AdvisorEducationEditController::class); // 가입 완료 후 수정하기
     });
 
     Route::get('/loginFindId', function () { // 아이디, 패스워드 찾기 페이지

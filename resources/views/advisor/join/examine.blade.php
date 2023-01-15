@@ -39,7 +39,7 @@
               </div>
             </div>
             @if($getAdvisorStatus['advisorStatus'] == 361) 
-              <a href="/advisor/consultationInformation" class="join-progress__btn">수정하기</a>
+              <a href="/advisor/consultationInformationEdit" class="join-progress__btn">수정하기</a>
             @elseif($getAdvisorStatus['advisorStatus'] == 362)
               <a class="join-progress__btn disabled">수정하기</a>
             @else
