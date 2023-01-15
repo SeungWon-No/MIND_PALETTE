@@ -8,7 +8,7 @@ use App\Models\Counseling;
 use Illuminate\Http\Request;
 
 class orderByAdvisorListController extends Controller
-{ 
+{
     public function __invoke(Request $request)
     {
         $isLogin = $request->session()->has('advisorLogin'); // 상담사 로그인 세션 key값
@@ -26,7 +26,7 @@ class orderByAdvisorListController extends Controller
             return view("/advisor/advisorList");
         }
 
-        $orderByOption = $getParameter[1];
+        $orderByOption = $request->orderByValue ?? '';
         if ($orderByOption == 'orderByRecent'){
             $advisorList = Advisor::advisorListOrderBy(9, 'DESC');
             $returnText = ['data'=>'최신순'];
@@ -42,6 +42,7 @@ class orderByAdvisorListController extends Controller
             'advisorList' => $advisorList,
             'advisorProfile' => $advisorProfile,
             'myCompleteCount' => $myCompleteCount,
+            "orderByOption" =>$orderByOption,
             'returnText' => $returnText,
         ]);
     }

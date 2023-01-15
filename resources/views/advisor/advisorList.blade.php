@@ -9,10 +9,20 @@
               <div class="counselor-select__wrap">
                 <form id="orderByForm" name="orderByForm" action="/advisor/orderByAdvisorList" method="GET">
                 <div class="select-box">
-                  <button id="orderBySelectBox" type="button" class="select-box__label">전체보기<span class="icon select-down-icon"></span></button>
+                  <button id="orderBySelectBox" type="button" class="select-box__label">
+                      @if(isset($orderByOption))
+                          @if($orderByOption == "orderByRecent")
+                              최신순
+                          @else
+                              과거순
+                          @endif
+                      @else
+                          전체보기
+                      @endif
+                      <span class="icon select-down-icon"></span></button>
                   <!-- select-option__list에 acitve 클래스 붙으면 활성화 -->
                       <ul class="select-option__list">
-                        <input type="hidden" id="orderByValue" name="orderByValue" value=""/>
+                        <input type="hidden" id="orderByValue" name="orderByValue" value="{{(isset($orderByOption))?$orderByOption:""}}"/>
                       <input type="hidden" id="page" name="page" value="1"/>
                         <li id="orderByRecent" class="select-option" onclick="orderByList('orderByRecent')">최신순</li>
                         <li id="orderByPast" class="select-option" onclick="orderByList('orderByPast')">과거순</li>
@@ -36,7 +46,7 @@
                       <div class="star-review__unit">/ 5</div>
                     </div>
                     <div class="expert-exp">
-                        팔레트 상담 <span class="expert-exp__num">{{$myCompleteCount}}</span>회 진행
+                        팔레트 상담 <span class="expert-exp__num">{{$advisorProfile->counselingCount}}</span>회 진행
                     </div>
                   </div>
                 </div>

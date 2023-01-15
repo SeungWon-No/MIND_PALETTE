@@ -79,7 +79,7 @@
                       <a class="counseling-link" style="cursor: default;">상담불가</a>
                     </div>
                     @else
-                    
+
                     @endif
                   </li>
                 @endforeach
@@ -118,7 +118,7 @@
                       <div class="star-review__unit">/ 5</div>
                     </div>
                     <div class="expert-exp">
-                      팔레트 상담 <span class="expert-exp__num">{{$myCompleteCount}}</span>회 진행
+                      팔레트 상담 <span class="expert-exp__num">{{$advisorProfile->counselingCount}}</span>회 진행
                     </div>
                   </div>
                 </div>
