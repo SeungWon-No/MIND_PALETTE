@@ -1,5 +1,5 @@
 @include('advisor/common/header')
-<form id="nextStepForm" name="nextStepForm" action="/advisor/education" method="post" autocomplete="off">
+<form id="nextStepForm" name="nextStepForm" action="/advisor/consultationInformationEdit" method="post" autocomplete="off">
 @csrf
 <div id="container">
       <div class="member-cont">
@@ -634,6 +634,17 @@
             }
         });
         $(imageObject).val("");
+    }
+
+    function submitForm($param) {
+      var extraParam = $param
+      var extraValue = $('#submitExtraValue').val(extraParam);
+      var agreeCheckbox = window.agreeCheckbox();
+      if (agreeCheckbox == true) {
+        $("#nextStepForm").submit();
+      }else{
+        alert('필수 사항에 동의해주세요.');
+      }
     }
 </script>
 @include('advisor/common/footer')

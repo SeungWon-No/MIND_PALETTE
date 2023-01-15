@@ -45,19 +45,26 @@ class AdvisorEducationEditController extends Controller
     {
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
 
-        $counselingCareer = $request->counselingCareer ?? '';
-        $centerName = $request->centerName ?? '';
+            $counselingCareer = $request->counselingCareer ?? '';
+            $centerName = $request->centerName ?? '';
 
-        if ($counselingCareer != "" || $centerName != "") {
-            $advisor = Advisor::find($advisorPK);
-            if ($counselingCareer != "") {
-                $advisor->career = $counselingCareer;
+            if ($counselingCareer != "" || $centerName != "") {
+                $advisor = Advisor::find($advisorPK);
+                if ($counselingCareer != "") {
+                    $advisor->career = $counselingCareer;
+                }
+                if ($centerName != "") {
+                    $advisor->centerName = $centerName;
+                }
+                if (true) {
+                    if($request['submitExtraValue'] == 'save'){ // 임시 저장
+                        $advisor->advisorStatus = 360;
+                    } else {    // 승인 요청
+                        $advisor->advisorStatus = 361;
+                    }
+                }
+                $advisor->save();
             }
-            if ($centerName != "") {
-                $advisor->centerName = $centerName;
-            }
-            $advisor->save();
-        }
 
         $nowDateTime = date('Y-m-d H:i:s');
 
@@ -128,6 +135,16 @@ class AdvisorEducationEditController extends Controller
             $career->createDate = $nowDateTime;
             $career->updateDate = $nowDateTime;
             $career->save();
+
+            $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
+            
+            if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
+                return redirect('/advisor/examine');
+
+            }else{  // 임시저장
+                return redirect('/advisor/consultationInformationEdit');
+
+            }
 
         }
         return redirect('/advisor/consultationInformationEdit');
