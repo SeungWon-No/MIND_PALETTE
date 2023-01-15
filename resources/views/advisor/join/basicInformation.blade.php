@@ -192,6 +192,7 @@
       //return alert('개인정보 수집 및 이용에 동의합니다.');
 
     }else{
+      pop.open('saveDonePop');
       $("#joinForm").submit();
     }
 

@@ -558,10 +558,10 @@
       var extraValue = $('#submitExtraValue').val(extraParam);
       var agreeCheckbox = window.agreeCheckbox();
       if (agreeCheckbox == true) {
-        
-        //$("#nextStepForm").submit();
+        pop.open('saveDonePop');
+        $("#nextStepForm").submit();
       }else{
-        alert('필수 사항에 동의해주세요.');
+        pop.open('noAgreePolicy');
       }
     }
 
