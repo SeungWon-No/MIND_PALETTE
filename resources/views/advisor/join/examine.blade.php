@@ -41,12 +41,10 @@ print_r($getAdvisorStatus['advisorStatus']);
                 </div>
               </div>
             </div>
-            @if($getAdvisorInfo['advisorStatus'] == 361) 
-            <!-- 예정 -->
-            <a href="/advisor/consultationInformation" class="join-progress__btn">수정하기</a>
-            @elseif($getAdvisorInfo['advisorStatus'] == 362)
-            <!-- 진행중 -->
-            <a class="join-progress__btn disabled">수정하기</a>
+            @if($getAdvisorStatus['advisorStatus'] == 361) 
+              <a href="/advisor/consultationInformation" class="join-progress__btn">수정하기</a>
+            @elseif($getAdvisorStatus['advisorStatus'] == 362)
+              <a class="join-progress__btn disabled">수정하기</a>
             @else
             
             @endif
