@@ -57,7 +57,7 @@ class AdvisorCounselingDetailController extends Controller
             "minute" => "0"
         ];
 
-        if ($getClientInfo['startDate'] != "") {
+        if (isset($getClientInfo['startDate']) && $getClientInfo['startDate'] != "") {
             $nowTime = date("Y-m-d H:i:s");
             $startTime = $getClientInfo['startDate'];
             $diffTime = strtotime($nowTime) - strtotime($startTime);
