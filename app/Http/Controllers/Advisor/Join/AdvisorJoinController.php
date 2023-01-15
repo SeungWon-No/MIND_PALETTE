@@ -61,7 +61,7 @@ class AdvisorJoinController extends Controller{
 
             return AdvisorLoginController::login($request,Advisor::find($advisor->advisorPK));
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
         }
 
