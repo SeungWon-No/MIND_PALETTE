@@ -14,6 +14,7 @@ class AdvisorEducationController extends Controller{
     public function store(Request $request)
     {
         try {
+            dd($request);
 
             $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
 
@@ -28,9 +29,14 @@ class AdvisorEducationController extends Controller{
                 if ($centerName != "") {
                     $advisor->centerName = $centerName;
                 }
-                if (true) { //임시 저장이 아니고, 승인 요청이라면
-                    $advisor->advisorStatus = 361;
-                    //승인 요청 이라면 해당 화면을 만들어서 거기로 보내야 합니다.
+                if (true) {
+                    
+                    if($request['submitExtraValue'] == 'save'){ // 임시 저장
+                        $advisor->advisorStatus = 360;
+                    
+                    } else {    // 승인 요청
+                        $advisor->advisorStatus = 361;
+                    }
                 }
                 $advisor->save();
             }

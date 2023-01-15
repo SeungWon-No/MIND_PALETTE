@@ -215,9 +215,10 @@
             <span class="icon check-off-round"></span>
             <em>(필수)</em> 입력한 정보는 모두 사실이며, 추후 사실이 아님이 확인되는 경우 즉각 상담활동이 중지됨을 확인하였습니다.
           </label>
+          <input type="hidden" id="submitExtraValue" name="submitExtraValue" value="" />
           <div class="member-bt__btns-wrap mg-t-43 gap-38">
-            <a href="javascript:submitForm()"><button type="button" class="member-bt__btn wd-320 save">저장하기</button></a>
-            <a href="javascript:submitForm()"><button type="button" class="member-bt__btn wd-320">승인요청</button></a>
+            <a onclick="javascript:submitForm('save')"><button type="button" class="member-bt__btn wd-320 save">저장하기</button></a>
+            <a onclick="javascript:submitForm('examine')"><button type="button" class="member-bt__btn wd-320">승인요청</button></a>
           </div>
         </div>
       </div>
@@ -544,7 +545,9 @@
       return checkResult;
     }
 
-    function submitForm() {
+    function submitForm($param) {
+      var extraParam = $param
+      var extraValue = $('#submitExtraValue').val(extraParam);
       var agreeCheckbox = window.agreeCheckbox();
       if (agreeCheckbox == true) {
         $("#nextStepForm").submit();
