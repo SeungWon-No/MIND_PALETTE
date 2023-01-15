@@ -224,6 +224,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::resource('/join', AdvisorJoinController::class)->only(['index', 'store', 'show']); // 상담사 회원가입
         Route::get("/examine", AdvisorExamineController::class); // 승인요청
         Route::post("/emailCheck", VerifyEmailDuplicationController::class); // 이메일 중복체크
+        Route::post("/memberAuthFind", [AdvisorJoinController::class,"memberAuthFind"]); // 이
 
         Route::resource("/login",AdvisorLoginController::class)->only([
             'index', 'store'

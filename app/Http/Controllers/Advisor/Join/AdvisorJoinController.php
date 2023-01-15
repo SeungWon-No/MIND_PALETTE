@@ -7,6 +7,7 @@ use App\Models\Advisor;
 use App\Models\AdvisorAuth;
 use App\Models\Career;
 use App\Models\EducationLevel;
+use App\Models\Member;
 use App\Models\MemberAgree;
 use App\Models\MemberAuth;
 use App\Models\Qualification;
@@ -26,7 +27,13 @@ class AdvisorJoinController extends Controller{
         try {
             DB::beginTransaction();
 
+            $ci = Crypt::decryptString($request['CI']) ?? '';
             $nowDate = date("Y-m-d H:i:s");
+
+            $advisor = Advisor::findAuthAdvisor($ci);
+            if ($advisor) {
+                return redirect("/advisor/")->with("error","이미 가입된 회원입니다.");
+            }
 
             // 필수 약관 동의
             $memberAgree = new MemberAgree;
@@ -42,7 +49,6 @@ class AdvisorJoinController extends Controller{
             $advisor->advisorName = $request['userName'] ?? '';
             $advisor->phone = $request['userPhone'] ?? '';
             $di = Crypt::decryptString($request['DI']) ?? '';
-            $ci = Crypt::decryptString($request['CI']) ?? '';
             $advisor->mbAgreePK = $memberAgree->mbAgreePK;
             //$advisor->auth = 'Y';
             $advisor->advisorStatus = 360;
@@ -66,6 +72,37 @@ class AdvisorJoinController extends Controller{
         } catch (\Exception $e) {
 
         }
+    }
+
+    public function memberAuthFind(Request $request) {
+        $CI = $request->CI ?? '';
+
+        if ($CI == "") {
+            $result = [
+                "status" => "error",
+                "message" => "인증 값이 존재하지 않습니다."
+            ];
+            return json_encode($result);
+        }
+
+        $CI = Crypt::decryptString($CI);
+
+        $advisor = Advisor::findAuthAdvisor($CI);
+
+        $result = [
+            "status" => "success",
+            "message" => ""
+        ];
+
+        if ($advisor) {
+            $memberEmailArray = explode("@",$advisor->email);
+            $memberEmailId = (strlen($memberEmailArray[0]) < 4) ? $memberEmailArray[0]."**" : $memberEmailArray[0];
+            $memberEmailId = substr($memberEmailId,0,strlen($memberEmailArray[0])-2);
+            $result["status"] = "fail";
+            $result["email"] = $memberEmailId."**@".$memberEmailArray[1];
+        }
+
+        return json_encode($result);
     }
 
     public function show(Request $request)

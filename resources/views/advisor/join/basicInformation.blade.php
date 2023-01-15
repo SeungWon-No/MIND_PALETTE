@@ -34,7 +34,7 @@
         <input type="hidden" name="userPhone" value="">
         <input type="hidden" name="DI" value="">
         <input type="hidden" name="CI" value="">
-        
+
         <div class="member-cell pd-56-114-105">
             <div class="member-group">
             <div class="form-group join">
@@ -74,7 +74,7 @@
                 <div class="member-label">비밀번호 재확인<em class="need">*</em></div>
                 <div class="form-group__item">
                 <div class="form-group__data">
-                    <input id="confirmUserPassword" name="confirmUserPassword" type="password" class="form-control pwd" placeholder="6-14자 이내로  영문 , 숫자 , 특수문자를 조합하여 작성합니다." 
+                    <input id="confirmUserPassword" name="confirmUserPassword" type="password" class="form-control pwd" placeholder="6-14자 이내로  영문 , 숫자 , 특수문자를 조합하여 작성합니다."
                     onkeyup="validConfirmUserPasswordCheck()" required>
                 </div>
                 <p id="valid-error-confirmPassword" class="form-group-text" style="display: none;">
@@ -153,7 +153,7 @@
   </article>
 
 <script>
-  
+
   function submitForm() {
 
     var validEmailResult = validEmailCheck(); // 이메일 체크
@@ -162,7 +162,7 @@
     var validConfirmUserPasswordResult = validConfirmUserPasswordCheck(); // 비밀번호 확인 체크
     var validServiceAgreeCheckboxResult = serviceAgreeCheck(); // 필수 동의 체크 여부
     var validPolicyAgreeCheckboxResult = policyAgreeCheck(); // 필수 동의 체크 여부
-    
+
     if (validEmailResult == false) {
       return alert('이메일을 확인해주세요.');
 
@@ -313,7 +313,24 @@
     }
 
   function authSuccess() {
-    alert('휴대폰 인증이 완료되었습니다.');
+      $.ajax({
+          type:'POST',
+          url:'/advisor/memberAuthFind',
+          data: {
+              "CI" : document.joinForm.CI.value
+          },
+          async: false,
+          headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
+          success:function(json){
+
+              var data = JSON.parse(json);
+              if ( data.status === "fail" ) {
+                  alert("이미 가입하신 이메일 계정이<br/>존재합니다.<br/>"+data.email);
+              } else {
+                  alert(data.message);
+              }
+          }
+      });
   }
 
 </script>

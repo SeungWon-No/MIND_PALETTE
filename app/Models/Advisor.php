@@ -79,6 +79,14 @@ class Advisor extends Model
 
     }
 
+
+    public static function findAuthAdvisor($CI) {
+        return Advisor::join("advisorAuth","advisor.advisorPK","=","advisorAuth.advisorPK")
+            -> where('advisorAuth.advisorCI','=',$CI)
+            -> whereNull('withdrawal')
+            -> get()->first();
+    }
+
     public static function getAdvisorList(){
         $getAdvisorList = Advisor::select('advisorPK', 'advisorName', 'briefIntroduction')->get();
 
