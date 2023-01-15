@@ -6,10 +6,10 @@
             <div class="counseling-tab__wrap">
               <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
               <a href="/advisor/counselingList" id="defaultList" class="counseling-tab__btn active">전체</a>
-              <a href="/advisor/waitingCounselingList" id="waitingCounselingList" class="counseling-tab__btn">상담대기</a>
-              <a href="/advisor/completeCounselingList" id="completeCounselingList" class="counseling-tab__btn">상담완료</a>
-              <a href="/advisor/warningCounselingList" id="warningCounselingList" class="counseling-tab__btn">주의/위험</a>
-              <a href="/advisor/impossibleCounselingList" id="impossibleCounselingList" class="counseling-tab__btn">상담불가</a>
+              <a href="/advisor/myWaitingCounseling" id="myWaitingCounseling" class="counseling-tab__btn">상담대기</a>
+              <a href="/advisor/myCompleteCounseling" id="myCompleteCounseling" class="counseling-tab__btn">상담완료</a>
+              <a href="/advisor/myWarningCounseling" id="myWarningCounseling" class="counseling-tab__btn">주의/위험</a>
+              <a href="/advisor/myImpossibleCounseling" id="myImpossibleCounseling" class="counseling-tab__btn">상담불가</a>
             </div>
             <form id="searchForm" name="searchForm" action="/advisor/myCounselingList" method="POST">
               @csrf
