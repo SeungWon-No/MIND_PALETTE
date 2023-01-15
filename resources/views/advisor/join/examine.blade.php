@@ -48,6 +48,6 @@
           </div>
         </div>
       </div>
-    </div> <!-- container end-->
+    </div>
 @include('advisor/common/footer')
 @include('advisor/common/end')

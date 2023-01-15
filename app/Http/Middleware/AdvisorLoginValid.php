@@ -15,7 +15,7 @@ class AdvisorLoginValid
         }
 
         $advisorLoginData = $request->session()->get('advisorLogin')[0];
-        if ($advisorLoginData["advisorStatus"] == 360 ) { //361
+        if ($advisorLoginData["advisorStatus"] == 360 ) {
             return redirect('/advisor/consultationInformation')->with('error', '관리자 승인 이후 사용 가능한 메뉴입니다.');
         }
         if ($advisorLoginData["advisorStatus"] == 361 || $advisorLoginData["advisorStatus"] == 362 || $advisorLoginData["advisorStatus"] == 363) {
