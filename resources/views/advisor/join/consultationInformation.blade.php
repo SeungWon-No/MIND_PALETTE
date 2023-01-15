@@ -559,10 +559,14 @@
       var agreeCheckbox = window.agreeCheckbox();
       if (agreeCheckbox == true) {
         pop.open('saveDonePop');
-        $("#nextStepForm").submit();
+
       }else{
         pop.open('noAgreePolicy');
       }
+    }
+
+    function submitNextStepForm(){
+      $("#nextStepForm").submit();
     }
 
 </script>
@@ -575,7 +579,7 @@
           <p class="pop-alert__desc">
             저장이 완료되었습니다.
           </p>
-          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+          <button type="button" class="pop-alert__btn" onclick="javascript:submitNextStepForm();">확인</button>
         </div>
       </div>
     </div>

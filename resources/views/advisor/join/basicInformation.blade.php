@@ -193,7 +193,6 @@
 
     }else{
       pop.open('saveDonePop');
-      $("#joinForm").submit();
     }
 
   }
@@ -357,6 +356,10 @@
       });
   }
 
+  function submitJoinForm(){
+    $("#joinForm").submit();
+  }
+
 </script>
 <!-- 저장완료 -->
 <article id="saveDonePop" class="layer-pop__wrap">
@@ -366,7 +369,7 @@
           <p class="pop-alert__desc">
             저장이 완료되었습니다.
           </p>
-          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+          <button type="button" class="pop-alert__btn" onclick="javascript:submitJoinForm();">확인</button>
         </div>
       </div>
     </div>
