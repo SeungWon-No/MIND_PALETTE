@@ -13,7 +13,13 @@
     <header id="header" class="basic-header">
         @if($isShowBackButton)
             <div class="header-left">
-                <a href="javascript:history.back()" class="btn-page-ui btn-page-prev">
+                <a
+                    @if(isset($backUrl))
+                        href="{{$backUrl}}"
+                    @else
+                        href="javascript:history.back()"
+                    @endif
+                    class="btn-page-ui btn-page-prev">
                     <div class="icon icon-page-prev-gray">페이지 뒤로가기</div>
                 </a>
             </div>

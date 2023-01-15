@@ -27,7 +27,7 @@ class DepressionController extends Controller
             $freeCode = Cookie::get('FREE_ADVICE');
         }
 
-        $answer = $this->answerResult($memberPK, $freeCode,"step1",$questionsOption);
+        $answer = $this->answerResult($memberPK, $freeCode,"step1",$questionsOption, $counselingTemplatePK);
         return view("/mobile/freeAdvice/depression",[
             "counselingTemplatePK" =>$counselingTemplatePK,
             "step" => "depressionStep1",
@@ -37,7 +37,8 @@ class DepressionController extends Controller
                 $questionsOption["questionRange"]["step1"]["limit"]
             ),
             "answer" => $answer,
-            "options" => $questionsOption
+            "options" => $questionsOption,
+            "backUrl" => "/freeAdviceRequest"
         ]);
     }
 
@@ -54,7 +55,7 @@ class DepressionController extends Controller
             $freeCode = Cookie::get('FREE_ADVICE');
         }
 
-        $answer = $this->answerResult($memberPK, $freeCode,"step2",$questionsOption);
+        $answer = $this->answerResult($memberPK, $freeCode,"step2",$questionsOption, $counselingTemplatePK);
         return view("/mobile/freeAdvice/depression",[
             "counselingTemplatePK" =>$counselingTemplatePK,
             "step" => "depressionStep2",
@@ -64,7 +65,8 @@ class DepressionController extends Controller
                 $questionsOption["questionRange"]["step2"]["limit"]
             ),
             "answer" => $answer,
-            "options" => $questionsOption
+            "options" => $questionsOption,
+            "backUrl" => "/depressionStep1/".$counselingTemplatePK
         ]);
     }
 
@@ -81,7 +83,7 @@ class DepressionController extends Controller
             $freeCode = Cookie::get('FREE_ADVICE');
         }
 
-        $answer = $this->answerResult($memberPK, $freeCode,"step3",$questionsOption);
+        $answer = $this->answerResult($memberPK, $freeCode,"step3",$questionsOption, $counselingTemplatePK);
 
         return view("/mobile/freeAdvice/depression",[
             "counselingTemplatePK" =>$counselingTemplatePK,
@@ -92,7 +94,8 @@ class DepressionController extends Controller
                 $questionsOption["questionRange"]["step3"]["limit"]
             ),
             "answer" => $answer,
-            "options" => $questionsOption
+            "options" => $questionsOption,
+            "backUrl" => "/depressionStep2/".$counselingTemplatePK
         ]);
     }
 
@@ -241,7 +244,6 @@ class DepressionController extends Controller
                 "nextStep" => $nextStep
             ]);
         }catch (\Exception $e) {
-
             DB::rollBack();
             return json_encode([
                 "status" => "fail",
@@ -251,9 +253,9 @@ class DepressionController extends Controller
     }
 
 
-    private function answerResult($memberPK, $freeCode, $step, $questionsOption) {
+    private function answerResult($memberPK, $freeCode, $step, $questionsOption, $counselingTemplatePK) {
         $returnValue = null;
-        $answer = Answer::findAnswers($memberPK, $freeCode,287,
+        $answer = Answer::findAnswers($memberPK, $freeCode, $counselingTemplatePK,287,
             $questionsOption["questionRange"][$step]["offset"],
             $questionsOption["questionRange"][$step]["limit"]);
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Util\CounselingStatus;
 use App\Models\Advisor;
 use App\Models\Answer;
+use App\Models\Code;
 use App\Models\Counseling;
 use Illuminate\Http\Request;
 
@@ -30,8 +31,10 @@ class IndexController extends Controller
             "counselingRow" => $counselingRow,
             "counselingCount" => $counselingCount,
             "HTPImageRow" => $HTPImageRow,
+            "counselingStatus" => CounselingStatus::$counselingStatus,
             "payCounselingWritingCode" => CounselingStatus::$payCounselingWritingCode,
             "payCounselingStatus" => CounselingStatus::$payCounselingStatus,
+            "statusCode" => Code::findCodeType("counselingStatus"),
             "advisor" => Advisor::findRandomAdvisorLimit(3)
         ]);
     }

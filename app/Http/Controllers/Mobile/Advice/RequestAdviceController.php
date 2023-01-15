@@ -49,7 +49,7 @@ class RequestAdviceController extends Controller
         $counseling->phone = Crypt::encryptString($phone);
         $counseling->city = $city;
         $counseling->region = $region;
-        $counseling->counselingStatus = 282; //adviceInfoStep01
+        $counseling->counselingStatus = 306; //adviceInfoStep01
         $counseling->counselorStatus = 354;
         $counseling->updateDate = $nowDate;
         $counseling->createDate = $nowDate;

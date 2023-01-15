@@ -12,7 +12,7 @@ class Answer extends Model
     protected $primaryKey = 'answerPK';
     public $timestamps = false;
 
-    public static function findAnswers($memberPK, $freeCode, $questionsType, $offset, $limit) {
+    public static function findAnswers($memberPK, $freeCode, $counselingTemplatePK, $questionsType, $offset, $limit) {
         $answerResult = Answer::join("questions","questions.questionsPK","=","answer.questionsPK");
 
         if ($memberPK != "") {
@@ -22,6 +22,7 @@ class Answer extends Model
         }
 
         $answerResult->where('questionsType','=',$questionsType)
+            ->where("counselingTemplatePK",$counselingTemplatePK)
             ->orderBy("questionsOrder", "ASC")
             ->offset($offset)
             ->limit($limit);

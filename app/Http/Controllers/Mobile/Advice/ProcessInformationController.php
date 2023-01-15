@@ -16,48 +16,55 @@ class ProcessInformationController extends Controller
     {
         return view("mobile/advice/processInformation",[
             "counselingPK" => $counselingPK,
-            "progressWidth" => 5.2
+            "progressWidth" => 5.2,
+            "backUrl" => "/"
         ]);
     }
 
     public function adviceInformation(Request $request, $counselingPK) {
         return view("mobile/advice/adviceInformation",[
             "counselingPK" => $counselingPK,
-            "progressWidth" => 10.4
+            "progressWidth" => 10.4,
+            "backUrl" => "/processInformation/".$counselingPK
         ]);
     }
     public function paintingHouseTimer(Request $request, $counselingPK) {
         return view("mobile/advice/paintingHouseTimer",[
             "counselingPK" => $counselingPK,
             "progressWidth" => 15.6,
-            "answer" => $this->getAnswer($request,$counselingPK,302,[60,61,62])
+            "answer" => $this->getAnswer($request,$counselingPK,302,[60,61,62]),
+            "backUrl" => "/adviceInformation/".$counselingPK
         ]);
     }
     public function paintingTreeTimer(Request $request, $counselingPK) {
         return view("mobile/advice/paintingTreeTimer",[
             "counselingPK" => $counselingPK,
             "progressWidth" => 21.2,
-            "answer" => $this->getAnswer($request,$counselingPK,303,[70,71,72])
+            "answer" => $this->getAnswer($request,$counselingPK,303,[70,71,72]),
+            "backUrl" => "/paintingHouseTimer/".$counselingPK
         ]);
     }
     public function paintingPerson1Timer(Request $request, $counselingPK) {
         return view("mobile/advice/paintingPerson1Timer",[
             "counselingPK" => $counselingPK,
             "progressWidth" => 26.4,
-            "answer" => $this->getAnswer($request,$counselingPK,304,[97,79,80,81])
+            "answer" => $this->getAnswer($request,$counselingPK,304,[97,79,80,81]),
+            "backUrl" => "/paintingTreeTimer/".$counselingPK
         ]);
     }
     public function paintingPerson2Timer(Request $request, $counselingPK) {
         return view("mobile/advice/paintingPerson2Timer",[
             "counselingPK" => $counselingPK,
             "progressWidth" => 31.6,
-            "answer" => $this->getAnswer($request,$counselingPK,305,[98,89,90])
+            "answer" => $this->getAnswer($request,$counselingPK,305,[98,89,90]),
+            "backUrl" => "/paintingPerson1Timer/".$counselingPK
         ]);
     }
     public function answerInformation(Request $request, $counselingPK) {
         return view("mobile/advice/answerInformation",[
             "counselingPK" => $counselingPK,
-            "progressWidth" => 36.8
+            "progressWidth" => 36.8,
+            "backUrl" => "/paintingPerson2Timer/".$counselingPK
         ]);
     }
 
@@ -66,7 +73,8 @@ class ProcessInformationController extends Controller
             "counselingPK" => $counselingPK,
             "progressWidth" => 42,
             "questions" => Questions::findAllQuestion(302),
-            "answer" => $this->getAllAnswer($request,$counselingPK,302)
+            "answer" => $this->getAllAnswer($request,$counselingPK,302),
+            "backUrl" => "/answerInformation/".$counselingPK
         ]);
     }
     public function answerTree(Request $request, $counselingPK) {
@@ -74,7 +82,8 @@ class ProcessInformationController extends Controller
             "counselingPK" => $counselingPK,
             "progressWidth" => 47.2,
             "questions" => Questions::findAllQuestion(303),
-            "answer" => $this->getAllAnswer($request,$counselingPK,303)
+            "answer" => $this->getAllAnswer($request,$counselingPK,303),
+            "backUrl" => "/answerHouse/".$counselingPK
         ]);
     }
 
@@ -83,7 +92,8 @@ class ProcessInformationController extends Controller
             "counselingPK" => $counselingPK,
             "progressWidth" => 52.4,
             "questions" => Questions::findAllQuestion(304),
-            "answer" => $this->getAllAnswer($request,$counselingPK,304)
+            "answer" => $this->getAllAnswer($request,$counselingPK,304),
+            "backUrl" => "/answerTree/".$counselingPK
         ]);
     }
     public function answerPerson2(Request $request, $counselingPK) {
@@ -91,7 +101,8 @@ class ProcessInformationController extends Controller
             "counselingPK" => $counselingPK,
             "progressWidth" => 57.6,
             "questions" => Questions::findAllQuestion(305),
-            "answer" => $this->getAllAnswer($request,$counselingPK,305)
+            "answer" => $this->getAllAnswer($request,$counselingPK,305),
+            "backUrl" => "/answerPerson1/".$counselingPK
         ]);
     }
     public function behaviorObservation(Request $request, $counselingPK) {
@@ -99,13 +110,15 @@ class ProcessInformationController extends Controller
             "counselingPK" => $counselingPK,
             "progressWidth" => 62.8,
             "questions" => Questions::findAllQuestion(335),
-            "answer" => $this->getAllAnswer($request,$counselingPK,335)
+            "answer" => $this->getAllAnswer($request,$counselingPK,335),
+            "backUrl" => "/answerPerson2/".$counselingPK
         ]);
     }
     public function temperamentTestInformation(Request $request, $counselingPK) {
         return view("mobile/advice/temperamentTestInformation",[
             "counselingPK" => $counselingPK,
             "progressWidth" => 68,
+            "backUrl" => "/behaviorObservation/".$counselingPK
         ]);
     }
     public function temperamentTestStep1(Request $request, $counselingPK) {
@@ -114,7 +127,8 @@ class ProcessInformationController extends Controller
             "progressWidth" => 73.2,
             "questions" => Questions::findAnyQuestions([336,342,343,344],0,10),
             "answer" => $this->getAnswersLimit($request,$counselingPK,[336,342,343,344],0,10),
-            "scoreIndex" => CounselingTemplateTest::$scoreValue
+            "scoreIndex" => CounselingTemplateTest::$scoreValue,
+            "backUrl" => "/temperamentTestInformation/".$counselingPK
         ]);
     }
 
@@ -124,13 +138,15 @@ class ProcessInformationController extends Controller
             "progressWidth" => 78.4,
             "questions" => Questions::findAnyQuestions([336,342,343,344],10,10),
             "answer" => $this->getAnswersLimit($request,$counselingPK,[336,342,343,344],10,10),
-            "scoreIndex" => CounselingTemplateTest::$scoreValue
+            "scoreIndex" => CounselingTemplateTest::$scoreValue,
+            "backUrl" => "/temperamentTestStep1/".$counselingPK
         ]);
     }
     public function applicationFormInformation(Request $request, $counselingPK) {
         return view("mobile/advice/applicationFormInformation",[
             "counselingPK" => $counselingPK,
             "progressWidth" => 83.6,
+            "backUrl" => "/temperamentTestStep2/".$counselingPK
         ]);
     }
     public function personalData(Request $request, $counselingPK) {
@@ -139,7 +155,8 @@ class ProcessInformationController extends Controller
             "progressWidth" => 88.8,
             "counseling" => Counseling::find($counselingPK),
             "genders" => Code::findCode("gender"),
-            "schools" => Code::findCode("school")
+            "schools" => Code::findCode("school"),
+            "backUrl" => "/applicationFormInformation/".$counselingPK
         ]);
     }
     public function familyRelations(Request $request, $counselingPK) {
@@ -147,6 +164,7 @@ class ProcessInformationController extends Controller
             "counselingPK" => $counselingPK,
             "progressWidth" => 94,
             "counseling" => Counseling::find($counselingPK),
+            "backUrl" => "/personalData/".$counselingPK
         ]);
     }
     public function reasonWrite(Request $request, $counselingPK) {
@@ -154,6 +172,7 @@ class ProcessInformationController extends Controller
             "counselingPK" => $counselingPK,
             "progressWidth" => 100,
             "counseling" => Counseling::find($counselingPK),
+            "backUrl" => "/familyRelations/".$counselingPK
         ]);
     }
     public function HTPRequestComplete(Request $request) {

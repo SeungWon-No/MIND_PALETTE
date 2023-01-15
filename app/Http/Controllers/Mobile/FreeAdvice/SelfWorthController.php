@@ -27,7 +27,7 @@ class SelfWorthController extends Controller
             $freeCode = Cookie::get('FREE_ADVICE');
         }
 
-        $answer = $this->answerResult($memberPK, $freeCode,"step1",$questionsOption);
+        $answer = $this->answerResult($memberPK, $freeCode,"step1",$questionsOption, $counselingTemplatePK);
         return view("/mobile/freeAdvice/selfWorth",[
             "counselingTemplatePK" =>$counselingTemplatePK,
             "step" => "selfWorthStep1",
@@ -37,7 +37,8 @@ class SelfWorthController extends Controller
                 $questionsOption["questionRange"]["step1"]["limit"]
             ),
             "answer" => $answer,
-            "options" => $questionsOption
+            "options" => $questionsOption,
+            "backUrl" => "/freeAdviceRequest"
         ]);
     }
 
@@ -53,7 +54,7 @@ class SelfWorthController extends Controller
             $freeCode = Cookie::get('FREE_ADVICE');
         }
 
-        $answer = $this->answerResult($memberPK, $freeCode,"step2",$questionsOption);
+        $answer = $this->answerResult($memberPK, $freeCode,"step2",$questionsOption, $counselingTemplatePK);
         return view("/mobile/freeAdvice/selfWorth",[
             "counselingTemplatePK" =>$counselingTemplatePK,
             "step" => "selfWorthStep2",
@@ -63,7 +64,8 @@ class SelfWorthController extends Controller
                 $questionsOption["questionRange"]["step2"]["limit"]
             ),
             "answer" => $answer,
-            "options" => $questionsOption
+            "options" => $questionsOption,
+            "backUrl" => "/selfWorthStep1/".$counselingTemplatePK
         ]);
     }
 
@@ -215,9 +217,9 @@ class SelfWorthController extends Controller
     }
 
 
-    private function answerResult($memberPK,$freeCode, $step, $questionsOption) {
+    private function answerResult($memberPK,$freeCode, $step, $questionsOption, $counselingTemplatePK) {
         $returnValue = null;
-        $answer = Answer::findAnswers($memberPK,$freeCode,289,
+        $answer = Answer::findAnswers($memberPK,$freeCode, $counselingTemplatePK,289,
             $questionsOption["questionRange"][$step]["offset"],
             $questionsOption["questionRange"][$step]["limit"]);
 

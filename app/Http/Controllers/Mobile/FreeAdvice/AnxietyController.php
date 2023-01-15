@@ -27,7 +27,7 @@ class AnxietyController extends Controller
             $freeCode = Cookie::get('FREE_ADVICE');
         }
 
-        $answer = $this->answerResult($memberPK, $freeCode,"step1",$questionsOption);
+        $answer = $this->answerResult($memberPK, $freeCode,"step1",$questionsOption, $counselingTemplatePK);
         return view("/mobile/freeAdvice/anxiety",[
             "counselingTemplatePK" =>$counselingTemplatePK,
             "step" => "anxietyStep1",
@@ -37,7 +37,8 @@ class AnxietyController extends Controller
                 $questionsOption["questionRange"]["step1"]["limit"]
             ),
             "answer" => $answer,
-            "options" => $questionsOption
+            "options" => $questionsOption,
+            "backUrl" => "/freeAdviceRequest"
         ]);
     }
 
@@ -54,7 +55,7 @@ class AnxietyController extends Controller
             $freeCode = Cookie::get('FREE_ADVICE');
         }
 
-        $answer = $this->answerResult($memberPK, $freeCode,"step2",$questionsOption);
+        $answer = $this->answerResult($memberPK, $freeCode,"step2",$questionsOption, $counselingTemplatePK);
         return view("/mobile/freeAdvice/anxiety",[
             "counselingTemplatePK" =>$counselingTemplatePK,
             "step" => "anxietyStep2",
@@ -64,7 +65,8 @@ class AnxietyController extends Controller
                 $questionsOption["questionRange"]["step2"]["limit"]
             ),
             "answer" => $answer,
-            "options" => $questionsOption
+            "options" => $questionsOption,
+            "backUrl" => "/anxietyStep1/".$counselingTemplatePK
         ]);
     }
 
@@ -81,7 +83,7 @@ class AnxietyController extends Controller
             $freeCode = Cookie::get('FREE_ADVICE');
         }
 
-        $answer = $this->answerResult($memberPK, $freeCode,"step3",$questionsOption);
+        $answer = $this->answerResult($memberPK, $freeCode,"step3",$questionsOption, $counselingTemplatePK);
         return view("/mobile/freeAdvice/anxiety",[
             "counselingTemplatePK" =>$counselingTemplatePK,
             "step" => "anxietyStep3",
@@ -91,7 +93,8 @@ class AnxietyController extends Controller
                 $questionsOption["questionRange"]["step3"]["limit"]
             ),
             "answer" => $answer,
-            "options" => $questionsOption
+            "options" => $questionsOption,
+            "backUrl" => "/anxietyStep2/".$counselingTemplatePK
         ]);
     }
 
@@ -245,9 +248,9 @@ class AnxietyController extends Controller
         ]);
     }
 
-    private function answerResult($memberPK,$freeCode, $step, $questionsOption) {
+    private function answerResult($memberPK,$freeCode, $step, $questionsOption, $counselingTemplatePK) {
         $returnValue = null;
-        $answer = Answer::findAnswers($memberPK, $freeCode,288,
+        $answer = Answer::findAnswers($memberPK, $freeCode, $counselingTemplatePK,288,
             $questionsOption["questionRange"][$step]["offset"],
             $questionsOption["questionRange"][$step]["limit"]);
 

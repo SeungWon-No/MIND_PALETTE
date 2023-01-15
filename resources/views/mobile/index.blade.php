@@ -50,15 +50,20 @@ use Illuminate\Support\Facades\Crypt;
                                                             $link = $counselingStatus[$counseling->counselingStatus]["link"].$counseling->PK;
                                                         }
                                                     @endphp
+                                                    <div class="item-thumb">
+
+                                                    </div>
+
                                                     <a href="{{$link}}" class="gallery-list-item">
                                                         <div class="item-thumb">
                                                             @if($counseling->type == "FREE")
-                                                                <div class="advice-free">
-                                                                    <em></em><strong>마음팔레트 무료 상담
-                                                                        @if(isset($counselingStatus[$counseling->counselingStatus]))
-                                                                            {{$counselingStatus[$counseling->counselingStatus]["title"]}}
-                                                                        @endif
-                                                                    </strong>
+                                                                <div class="thumb">
+                                                                    <div class="advice-free">
+                                                                        <em></em><strong>마음팔레트 무료 상담
+                                                                            @if(isset($counselingStatus[$counseling->counselingStatus]))
+                                                                                {{$counselingStatus[$counseling->counselingStatus]["title"]}}
+                                                                            @endif</strong>
+                                                                    </div>
                                                                 </div>
                                                             @else
                                                                 @if($payStatus == "write")
@@ -68,9 +73,11 @@ use Illuminate\Support\Facades\Crypt;
                                                                         </div>
                                                                     </div>
                                                                 @else
+                                                                    <div class="thumb">
                                                                     @if(isset($HTPImageRow[$counseling->PK]))
                                                                         <img src="/storage/image/thumb/{{$HTPImageRow[$counseling->PK]}}" alt=""/>
                                                                     @endif
+                                                                    </div>
                                                                 @endif
                                                             @endif
                                                         </div>
