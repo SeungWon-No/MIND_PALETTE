@@ -136,10 +136,8 @@ class AdvisorEducationController extends Controller{
             $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
             
             if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
-                dd(1);
                 return redirect('/advisor/examine');
             }else{  // 임시저장
-                dd(2);
                 return redirect('/advisor/consultationInformation');
 
             }
