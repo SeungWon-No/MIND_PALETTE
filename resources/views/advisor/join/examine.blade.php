@@ -26,7 +26,7 @@
               </div>
             </div>
             <!-- 자격심사 검토중일 때 join-progress__btn에 클래스 disabled추가  -->
-            <a href="#none" class="join-progress__btn">수정하기</a>
+            <a href="/advisor/consultationInformation" class="join-progress__btn">수정하기</a>
           </div>
         </div>
       </div>
