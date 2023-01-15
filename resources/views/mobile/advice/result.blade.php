@@ -2,6 +2,7 @@
 @include('/mobile/common/header',[
     "isShowBackButton" => true,
     "isShowCloseButton" => false,
+    "isAdviceResult" => true,
     "title" => "HTP 상담 결과"
 ])
 @php
@@ -33,7 +34,7 @@
                     <div class="user-card-info">
                         <div class="item-cate">
                             <h3 class="con-title">아이 정보</h3>
-                            <div class="item-code">221201-ab32d</div>
+                            <div class="item-code">{{$counseling->counselingCode}}</div>
                         </div>
                         <!-- 23.01.04 아이콘 변경 -->
                         <div class="item-data">
@@ -132,7 +133,8 @@
                                                                  class="bar {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipAdaptation"])]["class"]}}"></div>
                                                         </div>
                                                         <div class="graph-data-bar">
-                                                            <div style="height:{{$temperamentTest["relationshipPursuit"]}}%;" class="bar orange"></div>
+                                                            <div style="height:{{$temperamentTest["relationshipPursuit"]}}%;"
+                                                                 class="bar {{$levelInfo[$counselingTemplate->getTemperamentTestLevel($temperamentTest["relationshipPursuit"])]["class"]}}"></div>
                                                         </div>
                                                     </div>
                                                 </div>

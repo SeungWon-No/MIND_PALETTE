@@ -31,7 +31,7 @@
                     @foreach($noticeList["data"] as $notice)
                   <div class="notice-table__row">
                     <div class="table-body__cell col-1">{{$notice["noticePK"]}}</div>
-                    <div class="table-body__cell col-2"><a href="/advisor/notice/1">{{$notice["title"]}}</a></div>
+                    <div class="table-body__cell col-2"><a href="/advisor/notice/{{$notice["noticePK"]}}">{{$notice["title"]}}</a></div>
                     <div class="table-body__cell col-3">마음팔레트</div>
                     <div class="table-body__cell col-4">{{date_format(date_create($notice["createDate"]),"Y.m.d")}}</div>
                     <div class="table-body__cell col-5">{{number_format($notice["viewCount"])}}</div>
