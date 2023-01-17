@@ -143,13 +143,13 @@
           var urlSection1 = splitUrl[3];
           var urlSection2 = splitUrl[4];
 
+          if (urlSection1 == 'advisor' && (urlSection2 === '' || urlSection2 === undefined)){
+            $(".counseling-filter__btn").attr("class", "counseling-filter__btn active");
 
-          if (urlSection1 == 'advisor' && (urlSection2 == '' || urlSection2 === undefined)) {
-            $("#defalut").attr("class", "counseling-filter__btn active");
-
-          }else{
-            $("#defalut").attr("class", "counseling-filter__btn");
+          }else if(urlSection1 == 'advisor' && urlSection2 != '' || urlSection2 != undefined){
+            $(".counseling-filter__btn").attr("class", "counseling-filter__btn");
             $("#"+urlSection2).attr("class", "counseling-filter__btn active");
+
           }
         </script>
 
