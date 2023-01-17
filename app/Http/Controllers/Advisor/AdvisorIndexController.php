@@ -54,6 +54,7 @@ class AdvisorIndexController extends Controller
         $advisorList = $this->advisor->pagination(3); // 상담사 리스트
 
         return view("/advisor/main",[   // 상담사 메인 페이지
+            'listName' => '상담대기중인 그림상담',
             "isLogin" => $isLogin,
             "waitingCount" => $waitingCount,
             "completeCount" => $completeCount,
@@ -89,6 +90,7 @@ class AdvisorIndexController extends Controller
         $waitingCounselingList = $this->counseling->getWaitingCounselingList();
 
         return view("/advisor/main",[
+            'listName' => '상담대기중인 그림상담',
             'advisorList' => $advisorList,
             'advisorProfile' => $advisorProfile,
             'counselingList' => $waitingCounselingList,
@@ -121,6 +123,7 @@ class AdvisorIndexController extends Controller
         $completeCounselingList = $this->counseling->getCompleteCounselingList();
 
         return view("/advisor/main",[
+            'listName' => '상담완료 그림상담',
             'advisorList' => $advisorList,
             'advisorProfile' => $advisorProfile,
             'counselingList' => $completeCounselingList,
@@ -155,6 +158,7 @@ class AdvisorIndexController extends Controller
         $advisorList = $this->advisor->pagination(3); // 상담사 리스트
 
         return view("/advisor/main",[
+            'listName' => '위험 / 긴급조치 그림상담',
             'advisorList' => $advisorList,
             'advisorProfile' => $advisorProfile,
             'counselingList' => $warningList,
@@ -187,6 +191,7 @@ class AdvisorIndexController extends Controller
         $impossibleList = $this->counseling->getImpossibleCounselingList();
 
         return view("/advisor/main",[
+            'listName' => '상담대기중인 그림상담',
             'advisorList' => $advisorList,
             'advisorProfile' => $advisorProfile,
             'counselingList' => $impossibleList,

@@ -49,7 +49,7 @@
             </div>
               @endif
             <div class="cont-heading">
-              <h3 class="cont-heading__tit">대기중인 그림상담</h3>
+              <h3 class="cont-heading__tit">{{$listName}}</h3>
             </div>
             <div class="counseling-list__wrap">
               @if (!empty($counselingList['data']))

@@ -63,9 +63,11 @@
         <ul class="my-history__list">
             <li class="my-history__item">
                 <!-- 작성 중인 상담이 1건 이상이면 class에  active추가 -->
-                <a href="#none" class="my-history__obj active">• 작성중
+                @if($myWritingCounselingCount > 0)
+                <a href="/advisor/counselingDetail/{{$myWritingCounseling['counselingPK']}}" class="my-history__obj active">• 작성중
                     <span class="my-history__num">{{$myWritingCounselingCount}}</span><span class="my-history__unit">건</span>
                 </a>
+                @endif
                 <!-- 작성 중인 상담이 1건 이상이면 남은 시간 추가 -->
                 @if($myWritingCounselingCount > 0)
                     <div class="my-history__time-cell">남은 시간 <span class="my-history__time">{{$hour}}:{{$minute}}</span></div>
