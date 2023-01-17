@@ -647,11 +647,55 @@
       var extraValue = $('#submitExtraValue').val(extraParam);
       var agreeCheckbox = window.agreeCheckbox();
       if (agreeCheckbox == true) {
-        $("#nextStepEditForm").submit();
+        pop.open('saveDonePop');
+        //$("#nextStepEditForm").submit();
       }else{
-        alert('필수 사항에 동의해주세요.');
+        pop.open('noAgreePolicy');
       }
+    }
+
+    function submitNextStepEditForm(){
+      $("#nextStepEditForm").submit();
     }
 </script>
 @include('advisor/common/footer')
+<!-- 저장완료 -->
+<article id="saveDonePop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            저장이 완료되었습니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="javascript:submitNextStepEditForm();">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 필수항목 미입력-->
+  <article id="noEnterDataPop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            필수 항목을 입력해주세요.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 약관 미동의 시 -->
+  <article id="noAgreePolicy" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            필수 약관 동의가 필요합니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
 @include('advisor/common/end')

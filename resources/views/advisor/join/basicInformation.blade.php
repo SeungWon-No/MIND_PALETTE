@@ -160,31 +160,55 @@
     var validEmailDuplicationResult = emailDuplicationCheck('submit'); // 이메일 중복체크
     var validPasswordResult = validPasswordCheck(); // 비밀번호 체크
     var validConfirmUserPasswordResult = validConfirmUserPasswordCheck(); // 비밀번호 확인 체크
+    var validAuthPhoneResult = phoneAuth(); // 휴대폰 인증
     var validServiceAgreeCheckboxResult = serviceAgreeCheck(); // 필수 동의 체크 여부
     var validPolicyAgreeCheckboxResult = policyAgreeCheck(); // 필수 동의 체크 여부
 
     if (validEmailResult == false) {
-      return alert('이메일을 확인해주세요.');
+      return pop.open('noEnterDataPop'); // 필수 항목 입력 alert
+      //return alert('이메일을 확인해주세요.');
 
     }else if(validEmailDuplicationResult == false){
-      return alert('이미 사용중인 이메일 입니다.');
+      return pop.open('duplicateEmail');
+      //return alert('이미 사용중인 이메일 입니다.');
 
     }else if(validPasswordResult == false){
-      return alert('비밀번호를 확인해주세요.');
+      return pop.open('noEnterDataPop'); // 필수 항목 입력 alert
+      //return alert('비밀번호를 확인해주세요.');
 
     }else if(validConfirmUserPasswordResult == false ){
-      return alert('비밀번호가 일치하지 않습니다.');
+      return pop.open('alertDataPop'); 
+      //return alert('비밀번호가 일치하지 않습니다.');
+
+    }else if(validAuthPhoneResult == false){
+      return pop.open('authPhone'); 
 
     }else if(validServiceAgreeCheckboxResult == false){
-      return alert('마음팔레트 서비스 이용약관에 동의해주세요.');
+      return pop.open('noAgreePolicy'); 
+      //return alert('마음팔레트 서비스 이용약관에 동의해주세요.');
 
     }else if(validPolicyAgreeCheckboxResult == false){
-      return alert('개인정보 수집 및 이용에 동의합니다.');
+      return pop.open('noAgreePolicy'); 
+      //return alert('개인정보 수집 및 이용에 동의합니다.');
 
     }else{
-      $("#joinForm").submit();
+      pop.open('saveDonePop');
     }
 
+  }
+
+  // 휴대폰 인증 유효성 체크 
+  function phoneAuth(){
+    var authUserName = $('input[name=userName]').val();
+    var authUserPhone= $('input[name=userPhone]').val();
+    var DI = $('input[name=DI]').val();
+    var CI = $('input[name=CI]').val();
+
+    if(authUserName == '' || authUserPhone == '' || DI == '' || CI == '' ){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   // 이메일 유효성 체크
@@ -239,7 +263,8 @@
       return false;
 
     }else if(sign == 'check'){ // 이메일 사용 가능한 경우
-      alert('사용 가능한 이메일입니다.');
+      //alert('사용 가능한 이메일입니다.');
+      pop.open('availableEmail');
       return true;
     }
 
@@ -329,7 +354,116 @@
               }
           }
       });
+      pop.open('authPhoneSuccess');
+  }
+
+  function submitJoinForm(){
+    $("#joinForm").submit();
   }
 
 </script>
+<!-- 저장완료 -->
+<article id="saveDonePop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            저장이 완료되었습니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="javascript:submitJoinForm();">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 입력오류 -->
+  <article id="alertDataPop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            올바른 정보를 기입해주세요.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 필수항목 미입력-->
+  <article id="noEnterDataPop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            필수 항목을 입력해주세요.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 약관 미동의 시 -->
+  <article id="noAgreePolicy" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            필수 약관 동의가 필요합니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 이메일 중복 -->
+  <article id="duplicateEmail" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            이미 사용중인 이메일 입니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 이메일 사용가능 -->
+  <article id="availableEmail" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            사용 가능한 이메일 입니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 휴대폰 인증 -->
+  <article id="authPhone" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            휴대폰 인증이 필요합니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- 휴대폰 인증 성공-->
+  <article id="authPhoneSuccess" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            휴대폰 인증이 완료되었습니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
 @include('advisor/common/end')
