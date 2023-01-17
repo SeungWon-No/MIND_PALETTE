@@ -25,31 +25,19 @@ class PasswordChangeController extends Controller
         $changePassword = $request->changePassword ?? '';
 
         if ($originPassword == "" || $changePassword == "" ) {
-            $result = [
-                "status" => "error",
-                "message" => "필수 값이 없습니다."
-            ];
-            return json_encode($result);
+            return redirect('/MyPage/passwordChange')->with("toast","필수 값이 없습니다.");
         }
         try {
             $memberPK = $request->session()->get('login')[0]["memberPK"];
             $member = Member::find($memberPK);
 
             if (!Hash::check($originPassword, $member->pw)) {
-                $result = [
-                    "status" => "error",
-                    "message" => "패스워드가 일치하지 않습니다."
-                ];
-                return json_encode($result);
+                return redirect('/MyPage/passwordChange')->with("toast","패스워드가 일치하지 않습니다.");
             }
 
             Member::updatePKPassword($memberPK,Hash::make($changePassword));
-            $result = [
-                "status" => "success",
-                "message" => "비밀번호가 성공적으로 변경되었습니다."
-            ];
 
-            return json_encode($result);
+            return redirect('/mypage')->with("toast","비밀번호가 성공적으로 변경되었습니다.");
         }catch (\Exception $e) {
 
         }
