@@ -94,7 +94,16 @@
               @endif
               <div class="paging-box">
                 @foreach ($counselingList['links'] as $link)
-                  <a href="{{ $link['url'] }}" class="paging-num active">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
+                  @php
+                  if($link['label'] >= 1){
+                    if ($counselingList['current_page'] == $link['label']){
+                      $addClass = 'active';
+                    }else{
+                      $addClass = '';
+                    }
+                  }
+                  @endphp
+                <a href="{{ $link['url'] }}" class="paging-num {{$addClass}}">{!! str_replace("Next ","",str_replace(" Previous","",$link['label'])) !!}</a>
                 @endforeach
               </div>
             </div>

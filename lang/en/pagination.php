@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'previous' => '&laquo; Previous',
-    'next' => 'Next &raquo;',
+    'previous' => '<span class="icon pagin-perv-icon"></span> Previous',
+    'next' => 'Next <span class="icon pagin-next-icon"></span>',
 
 ];

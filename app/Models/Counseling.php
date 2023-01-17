@@ -98,7 +98,7 @@ class Counseling extends Model
                     ->where('counseling.memberPK', '>', '0')
                     ->whereIn("counseling.counselingStatus",[279,280,281,353])
                     ->orderBy("counselingPK", "DESC")
-                    ->paginate(10);
+                    ->paginate();
 
         $counselingList = json_decode(json_encode($pagination), true);
 
