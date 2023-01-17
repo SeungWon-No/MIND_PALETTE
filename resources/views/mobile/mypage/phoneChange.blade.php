@@ -20,7 +20,7 @@
         <input type="hidden" name="CP_CD" maxlength="12" size="16" value="">
         <input type="hidden" name="SITE_NAME" maxlength="20" size="24" value="마음팔레트">
     </form>
-    <form name="joinForm" method="post" action="#">
+    <form name="joinForm" method="post" action="/MyPage/changePhone">
         @csrf
         <input type="hidden" name="userName" value="">
         <input type="hidden" name="userPhone" value="">
@@ -40,19 +40,7 @@
     }
 
     function authSuccess() {
-        var queryString = $("form[name=joinForm]").serialize() ;
-        $.ajax({
-            type:'POST',
-            url:'/MyPage/changePhone',
-            data: queryString,
-            async: false,
-            headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()},
-            success:function(json){
-                var data = JSON.parse(json);
-                $("#toastMessage").html(data.message);
-                common.toastPopOpen('phoneChangeConfirm');
-            }
-        });
+        document.joinForm.submit();
     }
 </script>
 @include('/mobile/common/end')

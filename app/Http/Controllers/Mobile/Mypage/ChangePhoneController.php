@@ -31,17 +31,10 @@ class ChangePhoneController extends Controller
 
             Member::updatePKPhone($memberPK,$userPhone);
 
-            $result = [
-                "status" => "success",
-                "message" => "전화번호가 성공적으로 변경되었습니다."
-            ];
+            return redirect('/mypage')->with("toast","전화번호가 성공적으로 변경되었습니다.");
         }catch (\Exception $e) {
-            $result = [
-                "status" => "fail",
-                "message" => "전화번호 변경에 실패하였습니다."
-            ];
+            return redirect('/MyPage/changePhone')->with("toast","전화번호 변경에 실패하였습니다.");
         }
 
-        return json_encode($result);
     }
 }

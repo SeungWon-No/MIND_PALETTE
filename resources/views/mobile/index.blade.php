@@ -50,10 +50,6 @@ use Illuminate\Support\Facades\Crypt;
                                                             $link = $counselingStatus[$counseling->counselingStatus]["link"].$counseling->PK;
                                                         }
                                                     @endphp
-                                                    <div class="item-thumb">
-
-                                                    </div>
-
                                                     <a href="{{$link}}" class="gallery-list-item">
                                                         <div class="item-thumb">
                                                             @if($counseling->type == "FREE")

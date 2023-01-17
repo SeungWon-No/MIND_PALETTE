@@ -50,10 +50,6 @@
         </div>
         <div class="header-right">
             @if($isLogin)
-                <a href="#" class="btn-page-ui btn-page-alarm actived">
-                    <div class="icon icon-page-alarm-gray on"></div>
-                    <div class="icon icon-page-alarm-white off"></div>
-                </a>
                 <a href="/mypage" class="btn-page-ui btn-page-user">
                     <div class="icon {{(Cookie::has('AD_ICO'))?Cookie::get('AD_ICO'):"icon-page-user-green"}} off"></div>
                 </a>
