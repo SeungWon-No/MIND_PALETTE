@@ -30,14 +30,18 @@ class AdvisorLoginController extends Controller
             return view("/advisor/login/loginFail");
         }
 
-        $advisor = Advisor::findUser($email, $password)->first();
-        if ($advisor) { // 로그인 성공
+        $advisor = Advisor::findUser($email)->first();
+
+        if ($advisor == null || $advisor->isDelete == 'Y') { // 동일한 이메일이 없거나 탈퇴한 회원일 경우 login 실패처리
+            return redirect("/advisor/loginFail");
+
+        }else{  // 로그인 성공
             if (Hash::check($password, $advisor->password)) {
                 $this->login($request, Advisor::findAdvisorInfo($advisor->advisorPK));
                 return redirect("/advisor/");
             }
         }
-        return redirect("/advisor/loginFail");
+        
     }
 
     public static function login($request, $advisor)

@@ -5,8 +5,14 @@ namespace App\Http\Controllers\Advisor\Profile;
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use App\Models\AdvisorAuth;
+use App\Models\Answer;
+use App\Models\Career;
+use App\Models\Counseling;
+use App\Models\EducationLevel;
+use App\Models\Qualification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdvisorWithdrawalController extends Controller
@@ -37,23 +43,42 @@ class AdvisorWithdrawalController extends Controller
 
         if($advisorPK){
 
+            $nowDateTime = date('Y-m-d H:i:s');
             $advisorName = $request->advisorName ?? '';
             $advisorEmail = $request->email ?? '';
             $advisorPassword = $request->advisorPassword ?? '';
 
             if($advisorName != '' && $advisorEmail != '' && $advisorPassword != ''){
 
-                $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
-                
-                $contrastName = $getAdvisorInfo->advisorName ?? '';
-                $contrastEmail = $getAdvisorInfo->email ?? '';
-    
-                if ($advisorName == Crypt::decryptString($contrastName) && $advisorEmail == $contrastEmail){
-                    dd(1);
-    
-                }else{
-                    dd(2);
+                try{
+
+                    DB::beginTransaction();
+                    $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
+                    
+                    $contrastName = $getAdvisorInfo->advisorName ?? '';
+                    $contrastEmail = $getAdvisorInfo->email ?? '';
+                    $contrastPassword = $getAdvisorInfo->password ?? '';
+                    $passwordMatchingCheck = Hash::check($advisorPassword, $contrastPassword);
+        
+                    if ($advisorName == Crypt::decryptString($contrastName) && 
+                        $advisorEmail == $contrastEmail && $passwordMatchingCheck == true){
+                        
+                        EducationLevel::where('advisorPK', $advisorPK)->update(['isDelete' => 'Y']);        // 학력사항 삭제 처리
+                        Qualification::where('advisorPK', '=', $advisorPK)->update(['isDelete' => 'Y']);    // 자격사항 삭제 처리
+                        Career::where('advisorPK', '=', $advisorPK)->update(['isDelete' => 'Y']);           // 경력사항 삭제 처리
+                        Counseling::where('advisorPK', $advisorPK)->update(['isDelete' => 'Y']);            // 상담 내역 삭제 처리
+                        AdvisorAuth::where('advisorPK', $advisorPK)->delete();                              // 상담사 인증 정보 삭제 (hard delete)
+                        Advisor::where('advisorPK', $advisorPK)->update(['isDelete' => 'Y'], ['withdrawal' => $nowDateTime]); // 상담사 정보 삭제 처리, 탈퇴일 입력
+                            
+                        DB::commit();
+                        return redirect('/advisor/logout');
+                    }
+
+                }catch(\Exception $e){
+
                 }
+            }else{
+                return redirect('/advisor/memberWithdrawal')->with('error', '올바른 정보를 기입해주세요.');
             }
 
         }

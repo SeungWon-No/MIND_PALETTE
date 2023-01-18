@@ -40,6 +40,7 @@ class EducationLevel extends Model
                 'educationLevel.major',
                 'educationLevel.graduationStatus',
                 'educationLevel.certificateFilePath',
+                'educationLevel.isDelete',
                 'degreeCode.codeName as degree',
                 'graduationStatusCode.codeName as graduationStatus',
             )
@@ -57,7 +58,8 @@ class EducationLevel extends Model
                 'department' => $list['department'],
                 'major' => $list['major'],
                 'graduationStatus' => $list['graduationStatus'],
-                'certificateFilePath' => $list['department'],
+                'certificateFilePath' => $list['certificateFilePath'],
+                'isDelete' => $list['isDelete'],
             ];
         }
 

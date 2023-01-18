@@ -50,7 +50,7 @@ class AdvisorJoinController extends Controller{
             $advisor->phone = $request['userPhone'] ?? '';
             $di = Crypt::decryptString($request['DI']) ?? '';
             $advisor->mbAgreePK = $memberAgree->mbAgreePK;
-            //$advisor->auth = 'Y';
+            $advisor->isDelete = 'N';
             $advisor->advisorStatus = 360;
             $advisor->lastLoginDate = $nowDate;
             $advisor->updateDate = $nowDate;

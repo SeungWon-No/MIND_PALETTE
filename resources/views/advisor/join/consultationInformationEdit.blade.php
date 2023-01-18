@@ -648,7 +648,7 @@
       var agreeCheckbox = window.agreeCheckbox();
       if (agreeCheckbox == true) {
         pop.open('saveDonePop');
-        //$("#nextStepEditForm").submit();
+
       }else{
         pop.open('noAgreePolicy');
       }
