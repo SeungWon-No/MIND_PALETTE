@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Advisor\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
+use App\Models\AdvisorAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class AdvisorWithdrawalController extends Controller
 {
@@ -35,34 +37,26 @@ class AdvisorWithdrawalController extends Controller
 
         if($advisorPK){
 
-            $advisorName = $request['advisorName'];
-            $advisorEmail = $request['email'];
-            $advisorPassword = $request['advisorPassword'];
+            $advisorName = $request->advisorName ?? '';
+            $advisorEmail = $request->email ?? '';
+            $advisorPassword = $request->advisorPassword ?? '';
 
-            $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
-            
-            $contrastName = $getAdvisorInfo['advisorName'] ?? '';
-            $contrastEmail = $getAdvisorInfo->email ?? '';
-            $contrastPassword = $getAdvisorInfo['password'] ?? '';
+            if($advisorName != '' && $advisorEmail != '' && $advisorPassword != ''){
 
-            
-            if($advisorPassword == Crypt::decryptString($contrastPassword)){
-                dd(1);
-            }else{
-                dd(2);
+                $getAdvisorInfo = Advisor::findAdvisorInfo($advisorPK);
+                
+                $contrastName = $getAdvisorInfo->advisorName ?? '';
+                $contrastEmail = $getAdvisorInfo->email ?? '';
+    
+                if ($advisorName == Crypt::decryptString($contrastName) && $advisorEmail == $contrastEmail){
+                    dd(1);
+    
+                }else{
+                    dd(2);
+                }
             }
 
-            if ($advisorName == Crypt::decryptString($contrastName) && 
-                $advisorEmail == $contrastEmail && 
-                $advisorPassword == $contrastPassword){
-                dd(1);
-
-            }else{
-                dd(2);
-            }
         }
-
-        
 
     }
 

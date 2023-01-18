@@ -21,8 +21,5 @@ class AdvisorAuth extends Model
         $findAdvisorPK = json_decode(json_encode($findAdvisorEmail), true);
         return $findAdvisorPK;
     }
-
-    public static function getAdvisorAuthInfomation($advisorPK){
-        return $getAdvisorAuthInfomation = AdvisorAuth::where('advisorPK', $advisorPK)->first();
-    }
+    
 }
