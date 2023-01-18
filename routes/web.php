@@ -19,6 +19,7 @@ use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorMyCounselingListController;
 use App\Http\Controllers\Advisor\Counseling\AdvisorCounselingDetailController;
 use App\Http\Controllers\Advisor\Profile\AdvisorProfileController;
+use App\Http\Controllers\Advisor\Profile\AdvisorWithdrawalController;
 use App\Http\Controllers\Advisor\Inquiry\AdvisorInquiryController;
 
 use App\Http\Controllers\Common\FileUpload;
@@ -190,6 +191,7 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
 
         Route::resource('/profile', AdvisorProfileController::class); // 상담사 프로필
         Route::post('/profile/changePhone', [AdvisorProfileController::class,"changePhone"]); // 상담사 프로필
+        Route::resource('/memberWithdrawal', AdvisorWithdrawalController::class); // 상담사 회원탈퇴
 
         Route::resource("/counselingList", AdvisorCounselingListController::class); // 상담리스트
         Route::get("/waitingCounselingList", [AdvisorCounselingListController::class, "waitingCounselingList"]); // 상담리스트

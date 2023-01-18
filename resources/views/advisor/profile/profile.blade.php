@@ -115,7 +115,6 @@
                   </div>
                 </div>
               </div>
-              <!-- //22.12.30 수정 -->
               <div class="profile-col">
                 <div class="profile-col__heading">자격사항</div>
                 <div class="profile-col__content">
@@ -129,7 +128,7 @@
               </div>
             </div>
           </div>
-          <a href="#" class="member-out__btn">회원탈퇴 <span class="icon link-more-icon"></span></a>
+          <a href="/advisor/memberWithdrawal" class="member-out__btn">회원탈퇴 <span class="icon link-more-icon"></span></a>
         </div>
       </div>
     </div> <!-- container end-->
