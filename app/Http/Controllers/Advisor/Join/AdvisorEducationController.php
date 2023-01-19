@@ -32,8 +32,8 @@ class AdvisorEducationController extends Controller{
                     if($request['submitExtraValue'] == 'save'){ // 임시 저장
                         $advisor->advisorStatus = 360;
                     } else {    // 승인 요청
-                        //$advisor->advisorStatus = 361;
-                        $advisor->advisorStatus = 2;
+                        $advisor->advisorStatus = 361;
+                        //$advisor->advisorStatus = 2;
                     }
                 }
                 $advisor->save();
@@ -62,8 +62,8 @@ class AdvisorEducationController extends Controller{
                     'department' => $request['department'.$index],  // 학과
                     'major' => $request['major'.$index],    // 전공
                     'graduation' => (integer)$request['graduation'.$index], // 졸업여부
-                    'certificateFilePath' => $request['education-attachedFilePath'.$index],   // 첨부파일 경로
-                    'fileName' => $request['education-attachedFileName'.$index],   // 첨부파일 경로
+                    'certificateFilePath' => $request['education-attachedFilePath'.$index] ?? '',   // 첨부파일 경로
+                    'fileName' => $request['education-attachedFileName'.$index] ?? '',   // 첨부파일명
                     'createDate' => $nowDateTime,
                     'updateDate' => $nowDateTime,
                 ];
@@ -106,6 +106,12 @@ class AdvisorEducationController extends Controller{
 
             // 경력사항 INSERT
             for ($index = 1; $index <= $qualificationCount; $index++) {
+                if($request['careerType'.$index] == -1){
+                    $request['careerType' . $index] = 367;
+                }
+                if($request['employmentType'.$index] == -1){
+                    $request['employmentType' . $index] = 368;
+                }
                 $advisorCareer[$index] = [
                     'advisorPK' => session('advisorLogin')[0]['advisorPK'], // 사용자 PK (session)
                     'counselingCareer'=>$request['counselingCareer'],
@@ -130,14 +136,14 @@ class AdvisorEducationController extends Controller{
                 $career->fileName = $advisorCareer[$index]['fileName'];
                 $career->createDate = $advisorCareer[$index]['createDate'];
                 $career->updateDate = $advisorCareer[$index]['updateDate'];
+                //dd($career->employmentType);
                 $career->save();
             }
             DB::commit();
-            
             $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
             
             if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
-                return redirect('/advisor/examine');
+                return redirect('/advisor/logout')->with('error', '승인요청이 완료되었습니다.');
 
             }else{  // 임시저장
                 return redirect('/advisor/consultationInformationEdit');

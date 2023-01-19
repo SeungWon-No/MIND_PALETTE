@@ -215,7 +215,7 @@
                             <input type="hidden" id="careerType{{$careerIndex}}" name="careerType{{$careerIndex}}" value="{{$info->careerType}}"/>
                             <button class="select-box__label" type="button">{{ $codeTitle[$info->careerType] }} <span class="icon select-down-icon"></span></button>
                             <ul class="select-option__list">
-                                <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','-1')">선택</li>
+                                <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','367')">선택</li>
                                 <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','331')">현재 근무지</li>
                                 <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','332')">이전 근무지</li>
                             </ul>
@@ -229,7 +229,7 @@
                             <input type="hidden" id="employmentType{{$careerIndex}}" name="employmentType{{$careerIndex}}" value="{{$info->employmentType}}"/>
                             <button class="select-box__label" type="button">{{ $codeTitle[$info->employmentType] }} <span class="icon select-down-icon"></span></button>
                             <ul class="select-option__list">
-                                <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','-1')">근무형태</li>
+                                <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','368')">근무형태</li>
                                 <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','333')">풀타임</li>
                                 <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','334')">파트타임</li>
                             </ul>
@@ -388,7 +388,7 @@
                                         <input type="hidden" id="careerType`+careerIndex+`" name="careerType`+careerIndex+`" value="-1"/>
                                         <button class="select-box__label" type="button">선택<span class="icon select-down-icon"></span></button>
                                         <ul class="select-option__list">
-                                            <li class="select-option" onclick="changeCareerType('`+careerIndex+`','-1')">선택</li>
+                                            <li class="select-option" onclick="changeCareerType('`+careerIndex+`','367')">선택</li>
                                             <li class="select-option" onclick="changeCareerType('`+careerIndex+`','331')">현재 근무지</li>
                                             <li class="select-option" onclick="changeCareerType('`+careerIndex+`','332')">이전 근무지</li>
                                         </ul>
@@ -402,7 +402,7 @@
                                         <input type="hidden" id="employmentType`+careerIndex+`" name="employmentType`+careerIndex+`" value="-1"/>
                                         <button class="select-box__label" type="button">근무형태 <span class="icon select-down-icon"></span></button>
                                         <ul class="select-option__list">
-                                            <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','-1')">근무형태</li>
+                                            <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','368')">근무형태</li>
                                             <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','333')">풀타임</li>
                                             <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','334')">파트타임</li>
                                         </ul>

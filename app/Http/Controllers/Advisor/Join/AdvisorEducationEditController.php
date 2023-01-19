@@ -30,6 +30,8 @@ class AdvisorEducationEditController extends Controller
             "332" => "이전 근무지",
             "333" => "풀타임",
             "334" => "파트타임",
+            "367" => "선택",
+            "368" => "선택",
         ];
 
         return view("/advisor/join/consultationInformationEdit", [
@@ -60,8 +62,8 @@ class AdvisorEducationEditController extends Controller
                     if($request['submitExtraValue'] == 'save'){ // 임시 저장
                         $advisor->advisorStatus = 360;
                     } else {    // 승인 요청
-                        //$advisor->advisorStatus = 361;
-                        $advisor->advisorStatus = 2;
+                        $advisor->advisorStatus = 361;
+                        //$advisor->advisorStatus = 2;
                     }
                 }
                 $advisor->save();

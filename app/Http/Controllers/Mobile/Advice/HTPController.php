@@ -67,7 +67,7 @@ class HTPController extends Controller
                 return $this->reasonWrite($request, $counselingPK, $isClose, $pageStatus);
         }
 
-        dd($pageStatus);
+        //dd($pageStatus);
     }
 
     private function saveInformation($isClose, $pageStatus) {
