@@ -554,9 +554,22 @@
     }
 
     function submitForm($param) {
+      // 필수 항목 체크
+      var degree = $("#degree"+educationIndex).val();
+      var schoolName = $("#schoolName"+educationIndex).val();
+      var department = $("#department"+educationIndex).val();
+      var major = $("#major"+educationIndex).val();
+      var graduation = $("#graduation"+educationIndex).val();
+      var educationAttachedFilePath = $("#education-attachedFilePath"+educationIndex).val();
+
       var extraParam = $param
       var extraValue = $('#submitExtraValue').val(extraParam);
       var agreeCheckbox = window.agreeCheckbox();
+
+      if(degree == -1 || schoolName == '' || department == '' || major == '' || graduation == ''){
+        pop.opne('noEnterDataPop');
+      }
+
       if (agreeCheckbox == true) {
         pop.open('saveDonePop');
 
