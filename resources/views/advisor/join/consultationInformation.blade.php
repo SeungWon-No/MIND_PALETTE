@@ -568,6 +568,7 @@
 
       if(degree == -1 || schoolName == '' || department == '' || major == '' || graduation == ''){
         pop.open('noEnterDataPop');
+        return false;
       }
 
       if (agreeCheckbox == true) {
