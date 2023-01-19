@@ -11,7 +11,7 @@
               <div class="member-cell">
                 <div class="member-group">
                   <div class="member-label">프로필사진<em>*</em></div>
-                  <div id="profileDiv" class="upload-file__wrap" style="display:@if($advisorProfile->profilePath == "") none @else block @endif;">
+                  <div id="profileDiv" class="upload-file__wrap" style="display:flex @if($advisorProfile->profilePath == "") none @else block @endif;">
                     <div class="upload-file__photo">
                       <img id="userProfileImage" src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
                     </div>
@@ -79,7 +79,7 @@
                     <div class="form-group__label">한줄소개</div>
                     <div class="form-group__item">
                       <div class="form-group__data">
-                        <input type="text" class="form-control" placeholder="자신을 소개해주세요." value="{{ $advisorProfile ? $advisorProfile['briefIntroduction'] : '' }}">
+                        <input id="briefIntroduction" name="briefIntroduction" type="text" class="form-control" placeholder="자신을 소개해주세요." value="{{ $advisorProfile ? $advisorProfile['briefIntroduction'] : '' }}">
                       </div>
                       <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                     </div>
@@ -88,7 +88,7 @@
                     <div class="form-group__label">상세소개</div>
                     <div class="form-group__item">
                       <div class="form-group__data">
-                        <textarea class="form-textarea" placeholder="자신을 소개해주세요">{{ $advisorProfile ? $advisorProfile['detailedDescription'] : '' }}</textarea>
+                        <textarea id="detailedDescription" name="detailedDescription" class="form-textarea" placeholder="자신을 소개해주세요">{{ $advisorProfile ? $advisorProfile['detailedDescription'] : '' }}</textarea>
                       </div>
                       <p class="form-group-text">* 입력하지 않는 경우, 프로필에 공란으로 표시됩니다.</p>
                     </div>
@@ -323,8 +323,8 @@
                 </div>
                 </div>
               <div class="member-bt__btns-wrap">
-                <button onclick="validForm()" type="button" class="member-bt__btn">저장</button>
-                <button onclick="location.href='/advisor/profile';" type="button" class="member-bt__btn cancel">취소</button>
+                <button onclick="pop.open('profileEditDone')" type="button" class="member-bt__btn">저장</button>
+                <button onclick="pop.open('profileEditYet')" type="button" class="member-bt__btn cancel">취소</button>
               </div>
             </div>
           </div>
@@ -477,7 +477,7 @@
                                         <input type="hidden" id="careerType`+careerIndex+`" name="careerType`+careerIndex+`" value="-1"/>
                                         <button class="select-box__label" type="button">선택<span class="icon select-down-icon"></span></button>
                                         <ul class="select-option__list">
-                                            <li class="select-option" onclick="changeCareerType('`+careerIndex+`','-1')">선택</li>
+                                            <li class="select-option" onclick="changeCareerType('`+careerIndex+`','367')">선택</li>
                                             <li class="select-option" onclick="changeCareerType('`+careerIndex+`','331')">현재 근무지</li>
                                             <li class="select-option" onclick="changeCareerType('`+careerIndex+`','332')">이전 근무지</li>
                                         </ul>
@@ -491,7 +491,7 @@
                                         <input type="hidden" id="employmentType`+careerIndex+`" name="employmentType`+careerIndex+`" value="-1"/>
                                         <button class="select-box__label" type="button">근무형태 <span class="icon select-down-icon"></span></button>
                                         <ul class="select-option__list">
-                                            <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','-1')">근무형태</li>
+                                            <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','368')">근무형태</li>
                                             <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','333')">풀타임</li>
                                             <li class="select-option" onclick="changeEmploymentType('`+careerIndex+`','334')">파트타임</li>
                                         </ul>
@@ -724,7 +724,41 @@
         });
         $(imageObject).val("");
     }
+
+    function noSubmit(){
+      location.href = '/advisor/profile';
+    }
 </script>
     @include('advisor/common/footer')
+    <!-- 프로필 수정 완료 -->
+  <article id="profileEditDone" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            프로필 정보가 수정되었습니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="validForm()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <article id="profileEditYet" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            저장하지 않은 내용은 복구되지 않습니다.<br>
+            프로필 수정을 취소하시겠습니까?
+            <br>
+          </p>
+          <div class="pop-alert__btns-wrap">
+            <button type="button" class="pop-alert__btn pop-alert__btn--confirm" onclick="noSubmit()">확인</button>
+            <button type="button" class="pop-alert__btn pop-alert__btn--cancel" onclick="pop.close()">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
     @include('advisor/common/end')
 

@@ -43,6 +43,7 @@ class AdvisorProfileController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request);
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
 
         $counselingCareer = $request->counselingCareer ?? '';
@@ -55,6 +56,20 @@ class AdvisorProfileController extends Controller
             }
             if ($centerName != "") {
                 $advisor->centerName = $centerName;
+            }
+            $advisor->save();
+        }
+
+        $advisorBriefIntroduction = $request->briefIntroduction ?? '';
+        $advisorDetailedDescription = $request->detailedDescription ?? '';
+
+        if ($advisorBriefIntroduction != "" || $advisorDetailedDescription != "") {
+            $advisor = Advisor::find($advisorPK);
+            if ($advisorBriefIntroduction != "") {
+                $advisor->briefIntroduction = $advisorBriefIntroduction;
+            }
+            if ($advisorDetailedDescription != "") {
+                $advisor->detailedDescription = $advisorDetailedDescription;
             }
             $advisor->save();
         }
@@ -158,6 +173,8 @@ class AdvisorProfileController extends Controller
             "332" => "이전 근무지",
             "333" => "풀타임",
             "334" => "파트타임",
+            "367" => "선택",
+            "368" => "선택",
         ];
 
         return view("/advisor/profile/profileUpdate", [
