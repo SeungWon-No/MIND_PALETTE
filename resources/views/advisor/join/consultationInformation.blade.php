@@ -566,9 +566,7 @@
       var extraValue = $('#submitExtraValue').val(extraParam);
       var agreeCheckbox = window.agreeCheckbox();
 
-      if(degree == -1 || schoolName == '' || department == '' || major == '' || graduation == -1){
-        console.log(graduation);
-        return false;
+      if(degree == '-1' || schoolName == '' || department == '' || major == '' || graduation == '-1'){
         pop.open('noEnterDataPop');
         return false;
       }
