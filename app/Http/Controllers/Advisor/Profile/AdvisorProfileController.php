@@ -127,6 +127,12 @@ class AdvisorProfileController extends Controller
             // 경력사항 INSERT
             $careerCount = $request->careerCount ?? 0;
             for ($index = 1; $index <= $careerCount; $index++) {
+                if($request['careerType'.$index] == -1){
+                    $request['careerType' . $index] = 367;
+                }
+                if($request['employmentType'.$index] == -1){
+                    $request['employmentType' . $index] = 368;
+                }
                 $careerPK = $request['careerPK' . $index] ?? '';
 
                 if ($careerPK == '') {

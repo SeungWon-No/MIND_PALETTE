@@ -275,7 +275,7 @@
                             <input type="hidden" id="careerType{{$careerIndex}}" name="careerType{{$careerIndex}}" value="{{$info->careerType}}"/>
                             <button class="select-box__label" type="button">{{ $codeTitle[$info->careerType] }} <span class="icon select-down-icon"></span></button>
                             <ul class="select-option__list">
-                                <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','-1')">선택</li>
+                                <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','367')">선택</li>
                                 <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','331')">현재 근무지</li>
                                 <li class="select-option" onclick="changeCareerType('{{$careerIndex}}','332')">이전 근무지</li>
                             </ul>
@@ -289,7 +289,7 @@
                             <input type="hidden" id="employmentType{{$careerIndex}}" name="employmentType{{$careerIndex}}" value="{{$info->employmentType}}"/>
                             <button class="select-box__label" type="button">{{ $codeTitle[$info->employmentType] }} <span class="icon select-down-icon"></span></button>
                             <ul class="select-option__list">
-                                <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','-1')">근무형태</li>
+                                <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','368')">근무형태</li>
                                 <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','333')">풀타임</li>
                                 <li class="select-option" onclick="changeEmploymentType('{{$careerIndex}}','334')">파트타임</li>
                             </ul>
@@ -323,7 +323,7 @@
                 </div>
                 </div>
               <div class="member-bt__btns-wrap">
-                <button onclick="pop.open('profileEditDone')" type="button" class="member-bt__btn">저장</button>
+                <button onclick="javascript:validForm();" type="button" class="member-bt__btn">저장</button>
                 <button onclick="pop.open('profileEditYet')" type="button" class="member-bt__btn cancel">취소</button>
               </div>
             </div>
@@ -367,8 +367,27 @@
 </script>
 <script>
     function validForm() {
-        document.profileUpdate.submit();
+      // 필수 학력사항 체크 
+      var degree = $("#degree"+educationIndex).val();
+      var schoolName = $("#schoolName"+educationIndex).val();
+      var department = $("#department"+educationIndex).val();
+      var major = $("#major"+educationIndex).val();
+      var graduation = $("#graduation"+educationIndex).val();
+
+      var issuance = $("#issuance"+qualificationIndex).val();
+      var licenseTitle = $("#licenseTitle"+qualificationIndex).val();
+
+      if(degree == '-1' || schoolName == '' || department == '' || major == '' || graduation == '-1'){
+        pop.open('noEnterDataPop');
+        return false;
+      }
+      pop.open('profileEditDone');
     }
+
+    function submitProfileUpdateForm(){
+      document.profileUpdate.submit();
+    }
+
     let educationIndex = parseInt("{{count($advisorEducationInfos)}}");
     let qualificationIndex = parseInt("{{count($advisorQualificationInfo)}}");
     let careerIndex = parseInt("{{count($advisorCareerInfo)}}");
@@ -730,6 +749,19 @@
     }
 </script>
     @include('advisor/common/footer')
+    <!-- 필수항목 미입력-->
+  <article id="noEnterDataPop" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            필수 항목을 입력해주세요.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
     <!-- 프로필 수정 완료 -->
   <article id="profileEditDone" class="layer-pop__wrap">
     <div class="layer-pop__parent">
@@ -738,7 +770,7 @@
           <p class="pop-alert__desc">
             프로필 정보가 수정되었습니다.
           </p>
-          <button type="button" class="pop-alert__btn" onclick="validForm()">확인</button>
+          <button type="button" class="pop-alert__btn" onclick="javascript:submitProfileUpdateForm()">확인</button>
         </div>
       </div>
     </div>

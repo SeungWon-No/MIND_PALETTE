@@ -643,6 +643,18 @@
     }
 
     function submitForm($param) {
+      // 필수 학력사항 체크 
+      var degree = $("#degree"+educationIndex).val();
+      var schoolName = $("#schoolName"+educationIndex).val();
+      var department = $("#department"+educationIndex).val();
+      var major = $("#major"+educationIndex).val();
+      var graduation = $("#graduation"+educationIndex).val();
+
+      if(degree == '-1' || schoolName == '' || department == '' || major == '' || graduation == '-1'){
+        pop.open('noEnterDataPop');
+        return false;
+      }
+      
       var extraParam = $param
       var extraValue = $('#submitExtraValue').val(extraParam);
       var agreeCheckbox = window.agreeCheckbox();
