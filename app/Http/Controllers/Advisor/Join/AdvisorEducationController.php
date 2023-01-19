@@ -63,7 +63,7 @@ class AdvisorEducationController extends Controller{
                     'major' => $request['major'.$index],    // 전공
                     'graduation' => (integer)$request['graduation'.$index], // 졸업여부
                     'certificateFilePath' => $request['education-attachedFilePath'.$index] ?? '',   // 첨부파일 경로
-                    'fileName' => $request['education-attachedFileName'.$index] ?? '',   // 첨부파일명
+                    'fileName' => $request['education-attachedFileName'.$index] ?? '첨부하기',   // 첨부파일명
                     'createDate' => $nowDateTime,
                     'updateDate' => $nowDateTime,
                 ];
@@ -89,7 +89,7 @@ class AdvisorEducationController extends Controller{
                     'issuingAgency'=>$request['issuance'.$index],
                     'certificateName'=>$request['licenseTitle'.$index],
                     'certificateFilePath'=>$request['qualification-attachedFilePath'.$index],
-                    'fileName' => $request['qualification-attachedFileName'.$index],   // 첨부파일 경로
+                    'fileName' => $request['qualification-attachedFileName'.$index] ?? '첨부하기',   // 첨부파일 경로
                     'createDate' => $nowDateTime,
                     'updateDate' => $nowDateTime,
                 ];
@@ -119,8 +119,8 @@ class AdvisorEducationController extends Controller{
                     'companyName'=>$request['companyName'.$index],
                     'employmentType'=>$request['employmentType'.$index],
                     'assignedTask'=>$request['assignedTask'.$index],
-                    'certificateFilePath'=>$request['career-attachedFilePath'.$index],
-                    'fileName' => $request['career-attachedFileName'.$index],   // 첨부파일 경로
+                    'certificateFilePath'=>$request['career-attachedFilePath'.$index], // 첨부파일 경로
+                    'fileName' => $request['career-attachedFileName'.$index] ?? '첨부하기',  // 파일명
                     'createDate' => $nowDateTime,
                     'updateDate' => $nowDateTime,
                 ];
