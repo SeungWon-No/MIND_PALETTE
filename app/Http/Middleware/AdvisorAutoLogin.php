@@ -13,7 +13,6 @@ class AdvisorAutoLogin
     public function handle(Request $request, Closure $next)
     {
         if ( Cookie::has('AD_AKTV') && !$request->session()->has("advisorLogin") ) {
-            dd(2123123);
             $advisorPK = Cookie::get('AD_AKTV');
 
             $advisor = Advisor::findAdvisorInfo($advisorPK);
