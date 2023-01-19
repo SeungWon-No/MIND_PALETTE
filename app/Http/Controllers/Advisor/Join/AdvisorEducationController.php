@@ -32,8 +32,8 @@ class AdvisorEducationController extends Controller{
                     if($request['submitExtraValue'] == 'save'){ // 임시 저장
                         $advisor->advisorStatus = 360;
                     } else {    // 승인 요청
-                        $advisor->advisorStatus = 361;
-                        //$advisor->advisorStatus = 2;
+                        //$advisor->advisorStatus = 361;
+                        $advisor->advisorStatus = 2;
                     }
                 }
                 $advisor->save();
@@ -142,7 +142,9 @@ class AdvisorEducationController extends Controller{
             DB::commit();
             $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
             
-            if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
+            //if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
+                //return redirect('/advisor/examine');
+            if($getAdvisorStatus['advisorStatus'] == 2){ // 승인요청
                 return redirect('/advisor/logout')->with('error', '승인요청이 완료되었습니다.');
 
             }else{  // 임시저장
