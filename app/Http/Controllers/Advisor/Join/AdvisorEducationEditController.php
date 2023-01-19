@@ -147,10 +147,10 @@ class AdvisorEducationEditController extends Controller
         }
         $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
         
-        // if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
-        //     return redirect('/advisor/examine');
-        if($getAdvisorStatus['advisorStatus'] == 2){ // 승인요청
-            return redirect('/advisor/logout')->with('error', '승인요청이 완료되었습니다.');
+        if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
+            return redirect('/advisor/examine');
+        // if($getAdvisorStatus['advisorStatus'] == 2){ // 승인요청
+        //     return redirect('/advisor/logout')->with('error', '승인요청이 완료되었습니다.');
 
         }else{  // 임시저장
             return redirect('/advisor/consultationInformationEdit');
