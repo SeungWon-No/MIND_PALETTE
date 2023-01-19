@@ -46,9 +46,21 @@ class AdvisorEducationEditController extends Controller
     public function store(Request $request)
     {
         $advisorPK = $request->session()->get('advisorLogin')[0]["advisorPK"];
+        $counselingCareer = $request->counselingCareer ?? '';
+        $centerName = $request->centerName ?? '';
 
-            $counselingCareer = $request->counselingCareer ?? '';
-            $centerName = $request->centerName ?? '';
+            $advisor = Advisor::find($advisorPK);
+
+            if($request['submitExtraValue']){
+                if($request['submitExtraValue'] == 'save'){ // 임시 저장
+                    $advisor->advisorStatus = 360;
+
+                } else {    // 승인 요청
+                    //$advisor->advisorStatus = 361;
+                    $advisor->advisorStatus = 2;
+                }
+            }
+            $advisor->save();
 
             if ($counselingCareer != "" || $centerName != "") {
                 $advisor = Advisor::find($advisorPK);
@@ -57,14 +69,6 @@ class AdvisorEducationEditController extends Controller
                 }
                 if ($centerName != "") {
                     $advisor->centerName = $centerName;
-                }
-                if (true) {
-                    if($request['submitExtraValue'] == 'save'){ // 임시 저장
-                        $advisor->advisorStatus = 360;
-                    } else {    // 승인 요청
-                        //$advisor->advisorStatus = 361;
-                        $advisor->advisorStatus = 2;
-                    }
                 }
                 $advisor->save();
             }

@@ -60,6 +60,13 @@
 </html>
 <script src="../advisorAssets/assets/js/common.js?v={{JS_VERSION}}"></script>
 <script>
+
+  $(window).keypress(function(e){
+        if(e.keyCode === 13) {
+          submitForm();
+        }
+  });
+
   function autoLoginCheckConfirm(){ // 자동로그인 유지 팝업에서 '확인'버튼 클릭 시 호출
     return true;
   }
