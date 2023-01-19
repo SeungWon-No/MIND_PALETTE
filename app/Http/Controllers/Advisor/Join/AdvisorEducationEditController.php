@@ -92,7 +92,7 @@ class AdvisorEducationEditController extends Controller
             $educationLevel->major = $request['major' . $index];
             $educationLevel->graduationStatus = $request['graduation' . $index];
             $educationLevel->certificateFilePath = $request['education-attachedFilePath' . $index];
-            $educationLevel->fileName = $request['education-attachedFileName' . $index];
+            $educationLevel->fileName = $request['education-attachedFileName' . $index] ?? '첨부하기';
             $educationLevel->updateDate = $nowDateTime;
             $educationLevel->createDate = $nowDateTime;
             $educationLevel->save();
@@ -115,7 +115,7 @@ class AdvisorEducationEditController extends Controller
             $qualification->issuingAgency = $request['issuance' . $index];
             $qualification->certificateName = $request['licenseTitle' . $index];
             $qualification->certificateFilePath = $request['qualification-attachedFilePath' . $index];
-            $qualification->fileName = $request['qualification-attachedFileName' . $index];
+            $qualification->fileName = $request['qualification-attachedFileName' . $index] ?? '첨부하기';
             $qualification->updateDate = $nowDateTime;
             $qualification->createDate = $nowDateTime;
             $qualification->save();
@@ -139,7 +139,7 @@ class AdvisorEducationEditController extends Controller
             $career->employmentType = $request['employmentType' . $index];
             $career->assignedTask = $request['assignedTask' . $index];
             $career->certificateFilePath = $request['career-attachedFilePath' . $index];
-            $career->fileName = $request['career-attachedFileName' . $index];
+            $career->fileName = $request['career-attachedFileName' . $index] ?? '첨부하기';
             $career->createDate = $nowDateTime;
             $career->updateDate = $nowDateTime;
             $career->save();
