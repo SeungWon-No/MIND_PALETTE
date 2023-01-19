@@ -567,6 +567,8 @@
       var agreeCheckbox = window.agreeCheckbox();
 
       if(degree == -1 || schoolName == '' || department == '' || major == '' || graduation == -1){
+        console.log(graduation);
+        return false;
         pop.open('noEnterDataPop');
         return false;
       }
