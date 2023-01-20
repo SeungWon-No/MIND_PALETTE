@@ -47,6 +47,9 @@
             <div class="user-info__cell">
               <div class="user-profile__photo">
                 @if(isset($advisorProfile))
+                  @if($advisorProfile->profilePath)
+                      <img id="userProfileImage" src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
+                  @endif
                 <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="user-profile__img">
                 @endif
               </div>
