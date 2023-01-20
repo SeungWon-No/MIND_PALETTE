@@ -5,6 +5,9 @@
           <div class="profile-wrapper">
             <div class="porfile-row-1">
               <div class="profile-row__photo">
+                @if($advisorProfile->profilePath)
+                <img id="userProfileImage" src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
+                @endif
                 <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="profile-row__img">
               </div>
               <div class="profile-row__name">{{$advisorProfile['advisorName']}} 상담사</div>
