@@ -87,7 +87,7 @@
               <div class="form-group__item">
                 <div class="form-group__data">
                   <!-- 패스 인증했을때 form-control에 클래스 confirm 생성-->
-                  <input type="text" class="form-control name confirm" placeholder="변경 불가하니 정확히 입력해주세요."> <!-- 인증 후 자동 입력이면 default 문구 변경 필요할 것 같습니다-->
+                  <input type="text" name="displayName" class="form-control name confirm" placeholder="변경 불가하니 정확히 입력해주세요." disabled> <!-- 인증 후 자동 입력이면 default 문구 변경 필요할 것 같습니다-->
                 </div>
               </div>
             </div>
@@ -96,7 +96,7 @@
               <div class="form-group__item">
                 <div class="form-group__data">
                   <!-- 패스 인증했을때 form-control에 클래스 confirm 생성-->
-                  <input type="tel" class="form-control wd-239 confirm" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)"> <!-- 인증 후 자동 입력이면 default 문구 변경 필요할 것 같습니다-->
+                  <input type="tel" name="displayPhone" class="form-control wd-239 confirm" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)" disabled> <!-- 인증 후 자동 입력이면 default 문구 변경 필요할 것 같습니다-->
                 </div>
               </div>
             </div>
@@ -195,18 +195,18 @@
       //return alert('비밀번호를 확인해주세요.');
 
     }else if(validConfirmUserPasswordResult == false ){
-      return pop.open('alertDataPop'); 
+      return pop.open('alertDataPop');
       //return alert('비밀번호가 일치하지 않습니다.');
 
     }else if(validAuthPhoneResult == false){
-      return pop.open('authPhone'); 
+      return pop.open('authPhone');
 
     }else if(validServiceAgreeCheckboxResult == false){
-      return pop.open('noAgreePolicy'); 
+      return pop.open('noAgreePolicy');
       //return alert('마음팔레트 서비스 이용약관에 동의해주세요.');
 
     }else if(validPolicyAgreeCheckboxResult == false){
-      return pop.open('noAgreePolicy'); 
+      return pop.open('noAgreePolicy');
       //return alert('개인정보 수집 및 이용에 동의합니다.');
 
     }else{
@@ -215,7 +215,7 @@
 
   }
 
-  // 휴대폰 인증 유효성 체크 
+  // 휴대폰 인증 유효성 체크
   function phoneAuth(){
     var authUserName = $('input[name=userName]').val();
     var authUserPhone= $('input[name=userPhone]').val();
@@ -290,6 +290,7 @@
 
   // 비밀번호 유효성 체크
   function validPasswordCheck() {
+
     var password = $('#userPassword').val();
     var regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{6,14}$/;
     var checkResult = regExp.test(password);

@@ -12,6 +12,12 @@
 		opener.document.joinForm.DI.value          = "{{$authResult['DI']}}";
 		opener.document.joinForm.CI.value          = "{{$authResult['CI']}}";
 
+        try {
+            opener.document.joinForm.displayName.value = "{{$authResult['displayName']}}";
+            opener.document.joinForm.displayPhone.value = "{{$authResult['displayPhone']}}";
+        } catch (e) {
+        }
+
 		window.opener.authSuccess();
 		self.close();
 	</script>

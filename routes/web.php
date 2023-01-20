@@ -51,8 +51,8 @@ use App\Http\Controllers\Mobile\Mypage\PayListController;
 use App\Http\Controllers\Mobile\Mypage\WithdrawalController;
 use Illuminate\Support\Facades\Route;
 
-const CSS_VERSION = "5";
-const JS_VERSION = "5";
+const CSS_VERSION = "6";
+const JS_VERSION = "6";
 
 Route::middleware(['autoLogin'])->group(function () {
     Route::get('/', IndexController::class);

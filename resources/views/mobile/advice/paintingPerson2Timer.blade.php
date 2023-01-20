@@ -63,7 +63,7 @@
                                                 00:00
                                             @endif
                                         </div>
-                                        <button type="button" onclick="clearTimer()" class="btn-draw-timer-reset">
+                                        <button type="button" onclick="pop.open('resetTimer')" class="btn-draw-timer-reset">
                                             <span class="icon icon-reset-gray"></span>
                                         </button>
                                     </div>
@@ -125,6 +125,24 @@
         </div>
     </form>
 </section>
+<article id="resetTimer" class="layer-pop-wrap">
+    <div class="layer-pop-parent">
+        <div class="layer-pop-children">
+            <div class="pop-data alert-pop-data">
+                <div class="pop-body">
+                    <div class="msg-txt">
+                        <div class="txt">시간 및 답변은 그림 등록 단계에서 수정 가능합니다. 새로고침을 진행하시겠습니까?</div>
+                    </div>
+                    <div class="pop-body-btns">
+                        <button type="button" class="btn btn-large-size btn-confirm" onclick="clearTimer();pop.close();">새로고침하기</button>
+                        <button type="button" class="btn btn-large-size btn-cancel" onclick="pop.close();">취소하기</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-pop-close" onclick="pop.close();">닫기</button>
+            </div>
+        </div>
+    </div>
+</article>
 <script>
     function popupSaveAction() {
         checkSubmit("true");

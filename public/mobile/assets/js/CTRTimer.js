@@ -54,8 +54,8 @@ function clearTimer() {
 
     clearFrom();
 
+    timeCount = 0;
     if ( timerInterval != null ) {
-        timeCount = 0;
         clearInterval(timerInterval);
         timerInterval = null;
     }
