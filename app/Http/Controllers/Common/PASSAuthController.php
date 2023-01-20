@@ -163,6 +163,8 @@ class PASSAuthController extends Controller
                     "CI" => $CI,
                     "name" => $RSLT_NAME,
                     "phone" => $TEL_NO,
+                    "displayName" => $output['RSLT_NAME'],
+                    "displayPhone" => $output['TEL_NO'],
                 ];
 
                 $isSuccess = true;
