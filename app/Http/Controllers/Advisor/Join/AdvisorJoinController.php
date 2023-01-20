@@ -75,6 +75,7 @@ class AdvisorJoinController extends Controller{
     }
 
     public function memberAuthFind(Request $request) {
+        dd($request);
         $CI = $request->CI ?? '';
 
         if ($CI == "") {
