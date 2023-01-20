@@ -83,6 +83,24 @@
                 </div>
             </div>
             <div class="form-group join">
+              <div class="member-label">이름</div>
+              <div class="form-group__item">
+                <div class="form-group__data">
+                  <!-- 패스 인증했을때 form-control에 클래스 confirm 생성-->
+                  <input type="text" class="form-control name confirm" placeholder="변경 불가하니 정확히 입력해주세요."> <!-- 인증 후 자동 입력이면 default 문구 변경 필요할 것 같습니다-->
+                </div>
+              </div>
+            </div>
+            <div class="form-group join">
+              <div class="member-label">휴대폰 번호</div>
+              <div class="form-group__item">
+                <div class="form-group__data">
+                  <!-- 패스 인증했을때 form-control에 클래스 confirm 생성-->
+                  <input type="tel" class="form-control wd-239 confirm" placeholder="휴대폰번호 8자리를 입력하세요. (“-”제외)"> <!-- 인증 후 자동 입력이면 default 문구 변경 필요할 것 같습니다-->
+                </div>
+              </div>
+            </div>
+            <div class="form-group join">
                 <div class="member-label">실명인증</div>
                 <p class="form-group-text pass">
                   * 연락 가능한 휴대전화 번호를 입력해주세요.
@@ -353,7 +371,7 @@
               }
           }
       });
-      console.log(data);
+      //console.log(data);
       pop.open('authPhoneSuccess');
   }
 
