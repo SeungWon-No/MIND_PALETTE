@@ -91,7 +91,9 @@ class AdvisorJoinController extends Controller{
 
         $result = [
             "status" => "success",
-            "message" => ""
+            "message" => "",
+            "userName" => Crypt::decryptString($advisor->advisorName),
+            "userPhone" => Crypt::decryptString($advisor->phone),
         ];
 
         if ($advisor) {
