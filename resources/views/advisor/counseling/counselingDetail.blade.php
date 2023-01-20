@@ -240,7 +240,7 @@
                       </div>
                       <div class="kid-info__item">
                         <div class="kid-info__label">학교</div>
-                        <div class="kid-info__content">{{($clientInfo['counselorSchool'] == "") ? "-" : $scoolCode[$clientInfo['counselorSchool']]}}</div>
+                        <div class="kid-info__content">{{($clientInfo['counselorSchool'] == "") ? "-" : $schoolCode[$clientInfo['counselorSchool']]}}</div>
                       </div>
                     </div>
                     <div class="kid-info__item-wrap">
