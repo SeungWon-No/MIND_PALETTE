@@ -732,7 +732,7 @@
                     $("#"+type+"-attachedFilePath"+imageIndex).val(data.filePath);
                     $("#"+type+"-attachedFileName"+imageIndex).val(data.fileName);
                     $("#"+type+"-attachedDisplayName"+imageIndex).html(data.fileName);
-                    location.reload();
+
                 } else {
                     console.log(data.message);
                 }
