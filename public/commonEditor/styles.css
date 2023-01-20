@@ -13,7 +13,9 @@
 	--ck-sample-editor-min-height: 500px;
 	--ck-sample-editor-z-index: 10;
 }
-
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    box-sizing: border-box;
+}
 /* --------- EDITOR STYLES  ---------------------------------------------------------------------------------------- */
 
 .editor__editable,
