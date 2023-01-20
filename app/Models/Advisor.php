@@ -107,6 +107,7 @@ class Advisor extends Model
     public static function pagination($items){
         $pagination = DB::table('advisor')
         ->select('advisorPK', 'advisorName', 'briefIntroduction', 'profilePath')
+        ->where('isDelete', '=', 'N')
         ->paginate($items);
 
         $advisorList = json_decode(json_encode($pagination), true);
