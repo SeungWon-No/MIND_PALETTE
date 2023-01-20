@@ -155,7 +155,7 @@ use Illuminate\Support\Facades\Crypt;
                                         @foreach($advisor as $advisorRow)
                                         <div class="card-item card-user">
                                             <div class="thumb-wrap">
-                                                <div class="thumb"><img src="{{URL::asset('/storage/image/profile/'.$advisorRow->profilePath)}}" alt=""></div>
+                                                <div class="thumb"><img src="{{URL::asset('/storage/image/profile/'.$advisorRow->profilePath)}}" onerror="this.src='/advisorAssets/assets/images/user-profile.jpg'" alt=""></div>
                                             </div>
                                             <div class="item-info">
                                                 <div class="item-info-inner">
