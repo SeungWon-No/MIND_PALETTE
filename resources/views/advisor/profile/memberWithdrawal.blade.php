@@ -67,8 +67,12 @@
         if (validServiceAgreeCheckboxResult == false){
           return pop.open('noAgreePolicy');
         }else{
-          $('#deleteForm').submit();
+          return pop.open('memberWithdrawal');
         }
+      }
+
+      function submitMemberWithdrawal(){
+        $('#deleteForm').submit();
       }
     </script>
     <!-- 약관 미동의 시 -->
@@ -80,6 +84,19 @@
             필수 약관 동의가 필요합니다.
           </p>
           <button type="button" class="pop-alert__btn" onclick="pop.close()">확인</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <article id="memberWithdrawal" class="layer-pop__wrap">
+    <div class="layer-pop__parent">
+      <div class="layer-pop__children">
+        <div class="layer-pop__alert">
+          <p class="pop-alert__desc">
+            탈퇴 완료<br>
+            이용해 주셔서 감사합니다.
+          </p>
+          <button type="button" class="pop-alert__btn" onclick="submitMemberWithdrawal()">확인</button>
         </div>
       </div>
     </div>
