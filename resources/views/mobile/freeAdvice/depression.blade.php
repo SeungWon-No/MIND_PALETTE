@@ -8,7 +8,11 @@
 ])
 <script>
     function pageClose(){
+        @if(session()->has('login'))
         pop.open('savePop');
+        @else
+        pop.open('closePop');
+        @endif
     }
 </script>
 <section id="container" class="page-body">
@@ -92,6 +96,24 @@
         </div>
     </form>
 </section>
+<article id="closePop" class="layer-pop-wrap">
+    <div class="layer-pop-parent">
+        <div class="layer-pop-children">
+            <div class="pop-data alert-pop-data">
+                <div class="pop-body">
+                    <div class="msg-txt">
+                        <div class="txt">검사를 종료하시겠습니까? 종료하시면 입력된 내용은 삭제됩니다.</div>
+                    </div>
+                    <div class="pop-body-btns">
+                        <button type="button" class="btn btn-large-size btn-confirm" onclick="location.href='/'">확인</button>
+                        <button type="button" class="btn btn-large-size btn-cancel" onclick="pop.close();">취소</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-pop-close" onclick="pop.close();">닫기</button>
+            </div>
+        </div>
+    </div>
+</article>
 <script>
     checkFormSubmit();
     $(".q-radio-box").on('click',function (){
