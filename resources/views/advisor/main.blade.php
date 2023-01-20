@@ -118,7 +118,7 @@
               <div class="expert-item">
                 <div class="expert-item__head">
                   <div class="expert-profile__photo">
-                    <img src="../advisorAssets/assets/images/user-profile.jpg" alt="" class="expert-profile__img">
+                    <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="expert-profile__img">
                   </div>
                   <div class="expert-profile">
                     <div class="expert-name">{{$list['advisorName']}}</div>

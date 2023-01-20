@@ -69,7 +69,8 @@ class Advisor extends Model
                 'ratingCount',
                 'centerName',
                 'career',
-                'detailedDescription'
+                'detailedDescription',
+                'advisorStatus'
             )
             ->where('advisorPK', '=', $advisorPK)
             ->get()->first();
@@ -105,7 +106,7 @@ class Advisor extends Model
 
     public static function pagination($items){
         $pagination = DB::table('advisor')
-        ->select('advisorPK', 'advisorName', 'briefIntroduction')
+        ->select('advisorPK', 'advisorName', 'briefIntroduction', 'profilePath')
         ->paginate($items);
 
         $advisorList = json_decode(json_encode($pagination), true);
@@ -113,6 +114,7 @@ class Advisor extends Model
         foreach($advisorList['data'] as $key => $list){
             $advisorList['data'][$key] = [
                 'advisorPK' => $list['advisorPK'],
+                'profilePath' => $list['profilePath'],
                 'advisorName' => Crypt::decryptString($list['advisorName']),
                 'briefIntroduction' => $list['briefIntroduction'],
             ];
