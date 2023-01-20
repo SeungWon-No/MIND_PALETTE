@@ -742,6 +742,7 @@
             }
         });
         $(imageObject).val("");
+        window.location.reload(true);
     }
 
     function noSubmit(){
