@@ -1,9 +1,18 @@
 @include('/mobile/common/start')
 @include('/mobile/common/header',[
     "isShowBackButton" => true,
-    "isShowCloseButton" => false,
+    "isShowCloseButton" => true,
     "title" => "무료 상담 결과"
 ])
+<script>
+    function pageClose(){
+        @if(session()->has('login'))
+            location.href = '/';
+        @else
+            pop.open('loginPop');
+        @endif
+    }
+</script>
 <section id="container" class="page-body">
     <div class="page-contents">
         <div class="advice-view">
@@ -133,5 +142,22 @@
         </div>
     </div>
 </section>
+<article id="loginPop" class="layer-pop-wrap">
+    <div class="layer-pop-parent">
+        <div class="layer-pop-children">
+            <div class="pop-data alert-pop-data">
+                <div class="pop-body">
+                    <div class="msg-txt">
+                        <div class="txt">결과를 저장하고 싶으신가요? 로그인 시 현재 결과를 기록할 수 있습니다.</div>
+                    </div>
+                    <div class="pop-body-btns">
+                        <button type="button" class="btn btn-large-size btn-confirm" onclick="location.href='/login'">로그인</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-pop-close" onclick="pop.close();">닫기</button>
+            </div>
+        </div>
+    </div>
+</article>
 @include('/mobile/common/end')
 
