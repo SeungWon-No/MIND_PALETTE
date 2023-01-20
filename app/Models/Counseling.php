@@ -31,6 +31,14 @@ class Counseling extends Model
         return Counseling::select(DB::raw("'PAY' as type, counselingPK as PK"),"counselorName","counselingStatus","updateDate")
             ->where('memberPK','=',$userPK)->union($freeCounseling)
             ->orderBy('updateDate', 'DESC')
+            ->get();
+    }
+
+    public static function findCounselingLimit($userPK) {
+        $freeCounseling = CounselingTemplate::findFreeCounselingResult($userPK);
+        return Counseling::select(DB::raw("'PAY' as type, counselingPK as PK"),"counselorName","counselingStatus","updateDate")
+            ->where('memberPK','=',$userPK)->union($freeCounseling)
+            ->orderBy('updateDate', 'DESC')
             ->offset(0)
             ->limit(10)
             ->get();

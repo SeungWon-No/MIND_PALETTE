@@ -21,7 +21,7 @@ class IndexController extends Controller
 
         if ($isLogin) {
             $memberPK = $request->session()->get('login')[0]["memberPK"];
-            $counselingRow = Counseling::findAllCounseling($memberPK);
+            $counselingRow = Counseling::findCounselingLimit($memberPK);
             $counselingCount = $counselingRow->count();
             $HTPImageRow = Answer::findHTPImageRow($memberPK);
         }
