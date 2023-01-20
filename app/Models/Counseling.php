@@ -449,6 +449,7 @@ class Counseling extends Model
                              "counseling.counselorName",
                              "counseling.counselorBirthday",
                              "codeGender.codeName as counselorGender",
+                             "counseling.counselorSchool",
                              "counseling.hobby",
                              "counseling.familyRelations1",
                              "counseling.familyRelations2",
