@@ -36,6 +36,9 @@
               <div class="expert-item">
                 <div class="expert-item__head">
                   <div class="expert-profile__photo">
+                  @if(isset($list['profilePath']))
+                      <img id="userProfileImage" src="{{URL::asset('/storage/image/profile/'.$list['profilePath'])}}" alt="" class="upload-file__img">
+                  @endif
                   <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="account-profile__img">
                   </div>
                   <div class="expert-profile">
