@@ -69,7 +69,8 @@ class Advisor extends Model
                 'ratingCount',
                 'centerName',
                 'career',
-                'detailedDescription'
+                'detailedDescription',
+                'advisorStatus'
             )
             ->where('advisorPK', '=', $advisorPK)
             ->get()->first();
