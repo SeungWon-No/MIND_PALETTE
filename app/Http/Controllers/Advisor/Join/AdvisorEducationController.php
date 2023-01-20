@@ -144,14 +144,15 @@ class AdvisorEducationController extends Controller{
             }
             DB::commit();
             $getAdvisorStatus = Advisor::getAdvisorStatus($advisorPK);
-            
-            // if($getAdvisorStatus['advisorStatus'] == 361){ // 승인요청
-            //     return redirect('/advisor/examine');
-            if($getAdvisorStatus['advisorStatus'] == 2){ // 승인요청
-                return redirect('/advisor/logout')->with('error', '승인요청이 완료되었습니다.');
 
-            }else{  // 임시저장
+            if ($getAdvisorStatus['advisorStatus'] == 360) { // 임시저장
                 return redirect('/advisor/consultationInformationEdit');
+
+            }else if ($getAdvisorStatus['advisorStatus'] == 361) { // 승인요청
+                return redirect('/advisor/examine');
+
+            }else{  // todo : 테스트를 위해 승인요청 단계없이 바로 상태값을 '2'로 변경하도록 하고있음, 이 후 로그아웃 처리
+                return redirect('/advisor/logout')->with('error', '승인요청이 완료되었습니다.');
             }
         }catch(\Exception $e){
 
