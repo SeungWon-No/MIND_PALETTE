@@ -91,7 +91,7 @@ class AdvisorJoinController extends Controller{
 
         $result = [
             "status" => "success",
-            "message" => ""
+            "message" => "",
         ];
 
         if ($advisor) {
