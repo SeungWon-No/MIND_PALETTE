@@ -240,6 +240,9 @@
                       </div>
                       <div class="kid-info__item">
                         <div class="kid-info__label">학교</div>
+                        @php
+                        print_r($schoolCode);
+                        @endphp
                         <div class="kid-info__content">{{($clientInfo['counselorSchool'] == "") ? "-" : $schoolCode[$clientInfo['counselorSchool']]}}</div>
                       </div>
                     </div>
