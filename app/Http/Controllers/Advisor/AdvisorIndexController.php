@@ -49,7 +49,7 @@ class AdvisorIndexController extends Controller
         $dangerCount = $this->counseling->getDangerCounselingCount();
         $impossibleCount = $this->counseling->getImpossibleCounselingCount();
         $myCompleteCount = $this->counseling->getMyCompleteCounselingCount($advisorPK);
-        $counselingList = $this->counseling->pagination(); // 전체 상담 리스트
+        $counselingList = $this->counseling->pagination(15); // 전체 상담 리스트
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
         $advisorList = $this->advisor->pagination(3); // 상담사 리스트
 
