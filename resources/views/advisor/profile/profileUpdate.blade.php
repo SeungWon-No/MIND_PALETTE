@@ -17,7 +17,8 @@
                     </div>
                     <div class="upload-file__text">
                       <div class="upload-file">
-                        현재사진:<span class="upload-file__name">{{(isset($advisorProfile)) ? $advisorProfile['profilePath'] : ""}}</span>
+                        <!-- 현재사진:<span class="upload-file__name">{{(isset($advisorProfile)) ? $advisorProfile['profilePath'] : ""}}</span> -->
+                        현재사진<span class="upload-file__name"></span>
                       </div>
                       <p class="member-s__text">권장 사이즈와 사진 사이즈 다를 경우, 사진이 일부 잘리거나 변형 될 수 있습니다.</p>
                     </div>
