@@ -127,6 +127,7 @@ class Advisor extends Model
     public static function advisorListOrderBy($items, $orderByOption){
         $pagination = DB::table('advisor')
         ->select('advisorPK', 'advisorName', 'briefIntroduction')
+        ->where('isDelete', '=', 'N')
         ->orderBy('createDate', $orderByOption)
         ->paginate($items);
 
