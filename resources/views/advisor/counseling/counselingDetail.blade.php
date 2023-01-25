@@ -820,7 +820,7 @@
 </article>
 <script>
   $(function(){
-      $("#myCounselingList").addClass("active");
+      $("#counselingList").addClass("active");
   });
 
     let timerInterval = null;
