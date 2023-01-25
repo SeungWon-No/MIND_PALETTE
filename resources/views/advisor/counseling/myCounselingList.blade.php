@@ -11,7 +11,7 @@
               <a href="/advisor/myWarningCounseling" id="myWarningCounseling" class="counseling-tab__btn">주의/위험</a>
               <a href="/advisor/myImpossibleCounseling" id="myImpossibleCounseling" class="counseling-tab__btn">상담불가</a>
             </div>
-            <form id="searchForm" name="searchForm" action="/advisor/myCounselingList" method="POST">
+            <form id="searchForm" name="searchForm" action="/advisor/{{$tag}}" method="POST">
               @csrf
             <div class="counseling-search__wrap">
               <div class="counseling-search__left">
@@ -20,7 +20,7 @@
                   <input type="hidden" id="selectBoxCategory" name="selectBoxCategory"
 
                       @if(isset($searchData))
-                             value="{{($searchData["selectBoxCategory"] == "") ? "-1":$searchData["selectBoxCategory"]}}"
+                             value="{{($searchData['selectBoxCategory'] == '') ? '-1':$searchData['selectBoxCategory']}}"
                       @else
                              value="-1"
                       @endif
@@ -63,7 +63,7 @@
                 주의/위험->주의/위험 내역
                 상담불가-> 상담불가 내역
               -->
-              <h3 class="counseling-list__tit">전체내역</h3>
+              <h3 class="counseling-list__tit">{{$pageName}}</h3>
               <div class="counseling-sort__wrap">
               <div class="counseling-sort__btns">
                   <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
@@ -153,6 +153,9 @@
   <!-- datepicker-->
   <script src="../advisorAssets/assets/js/jquery-ui.min.js"></script>
   <script>
+    $(function(){
+        $("#myCounselingList").addClass("active");
+    });
 
   function tabEvent($tab){
     if(!$tab){

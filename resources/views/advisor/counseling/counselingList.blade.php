@@ -20,9 +20,9 @@
                   <input type="hidden" id="selectBoxCategory" name="selectBoxCategory"
 
                       @if(isset($searchData))
-                             value="{{($searchData["selectBoxCategory"] == "") ? "-1":$searchData["selectBoxCategory"]}}"
+                        value="{{($searchData['selectBoxCategory'] == '') ? '-1':$searchData['selectBoxCategory']}}"
                       @else
-                             value="-1"
+                        value="-1"
                       @endif
                   />
                   <button id="select-box__label" class="select-box__label" type="button">
@@ -63,7 +63,7 @@
                 주의/위험->주의/위험 내역
                 상담불가-> 상담불가 내역
               -->
-              <h3 class="counseling-list__tit">전체내역</h3>
+              <h3 class="counseling-list__tit">{{$pageName}}</h3>
               <div class="counseling-sort__wrap">
                 <div class="counseling-sort__btns">
                   <!-- 활성화 된 버튼(counseling-tab__btn)에 클래스 active 추가 -->
@@ -161,6 +161,9 @@
   <!-- datepicker-->
   <script src="../advisorAssets/assets/js/jquery-ui.min.js"></script>
   <script>
+      $(function(){
+        $("#counselingList").addClass("active");
+      });
 
       function tabEvent($tab){
         if(!$tab){

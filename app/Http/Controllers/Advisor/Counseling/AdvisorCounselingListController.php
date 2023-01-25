@@ -52,6 +52,7 @@ class AdvisorCounselingListController extends Controller
         return view("/advisor/counseling/counselingList",[   // 상담사 메인 페이지
             "isLogin" => $isLogin,
             "tag" => "counselingList",
+            "pageName" => "전체내역",
             "searchMonth" => $this->code->searchMonth(),
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
@@ -74,10 +75,10 @@ class AdvisorCounselingListController extends Controller
         $sliceUrl = explode('/', $previousUrl);
         $previousPage = $sliceUrl[4];
 
-        $selectBoxCategory = $request['selectBoxCategory'];
-        $searchingText = $request['searchingText'];
-        $sdate = $request['sdate'];
-        $edate = $request['edate'];
+        $selectBoxCategory = $request['selectBoxCategory'] ?? '';
+        $searchingText = $request['searchingText'] ?? '';
+        $sdate = $request['sdate'] ?? '';
+        $edate = $request['edate'] ?? '';
 
         $searchData = [
             "sdate" => $sdate,
@@ -128,6 +129,7 @@ class AdvisorCounselingListController extends Controller
         return view("/advisor/counseling/counselingList",[
             "isLogin" => $isLogin,
             "tag" => "waitingCounselingList",
+            "pageName" => "상담대기",
             'searchData' => $searchData,
             'advisorProfile' => $advisorProfile,
             'counselingList' => $waitingCounselingList,
@@ -163,7 +165,9 @@ class AdvisorCounselingListController extends Controller
         $completeCounselingList = $this->counseling->getCompleteCounselingList($searchData);
 
         return view("/advisor/counseling/counselingList",[
+            "isLogin" => $isLogin,
             "tag" => "completeCounselingList",
+            "pageName" => "상담완료",
             'searchData' => $searchData,
             'advisorProfile' => $advisorProfile,
             'counselingList' => $completeCounselingList,
@@ -201,6 +205,8 @@ class AdvisorCounselingListController extends Controller
         $warningList = $this->counseling->getWarningCounselingList($searchData);
 
         return view("/advisor/counseling/counselingList",[
+            "isLogin" => $isLogin,
+            "pageName" => "주의/위험",
             "tag" => "warningCounselingList",
             'searchData' => $searchData,
             'advisorProfile' => $advisorProfile,
@@ -237,6 +243,8 @@ class AdvisorCounselingListController extends Controller
         $impossibleList = $this->counseling->getImpossibleCounselingList($searchData);
 
         return view("/advisor/counseling/counselingList",[
+            "isLogin" => $isLogin,
+            "pageName" => "상담불가",
             "tag" => "impossibleCounselingList",
             'searchData' => $searchData,
             'advisorProfile' => $advisorProfile,

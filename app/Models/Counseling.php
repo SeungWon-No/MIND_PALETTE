@@ -355,7 +355,7 @@ class Counseling extends Model
     }
 
 
-    public static function getMyCounselingList($advisorPK)
+    public static function getMyCounselingList($advisorPK, $items)
     {
         $pagination = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
@@ -366,7 +366,7 @@ class Counseling extends Model
                     ->where('counseling.advisorPK', '=', $advisorPK)
                     ->whereIn("counseling.counselingStatus",[279,280,281,353])
                     ->orderBy("counselingPK", "DESC")
-                    ->paginate(10);
+                    ->paginate($items);
 
         $counselingList = json_decode(json_encode($pagination), true);
 
@@ -385,9 +385,9 @@ class Counseling extends Model
         return $counselingList;
     }
 
-    public static function getMyWaitingCounselingList($advisorPK){
+    public static function getMyWaitingCounselingList($advisorPK, $searchData=null , $items){
 
-        $getWarningList = DB::table('counseling')
+        $pagination = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
             ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus", "counseling.counselorStatus", "code.codeName", "answer")
@@ -395,11 +395,25 @@ class Counseling extends Model
             ->where('counseling.isDelete', '=', 'N')
             ->where('counseling.advisorPK', '=', $advisorPK)
             ->where('answer.questionsPK', '68')
-            ->where("counseling.counselingStatus", "=", "279")
-            ->orderBy("counselingPK", "DESC")
-            ->paginate(10);
+            ->where("counseling.counselingStatus", "=", "279");
+            if ($searchData != null) {
+                if ( $searchData["sdate"] != "" ) {
+                    $pagination = $pagination->where('counseling.createDate', '>=', $searchData["sdate"]);
+                }
+                if ( $searchData["edate"] != "" ) {
+                    $pagination = $pagination->where('counseling.createDate', '<=', $searchData["edate"]);
+                }
+                if ($searchData["selectBoxCategory"] == "counselorName") { //searchingText
+                    $pagination = $pagination->where('counseling.counselorName', 'like', '%'. $searchData["searchingText"].'%');
+                }
+                if ($searchData["selectBoxCategory"] == "counselingCode") { //searchingText
+                    $pagination = $pagination->where('counseling.counselingCode', 'like', '%'. $searchData["searchingText"].'%');
+                }
+            }
+            $pagination = $pagination->orderBy("counselingPK", "DESC")
+            ->paginate($items);
 
-        $warningList = json_decode(json_encode($getWarningList), true);
+        $warningList = json_decode(json_encode($pagination), true);
 
         foreach($warningList['data'] as $key => $list){
             $warningList['data'][$key] = [
@@ -416,9 +430,9 @@ class Counseling extends Model
         return $warningList;
     }
 
-    public static function getMyCompleteCounselingList($advisorPK){
+    public static function getMyCompleteCounselingList($advisorPK, $searchData=null, $items){
 
-        $getWarningList = DB::table('counseling')
+        $pagination = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
             ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday","counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
@@ -426,42 +440,25 @@ class Counseling extends Model
             ->where('counseling.isDelete', '=', 'N')
             ->where('counseling.advisorPK', '=', $advisorPK)
             ->where('answer.questionsPK', '68')
-            ->where("counseling.counselingStatus", "=", "281")
-            ->orderBy("counselingPK", "DESC")
-            ->paginate(10);
+            ->where("counseling.counselingStatus", "=", "281");
+            if ($searchData != null) {
+                if ( $searchData["sdate"] != "" ) {
+                    $pagination = $pagination->where('counseling.createDate', '>=', $searchData["sdate"]);
+                }
+                if ( $searchData["edate"] != "" ) {
+                    $pagination = $pagination->where('counseling.createDate', '<=', $searchData["edate"]);
+                }
+                if ($searchData["selectBoxCategory"] == "counselorName") { //searchingText
+                    $pagination = $pagination->where('counseling.counselorName', 'like', '%'. $searchData["searchingText"].'%');
+                }
+                if ($searchData["selectBoxCategory"] == "counselingCode") { //searchingText
+                    $pagination = $pagination->where('counseling.counselingCode', 'like', '%'. $searchData["searchingText"].'%');
+                }
+            }
+            $pagination = $pagination->orderBy("counselingPK", "DESC")
+            ->paginate($items);
 
-        $warningList = json_decode(json_encode($getWarningList), true);
-
-        foreach($warningList['data'] as $key => $list){
-            $warningList['data'][$key] = [
-                'counselingPK' => $list['counselingPK'],
-                'counselingCode' => $list['counselingCode'],
-                'counselorName' => $list['counselorName'],
-                'answer' => $list['answer'],
-                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
-                'counselorGender' => $list['codeName'],
-                'counselingStatus' => $list['counselingStatus'],
-                'counselorStatus' => $list['counselorStatus'],
-            ];
-        }
-        return $warningList;
-    }
-
-    public static function getMyWarningCounselingList($advisorPK){
-
-        $getWarningList = DB::table('counseling')
-            ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
-            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
-            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
-            ->where('counseling.memberPK', '>', '0')
-            ->where('counseling.isDelete', '=', 'N')
-            ->where('counseling.advisorPK', '=', $advisorPK)
-            ->where('answer.questionsPK', '68')
-            ->whereIn("counseling.counselorStatus",[355, 356])
-            ->orderBy("counselingPK", "DESC")
-            ->paginate(10);
-
-        $warningList = json_decode(json_encode($getWarningList), true);
+        $warningList = json_decode(json_encode($pagination), true);
 
         foreach($warningList['data'] as $key => $list){
             $warningList['data'][$key] = [
@@ -478,9 +475,9 @@ class Counseling extends Model
         return $warningList;
     }
 
-    public static function getMyImpossibleCounselingList($advisorPK){
+    public static function getMyWarningCounselingList($advisorPK, $searchData=null, $items){
 
-        $getWarningList = DB::table('counseling')
+        $pagination = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
             ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
@@ -488,11 +485,70 @@ class Counseling extends Model
             ->where('counseling.isDelete', '=', 'N')
             ->where('counseling.advisorPK', '=', $advisorPK)
             ->where('answer.questionsPK', '68')
-            ->where("counseling.counselingStatus", "=", "353")
-            ->orderBy("counselingPK", "DESC")
-            ->paginate(10);
+            ->whereIn("counseling.counselorStatus",[355, 356]);
+            if ($searchData != null) {
+                if ( $searchData["sdate"] != "" ) {
+                    $pagination = $pagination->where('counseling.createDate', '>=', $searchData["sdate"]);
+                }
+                if ( $searchData["edate"] != "" ) {
+                    $pagination = $pagination->where('counseling.createDate', '<=', $searchData["edate"]);
+                }
+                if ($searchData["selectBoxCategory"] == "counselorName") { //searchingText
+                    $pagination = $pagination->where('counseling.counselorName', 'like', '%'. $searchData["searchingText"].'%');
+                }
+                if ($searchData["selectBoxCategory"] == "counselingCode") { //searchingText
+                    $pagination = $pagination->where('counseling.counselingCode', 'like', '%'. $searchData["searchingText"].'%');
+                }
+            }
+            $pagination = $pagination->orderBy("counselingPK", "DESC")
+            ->paginate($items);
 
-        $warningList = json_decode(json_encode($getWarningList), true);
+        $warningList = json_decode(json_encode($pagination), true);
+
+        foreach($warningList['data'] as $key => $list){
+            $warningList['data'][$key] = [
+                'counselingPK' => $list['counselingPK'],
+                'counselingCode' => $list['counselingCode'],
+                'counselorName' => $list['counselorName'],
+                'answer' => $list['answer'],
+                'counselorBirthday' => Crypt::decryptString($list['counselorBirthday']),
+                'counselorGender' => $list['codeName'],
+                'counselingStatus' => $list['counselingStatus'],
+                'counselorStatus' => $list['counselorStatus'],
+            ];
+        }
+        return $warningList;
+    }
+
+    public static function getMyImpossibleCounselingList($advisorPK, $searchData=null, $items){
+
+        $pagination = DB::table('counseling')
+            ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
+            ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
+            ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
+            ->where('counseling.memberPK', '>', '0')
+            ->where('counseling.isDelete', '=', 'N')
+            ->where('counseling.advisorPK', '=', $advisorPK)
+            ->where('answer.questionsPK', '68')
+            ->where("counseling.counselingStatus", "=", "353");
+            if ($searchData != null) {
+                if ( $searchData["sdate"] != "" ) {
+                    $pagination = $pagination->where('counseling.createDate', '>=', $searchData["sdate"]);
+                }
+                if ( $searchData["edate"] != "" ) {
+                    $pagination = $pagination->where('counseling.createDate', '<=', $searchData["edate"]);
+                }
+                if ($searchData["selectBoxCategory"] == "counselorName") { //searchingText
+                    $pagination = $pagination->where('counseling.counselorName', 'like', '%'. $searchData["searchingText"].'%');
+                }
+                if ($searchData["selectBoxCategory"] == "counselingCode") { //searchingText
+                    $pagination = $pagination->where('counseling.counselingCode', 'like', '%'. $searchData["searchingText"].'%');
+                }
+            }
+            $pagination = $pagination->orderBy("counselingPK", "DESC")
+            ->paginate($items);
+
+        $warningList = json_decode(json_encode($pagination), true);
 
         foreach($warningList['data'] as $key => $list){
             $warningList['data'][$key] = [

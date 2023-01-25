@@ -45,10 +45,12 @@ class AdvisorMyCounselingListController extends Controller
         }else{
             return view("/advisor/login/login");
         }
-        $counselingList = Counseling::getMyCounselingList($advisorPK); // 나의 상담 리스트
+        $counselingList = Counseling::getMyCounselingList($advisorPK, 15); // 나의 상담 리스트
         $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
         return view("/advisor/counseling/myCounselingList",[   // 상담사 메인 페이지 
             "isLogin" => $isLogin,
+            "tag" => "myCounselingList",
+            "pageName" => "전체내역",
             "counselingList" => $counselingList,
             "advisorProfile" => $advisorProfile,
             "counselingStatus" => $this->counselingStatus,
@@ -71,10 +73,10 @@ class AdvisorMyCounselingListController extends Controller
         $sliceUrl = explode('/', $previousUrl);
         $previousPage = $sliceUrl[4];
 
-        $selectBoxCategory = $request['selectBoxCategory'];
-        $searchingText = $request['searchingText'];
-        $sdate = $request['sdate'];
-        $edate = $request['edate'];
+        $selectBoxCategory = $request['selectBoxCategory'] ?? '';
+        $searchingText = $request['searchingText'] ?? '';
+        $sdate = $request['sdate'] ?? '';
+        $edate = $request['edate'] ?? '';
 
         $searchData = [
             "sdate" => $sdate,
@@ -88,6 +90,7 @@ class AdvisorMyCounselingListController extends Controller
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
         return view("/advisor/counseling/".$previousPage, [
             'isLogin' => $isLogin,
+            "tag" => "myCounselingList",
             'searchData' => $searchData,
             'counselingList' => $counselingList,
             'advisorProfile' => $advisorProfile,
@@ -106,11 +109,27 @@ class AdvisorMyCounselingListController extends Controller
             return view("/advisor/login/login");
         }
 
+        $selectBoxCategory = $request['selectBoxCategory'] ?? '';
+        $searchingText = $request['searchingText'] ?? '';
+        $sdate = $request['sdate'] ?? '';
+        $edate = $request['edate'] ?? '';
+
+        $searchData = [
+            "sdate" => $sdate,
+            "edate" => $edate,
+            "selectBoxCategory" => $selectBoxCategory,
+            "searchingText" => $searchingText
+        ];
+
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
-        $waitingCounselingList = $this->counseling->getMyWaitingCounselingList($advisorPK);
+        $waitingCounselingList = $this->counseling->getMyWaitingCounselingList($advisorPK, $searchData, 15);
+
 
         return view("/advisor/counseling/myCounselingList",[
             "isLogin" => $isLogin,
+            "tag" => "myWaitingCounseling",
+            "pageName" => "상담대기",
+            'searchData' => $searchData,
             'advisorProfile' => $advisorProfile,
             'counselingList' => $waitingCounselingList,
             "counselingStatus" => $this->counselingStatus,
@@ -128,11 +147,27 @@ class AdvisorMyCounselingListController extends Controller
             return view("/advisor/login/login");
         }
 
+        $selectBoxCategory = $request['selectBoxCategory'] ?? '';
+        $searchingText = $request['searchingText'] ?? '';
+        $sdate = $request['sdate'] ?? '';
+        $edate = $request['edate'] ?? '';
+
+        $searchData = [
+            "sdate" => $sdate,
+            "edate" => $edate,
+            "selectBoxCategory" => $selectBoxCategory,
+            "searchingText" => $searchingText
+        ];
+
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
-        $completeCounselingList = $this->counseling->getMyCompleteCounselingList($advisorPK);
+        $completeCounselingList = $this->counseling->getMyCompleteCounselingList($advisorPK, $searchData, 15);
+
 
         return view("/advisor/counseling/myCounselingList",[
             'advisorProfile' => $advisorProfile,
+            "tag" => "myCompleteCounseling",
+            "pageName" => "상담완료",
+            'searchData' => $searchData,
             'counselingList' => $completeCounselingList,
             "counselingStatus" => $this->counselingStatus,
             "counselorStatus" => $this->counselorStatus,
@@ -151,11 +186,27 @@ class AdvisorMyCounselingListController extends Controller
             return view("/advisor/login/login");
         }
 
+        $selectBoxCategory = $request['selectBoxCategory'] ?? '';
+        $searchingText = $request['searchingText'] ?? '';
+        $sdate = $request['sdate'] ?? '';
+        $edate = $request['edate'] ?? '';
+
+        $searchData = [
+            "sdate" => $sdate,
+            "edate" => $edate,
+            "selectBoxCategory" => $selectBoxCategory,
+            "searchingText" => $searchingText
+        ];
+
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
-        $warningList = $this->counseling->getMyWarningCounselingList($advisorPK);
+        $warningList = $this->counseling->getMyWarningCounselingList($advisorPK, $searchData, 15);
+
 
         return view("/advisor/counseling/myCounselingList",[
             'advisorProfile' => $advisorProfile,
+            "tag" => "myWarningCounseling",
+            "pageName" => "주의/위험",
+            'searchData' => $searchData,
             'counselingList' => $warningList,
             "counselingStatus" => $this->counselingStatus,
             "counselorStatus" => $this->counselorStatus,
@@ -172,11 +223,27 @@ class AdvisorMyCounselingListController extends Controller
             return view("/advisor/login/login");
         }
         
+        $selectBoxCategory = $request['selectBoxCategory'] ?? '';
+        $searchingText = $request['searchingText'] ?? '';
+        $sdate = $request['sdate'] ?? '';
+        $edate = $request['edate'] ?? '';
+
+        $searchData = [
+            "sdate" => $sdate,
+            "edate" => $edate,
+            "selectBoxCategory" => $selectBoxCategory,
+            "searchingText" => $searchingText
+        ];
+
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK);
-        $impossibleList = $this->counseling->getMyImpossibleCounselingList($advisorPK);
+        $impossibleList = $this->counseling->getMyImpossibleCounselingList($advisorPK, $searchData, 15);
+
 
         return view("/advisor/counseling/myCounselingList",[
             'advisorProfile' => $advisorProfile,
+            "tag" => "myImpossibleCounseling",
+            "pageName" => "상담불가",
+            'searchData' => $searchData,
             'counselingList' => $impossibleList,
             "counselingStatus" => $this->counselingStatus,
             "counselorStatus" => $this->counselorStatus,
