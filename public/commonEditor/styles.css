@@ -368,6 +368,17 @@ a {
 	color: #38A5EE;
 }
 
+/* 상담상세 페이지에서 nav, 로그아웃 버튼색이 바뀌는 것 수정 */
+.account-logout__btn{
+	text-decoration: none;
+    color: inherit;
+}
+
+.nav-menu{
+	text-decoration: none;
+    color: inherit;
+}
+
 header .centered {
 	display: flex;
 	flex-flow: row nowrap;

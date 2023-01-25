@@ -87,6 +87,7 @@
           $(".nav a").each(function(){
               var hrefLink = $(this).attr('href');
               var id = $(this).attr('id');
+              
               if (pathname === hrefLink) {
                   $(this).addClass("active");
               }
