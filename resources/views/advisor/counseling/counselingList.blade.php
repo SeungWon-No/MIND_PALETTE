@@ -11,7 +11,7 @@
               <a href="/advisor/warningCounselingList" id="warningCounselingList" class="counseling-tab__btn">주의/위험</a>
               <a href="/advisor/impossibleCounselingList" id="impossibleCounselingList" class="counseling-tab__btn">상담불가</a>
             </div>
-            <form id="searchForm" name="searchForm" action="/advisor/counselingList" method="POST">
+            <form id="searchForm" name="searchForm" action="/advisor/{{$tag}}" method="POST">
               @csrf
             <div class="counseling-search__wrap">
               <div class="counseling-search__left">
@@ -123,7 +123,7 @@
                       <a class="counseling-link" style="cursor: default;">상담불가</a>
                     </div>
                     @else
-                    
+
                     @endif
                   </li>
                 @endforeach
@@ -161,7 +161,7 @@
   <!-- datepicker-->
   <script src="../advisorAssets/assets/js/jquery-ui.min.js"></script>
   <script>
-    
+
       function tabEvent($tab){
         if(!$tab){
           $('#allTab').toggleClass('active');
@@ -176,7 +176,7 @@
 
         });
       }
-      
+
       var currentUrl = $(location).attr("href"); // 현재 페이지 url
       var splitUrl = currentUrl.split("/");
       var urlSection1 = splitUrl[3];

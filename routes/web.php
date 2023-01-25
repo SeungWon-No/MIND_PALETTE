@@ -194,10 +194,10 @@ Route::prefix('advisor')->group(function () { // (dev-)m.maeumpalette.com:8080/a
         Route::resource('/memberWithdrawal', AdvisorWithdrawalController::class); // 상담사 회원탈퇴
 
         Route::resource("/counselingList", AdvisorCounselingListController::class); // 상담리스트
-        Route::get("/waitingCounselingList", [AdvisorCounselingListController::class, "waitingCounselingList"]); // 상담리스트
-        Route::get("/completeCounselingList", [AdvisorCounselingListController::class, "completeCounselingList"]); // 상담리스트
-        Route::get("/warningCounselingList", [AdvisorCounselingListController::class, "warningCounselingList"]); // 상담리스트
-        Route::get("/impossibleCounselingList", [AdvisorCounselingListController::class, "impossibleCounselingList"]); // 상담리스트
+        Route::any("/waitingCounselingList", [AdvisorCounselingListController::class, "waitingCounselingList"]); // 상담리스트
+        Route::any("/completeCounselingList", [AdvisorCounselingListController::class, "completeCounselingList"]); // 상담리스트
+        Route::any("/warningCounselingList", [AdvisorCounselingListController::class, "warningCounselingList"]); // 상담리스트
+        Route::any("/impossibleCounselingList", [AdvisorCounselingListController::class, "impossibleCounselingList"]); // 상담리스트
 
         Route::resource("/myCounselingList", AdvisorMyCounselingListController::class); // my 상담리스트
         Route::get("/myWaitingCounseling", [AdvisorMyCounselingListController::class, "myWaitingCounseling"]); // my 상담리스트

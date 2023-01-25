@@ -165,7 +165,7 @@ class Counseling extends Model
         ->count();
     }
 
-    public static function getWaitingCounselingList(){
+    public static function getWaitingCounselingList($searchData = null){
 
         $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
@@ -174,8 +174,24 @@ class Counseling extends Model
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
             ->where('answer.questionsPK', '68')
-            ->where("counseling.counselingStatus", "=", "279")
-            ->orderBy("counselingPK", "DESC")
+            ->where("counseling.counselingStatus", "=", "279");
+
+        if ($searchData != null) {
+            if ( $searchData["sdate"] != "" ) {
+                $getWarningList = $getWarningList->where('counseling.createDate', '>=', $searchData["sdate"]);
+            }
+            if ( $searchData["edate"] != "" ) {
+                $getWarningList = $getWarningList->where('counseling.createDate', '<=', $searchData["edate"]);
+            }
+            if ($searchData["selectBoxCategory"] == "counselorName") { //searchingText
+                $getWarningList = $getWarningList->where('counseling.counselorName', 'like', '%'. $searchData["searchingText"].'%');
+            }
+            if ($searchData["selectBoxCategory"] == "counselingCode") { //searchingText
+                $getWarningList = $getWarningList->where('counseling.counselingCode', 'like', '%'. $searchData["searchingText"].'%');
+            }
+        }
+
+        $getWarningList = $getWarningList->orderBy("counselingPK", "DESC")
             ->paginate(10);
 
         $warningList = json_decode(json_encode($getWarningList), true);
@@ -198,7 +214,7 @@ class Counseling extends Model
 
 
     // 주의/위험 수준 상담 리스트
-    public static function getWarningCounselingList(){
+    public static function getWarningCounselingList($searchData = null){
 
         $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
@@ -207,8 +223,23 @@ class Counseling extends Model
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
             ->where('answer.questionsPK', '68')
-            ->whereIn("counseling.counselorStatus",[355, 356])
-            ->orderBy("counselingPK", "DESC")
+            ->whereIn("counseling.counselorStatus",[355, 356]);
+
+        if ($searchData != null) {
+            if ( $searchData["sdate"] != "" ) {
+                $getWarningList = $getWarningList->where('counseling.createDate', '>=', $searchData["sdate"]);
+            }
+            if ( $searchData["edate"] != "" ) {
+                $getWarningList = $getWarningList->where('counseling.createDate', '<=', $searchData["edate"]);
+            }
+            if ($searchData["selectBoxCategory"] == "counselorName") { //searchingText
+                $getWarningList = $getWarningList->where('counseling.counselorName', 'like', '%'. $searchData["searchingText"].'%');
+            }
+            if ($searchData["selectBoxCategory"] == "counselingCode") { //searchingText
+                $getWarningList = $getWarningList->where('counseling.counselingCode', 'like', '%'. $searchData["searchingText"].'%');
+            }
+        }
+            $getWarningList = $getWarningList->orderBy("counselingPK", "DESC")
             ->paginate(10);
 
         $warningList = json_decode(json_encode($getWarningList), true);
@@ -230,7 +261,7 @@ class Counseling extends Model
 
 
     // 상담 완료 리스트
-    public static function getCompleteCounselingList(){
+    public static function getCompleteCounselingList($searchData = null){
 
         $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
@@ -239,8 +270,23 @@ class Counseling extends Model
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
             ->where('answer.questionsPK', '68')
-            ->where("counseling.counselingStatus", "=", "281")
-            ->orderBy("counselingPK", "DESC")
+            ->where("counseling.counselingStatus", "=", "281");
+
+        if ($searchData != null) {
+            if ( $searchData["sdate"] != "" ) {
+                $getWarningList = $getWarningList->where('counseling.createDate', '>=', $searchData["sdate"]);
+            }
+            if ( $searchData["edate"] != "" ) {
+                $getWarningList = $getWarningList->where('counseling.createDate', '<=', $searchData["edate"]);
+            }
+            if ($searchData["selectBoxCategory"] == "counselorName") { //searchingText
+                $getWarningList = $getWarningList->where('counseling.counselorName', 'like', '%'. $searchData["searchingText"].'%');
+            }
+            if ($searchData["selectBoxCategory"] == "counselingCode") { //searchingText
+                $getWarningList = $getWarningList->where('counseling.counselingCode', 'like', '%'. $searchData["searchingText"].'%');
+            }
+        }
+            $getWarningList = $getWarningList->orderBy("counselingPK", "DESC")
             ->paginate(10);
 
         $warningList = json_decode(json_encode($getWarningList), true);
@@ -263,7 +309,7 @@ class Counseling extends Model
 
 
     // 상담 불가 리스트
-    public static function getImpossibleCounselingList(){
+    public static function getImpossibleCounselingList($searchData = null){
 
         $getWarningList = DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
@@ -272,8 +318,23 @@ class Counseling extends Model
             ->where('counseling.memberPK', '>', '0')
             ->where('counseling.isDelete', '=', 'N')
             ->where('answer.questionsPK', '68')
-            ->where("counseling.counselingStatus", "=", "353")
-            ->orderBy("counselingPK", "DESC")
+            ->where("counseling.counselingStatus", "=", "353");
+
+        if ($searchData != null) {
+            if ( $searchData["sdate"] != "" ) {
+                $getWarningList = $getWarningList->where('counseling.createDate', '>=', $searchData["sdate"]);
+            }
+            if ( $searchData["edate"] != "" ) {
+                $getWarningList = $getWarningList->where('counseling.createDate', '<=', $searchData["edate"]);
+            }
+            if ($searchData["selectBoxCategory"] == "counselorName") { //searchingText
+                $getWarningList = $getWarningList->where('counseling.counselorName', 'like', '%'. $searchData["searchingText"].'%');
+            }
+            if ($searchData["selectBoxCategory"] == "counselingCode") { //searchingText
+                $getWarningList = $getWarningList->where('counseling.counselingCode', 'like', '%'. $searchData["searchingText"].'%');
+            }
+        }
+        $getWarningList = $getWarningList->orderBy("counselingPK", "DESC")
             ->paginate(10);
 
         $warningList = json_decode(json_encode($getWarningList), true);
