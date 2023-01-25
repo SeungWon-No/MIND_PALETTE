@@ -83,7 +83,7 @@ class AdvisorMyCounselingListController extends Controller
             "searchingText" => $searchingText
         ];
 
-        $counselingList = Counseling::searchingMyCounselor($searchData, $advisorPK);
+        $counselingList = Counseling::searchingMyCounselor(15, $searchData, $advisorPK);
 
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
         return view("/advisor/counseling/".$previousPage, [
