@@ -375,8 +375,6 @@
               }
           }
       });
-      //console.log(data);
-      //pop.open('authPhoneSuccess');
   }
 
   function submitJoinForm(){
