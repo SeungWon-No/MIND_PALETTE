@@ -106,7 +106,7 @@ class Advisor extends Model
 
     public static function pagination($items){
         $pagination = DB::table('advisor')
-        ->select('advisorPK', 'advisorName', 'briefIntroduction', 'profilePath')
+        ->select('advisorPK', 'advisorName', 'briefIntroduction', 'profilePath', 'rating', 'ratingCount', 'counselingCount')
         ->where('isDelete', '=', 'N')
         ->paginate($items);
 
@@ -118,6 +118,9 @@ class Advisor extends Model
                 'profilePath' => $list['profilePath'],
                 'advisorName' => Crypt::decryptString($list['advisorName']),
                 'briefIntroduction' => $list['briefIntroduction'],
+                'rating' => $list['rating'],
+                'ratingCount' => $list['ratingCount'],
+                'counselingCount' => $list['counselingCount'],
             ];
         }
         return $advisorList;
@@ -126,7 +129,7 @@ class Advisor extends Model
 
     public static function advisorListOrderBy($items, $orderByOption){
         $pagination = DB::table('advisor')
-        ->select('advisorPK', 'advisorName', 'briefIntroduction', 'profilePath')
+        ->select('advisorPK', 'advisorName', 'briefIntroduction', 'profilePath', 'rating', 'ratingCount', 'counselingCount')
         ->where('isDelete', '=', 'N')
         ->orderBy('createDate', $orderByOption)
         ->paginate($items);
@@ -139,6 +142,9 @@ class Advisor extends Model
                 'advisorName' => Crypt::decryptString($list['advisorName']),
                 'briefIntroduction' => $list['briefIntroduction'],
                 'profilePath' => $list['profilePath'],
+                'rating' => $list['rating'],
+                'ratingCount' => $list['ratingCount'],
+                'counselingCount' => $list['counselingCount'],
             ];
         }
         return $advisorList;
