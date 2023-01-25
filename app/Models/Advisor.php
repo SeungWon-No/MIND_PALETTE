@@ -126,7 +126,7 @@ class Advisor extends Model
 
     public static function advisorListOrderBy($items, $orderByOption){
         $pagination = DB::table('advisor')
-        ->select('advisorPK', 'advisorName', 'briefIntroduction')
+        ->select('advisorPK', 'advisorName', 'briefIntroduction', 'profilePath')
         ->where('isDelete', '=', 'N')
         ->orderBy('createDate', $orderByOption)
         ->paginate($items);
@@ -138,6 +138,7 @@ class Advisor extends Model
                 'advisorPK' => $list['advisorPK'],
                 'advisorName' => Crypt::decryptString($list['advisorName']),
                 'briefIntroduction' => $list['briefIntroduction'],
+                'profilePath' => $list['profilePath'],
             ];
         }
         return $advisorList;
