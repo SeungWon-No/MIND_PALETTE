@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Advisor\Profile;
 use App\Http\Controllers\Controller;
 use App\Models\Advisor;
 use App\Models\AdvisorAuth;
-use App\Models\Answer;
 use App\Models\Career;
 use App\Models\Counseling;
 use App\Models\EducationLevel;
@@ -59,35 +58,36 @@ class AdvisorWithdrawalController extends Controller
                     $contrastEmail = $getAdvisorInfo->email ?? '';
                     $contrastPassword = $getAdvisorInfo->password ?? '';
                     $passwordMatchingCheck = Hash::check($advisorPassword, $contrastPassword);
+                    
         
-                    if ($advisorName == Crypt::decryptString($contrastName) && 
+                    if ($advisorName == Crypt::decryptString($contrastName) &&
                         $advisorEmail == $contrastEmail && $passwordMatchingCheck == true){
-                        
+
                         EducationLevel::where('advisorPK', $advisorPK)->update(['isDelete' => 'Y']);        // 학력사항 삭제 처리
                         Qualification::where('advisorPK', '=', $advisorPK)->update(['isDelete' => 'Y']);    // 자격사항 삭제 처리
                         Career::where('advisorPK', '=', $advisorPK)->update(['isDelete' => 'Y']);           // 경력사항 삭제 처리
                         Counseling::where('advisorPK', $advisorPK)->update(['isDelete' => 'Y']);            // 상담 내역 삭제 처리
                         AdvisorAuth::where('advisorPK', $advisorPK)->delete();                              // 상담사 인증 정보 삭제 (hard delete)
                         Advisor::where('advisorPK', $advisorPK)->update(['isDelete' => 'Y'], ['withdrawal' => $nowDateTime]); // 상담사 정보 삭제 처리, 탈퇴일 입력
-                            
+                        
                         DB::commit();
-                        return redirect('/advisor/logout');
+
+                        $result = ["status" => "success"];
+                        return json_encode($result);
+
+                    }else{
+
+                        $result = ["status" => "fail"];
+                        return json_encode($result);
                     }
 
                 }catch(\Exception $e){
 
                 }
-            }else{
-                return redirect('/advisor/memberWithdrawal')->with('error', '올바른 정보를 기입해주세요.');
+
             }
 
         }
-
-    }
-
-
-    public function show(Request $request)
-    {
 
     }
 
