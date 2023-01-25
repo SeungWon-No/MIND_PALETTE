@@ -96,7 +96,7 @@ class Counseling extends Model
         return $counselingList;
     }
 
-    public static function pagination()
+    public static function pagination($items)
     {
         $pagination = DB::table('counseling')
                     ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
@@ -106,7 +106,7 @@ class Counseling extends Model
                     ->where('counseling.memberPK', '>', '0')
                     ->whereIn("counseling.counselingStatus",[279,280,281,353])
                     ->orderBy("counselingPK", "DESC")
-                    ->paginate();
+                    ->paginate($items);
 
         $counselingList = json_decode(json_encode($pagination), true);
 
@@ -497,17 +497,18 @@ class Counseling extends Model
             ->limit(10)->get();
     }
 
-    public static function searchingCounselorNameWithoutPeriod($searchingText)
+    public static function searchingCounselorNameWithoutPeriod($items, $searchingText)
     {
         $pagination= DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
             ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
+            ->where('answer.questionsPK', '68')
             ->whereIn("counseling.counselingStatus",[279,280,281,353])
             ->where('counseling.counselorName', 'like', '%'. $searchingText .'%')
             ->orderBy("counselingPK", "DESC")
-            ->paginate(10);
+            ->paginate($items);
 
         $counselingList = json_decode(json_encode($pagination), true);
 
@@ -526,17 +527,18 @@ class Counseling extends Model
         return $counselingList;
     }
 
-    public static function searchingCounselorCodeWithoutPeriod($searchingText)
+    public static function searchingCounselorCodeWithoutPeriod($items, $searchingText)
     {
         $pagination= DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
             ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
+            ->where('answer.questionsPK', '68')
             ->whereIn("counseling.counselingStatus",[279,280,281,353])
             ->where('counseling.counselingCode', 'like', '%'. $searchingText .'%')
             ->orderBy("counselingPK", "DESC")
-            ->paginate(10);
+            ->paginate($items);
 
         $counselingList = json_decode(json_encode($pagination), true);
 
@@ -556,7 +558,7 @@ class Counseling extends Model
     }
 
 
-    public static function searchingCounselor($searchData)
+    public static function searchingCounselor($items, $searchData)
     {
         $pagination= Counseling::join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
@@ -582,7 +584,7 @@ class Counseling extends Model
         }
 
         $pagination = $pagination->orderBy("counselingPK", "DESC")
-            ->paginate(10);
+            ->paginate($items);
 
         $counselingList = json_decode(json_encode($pagination), true);
 
@@ -601,7 +603,7 @@ class Counseling extends Model
         return $counselingList;
     }
 
-    public static function searchingMyCounselor($searchData, $advisorPK)
+    public static function searchingMyCounselor($items, $searchData, $advisorPK)
     {
         $pagination= Counseling::join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
@@ -628,7 +630,7 @@ class Counseling extends Model
         }
 
         $pagination = $pagination->orderBy("counselingPK", "DESC")
-            ->paginate(10);
+            ->paginate($items);
 
         $counselingList = json_decode(json_encode($pagination), true);
 
@@ -647,19 +649,20 @@ class Counseling extends Model
         return $counselingList;
     }
 
-    public static function searchingCounselorName($searchingText, $sdate, $edate)
+    public static function searchingCounselorName($items, $searchingText, $sdate, $edate)
     {
         $pagination= DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
             ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
+            ->where('answer.questionsPK', '68')
             ->whereIn("counseling.counselingStatus",[279,280,281,353])
             ->where('counseling.createDate', '>=', $sdate)
             ->where('counseling.createDate', '<=', $edate)
             ->where('counseling.counselorName', 'like', '%'. $searchingText .'%')
             ->orderBy("counselingPK", "DESC")
-            ->paginate(10);
+            ->paginate($items);
 
         $counselingList = json_decode(json_encode($pagination), true);
 
@@ -678,19 +681,20 @@ class Counseling extends Model
         return $counselingList;
     }
 
-    public static function searchingCounselorCode($searchingText, $sdate, $edate)
+    public static function searchingCounselorCode($items, $searchingText, $sdate, $edate)
     {
         $pagination= DB::table('counseling')
             ->join('code', 'counseling.counselorGender', '=', 'code.codePK')
             ->join('answer', 'counseling.counselingPK', '=', 'answer.counselingPK')
             ->select("counseling.counselingPK", "counseling.counselingCode", "counseling.counselorName", "counseling.counselorBirthday", "counseling.counselingStatus","counseling.counselorStatus", "code.codeName", "answer")
             ->where('counseling.memberPK', '>', '0')
+            ->where('answer.questionsPK', '68')
             ->whereIn("counseling.counselingStatus",[279,280,281,353])
             ->where('counseling.createDate', '>=', $sdate)
             ->where('counseling.createDate', '<=', $edate)
             ->where('counseling.counselingCode', '=', '"%'.$searchingText.'%"')
             ->orderBy("counselingPK", "DESC")
-            ->paginate(10);
+            ->paginate($items);
 
         $counselingList = json_decode(json_encode($pagination), true);
 

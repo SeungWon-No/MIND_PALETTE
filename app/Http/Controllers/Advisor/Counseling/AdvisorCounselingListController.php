@@ -46,7 +46,7 @@ class AdvisorCounselingListController extends Controller
             return view("/advisor/login/login");
         }
 
-        $counselingList = $this->counseling->pagination(); // 전체 상담 리스트
+        $counselingList = $this->counseling->pagination(15); // 전체 상담 리스트
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
 
         return view("/advisor/counseling/counselingList",[   // 상담사 메인 페이지
@@ -85,7 +85,7 @@ class AdvisorCounselingListController extends Controller
             "searchingText" => $searchingText
         ];
 
-        $counselingList = Counseling::searchingCounselor($searchData);
+        $counselingList = Counseling::searchingCounselor(15, $searchData);
 
         $advisorProfile = $this->advisor->getAdvisorProfile($advisorPK); // 상담사 프로필
         return view("/advisor/counseling/".$previousPage, [

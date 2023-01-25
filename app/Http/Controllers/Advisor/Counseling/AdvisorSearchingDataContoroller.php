@@ -51,16 +51,16 @@ class AdvisorSearchingDataContoroller extends Controller
 
         
         if($sdate == null && $edate == null && $selectBoxCategory == 'counselorName'){ // 이름 전체 기간 검색
-            $counselingList = $this->counseling->searchingCounselorNameWithoutPeriod($searchingText);
+            $counselingList = $this->counseling->searchingCounselorNameWithoutPeriod(15, $searchingText);
 
         }else if($sdate == null && $edate == null && $selectBoxCategory == 'counselorCode'){ // 코드 전체 기간 검색
-            $counselingList = $this->counseling->searchingCounselorCodeWithoutPeriod($searchingText);
+            $counselingList = $this->counseling->searchingCounselorCodeWithoutPeriod(15, $searchingText);
 
         }else if ($sdate != null && $edate != null && $selectBoxCategory == 'counselorName') { // 이름 검색
-            $counselingList = $this->counseling->searchingCounselorName($searchingText, $sdate, $edate);
+            $counselingList = $this->counseling->searchingCounselorName(15, $searchingText, $sdate, $edate);
 
         }else if($sdate != null && $edate != null && $selectBoxCategory == 'counselorCode'){  // 상담코드 검색
-            $counselingList = $this->counseling->searchingCounselorCode($searchingText, $sdate, $edate);
+            $counselingList = $this->counseling->searchingCounselorCode(15, $searchingText, $sdate, $edate);
 
         }else{
             return false;

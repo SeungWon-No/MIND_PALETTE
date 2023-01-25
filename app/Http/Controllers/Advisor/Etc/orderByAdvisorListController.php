@@ -28,10 +28,10 @@ class orderByAdvisorListController extends Controller
 
         $orderByOption = $request->orderByValue ?? '';
         if ($orderByOption == 'orderByRecent'){
-            $advisorList = Advisor::advisorListOrderBy(9, 'DESC');
+            $advisorList = Advisor::advisorListOrderBy(15, 'DESC');
             $returnText = ['data'=>'최신순'];
         }else{
-            $advisorList = Advisor::advisorListOrderBy(9, 'ASC');
+            $advisorList = Advisor::advisorListOrderBy(15, 'ASC');
             $returnText = ['data'=>'과거순'];
         }
 
