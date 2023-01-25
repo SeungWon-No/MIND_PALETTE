@@ -13,7 +13,7 @@
                   <div class="member-label">프로필사진<em>*</em></div>
                   <div id="profileDiv" class="upload-file__wrap" style="display:flex @if($advisorProfile->profilePath == "") none @else block @endif;">
                     <div class="upload-file__photo">
-                      <img id="userProfileImage" src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
+                      <img id="userProfileImageUpdate" src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
                     </div>
                     <div class="upload-file__text">
                       <div class="upload-file">
@@ -367,7 +367,7 @@
 </script>
 <script>
     function validForm() {
-      // 필수 학력사항 체크 
+      // 필수 학력사항 체크
       var degree = $("#degree"+educationIndex).val();
       var schoolName = $("#schoolName"+educationIndex).val();
       var department = $("#department"+educationIndex).val();
@@ -686,6 +686,7 @@
                 if ( data.status === "success" ) {
                     $("#profileFilePath").val(data.filePath);
                     $("#profileDiv").css("display","block");
+                    $("#userProfileImageUpdate").attr('src','/storage/image/profile/'+data.filePath);
                     $("#userProfileImage").attr('src','/storage/image/profile/'+data.filePath);
                 } else {
                     alert(data.message);
