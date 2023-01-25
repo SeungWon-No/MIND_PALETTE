@@ -819,6 +819,10 @@
     </form>
 </article>
 <script>
+  $(function(){
+      $("#myCounselingList").addClass("active");
+  });
+
     let timerInterval = null;
     function timerProc() {
         if ( timerInterval == null ) {
@@ -958,6 +962,8 @@
             return new UploadAdapter(loader)
         }
     }
+
+    
 </script>
 
 @include('advisor/common/footer')
