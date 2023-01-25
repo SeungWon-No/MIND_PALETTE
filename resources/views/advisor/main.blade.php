@@ -127,11 +127,11 @@
                     <div class="expert-name">{{$list['advisorName']}}</div>
                     <div class="expert-star__review">
                       <span class="icon star-review-icon"></span>
-                      <div class="star-review__score">{{($advisorProfile->rating == 0)?"0.0":sprintf('%0.1f', ($advisorProfile->rating/$advisorProfile->ratingCount))}}</div>
+                      <div class="star-review__score">{{($list['rating'] == 0)?"0.0":sprintf('%0.1f', ($list['rating']/$list['ratingCount']))}}</div>
                       <div class="star-review__unit">/ 5</div>
                     </div>
                     <div class="expert-exp">
-                      팔레트 상담 <span class="expert-exp__num">{{$advisorProfile->counselingCount}}</span>회 진행
+                        팔레트 상담 <span class="expert-exp__num">{{$list['counselingCount']}}</span>회 진행
                     </div>
                   </div>
                 </div>
