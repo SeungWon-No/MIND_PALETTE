@@ -620,7 +620,7 @@
                     <div class="counselor-edit__body">
                         <div class="counselor-editor__area">
                             <div class="counselor-editor__btn-wrap">
-                                <button class="counselor-editor__btn guide">작성가이드</button>
+                                <button class="counselor-editor__btn guide" type="button" onclick="javascript:openGuide()">작성가이드</button>
                                 <button onclick="clearForm()" type="button" class="counselor-editor__btn reset">폼 리셋</button>
                             </div>
                             <div class="counselor-editor2">
@@ -961,6 +961,10 @@
         editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
             return new UploadAdapter(loader)
         }
+    }
+
+    function openGuide(){
+      window.open('/advisor/counselingStructureGuide', '작성가이드');
     }
 
     

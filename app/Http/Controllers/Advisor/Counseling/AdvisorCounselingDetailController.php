@@ -279,4 +279,13 @@ class AdvisorCounselingDetailController extends Controller
         }
         return $answerResult;
     }
+
+    // 작성 가이드
+    public function counselingStructureGuide(){
+        return view('/advisor/counseling/counselingStructureGuide');
+    }
+
+    public function counselingContentGuide(){
+        return view('/advisor/counseling/counselingContentGuide');
+    }
 }

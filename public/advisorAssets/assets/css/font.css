@@ -33,12 +33,18 @@ font-display: swap;
   url('../fonts/Pretendard-Regular.woff') format('woff'),
   url('../fonts/Pretendard-Regular.otf') format('opentype');
 }
-
 @font-face {
   font-family: 'D-DIN';
   font-weight: 700;
   font-display: swap;
   src: url('../fonts/D-DIN-Bold.woff2') format('woff2');
+}
+/* 23.01.03 추가 */
+@font-face {
+  font-family: 'D-DIN';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/D-DIN.woff2') format('woff2');
 }
 
  /* font-family: 'D-DIN', sans-serif; */
@@ -46,9 +52,9 @@ html,
 body,
 select,
 textarea,
-button,
+button,f
 input,
 .ui-widget 
 {
-  font-family: "Pretendard", sans-serif !important;
+  /* font-family: "Pretendard", sans-serif !important; */
 }

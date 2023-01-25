@@ -24,17 +24,9 @@ const stanbyCounsSlider = new Swiper('.sb-counseling__slider', {
   },
 })
 
-
-
-
-
-
-
-
 //커스텀 셀렉트박스
 
 function customSelectControl() {
-
 
   const customSelectBox = document.querySelectorAll('.select-box');
   const customSelectBtn = document.querySelectorAll('.select-box__label');
@@ -82,45 +74,45 @@ customSelectControl();
 
 
 // 테이블 박스 추가하기
-
+//23.01.19 수정
 const tableAddBtn = document.querySelectorAll('.table-add__btn');
 
 tableAddBtn.forEach((addBtn) => {
 
   addBtn.addEventListener('click', () => {
 
-    // const targetTable = addBtn.previousElementSibling;
-    // const targetTableTr = targetTable.querySelector('.member-table__body');
+    const targetTable = addBtn.previousElementSibling.previousElementSibling;
+    const targetTableTr = targetTable.querySelector('.member-table__body');
     
-    // const tableTr = document.createElement('tr');
-    // tableTr.classList.add('table-row');
+    const tableTr = document.createElement('tr');
+    tableTr.classList.add('table-row');
 
-    // if (targetTable.classList.contains('member-table--01')) {
+    if (targetTable.classList.contains('member-table--01')) {
 
-    //   const table01Content = `<td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">학사</li><li class="select-option">석사</li><li class="select-option">박사</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="학교명"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="학과명"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="전공"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">졸업</li><li class="select-option">재학</li><li class="select-option">수료</li></ul></div></td><td class="table-col cursor"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td>` 
-    //   tableTr.innerHTML = table01Content;
+      const table01Content = `<td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">학사</li><li class="select-option">석사</li><li class="select-option">박사</li></ul></div></td><td class="table-col"><input type="text"class="tabel-form__control"placeholder="학교명"></td><td class="table-col"><input type="text"class="tabel-form__control"placeholder="학과명"></td><td class="table-col"><input type="text"class="tabel-form__control"placeholder="전공"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">졸업</li><li class="select-option">재학</li><li class="select-option">수료</li></ul></div></td><td class="table-col cursor"><label class="table-file__label"><input type="file"class="table-file">첨부하기</label></td><td class="table-col"><button class="table-delete__btn"><span class="icon table-delete-icon"></span></button></td>` 
+      tableTr.innerHTML = table01Content;
 
-    //   targetTableTr.appendChild(tableTr);
+      targetTableTr.appendChild(tableTr);
       
-    // } else if(targetTable.classList.contains('member-table--02')) {
+    } else if(targetTable.classList.contains('member-table--02')) {
 
-    //   const table02Content = `<tr class="table-row"><td class="table-col"><input type="text" class="tabel-form__control" placeholder="발행처"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="자격이름"></td><td class="table-col"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td></tr>`;
-    //   tableTr.innerHTML = table02Content;
+      const table02Content = `<td class="table-col"><input type="text" class="tabel-form__control" placeholder="발행처"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="자격이름"></td><td class="table-col"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td><td class="table-col"><button class="table-delete__btn"><span class="icon table-delete-icon"></span></button></td>`;
+      tableTr.innerHTML = table02Content;
 
-    //   targetTableTr.appendChild(tableTr);
-    // } else if (targetTable.classList.contains('member-table--03')) {
+      targetTableTr.appendChild(tableTr);
+    } else if (targetTable.classList.contains('member-table--03')) {
 
-    //   const table03Content = '<tr class="table-row"><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">현재 근무지</li><li class="select-option">이전 근무지</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="기관검색"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">근무형태 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">근무형태</li><li class="select-option">풀타임</li><li class="select-option">파트타임</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="담당업무"></td><td class="table-col"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td></tr>';
+      const table03Content = '<td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">현재 근무지</li><li class="select-option">이전 근무지</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="기관검색"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">근무형태 <span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">근무형태</li><li class="select-option">풀타임</li><li class="select-option">파트타임</li></ul></div></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="담당업무"></td><td class="table-col"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td><td class="table-col"><button class="table-delete__btn"><span class="icon table-delete-icon"></span></button></td>';
 
-    //   tableTr.innerHTML = table03Content;
-    //   targetTableTr.appendChild(tableTr);
-    // }
+      tableTr.innerHTML = table03Content;
+      targetTableTr.appendChild(tableTr);
+    }
 
     customSelectControl();
   })
 
 })
-
+//23.01.19 수정 끝
 
 
 
@@ -143,9 +135,8 @@ tableAddBtn.forEach((addBtn) => {
 
   })
 
-
-
 //감정 그래프 버튼 동작
+/* 23.01.02 삭제
 const emotionOrder1Btns = document.querySelectorAll('.counselor-edit__emotion .emotion-stauts.order-01 .emotion-status__btn')
 const emotionOrder2Btns = document.querySelectorAll('.counselor-edit__emotion .emotion-stauts.order-02 .emotion-status__btn')
 const emotionOrder3Btns = document.querySelectorAll('.counselor-edit__emotion .emotion-stauts.order-03 .emotion-status__btn')
@@ -199,7 +190,7 @@ if(emotionRefreshBtn) {
       item.nextElementSibling.innerHTML = `1단계`;
     })
   })
-}
+} */
 
 
 
@@ -319,34 +310,11 @@ if (serviceCheckBox) {
       pop.close();
     })
   })
-
-
   
 }
 
-
-// 메인 필터버튼 클릭
-// const counselingFilterBtn = document.querySelectorAll('.counseling-filter__btn');
-
-// counselingFilterBtn.forEach((filterBtn , btnIdx) => {
-//   filterBtn.addEventListener('click', (e) => {
-//     counselingFilterBtn.forEach((item) => {
-//       item.classList.remove('active');
-//     })
-//     filterBtn.classList.add('active');
-
-
-//     if(btnIdx == 0) {
-//       counselingFilterBtn.forEach((item) => {
-//         item.classList.add('active');
-//       })
-//     }
-//   })
-// })
-
-
 // 공감, 반대 원형그래프
-
+/* 23.01.02 삭제
 const myLikeNum = document.querySelector('.my-like__num');
 
 function arcDegCalc() {
@@ -398,10 +366,9 @@ function arcDegCalc() {
 
 if (myLikeNum) {
   arcDegCalc();
-}
+} */
 
 // 팝업
-
 const pop = {
 
   element : null,
