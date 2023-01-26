@@ -25,8 +25,12 @@ class AdvisorWithdrawalController extends Controller
         }else{
             return view("/advisor/login/login");
         }
+        $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
 
-        return view("/advisor/profile/memberWithdrawal");
+        return view("/advisor/profile/memberWithdrawal", [
+            "isLogin" => $isLogin,
+            "advisorProfile" => $advisorProfile,
+        ]);
 
     }
 
