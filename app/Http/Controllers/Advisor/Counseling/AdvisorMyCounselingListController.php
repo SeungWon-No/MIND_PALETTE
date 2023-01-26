@@ -91,6 +91,7 @@ class AdvisorMyCounselingListController extends Controller
         return view("/advisor/counseling/".$previousPage, [
             'isLogin' => $isLogin,
             "tag" => "myCounselingList",
+            "pageName" => "전체내역",
             'searchData' => $searchData,
             'counselingList' => $counselingList,
             'advisorProfile' => $advisorProfile,
