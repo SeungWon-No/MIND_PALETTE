@@ -36,7 +36,7 @@ function customSelectControl() {
   customSelectBtn.forEach((selectBtn) => {
 
     selectBtn.addEventListener('click', () => {
-      
+
       const selectOptionBtn = selectBtn.nextElementSibling;
       const selectOption = [...selectOptionBtn.children];
 
@@ -47,7 +47,7 @@ function customSelectControl() {
 
       //옵션박스열기
       selectOptionBtn.classList.add('active');
-      
+
       selectOption.forEach((optionValue) => {
         optionValue.addEventListener('click', () => {
           selectBtn.innerHTML = `${optionValue.innerHTML}<span class="icon select-down-icon"></span>`
@@ -83,17 +83,17 @@ tableAddBtn.forEach((addBtn) => {
 
     const targetTable = addBtn.previousElementSibling.previousElementSibling;
     const targetTableTr = targetTable.querySelector('.member-table__body');
-    
+
     const tableTr = document.createElement('tr');
     tableTr.classList.add('table-row');
 
     if (targetTable.classList.contains('member-table--01')) {
 
-      const table01Content = `<td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">학사</li><li class="select-option">석사</li><li class="select-option">박사</li></ul></div></td><td class="table-col"><input type="text"class="tabel-form__control"placeholder="학교명"></td><td class="table-col"><input type="text"class="tabel-form__control"placeholder="학과명"></td><td class="table-col"><input type="text"class="tabel-form__control"placeholder="전공"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">졸업</li><li class="select-option">재학</li><li class="select-option">수료</li></ul></div></td><td class="table-col cursor"><label class="table-file__label"><input type="file"class="table-file">첨부하기</label></td><td class="table-col"><button class="table-delete__btn"><span class="icon table-delete-icon"></span></button></td>` 
+      const table01Content = `<td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">학사</li><li class="select-option">석사</li><li class="select-option">박사</li></ul></div></td><td class="table-col"><input type="text"class="tabel-form__control"placeholder="학교명"></td><td class="table-col"><input type="text"class="tabel-form__control"placeholder="학과명"></td><td class="table-col"><input type="text"class="tabel-form__control"placeholder="전공"></td><td class="table-col no-padding"><div class="select-box"><button class="select-box__label">선택<span class="icon select-down-icon"></span></button><ul class="select-option__list"><li class="select-option">선택</li><li class="select-option">졸업</li><li class="select-option">재학</li><li class="select-option">수료</li></ul></div></td><td class="table-col cursor"><label class="table-file__label"><input type="file"class="table-file">첨부하기</label></td><td class="table-col"><button class="table-delete__btn"><span class="icon table-delete-icon"></span></button></td>`
       tableTr.innerHTML = table01Content;
 
       targetTableTr.appendChild(tableTr);
-      
+
     } else if(targetTable.classList.contains('member-table--02')) {
 
       const table02Content = `<td class="table-col"><input type="text" class="tabel-form__control" placeholder="발행처"></td><td class="table-col"><input type="text" class="tabel-form__control" placeholder="자격이름"></td><td class="table-col"><label class="table-file__label"><input type="file" class="table-file"> 첨부하기</label></td><td class="table-col"><button class="table-delete__btn"><span class="icon table-delete-icon"></span></button></td>`;
@@ -126,9 +126,9 @@ tableAddBtn.forEach((addBtn) => {
 
       // img src 속성가져오기
       const imgEle = plusBtn.parentElement.parentElement.children[0];
-      const imgSrc = imgEle.getAttribute('src');
-      
+      let imgSrc = imgEle.getAttribute('src');
 
+        imgSrc = imgSrc.replace("\/thumb\/","\/origin\/")
       layerPopImg.setAttribute('src', imgSrc);
       pop.open('detailImagePop');
     })
@@ -202,7 +202,7 @@ const detailSliderWrap = document.querySelector('.detail-slider__wrap');
 const detailSliderClose = document.querySelector('.detail-slider__close');
 
 
-const detailItemDocumentBtn = document.querySelectorAll('.detail-item .detail-item__btn.doc'); 
+const detailItemDocumentBtn = document.querySelectorAll('.detail-item .detail-item__btn.doc');
 
 detailItemDocumentBtn.forEach(function(docBtn, btnIdx) {
   docBtn.addEventListener('click', (e) => {
@@ -225,7 +225,7 @@ if (detailSliderClose) {
 }
 
 
-// 상담상세 정보 탭 
+// 상담상세 정보 탭
 
 const detailTabBtn = document.querySelectorAll('.detail-tab__btn');
 const edtailTabContent = document.querySelectorAll('.content-cell');
@@ -269,7 +269,7 @@ if (loginCheckBox) {
   })
 
 } else {
-  
+
 }
 // 회원가입 이용약관, 개인정보 수집 팝업
 
@@ -310,7 +310,7 @@ if (serviceCheckBox) {
       pop.close();
     })
   })
-  
+
 }
 
 // 공감, 반대 원형그래프
@@ -398,7 +398,7 @@ const pop = {
     //팝업 컨텐츠 외 영역 클릭시 닫기 이벤트
     document.addEventListener('click', (e) => {
       if(pop.isActive){
-        if(e.target.parentNode.parentNode == pop.element){					
+        if(e.target.parentNode.parentNode == pop.element){
           pop.close();
         }
       }
