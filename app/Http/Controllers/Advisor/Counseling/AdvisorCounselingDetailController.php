@@ -49,8 +49,9 @@ class AdvisorCounselingDetailController extends Controller
         $sliceUrl = explode('/', $request->url());
         $counselingPK = $sliceUrl[5];
 
-        $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
         $getClientInfo = Counseling::getCounselingDetail($counselingPK);
+        $advisorProfile = Advisor::getAdvisorProfile($getClientInfo->advisorPK); // 상담사 프로필
+        //dd($advisorProfile);
         $images = Answer::findHTPImage($counselingPK);
 
         $timer = [
@@ -89,7 +90,7 @@ class AdvisorCounselingDetailController extends Controller
             $cssStyle["result"] = "block";
         }
 
-        $advisorProfile["career"] = Career::findCareerLimit($advisorPK,3);
+        $advisorProfile["career"] = Career::findCareerLimit($getClientInfo->advisorPK, 3);
         return view("/advisor/counseling/counselingDetail", [
             "counselingPK" =>$counselingPK,
             "advisorProfile" => $advisorProfile,
