@@ -50,8 +50,8 @@ class AdvisorCounselingDetailController extends Controller
         $counselingPK = $sliceUrl[5];
 
         $getClientInfo = Counseling::getCounselingDetail($counselingPK);
-        $advisorProfile = Advisor::getAdvisorProfile($getClientInfo->advisorPK); // 상담사 프로필
-        //dd($advisorProfile);
+        $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
+        $takeCounselingAdvisorProfile = Advisor::getTakeCounselingAdvisorProfile($getClientInfo->advisorPK); // 상담 진행한 상담사 프로필
         $images = Answer::findHTPImage($counselingPK);
 
         $timer = [
@@ -94,6 +94,7 @@ class AdvisorCounselingDetailController extends Controller
         return view("/advisor/counseling/counselingDetail", [
             "counselingPK" =>$counselingPK,
             "advisorProfile" => $advisorProfile,
+            "takeCounselingAdvisorProfile" => $takeCounselingAdvisorProfile,
             'clientInfo' => $getClientInfo,
             'statusCode' => $statusCode,
             'cssStyle' => $cssStyle,
