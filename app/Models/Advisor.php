@@ -106,7 +106,7 @@ class Advisor extends Model
 
     public static function pagination($items){
         $pagination = DB::table('advisor')
-        ->select('advisorPK', 'advisorName', 'briefIntroduction', 'profilePath', 'rating', 'ratingCount', 'counselingCount')
+        ->select('advisorPK', 'advisorName', 'briefIntroduction', 'profilePath', 'rating', 'ratingCount', 'counselingCount', 'detailedDescription')
         ->where('isDelete', '=', 'N')
         ->paginate($items);
 
@@ -118,6 +118,7 @@ class Advisor extends Model
                 'profilePath' => $list['profilePath'],
                 'advisorName' => Crypt::decryptString($list['advisorName']),
                 'briefIntroduction' => $list['briefIntroduction'],
+                'detailedDescription' => $list['detailedDescription'],
                 'rating' => $list['rating'],
                 'ratingCount' => $list['ratingCount'],
                 'counselingCount' => $list['counselingCount'],

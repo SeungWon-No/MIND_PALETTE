@@ -56,8 +56,8 @@
                 <div class="expert-item__body">
                   <h5 class="expert-introduce">자기소개</h5>
                   <p class="expert-introduce__desc">
-                    @if($list['briefIntroduction'])
-                      {{$list['briefIntroduction']}}
+                    @if($list['detailedDescription'])
+                      {{$list['detailedDescription']}}
                     @else
                       아이의 전문적인 상담이 필요하신가요? 아이만을 위한 ‘개인적인 공간'에서 편안하게 고민을 털어 놓아주세요.꽁꽁 사매고 있던 짐을 나눠드릴 수 있는 시간들이 되실거라 기대합니다.
                     @endif
