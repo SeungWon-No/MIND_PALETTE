@@ -541,7 +541,7 @@
             <div class="detail-md__inner">
                 <div class="counselor-cont">
                     <div class="counselor-date">{{date_format(date_create($clientInfo["updateDate"]),"Y . m . d .")}} 답변</div>
-                    @if(isset($takeCounselingAdvisorProfile)){
+                    @if(isset($takeCounselingAdvisorProfile))
                       <div class="counselor-info">
                           <div class="counselor-info__top">
                               <div class="counselor-info__detail">
@@ -568,7 +568,6 @@
                               @endforeach
                           </div>
                       </div>
-                    }
                     @endif
                     <div class="counselor-answer">
                         <div class="counselor-answer__text">
