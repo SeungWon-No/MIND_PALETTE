@@ -558,9 +558,9 @@
                           <div class="counselor-info__carrier">
                               @php
                                   $x = 1;
-                                  $length = count($takeCounselingAdvisorProfile["career"]);
+                                  $length = count($advisorProfile["career"]);
                               @endphp
-                              @foreach($takeCounselingAdvisorProfile["career"] as $index => $career)
+                              @foreach($advisorProfile["career"] as $index => $career)
                                   {{($career->careerType == "331")?"현":"전"}}){{$career->companyName}}{{($x === $length)?"":","}}
                                   @php
                                       $x++;
