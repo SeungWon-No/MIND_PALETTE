@@ -46,14 +46,12 @@ class AdvisorCounselingDetailController extends Controller
             return view("/advisor/login/login");
         }
 
-
         $sliceUrl = explode('/', $request->url());
         $counselingPK = $sliceUrl[5];
 
         $getClientInfo = Counseling::getCounselingDetail($counselingPK);
         $advisorProfile = Advisor::getAdvisorProfile($advisorPK); // 상담사 프로필
-        $advisorProfileContent = Advisor::getAdvisorProfile($getClientInfo->advisorPK); // 상담사 프로필
-        //dd($advisorProfile);
+        $takeCounselingAdvisorProfile = Advisor::getTakeCounselingAdvisorProfile($getClientInfo->advisorPK); // 상담 진행한 상담사 프로필
         $images = Answer::findHTPImage($counselingPK);
 
         $timer = [
@@ -92,13 +90,11 @@ class AdvisorCounselingDetailController extends Controller
             $cssStyle["result"] = "block";
         }
 
-        if ($advisorProfileContent) {
-            $advisorProfileContent["career"] = Career::findCareerLimit($getClientInfo->advisorPK, 3);
-        }
+        $advisorProfile["career"] = Career::findCareerLimit($getClientInfo->advisorPK, 3);
         return view("/advisor/counseling/counselingDetail", [
             "counselingPK" =>$counselingPK,
             "advisorProfile" => $advisorProfile,
-            "advisorProfileContent" => $advisorProfileContent,
+            "takeCounselingAdvisorProfile" => $takeCounselingAdvisorProfile,
             'clientInfo' => $getClientInfo,
             'statusCode' => $statusCode,
             'cssStyle' => $cssStyle,

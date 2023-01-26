@@ -82,6 +82,34 @@ class Advisor extends Model
 
     }
 
+    public static function getTakeCounselingAdvisorProfile($advisorPK){
+        $result = Advisor::select(
+               'advisorPK',
+               'email',
+               'phone',
+               'advisorName',
+               'profilePath',
+               'briefIntroduction',
+               'counselingCount',
+               'rating',
+               'ratingCount',
+               'centerName',
+               'career',
+               'detailedDescription',
+               'advisorStatus'
+           )
+           ->where('advisorPK', '=', $advisorPK)
+           ->get()->first();
+
+        //dd($result);
+        if($result != null){
+            $result->advisorName = Crypt::decryptString($result->advisorName);
+            $result->phone = Crypt::decryptString($result->phone);
+        }
+       return $result;
+
+   }
+
 
     public static function findAuthAdvisor($CI) {
         return Advisor::join("advisorAuth","advisor.advisorPK","=","advisorAuth.advisorPK")

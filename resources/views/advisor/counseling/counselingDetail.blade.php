@@ -542,33 +542,33 @@
             <div class="detail-md__inner">
                 <div class="counselor-cont">
                     <div class="counselor-date">{{date_format(date_create($clientInfo["updateDate"]),"Y . m . d .")}} 답변</div>
-                    @if($advisorProfileContent)
-                    <div class="counselor-info">
-                        <div class="counselor-info__top">
-                            <div class="counselor-info__detail">
-                                <div class="counselor-info__name">{{$advisorProfileContent->advisorName}} 상담사</div>
-                                <div class="counselor-info__more">
-                                    <div class="counselor-info__work">{{$advisorProfileContent->centerName}}</div>
-                                    <div class="counselor-info__progress">팔레트 상담 <em>{{number_format($advisorProfileContent->counselingCount)}}</em>진행</div>
-                                </div>
-                            </div>
-                            <div class="counselor-info__photo">
-                                <img src="{{URL::asset('/storage/image/profile/'.$advisorProfileContent->profilePath)}}" alt="" class="counselor-info__img">
-                            </div>
-                        </div>
-                        <div class="counselor-info__carrier">
-                            @php
-                                $x = 1;
-                                $length = count($advisorProfileContent["career"]);
-                            @endphp
-                            @foreach($advisorProfileContent["career"] as $index => $career)
-                                {{($career->careerType == "331")?"현":"전"}}){{$career->companyName}}{{($x === $length)?"":","}}
-                                @php
-                                    $x++;
-                                @endphp
-                            @endforeach
-                        </div>
-                    </div>
+                    @if(isset($takeCounselingAdvisorProfile))
+                      <div class="counselor-info">
+                          <div class="counselor-info__top">
+                              <div class="counselor-info__detail">
+                                  <div class="counselor-info__name">{{$takeCounselingAdvisorProfile->advisorName}} 상담사</div>
+                                  <div class="counselor-info__more">
+                                      <div class="counselor-info__work">{{$takeCounselingAdvisorProfile->centerName}}</div>
+                                      <div class="counselor-info__progress">팔레트 상담 <em>{{number_format($takeCounselingAdvisorProfile->counselingCount)}}</em>진행</div>
+                                  </div>
+                              </div>
+                              <div class="counselor-info__photo">
+                                  <img src="{{URL::asset('/storage/image/profile/'.$takeCounselingAdvisorProfile->profilePath)}}" alt="" class="counselor-info__img">
+                              </div>
+                          </div>
+                          <div class="counselor-info__carrier">
+                              @php
+                                  $x = 1;
+                                  $length = count($advisorProfile["career"]);
+                              @endphp
+                              @foreach($advisorProfile["career"] as $index => $career)
+                                  {{($career->careerType == "331")?"현":"전"}}){{$career->companyName}}{{($x === $length)?"":","}}
+                                  @php
+                                      $x++;
+                                  @endphp
+                              @endforeach
+                          </div>
+                      </div>
                     @endif
                     <div class="counselor-answer">
                         <div class="counselor-answer__text">
