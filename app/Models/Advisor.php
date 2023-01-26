@@ -74,8 +74,10 @@ class Advisor extends Model
             )
             ->where('advisorPK', '=', $advisorPK)
             ->get()->first();
-        $result->advisorName = Crypt::decryptString($result->advisorName);
-        $result->phone = Crypt::decryptString($result->phone);
+         if ($result) {
+             $result->advisorName = Crypt::decryptString($result->advisorName);
+             $result->phone = Crypt::decryptString($result->phone);
+         }
         return $result;
 
     }

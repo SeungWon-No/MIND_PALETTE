@@ -538,28 +538,30 @@
         </div>
       </div>
         <div class="detail-md__cont" style="display: {{$cssStyle["result"]}}">
+
             <div class="detail-md__inner">
                 <div class="counselor-cont">
                     <div class="counselor-date">{{date_format(date_create($clientInfo["updateDate"]),"Y . m . d .")}} 답변</div>
+                    @if($advisorProfileContent)
                     <div class="counselor-info">
                         <div class="counselor-info__top">
                             <div class="counselor-info__detail">
-                                <div class="counselor-info__name">{{$advisorProfile->advisorName}} 상담사</div>
+                                <div class="counselor-info__name">{{$advisorProfileContent->advisorName}} 상담사</div>
                                 <div class="counselor-info__more">
-                                    <div class="counselor-info__work">{{$advisorProfile->centerName}}</div>
-                                    <div class="counselor-info__progress">팔레트 상담 <em>{{number_format($advisorProfile->counselingCount)}}</em>진행</div>
+                                    <div class="counselor-info__work">{{$advisorProfileContent->centerName}}</div>
+                                    <div class="counselor-info__progress">팔레트 상담 <em>{{number_format($advisorProfileContent->counselingCount)}}</em>진행</div>
                                 </div>
                             </div>
                             <div class="counselor-info__photo">
-                                <img src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="counselor-info__img">
+                                <img src="{{URL::asset('/storage/image/profile/'.$advisorProfileContent->profilePath)}}" alt="" class="counselor-info__img">
                             </div>
                         </div>
                         <div class="counselor-info__carrier">
                             @php
                                 $x = 1;
-                                $length = count($advisorProfile["career"]);
+                                $length = count($advisorProfileContent["career"]);
                             @endphp
-                            @foreach($advisorProfile["career"] as $index => $career)
+                            @foreach($advisorProfileContent["career"] as $index => $career)
                                 {{($career->careerType == "331")?"현":"전"}}){{$career->companyName}}{{($x === $length)?"":","}}
                                 @php
                                     $x++;
@@ -567,7 +569,7 @@
                             @endforeach
                         </div>
                     </div>
-
+                    @endif
                     <div class="counselor-answer">
                         <div class="counselor-answer__text">
                             <p class="counselor-answer__desc">
@@ -967,7 +969,7 @@
       window.open('/advisor/counselingStructureGuide', '작성가이드');
     }
 
-    
+
 </script>
 
 @include('advisor/common/footer')
