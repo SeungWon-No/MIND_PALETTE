@@ -81,7 +81,7 @@
                 @endif
             </li>
             <li class="my-history__item">
-                <a href="#none" class="my-history__obj">• 상담완료
+                <a href="/advisor/myCompleteCounseling" class="my-history__obj">• 상담완료
                     <span class="my-history__num">{{$myCompleteCount}}</span><span class="my-history__unit">건</span>
                 </a>
             </li>
