@@ -44,17 +44,19 @@
           </div>
           @if(session()->has('advisorLogin'))
           <div class="header-top__right">
-            <div class="user-info__cell">
-              <div class="user-profile__photo">
-                @if(isset($advisorProfile))
-                  @if($advisorProfile->profilePath)
-                      <img id="userProfileImage" src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
+            <a href="/advisor/profile">
+              <div class="user-info__cell">
+                <div class="user-profile__photo">
+                  @if(isset($advisorProfile))
+                    @if($advisorProfile->profilePath)
+                        <img id="userProfileImage" src="{{URL::asset('/storage/image/profile/'.$advisorProfile->profilePath)}}" alt="" class="upload-file__img">
+                    @endif
+                  <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="user-profile__img">
                   @endif
-                <img src="/advisorAssets/assets/images/user-profile.jpg" alt="" class="user-profile__img">
-                @endif
+                </div>
+                <div class="user-info__username">{{(isset($advisorProfile)) ? $advisorProfile['advisorName'] : ""}}</div>
               </div>
-              <div class="user-info__username">{{(isset($advisorProfile)) ? $advisorProfile['advisorName'] : ""}}</div>
-            </div>
+            </a>
             @if(isset($advisorProfile) && $advisorProfile['advisorStatus'] == '2')
             <a href="/advisor/logout" class="account-logout__btn">로그아웃</a>
             @endif
